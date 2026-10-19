@@ -953,3 +953,4 @@ body.cb-theme[data-cb-theme-layout=home] .codebhavya-hero{display:block!importan
 body.cb-theme[data-cb-theme-layout=home] .codebhavya-hero::before,body.cb-theme[data-cb-theme-layout=home] .codebhavya-hero::after{display:block!important}
 body.cb-theme[data-cb-theme-layout=home] .hero-small-title{color:#cbd5e1!important}
 body.cb-theme[data-cb-theme-layout=home] .why-codebhavya{background:#0d1b2a!important;border-top:0!important}
+/* Trigger classic theme deployment */
