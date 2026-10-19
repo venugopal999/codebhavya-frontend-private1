@@ -1,0 +1,15 @@
+/EVERY-PAGE-SNIPPET.html
+/C-Programming/integration-snippet.html
+/Online-Compiler/NAVIGATION-SNIPPET.html
+/C-Programming/media/sample.html
+/C-Programming/case-studies/sample.html
+/C-Programming/case-studies/programs/sample.html
+/Quiz/Admin/sample.html
+
+# Server entry point and local configuration are not public website assets.
+/worker.js
+/wrangler.jsonc
+/.env*
+/.dev.vars*
+
+/server/**

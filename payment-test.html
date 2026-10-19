@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="CodeBhavya simulated INR 5 checkout for payment integration testing.">
+  <title>₹5 Test Checkout | CodeBhavya</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/codebhavya-icon-32.png">
+  <link rel="stylesheet" href="payment-test.css?v=1">
+  <script src="payment-test.js?v=1" defer></script>
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+<body class="cb-theme" data-cb-theme-layout="utility">
+  <header><a class="brand" href="/index.html">Code<span>Bhavya</span></a><nav aria-label="Main navigation"><a href="/index.html">Home</a><a href="/Programs/index.html">Programs</a><a href="/Placement/index.html">Placement</a></nav></header>
+  <main>
+    <p class="eyebrow">PAYMENT INTEGRATION TEST</p>
+    <h1>Try the ₹5 test checkout</h1>
+    <p class="intro">Check how checkout and verification work before launching payments.</p>
+    <aside class="notice"><strong>Test Mode · No real money</strong><p>This is a simulated ₹5 transaction, not a real contribution or a paid service. It does not unlock or restrict tracers, mock tests or learning resources.</p></aside>
+    <section class="card" aria-labelledby="checkout-title">
+      <div class="summary"><div><h2 id="checkout-title">CodeBhavya checkout test</h2><p>One simulated transaction · INR</p></div><strong class="price">₹5</strong></div>
+      <form id="testForm">
+        <label class="consent"><input type="checkbox" id="testConsent" required><span>I understand this is a simulated payment with no real charge or paid benefit. I have read the <a href="/payment-terms.html">Payment Terms</a>, <a href="/refund-cancellation.html">Refund &amp; Cancellation Policy</a> and <a href="/subscription-recharge.html">Subscription &amp; Recharge Terms</a> for future paid services.</span></label>
+        <button type="submit" id="payTest" disabled>Open ₹5 test checkout</button>
+      </form>
+      <p id="testStatus" class="status" role="status" aria-live="polite" aria-atomic="true">Select the checkbox to begin.</p>
+      <p id="testReference" class="reference" hidden></p>
+      <button type="button" id="checkStatus" class="secondary" hidden>Check payment status again</button>
+      <noscript><p>Enable JavaScript to run the simulated checkout.</p></noscript>
+    </section>
+    <section class="help" aria-labelledby="how-to-test"><h2 id="how-to-test">What to test</h2><ol><li>Open checkout and confirm it shows Test Mode.</li><li>Use Razorpay's test payment methods. If Netbanking is available, choose a bank and select Success or Failure on the mock bank page.</li><li>For a successful transaction, return here and wait for server verification.</li><li>Also test closing checkout and a failed payment. Neither should display verified success.</li></ol><p>Do not use real card or bank credentials for this test. Payment inputs go directly to Razorpay checkout. CodeBhavya verifies the test transaction on its server.</p><p>If your test payment stays pending, check the payment's capture status in the Razorpay Test Mode dashboard.</p></section>
+  </main>
+  <footer><p>© 2026 CodeBhavya</p><nav aria-label="CodeBhavya information"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/payment-terms.html">Payment Terms</a><a href="/refund-cancellation.html">Refund &amp; Cancellation</a><a href="/subscription-recharge.html">Subscription &amp; Recharge</a></nav></footer>
+</body>
+</html>

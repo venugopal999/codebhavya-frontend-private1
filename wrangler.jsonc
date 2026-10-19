@@ -1,0 +1,21 @@
+{
+  "name": "codebhavya",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/runtime-health",
+      "/api/test-payments/*",
+      "/api/support-payments/*",
+      "/Full-Stack/lesson.html",
+      "/Full-Stack/lesson",
+      "/Java/lesson.html",
+      "/Java/lesson"
+    ]
+  },
+  "main": "worker.js",
+  "vars": {
+    "PAYMENTS_ENABLED": "true"
+  }
+}

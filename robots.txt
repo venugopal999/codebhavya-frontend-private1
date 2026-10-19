@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://codebhavya.com/sitemap.xml
+Sitemap: https://codebhavya.com/Programs/sitemap-programs.xml
+Sitemap: https://codebhavya.com/Labs/ads-c/sitemap.xml
+Sitemap: https://codebhavya.com/Labs/ds-c/sitemap.xml
+Sitemap: https://codebhavya.com/Labs/oop-java/sitemap.xml

@@ -1,0 +1,45 @@
+{
+  "id": "/",
+  "name": "CodeBhavya",
+  "short_name": "CodeBhavya",
+  "description": "Learn programming, computer science and prepare for placements with CodeBhavya.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#071d35",
+  "shortcuts": [
+    {
+      "name": "Explore courses",
+      "short_name": "Learning",
+      "description": "Browse CodeBhavya learning areas and courses",
+      "url": "/#learning-areas"
+    },
+    {
+      "name": "Open Quiz Arena",
+      "short_name": "Quiz",
+      "description": "Join a classroom quiz on CodeBhavya",
+      "url": "/Quiz/"
+    },
+    {
+      "name": "Open Placement Launchpad",
+      "short_name": "Placement",
+      "description": "Continue CodeBhavya placement preparation",
+      "url": "/Placement/"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/images/codebhavya-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/codebhavya-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

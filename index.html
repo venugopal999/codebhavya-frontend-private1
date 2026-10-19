@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="google-adsense-account" content="ca-pub-5294314077044734">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#071d35">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/images/codebhavya-icon-192.png">
+    <style>
+        .codebhavya-install-button {
+            border: 1px solid rgba(255,255,255,.8);
+            border-radius: 10px;
+            padding: 12px 19px;
+            background: rgba(255,255,255,.12);
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .codebhavya-install-button:hover,
+        .codebhavya-install-button:focus-visible { background: rgba(255,255,255,.24); }
+        .codebhavya-install-button:focus-visible { outline: 3px solid #f1be32; outline-offset: 3px; }
+        .codebhavya-install-help { margin: 12px 0 0; color: #fff; max-width: 31rem; }
+        @media (display-mode: standalone) { .codebhavya-install-button, .codebhavya-install-help { display: none; } }
+    </style>
+
+    <title>CodeBhavya | From Learning to Limitless Possibilities</title>
+
+    <meta name="description"
+          content="CodeBhavya - Learn Mathematics, Programming, Data Structures, AI and Machine Learning step by step.">
+<link rel="canonical" href="https://codebhavya.com/">
+    <link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" sizes="32x32"
+      href="images/codebhavya-icon-32.png">
+
+    <link rel="icon" type="image/png" sizes="128x128"
+      href="images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="images/codebhavya-icon-512.png">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CodeBhavya",
+  "url": "https://codebhavya.com/",
+  "logo": "https://codebhavya.com/images/codebhavya-main-logo.png"
+}
+</script>
+<link rel="stylesheet" href="learning-guide.css?v=1">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+
+<body class="cb-theme" data-cb-theme-layout="home">
+
+<!-- ============================
+     HEADER
+============================= -->
+
+<header class="top-header">
+
+<!-- <a href="index.html" class="logo">
+    <span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span>
+</a> -->
+
+    <a href="index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+
+</a>
+
+
+    <nav class="top-nav">
+
+        <a href="index.html">Home</a>
+
+        <a href="Online-Compiler/">Online Compiler</a>
+
+        <a href="Maths/">Maths</a>
+
+        <a href="C-Programming/">C</a>
+
+        <a href="Data-Structures/">Data Structures</a>
+
+         <a href="Advanced-Data-Structures/">Advanced Data Structures</a>
+
+        <a href="Python/">Python</a>
+
+        <a href="AI-ML/">AI & ML</a>
+
+        <a href="Placement/">Placement</a>
+
+    </nav>
+
+</header>
+
+
+<!-- ============================
+     HERO SECTION
+============================= -->
+
+<section class="hero codebhavya-hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small-title">
+            WELCOME TO
+        </p>
+
+<h1 class="hero-brand">
+    <span class="hero-code">Code</span><span class="hero-bhavya">Bhavya</span>
+</h1>
+
+        <h2>
+            From Learning to Limitless Possibilities.
+        </h2>
+
+        <p class="hero-description">
+
+            Learn Mathematics, Programming, Data Structures,
+            AI & Machine Learning and problem-solving skills
+            through simple, structured and practical learning.
+
+        </p>
+
+
+       <div class="hero-buttons">
+
+    <a href="Maths/" class="primary-button">
+        Start Learning →
+    </a>
+    <a href="learning-guide.html" class="cb-guide-home-link">How to use CodeBhavya</a>
+    <button class="codebhavya-install-button" id="installCodeBhavya" type="button">Install CodeBhavya Mobile App</button>
+
+</div>
+<p class="codebhavya-install-help" id="installCodeBhavyaHelp" role="status" aria-live="polite" hidden></p>
+
+    </div>
+
+</section>
+
+
+<!-- ============================
+     LEARNING AREAS
+============================= -->
+
+<main class="home-container" id="learning-areas">
+
+    <p class="section-label">
+        LEARN • PRACTICE • GROW
+    </p>
+
+    <h2 class="section-title">
+        Explore Learning Areas
+    </h2>
+
+    <p class="section-description">
+
+        Build your knowledge step by step,
+        from fundamentals to advanced concepts.
+
+    </p>
+
+
+    <div class="subject-grid">
+
+
+        <!-- MATHEMATICS -->
+
+        <a href="Maths/" class="subject-card">
+
+            <div class="subject-icon">
+                📐
+            </div>
+
+            <h3>
+                Mathematics
+            </h3>
+
+            <p>
+                Learn mathematical concepts,
+                formulas, shortcuts and
+                problem-solving techniques.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+
+        <!-- C PROGRAMMING -->
+
+        <a href="C-Programming/" class="subject-card">
+
+            <div class="subject-icon">
+                💻
+            </div>
+
+            <h3>
+                C Programming
+            </h3>
+
+            <p>
+                Learn C programming from
+                fundamentals to advanced
+                programming concepts.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+
+        <!-- ============================ DATA STRUCTURES ============================= --> 
+        <a href="Data-Structures/" class="subject-card"> 
+            <div class="subject-icon"> 
+                🧠 
+            </div> 
+            <h3> 
+                Data Structures 
+            </h3> 
+            <p> 
+                Learn Searching, Sorting, Linked Lists, Stacks, 
+                Queues, Trees and Graphs step by step. 
+            </p> 
+            <span class="learn-link"> 
+                Start Learning → 
+            </span> 
+        </a> 
+        <!-- ============================ ADVANCED DATA STRUCTURES ============================= --> 
+        <a href="Advanced-Data-Structures/" class="subject-card"> 
+            <div class="subject-icon"> 
+                🚀 
+            </div> 
+            <h3> Advanced Data Structures </h3> 
+            <p> 
+                Explore advanced searching, sorting, trees, heaps, 
+                hashing, pattern matching and file organization. 
+            </p> 
+            <span class="learn-link"> 
+                Start Learning → 
+            </span> 
+        </a>
+
+
+        <!-- PYTHON -->
+
+        <a href="Python/" class="subject-card">
+
+            <div class="subject-icon">
+                🐍
+            </div>
+
+            <h3>
+                Python
+            </h3>
+
+            <p>
+                Learn Python programming,
+                problem solving and
+                practical applications.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+
+        <!-- AI ML -->
+
+        <a href="AI-ML/" class="subject-card">
+
+            <div class="subject-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI & Machine Learning
+            </h3>
+
+            <p>
+                Learn Machine Learning,
+                Deep Learning, Neural Networks
+                and AI concepts.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+         <!-- JAVA -->
+
+        <a href="Java/" class="subject-card">
+
+            <div class="subject-icon">
+                ☕
+            </div>
+
+            <h3>
+                Java
+            </h3>
+
+            <p>
+                Learn Java programming,
+                problem solving and
+                practical applications.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+         <!-- Full Stack MERN -->
+
+        <a href="Full-Stack/" class="subject-card">
+
+            <div class="subject-icon">
+                ⚛️
+            </div>
+
+            <h3>
+                Full Stack MERN
+            </h3>
+
+            <p>
+                Learn to build full-stack MERN applications
+                through problem solving and practical projects.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+        <!-- DBMS & SQL -->
+
+        <a href="DBMS/" class="subject-card">
+
+            <div class="subject-icon">
+                🗄️
+            </div>
+
+            <h3>
+                DBMS &amp; SQL
+            </h3>
+
+            <p>
+                Learn DBMS &amp; SQL,
+                problem solving and
+                practical applications.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+        <!-- OS -->
+
+        <a href="Operating-Systems/" class="subject-card">
+
+            <div class="subject-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Operating Systems
+            </h3>
+
+            <p>
+                Learn operating systems and core computer
+                concepts through practical examples.
+            </p>
+
+            <span class="learn-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+        <!-- COMPUTER NETWORKS -->
+
+        <a href="Computer-Networks/" class="subject-card">
+            <div class="subject-icon">🌐</div>
+            <h3>Computer Networks</h3>
+            <p>Learn packets, subnetting, routing, TCP, DNS and how the web works through practical lessons.</p>
+            <span class="learn-link">Start Learning →</span>
+        </a>
+
+        <!-- Online Compiler -->
+
+        <a href="Online-Compiler/" class="subject-card">
+
+            <div class="subject-icon">
+                💻
+            </div>
+
+            <h3>
+                Online Compiler
+            </h3>
+
+            <p>
+                Execute all your practice programs, 
+                run and enjoy coding.
+            </p>
+
+            <span class="learn-link">
+                Start Executing →
+            </span>
+
+        </a>
+
+
+
+
+        <!-- PRACTICE -->
+
+        <a href="Placement/" class="subject-card">
+
+            <div class="subject-icon">
+                🎯
+            </div>
+
+            <h3>
+                Practice & Problem Solving
+            </h3>
+
+            <p>
+                Improve your aptitude, reasoning,
+                coding and problem-solving skills
+                through regular practice.
+            </p>
+
+            <span class="learn-link">
+                Practice Now →
+            </span>
+
+        </a>
+
+
+    </div>
+
+</main>
+
+
+<!-- ============================
+     WHY CODEBHAVYA
+============================= -->
+
+<!-- ============================
+     CODEBHAVYA LEARNING JOURNEY
+============================= -->
+
+<section class="why-codebhavya">
+
+    <div class="why-container">
+
+        <p class="section-label">
+            THE CODEBHAVYA APPROACH
+        </p>
+
+        <h2>
+            Learn. Practice. Build. Grow.
+        </h2>
+
+        <p class="approach-description">
+            A simple learning journey designed to turn
+            knowledge into practical skills.
+        </p>
+
+
+        <div class="learning-journey">
+
+            <!-- STEP 01 -->
+
+            <div class="journey-step">
+
+                <div class="journey-number">
+                    01
+                </div>
+
+                <div class="journey-icon">
+                    📖
+                </div>
+
+                <h3>
+                    Learn
+                </h3>
+
+                <p>
+                    Understand concepts clearly
+                    from the fundamentals.
+                </p>
+
+            </div>
+
+
+            <div class="journey-line"></div>
+
+
+            <!-- STEP 02 -->
+
+            <div class="journey-step">
+
+                <div class="journey-number">
+                    02
+                </div>
+
+                <div class="journey-icon">
+                    ✏️
+                </div>
+
+                <h3>
+                    Practice
+                </h3>
+
+                <p>
+                    Solve problems and strengthen
+                    your understanding.
+                </p>
+
+            </div>
+
+
+            <div class="journey-line"></div>
+
+
+            <!-- STEP 03 -->
+
+            <div class="journey-step">
+
+                <div class="journey-number">
+                    03
+                </div>
+
+                <div class="journey-icon">
+                    💻
+                </div>
+
+                <h3>
+                    Build
+                </h3>
+
+                <p>
+                    Apply your knowledge through
+                    coding and projects.
+                </p>
+
+            </div>
+
+
+            <div class="journey-line"></div>
+
+
+            <!-- STEP 04 -->
+
+            <div class="journey-step">
+
+                <div class="journey-number">
+                    04
+                </div>
+
+                <div class="journey-icon">
+                    ✨
+                </div>
+
+                <h3>
+                    Grow
+                </h3>
+
+                <p>
+                    Continue learning and move toward
+                    limitless possibilities.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================
+     FOOTER
+============================= -->
+
+<!-- ============================
+     CODEBHAVYA FOOTER
+============================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="learning-guide.html">How to use CodeBhavya</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="Placement/">
+                Placement
+            </a>
+
+               <a href="Placement/dashboard.html">
+                Overall Progress
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+
+        <div class="footer-column">
+
+            <h3>
+                Learning
+            </h3>
+            <a href="Maths/">
+                Mathematics
+            </a>
+            <a href="C-Programming/">
+                C Programming
+            </a>
+            <a href="Python/">
+                Python
+            </a>
+            <a href="Java/">
+                Java
+            </a>
+             <a href="Data-Structures/">
+                Data Structures 
+            </a>
+            <a href="Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+            <a href="AI-ML/">
+                AI &amp; Machine Learning
+            </a>
+        </div>
+
+                <!-- Core CS -->
+
+        <div class="footer-column">
+
+            <h3>
+                Core CS &amp; WEB Devp
+            </h3>
+            <a href="DBMS/">
+    DBMS &amp; SQL
+</a>
+            <a href="Operating-Systems/">
+    Operating-Systems
+</a>
+            <a href="Computer-Networks/">Computer Networks</a>
+                        <a href="Full-Stack/">
+    Full Stack MERN
+</a>
+        </div>
+
+        <!-- PRACTICE -->
+
+        <div class="footer-column">
+
+            <h3>
+                Practice
+            </h3>
+             <a href="Online-Compiler/">
+                Online Compiler
+            </a>
+
+             <a href="Placement/practice.html">
+                Practice Hub
+            </a>
+
+            <a href="Programs/index.html">
+                Programs Library
+            </a>
+            <a href="Placement/mcq-library.html">  
+MCQ Library
+            </a>
+            <a href="Placement/coding.html">  
+Coding Arena
+            </a>
+            <a href="Placement/mock-drive.html">  
+Mock Drive
+            </a>
+            <a href="Placement/interview.html">  
+Interview Coach
+            </a>
+            <a href="Placement/evidence-lab.html">  
+Evidence Lab
+            </a>
+        </div>
+
+    </div>         
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js?v=5"></script>
+<script>
+// Keep installation optional: the browser decides when it can offer its prompt.
+(function () {
+    const button = document.getElementById('installCodeBhavya');
+    const help = document.getElementById('installCodeBhavyaHelp');
+    let installPrompt = null;
+    const installed = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+    if (installed()) { button.hidden = true; return; }
+
+    window.addEventListener('beforeinstallprompt', function (event) {
+        event.preventDefault();
+        installPrompt = event;
+    });
+    window.addEventListener('appinstalled', function () {
+        installPrompt = null;
+        button.hidden = true;
+        help.hidden = true;
+    });
+
+    button.addEventListener('click', async function () {
+        if (installPrompt) {
+            const prompt = installPrompt;
+            installPrompt = null;
+            await prompt.prompt();
+            const choice = await prompt.userChoice;
+            if (choice.outcome !== 'accepted') {
+                help.textContent = 'You can install later using your browser menu.';
+                help.hidden = false;
+            }
+            return;
+        }
+        const isApplePhone = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        help.textContent = isApplePhone
+            ? 'In Safari, tap Share, then Add to Home Screen. Turn on Open as Web App if shown.'
+            : 'In Chrome, open the browser menu (⋮) and choose Install app or Add to Home screen. If you recently uninstalled it, the browser may wait before showing another popup.';
+        help.hidden = false;
+    });
+})();
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(function (error) {
+            console.warn('CodeBhavya app registration failed:', error);
+        });
+    });
+}
+</script>
+
+</body>
+
+</html>

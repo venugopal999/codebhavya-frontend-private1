@@ -1,0 +1,16 @@
+/course-snapshots/*
+  X-Robots-Tag: noindex
+
+/footer.html
+  X-Robots-Tag: noindex
+/sidebar.html
+  X-Robots-Tag: noindex
+/components/*
+  X-Robots-Tag: noindex
+/Web-Technologies/header.html
+  X-Robots-Tag: noindex
+/Web-Technologies/footer.html
+  X-Robots-Tag: noindex
+
+/Web-Technologies/sidebar.html
+  X-Robots-Tag: noindex
