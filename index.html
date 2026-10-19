@@ -58,8 +58,38 @@
 <link rel="stylesheet" href="learning-guide.css?v=1">
 
 <!-- CodeBhavya approved shared theme -->
-<link rel="stylesheet" href="shared-theme/codebhavya-theme.css?v=20261019-home-1" data-cb-shared-theme="true">
+<link rel="stylesheet" href="shared-theme/codebhavya-theme.css?v=20261019-home-2" data-cb-shared-theme="true">
 <script defer src="shared-theme/codebhavya-theme.js?v=20261019-2" data-cb-shared-theme="true"></script>
+<style id="cb-home-split-critical">
+/* Homepage split layout: real learning links, with the classic global shell retained. */
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split{display:grid!important;grid-template-columns:minmax(0,1.4fr) minmax(320px,1fr)!important;gap:56px!important;align-items:center!important;width:100%!important;max-width:1320px!important;min-height:0!important;margin:0 auto!important;padding:64px 28px!important;overflow:visible!important;background:#f4f7fb!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#17243a!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split::before,body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split::after{display:none!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-content{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;text-align:center!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split :is(.hero-small-title,.hero-brand){display:inline!important;font:600 12px/1.6 CBInter,Inter,system-ui,sans-serif!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#087f8c!important;margin:0!important;padding:0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-brand{margin-left:7px!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-brand :is(.hero-code,.hero-bhavya){font:inherit!important;color:#087f8c!important;background:none!important;-webkit-text-fill-color:currentColor!important;text-shadow:none!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split h1.cb-home-headline{font:700 clamp(32px,3.7vw,50px)/1.16 CBInter,Inter,system-ui,sans-serif!important;letter-spacing:-.045em!important;color:#0b1730!important;text-shadow:none!important;margin:26px 0!important;padding:0!important;max-width:none!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-description{font:400 18px/1.8 CBInter,Inter,system-ui,sans-serif!important;color:#536b86!important;margin:0 auto 26px!important;max-width:730px!important;padding:0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-buttons{display:flex!important;justify-content:center!important;gap:12px!important;flex-wrap:wrap!important;margin:24px 0 0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-buttons :is(a,button){font:600 14px/1.5 CBInter,Inter,system-ui,sans-serif!important;min-height:44px!important;border-radius:8px!important;padding:11px 16px!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-buttons .primary-button{background:#d4af37!important;color:#10243b!important;border:1px solid #d4af37!important;box-shadow:none!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-buttons .cb-guide-home-link{background:white!important;color:#145da0!important;border:1px solid #d8e3ef!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .codebhavya-install-button{background:white!important;color:#10243b!important;border:1px solid #d8e3ef!important;box-shadow:none!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace{position:relative!important;display:block!important;min-width:0!important;width:100%!important;max-width:none!important;height:auto!important;margin:0!important;padding:28px!important;overflow:hidden!important;background:white!important;border:1px solid #d8e3ef!important;border-radius:18px!important;box-shadow:0 12px 32px rgba(21,41,69,.04)!important;text-align:left!important;color:#17243a!important;font-family:CBInter,Inter,system-ui,sans-serif!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace::before{content:'';position:absolute;top:-42px;right:-42px;width:120px;height:120px;border-radius:50%;background:#e4f4f1;pointer-events:none}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace .cb-workspace-kicker{font:600 11px/1.5 CBInter,Inter,system-ui,sans-serif!important;color:#087f8c!important;letter-spacing:.12em!important;margin:0 0 20px!important;padding:0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace h2{font:600 23px/1.35 CBInter,Inter,system-ui,sans-serif!important;color:#17243a!important;margin:0 0 24px!important;padding:0!important;letter-spacing:-.02em!important;text-align:left!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace a{position:relative;display:flex!important;align-items:center!important;gap:15px!important;padding:16px!important;margin:12px 0 0!important;border:1px solid #d8e3ef!important;border-radius:10px!important;background:white!important;color:#17243a!important;text-decoration:none!important;box-shadow:none!important;min-width:0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace a:hover{background:#f4faf9!important;border-color:#8fc5c6!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace a>span{display:grid!important;place-items:center!important;flex:0 0 38px!important;width:38px!important;height:38px!important;border-radius:8px!important;background:#e8f5f4!important;color:#087f8c!important;font:400 13px/1 CBMono,monospace!important;margin:0!important;padding:0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace a>div{min-width:0}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace strong{display:block!important;font:600 15px/1.5 CBInter,Inter,system-ui,sans-serif!important;margin:0 0 4px!important;color:#17243a!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace small{display:block!important;font:400 13px/1.6 CBInter,Inter,system-ui,sans-serif!important;color:#536b86!important;margin:0!important}
+body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split :focus-visible{outline:3px solid #087f8c!important;outline-offset:4px!important}
+@media(max-width:900px){body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split{grid-template-columns:minmax(0,1fr)!important;gap:30px!important;padding:40px 20px!important}body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-content{max-width:730px!important;margin:auto!important}body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace{max-width:620px!important;margin:auto!important}}
+@media(max-width:520px){body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split{padding:32px 18px!important}body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .cb-home-workspace{padding:22px 18px!important}body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split h1.cb-home-headline{font-size:32px!important}body.cb-theme[data-cb-theme-layout=home] .hero.codebhavya-hero.cb-home-split .hero-description{font-size:17px!important}}
+
+</style>
 </head>
 
 
