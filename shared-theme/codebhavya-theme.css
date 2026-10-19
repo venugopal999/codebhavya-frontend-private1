@@ -1017,3 +1017,13 @@ body.cb-theme[data-cb-theme-layout=home] .top-header .cb-coming-soon small{paddi
 
 /* Gold labels on pale revision panels need the darker gold variant. */
 body.cb-theme .revision-controls>small,body.cb-theme .revision-content-head small{color:#806000!important}
+
+/* Lessons use the available viewport width; practice keeps its reading margins. */
+@media(min-width:821px){
+body.cb-theme[data-cb-theme-layout=course]:not([class*="practice"]) :is(.docs-layout,.os-layout,.cn-layout,.lesson-layout,.wt-index-layout,.wt-lesson-layout){width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;padding-left:24px!important;padding-right:24px!important}
+body.cb-theme[data-cb-theme-layout=program] .program-main,body.cb-theme[data-cb-theme-layout=lab] .lab-solution-main{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important}
+body.cb-theme[data-cb-theme-layout=program] .program-page-layout,body.cb-theme[data-cb-theme-layout=lab] .lab-solution-layout{width:100%!important;max-width:none!important}
+}
+/* Restore the original Maths practice container overwritten by the common reset. */
+body.cb-theme.math-practice-page .main-content{width:min(100%,1080px)!important;max-width:1080px!important;margin-left:auto!important;margin-right:auto!important;padding:38px!important}
+@media(max-width:900px){body.cb-theme.math-practice-page .main-content{padding:24px 18px!important}}
