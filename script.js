@@ -641,10 +641,36 @@ function searchTopics() {
         if (activeSection === "progress") {
             progress.setAttribute("aria-current", "page");
         }
-        const search = createElement("a", "cb-nav-link" + (activeSection === "search" ? " is-active" : ""), "Search");
-        search.href = siteUrl("search.html");
-        if (activeSection === "search") search.setAttribute("aria-current", "page");
-        links.append(search, placement, progress);
+        const search = createElement("form", "cb-header-search");
+        search.method = "get";
+        search.action = siteUrl("search.html");
+        search.setAttribute("role", "search");
+        search.setAttribute("aria-label", "Search CodeBhavya");
+        const searchInput = createElement("input", "cb-header-search-input");
+        searchInput.type = "search";
+        searchInput.name = "q";
+        searchInput.maxLength = 160;
+        searchInput.placeholder = "Find a topic…";
+        searchInput.setAttribute("aria-label", "Search topics, programs and labs");
+        const searchSubmit = createElement("button", "cb-header-search-submit");
+        searchSubmit.type = "submit";
+        searchSubmit.setAttribute("aria-label", "Submit search");
+        const searchIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        searchIcon.setAttribute("viewBox", "0 0 24 24");
+        searchIcon.setAttribute("aria-hidden", "true");
+        searchIcon.setAttribute("fill", "none");
+        searchIcon.setAttribute("stroke", "currentColor");
+        searchIcon.setAttribute("stroke-width", "2");
+        const searchCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        searchCircle.setAttribute("cx", "10.5");
+        searchCircle.setAttribute("cy", "10.5");
+        searchCircle.setAttribute("r", "6.5");
+        const searchHandle = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        searchHandle.setAttribute("d", "M16 16l5 5");
+        searchIcon.append(searchCircle, searchHandle);
+        searchSubmit.append(searchIcon);
+        search.append(searchInput, searchSubmit);
+        links.append(placement, progress, search);
 
         function closeDropdowns(except) {
             dropdowns.forEach(function (item) {
