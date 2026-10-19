@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 3: Forms &amp; Accessibility | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=3"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=3">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class="active " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">03</div><div><p class="eyebrow">WEB FOUNDATIONS</p><h1>Forms &amp; Accessibility</h1><p>Learn how websites collect user information correctly and inclusively. Build forms with semantic HTML, labels, input types, native validation, keyboard support, accessible descriptions, error handling and responsible ARIA usage.</p><div class="lesson-meta"><span>⏱ Estimated learning time: 3–4 hours</span><span>◈ Beginner → Intermediate</span><span>▣ 16 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Explain the purpose of the HTML form element and how form submission works.</p></article><article><b>02</b><p>Build forms using labels, inputs, buttons, textareas and select controls.</p></article><article><b>03</b><p>Choose appropriate input types for different kinds of user data.</p></article><article><b>04</b><p>Explain the difference between id, name, value, placeholder and autocomplete.</p></article><article><b>05</b><p>Use fieldset and legend to group related controls.</p></article><article><b>06</b><p>Use native HTML validation before reaching for JavaScript.</p></article><article><b>07</b><p>Explain required, minlength, maxlength, min, max and pattern.</p></article><article><b>08</b><p>Design forms that can be completed using only a keyboard.</p></article><article><b>09</b><p>Understand focus, focus order and visible focus indicators.</p></article><article><b>10</b><p>Create useful accessible error messages and descriptions.</p></article><article><b>11</b><p>Explain the purpose of aria-describedby and aria-invalid.</p></article><article><b>12</b><p>Understand when native HTML is better than custom ARIA widgets.</p></article><article><b>13</b><p>Distinguish navigation links from action buttons.</p></article><article><b>14</b><p>Audit a form for common accessibility and usability problems.</p></article><article><b>15</b><p>Connect accessible frontend forms to future React, Express and API workflows.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Why Forms Matter</h2></div></div><p class="concept-intro">Forms are the bridge between a user&#39;s intention and an application&#39;s data. Almost every serious web application eventually needs to collect information.</p><ul class="content-points"><li>Login pages collect credentials.</li><li>Registration pages collect account information.</li><li>Placement applications collect student and academic information.</li><li>Search forms collect queries.</li><li>Payment and checkout systems collect transaction information.</li><li>Admin dashboards collect updates and configuration data.</li><li>Feedback forms collect user responses.</li></ul><div class="explanation-list"><p>A form is not just a collection of text boxes. A good form communicates what information is required, how the user should provide it, what happens when something is wrong and what will happen after submission.</p><p>In Full Stack development, the browser is only the first validation boundary. The backend must validate submitted data again because client-side validation can be bypassed.</p><p>Accessibility is part of form quality. A form that looks beautiful but cannot be completed with a keyboard or understood by assistive technology is not a professionally complete form.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A professional form must be understandable, usable, validatable and accessible—not merely visually attractive.</p></div></div><div class="real-example"><strong>🌍 Placement Registration</strong><p>A college placement registration form might collect name, roll number, email, phone number, branch, CGPA, graduation year, skills and resume information.</p><ol><li>The student reads the field label.</li><li>The student enters a value.</li><li>The browser may perform native validation.</li><li>The form is submitted.</li><li>The server validates the data again.</li><li>The application stores or processes the information.</li></ol></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>The Form Element</h2></div></div><p class="concept-intro">The <code>&amp;lt;form&amp;gt;</code> element identifies a group of controls whose values can be submitted as a unit.</p><ul class="content-points"><li><code>action</code> identifies the submission destination.</li><li><code>method</code> controls the HTTP submission method.</li><li><code>name</code> gives a control its submitted field name.</li><li><code>button type=&quot;submit&quot;</code> triggers form submission.</li><li><code>button type=&quot;button&quot;</code> performs an ordinary action without submitting the form.</li><li>A form can contain multiple types of controls.</li></ul><div class="explanation-list"><p>The browser associates the label with the input because the label&#39;s <code>for</code> value matches the input&#39;s <code>id</code>.</p><p>The <code>name</code> is important because it identifies the field when form data is submitted.</p><p>The submit button tells the browser that the user wants to submit the form.</p></div><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Using an input with an id but no name is a common mistake. The control may still appear and work visually, but its value may not be included in the submitted form data.</p></div></div><div class="code-box premium-code-box"><header><span>BASIC FORM</span><button type="button" data-copy="&lt;form action=&quot;/register&quot; method=&quot;post&quot;&gt;
+    &lt;label for=&quot;studentName&quot;&gt;Student name&lt;/label&gt;
+    &lt;input
+        id=&quot;studentName&quot;
+        name=&quot;studentName&quot;
+        type=&quot;text&quot;
+        required
+    &gt;
+
+    &lt;button type=&quot;submit&quot;&gt;
+        Register
+    &lt;/button&gt;
+&lt;/form&gt;">Copy</button></header><pre><code>&lt;form action=&quot;/register&quot; method=&quot;post&quot;&gt;
+    &lt;label for=&quot;studentName&quot;&gt;Student name&lt;/label&gt;
+    &lt;input
+        id=&quot;studentName&quot;
+        name=&quot;studentName&quot;
+        type=&quot;text&quot;
+        required
+    &gt;
+
+    &lt;button type=&quot;submit&quot;&gt;
+        Register
+    &lt;/button&gt;
+&lt;/form&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Labels Are Not Optional Decoration</h2></div></div><p class="concept-intro">Every user-facing form control should have a clear accessible name. For ordinary form controls, the native <code>&amp;lt;label&amp;gt;</code> element is usually the best solution.</p><ul class="content-points"><li>The label tells users what the control represents.</li><li>Clicking an explicit label can move focus to the associated control.</li><li>Screen readers can use the label as the control&#39;s accessible name.</li><li>The label remains useful even when the placeholder disappears after typing.</li><li>A placeholder is not a replacement for a proper label.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A visible label and a programmatic relationship between label and control are two important parts of an accessible form.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;label for=&quot;email&quot;&gt;
+    College email
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;email&quot;
+    name=&quot;email&quot;
+    type=&quot;email&quot;
+&gt;">Copy</button></header><pre><code>&lt;label for=&quot;email&quot;&gt;
+    College email
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;email&quot;
+    name=&quot;email&quot;
+    type=&quot;email&quot;
+&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>id, name, value and placeholder</h2></div></div><p class="concept-intro">These attributes are often confused because they appear together in form examples, but they solve different problems.</p><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not use placeholder text as the only label. Users can forget what a field means after entering a value, and placeholder contrast can also be difficult to read.</p></div></div><div class="real-example"><strong>🌍 Student Profile</strong><p>A student profile form might use id=&quot;cgpa&quot; to connect the label, name=&quot;cgpa&quot; to identify submitted data and placeholder=&quot;e.g. 8.42&quot; as an optional example.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;label for=&quot;email&quot;&gt;
+    College email
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;email&quot;
+    name=&quot;email&quot;
+    type=&quot;email&quot;
+    placeholder=&quot;you@example.com&quot;
+&gt;">Copy</button></header><pre><code>&lt;label for=&quot;email&quot;&gt;
+    College email
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;email&quot;
+    name=&quot;email&quot;
+    type=&quot;email&quot;
+    placeholder=&quot;you@example.com&quot;
+&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Choosing the Correct Input Type</h2></div></div><p class="concept-intro">HTML provides many input types that communicate the expected data and allow browsers to provide useful native behaviour.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Choose the input type according to the meaning of the data, not merely according to how the control looks.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Radio Buttons, Checkboxes and Selects</h2></div></div><p class="concept-intro">Different controls communicate different selection models.</p><ul class="content-points"><li><strong>Radio buttons:</strong> choose one option from a related group.</li><li><strong>Checkboxes:</strong> choose zero, one or multiple independent options.</li><li><strong>Select:</strong> choose from a predefined list of options.</li><li><strong>Fieldset and legend:</strong> provide a semantic group and group name for related controls.</li></ul><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Radio buttons representing one choice must normally share the same name. Otherwise the browser treats them as separate groups.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;fieldset&gt;
+    &lt;legend&gt;Preferred learning mode&lt;/legend&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;radio&quot;
+            name=&quot;mode&quot;
+            value=&quot;online&quot;
+        &gt;
+        Online
+    &lt;/label&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;radio&quot;
+            name=&quot;mode&quot;
+            value=&quot;classroom&quot;
+        &gt;
+        Classroom
+    &lt;/label&gt;
+&lt;/fieldset&gt;
+
+&lt;fieldset&gt;
+    &lt;legend&gt;Skills&lt;/legend&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;checkbox&quot;
+            name=&quot;skills&quot;
+            value=&quot;html&quot;
+        &gt;
+        HTML
+    &lt;/label&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;checkbox&quot;
+            name=&quot;skills&quot;
+            value=&quot;javascript&quot;
+        &gt;
+        JavaScript
+    &lt;/label&gt;
+&lt;/fieldset&gt;">Copy</button></header><pre><code>&lt;fieldset&gt;
+    &lt;legend&gt;Preferred learning mode&lt;/legend&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;radio&quot;
+            name=&quot;mode&quot;
+            value=&quot;online&quot;
+        &gt;
+        Online
+    &lt;/label&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;radio&quot;
+            name=&quot;mode&quot;
+            value=&quot;classroom&quot;
+        &gt;
+        Classroom
+    &lt;/label&gt;
+&lt;/fieldset&gt;
+
+&lt;fieldset&gt;
+    &lt;legend&gt;Skills&lt;/legend&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;checkbox&quot;
+            name=&quot;skills&quot;
+            value=&quot;html&quot;
+        &gt;
+        HTML
+    &lt;/label&gt;
+
+    &lt;label&gt;
+        &lt;input
+            type=&quot;checkbox&quot;
+            name=&quot;skills&quot;
+            value=&quot;javascript&quot;
+        &gt;
+        JavaScript
+    &lt;/label&gt;
+&lt;/fieldset&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Textarea, Select and Button</h2></div></div><p class="concept-intro">Not every piece of information should be collected through a single-line text input.</p><ul class="content-points"><li>Use <code>select</code> when the available choices are known and relatively small.</li><li>Use <code>textarea</code> for multi-line input.</li><li>Use <code>button</code> for actions.</li><li>Use an anchor when the user is navigating to another resource.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;label for=&quot;branch&quot;&gt;
+    Branch
+&lt;/label&gt;
+
+&lt;select
+    id=&quot;branch&quot;
+    name=&quot;branch&quot;
+    required
+&gt;
+    &lt;option value=&quot;&quot;&gt;
+        Select your branch
+    &lt;/option&gt;
+    &lt;option value=&quot;cse&quot;&gt;
+        CSE
+    &lt;/option&gt;
+    &lt;option value=&quot;aiml&quot;&gt;
+        CSE-AI &amp; ML
+    &lt;/option&gt;
+&lt;/select&gt;
+
+&lt;label for=&quot;message&quot;&gt;
+    Career goal
+&lt;/label&gt;
+
+&lt;textarea
+    id=&quot;message&quot;
+    name=&quot;message&quot;
+    rows=&quot;5&quot;
+&gt;&lt;/textarea&gt;
+
+&lt;button type=&quot;submit&quot;&gt;
+    Submit profile
+&lt;/button&gt;">Copy</button></header><pre><code>&lt;label for=&quot;branch&quot;&gt;
+    Branch
+&lt;/label&gt;
+
+&lt;select
+    id=&quot;branch&quot;
+    name=&quot;branch&quot;
+    required
+&gt;
+    &lt;option value=&quot;&quot;&gt;
+        Select your branch
+    &lt;/option&gt;
+    &lt;option value=&quot;cse&quot;&gt;
+        CSE
+    &lt;/option&gt;
+    &lt;option value=&quot;aiml&quot;&gt;
+        CSE-AI &amp; ML
+    &lt;/option&gt;
+&lt;/select&gt;
+
+&lt;label for=&quot;message&quot;&gt;
+    Career goal
+&lt;/label&gt;
+
+&lt;textarea
+    id=&quot;message&quot;
+    name=&quot;message&quot;
+    rows=&quot;5&quot;
+&gt;&lt;/textarea&gt;
+
+&lt;button type=&quot;submit&quot;&gt;
+    Submit profile
+&lt;/button&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Native HTML Validation</h2></div></div><p class="concept-intro">Browsers can perform useful validation before JavaScript or a backend receives the form.</p><ul class="content-points"><li><code>required</code> prevents empty submission.</li><li><code>type=&quot;email&quot;</code> provides email-oriented validation.</li><li><code>min</code> and <code>max</code> define numeric boundaries.</li><li><code>minlength</code> and <code>maxlength</code> constrain text length.</li><li><code>pattern</code> applies a regular-expression constraint.</li><li><code>step</code> controls valid numeric increments.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Native validation is the first useful layer. It improves user feedback, but it never replaces server-side validation.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;form&gt;
+    &lt;label for=&quot;email&quot;&gt;
+        College email
+    &lt;/label&gt;
+
+    &lt;input
+        id=&quot;email&quot;
+        name=&quot;email&quot;
+        type=&quot;email&quot;
+        required
+    &gt;
+
+    &lt;label for=&quot;cgpa&quot;&gt;
+        CGPA
+    &lt;/label&gt;
+
+    &lt;input
+        id=&quot;cgpa&quot;
+        name=&quot;cgpa&quot;
+        type=&quot;number&quot;
+        min=&quot;0&quot;
+        max=&quot;10&quot;
+        step=&quot;0.01&quot;
+        required
+    &gt;
+
+    &lt;button type=&quot;submit&quot;&gt;
+        Continue
+    &lt;/button&gt;
+&lt;/form&gt;">Copy</button></header><pre><code>&lt;form&gt;
+    &lt;label for=&quot;email&quot;&gt;
+        College email
+    &lt;/label&gt;
+
+    &lt;input
+        id=&quot;email&quot;
+        name=&quot;email&quot;
+        type=&quot;email&quot;
+        required
+    &gt;
+
+    &lt;label for=&quot;cgpa&quot;&gt;
+        CGPA
+    &lt;/label&gt;
+
+    &lt;input
+        id=&quot;cgpa&quot;
+        name=&quot;cgpa&quot;
+        type=&quot;number&quot;
+        min=&quot;0&quot;
+        max=&quot;10&quot;
+        step=&quot;0.01&quot;
+        required
+    &gt;
+
+    &lt;button type=&quot;submit&quot;&gt;
+        Continue
+    &lt;/button&gt;
+&lt;/form&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>The Difference Between Client and Server Validation</h2></div></div><p class="concept-intro">A browser can help a user enter valid information, but the server must still treat incoming data as untrusted.</p><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Never trust client-side validation as a security boundary. A user can disable JavaScript, modify requests or call your API directly.</p></div></div><div class="real-example"><strong>🌍 CGPA Validation</strong><p>The browser can require a number between 0 and 10. The backend should independently verify that the submitted value is numeric and within the allowed range before storing it.</p></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>User enters data</strong><span>The user fills the form.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Browser validation</strong><span>Native constraints can catch obvious problems.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Form submission</strong><span>The browser sends data to the server.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Server validation</strong><span>The backend validates the data again.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Business rules</strong><span>The application checks permissions and domain rules.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Database</strong><span>Only acceptable data is stored.</span></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>Autocomplete and Better User Experience</h2></div></div><p class="concept-intro">The browser can help users fill common information by using the autocomplete attribute.</p><ul class="content-points"><li>Autocomplete can reduce repetitive typing.</li><li>Meaningful autocomplete values help browsers understand fields.</li><li>Autocomplete is especially useful for names, email addresses, telephone numbers and addresses.</li><li>Good form design respects the user&#39;s time as well as their accessibility needs.</li></ul><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Disabling autocomplete without a strong reason can make forms slower and less convenient.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;label for=&quot;name&quot;&gt;
+    Full name
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;name&quot;
+    name=&quot;name&quot;
+    type=&quot;text&quot;
+    autocomplete=&quot;name&quot;
+&gt;
+
+&lt;label for=&quot;email&quot;&gt;
+    Email
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;email&quot;
+    name=&quot;email&quot;
+    type=&quot;email&quot;
+    autocomplete=&quot;email&quot;
+&gt;">Copy</button></header><pre><code>&lt;label for=&quot;name&quot;&gt;
+    Full name
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;name&quot;
+    name=&quot;name&quot;
+    type=&quot;text&quot;
+    autocomplete=&quot;name&quot;
+&gt;
+
+&lt;label for=&quot;email&quot;&gt;
+    Email
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;email&quot;
+    name=&quot;email&quot;
+    type=&quot;email&quot;
+    autocomplete=&quot;email&quot;
+&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Keyboard Accessibility</h2></div></div><p class="concept-intro">A user should be able to operate a form without relying on a mouse.</p><ul class="content-points"><li>Use the Tab key to move through focusable controls.</li><li>Use Shift + Tab to move backwards.</li><li>Use Enter to submit forms when appropriate.</li><li>Use Space or arrow keys where native controls provide those interactions.</li><li>Do not remove the browser&#39;s visible focus indicator without replacing it with an equally clear indicator.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>If a form works with a mouse but becomes confusing or impossible with the keyboard, it is not fully accessible.</p></div></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Keyboard focus enters the form</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Name field receives focus</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Email field receives focus</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Branch selector receives focus</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Submit button receives focus</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>User submits the form</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>Focus Order and Focus Visibility</h2></div></div><p class="concept-intro">Focus tells keyboard users where they are. The order should follow a logical reading and interaction sequence.</p><ul class="content-points"><li>Avoid positive tabindex values such as <code>tabindex=&quot;5&quot;</code> to manually force order.</li><li>Prefer natural DOM order.</li><li>Use <code>tabindex=&quot;0&quot;</code> only when a custom focusable element genuinely needs to participate in normal tab order.</li><li>Use visible focus styles.</li><li>Do not make interactive elements disappear from keyboard navigation accidentally.</li></ul><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Never use outline: none without providing another obvious focus indicator.</p></div></div><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Moving focus around with arbitrary tabindex values can create an order that is difficult to predict and maintain.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #63d2da;
+    outline-offset: 3px;
+}">Copy</button></header><pre><code>button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #63d2da;
+    outline-offset: 3px;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Accessible Descriptions and Error Messages</h2></div></div><p class="concept-intro">A field may need more information than its visible label provides. Descriptions and errors should be programmatically associated with the relevant control.</p><ul class="content-points"><li><code>aria-describedby</code> can associate additional explanatory text with a control.</li><li><code>aria-invalid=&quot;true&quot;</code> can communicate that the current value is invalid.</li><li>Error messages should explain what went wrong and, when useful, how to fix it.</li><li>Do not rely only on red colour to communicate errors.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Accessible errors answer two questions: What is wrong? What should I do next?</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;label for=&quot;password&quot;&gt;
+    Password
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;password&quot;
+    name=&quot;password&quot;
+    type=&quot;password&quot;
+    aria-describedby=&quot;passwordHelp&quot;
+    aria-invalid=&quot;true&quot;
+&gt;
+
+&lt;p id=&quot;passwordHelp&quot;&gt;
+    Use at least 8 characters.
+&lt;/p&gt;
+
+&lt;p id=&quot;passwordError&quot;&gt;
+    Password must contain at least 8 characters.
+&lt;/p&gt;">Copy</button></header><pre><code>&lt;label for=&quot;password&quot;&gt;
+    Password
+&lt;/label&gt;
+
+&lt;input
+    id=&quot;password&quot;
+    name=&quot;password&quot;
+    type=&quot;password&quot;
+    aria-describedby=&quot;passwordHelp&quot;
+    aria-invalid=&quot;true&quot;
+&gt;
+
+&lt;p id=&quot;passwordHelp&quot;&gt;
+    Use at least 8 characters.
+&lt;/p&gt;
+
+&lt;p id=&quot;passwordError&quot;&gt;
+    Password must contain at least 8 characters.
+&lt;/p&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>ARIA — Use It Carefully</h2></div></div><p class="concept-intro">ARIA adds accessibility semantics to interfaces, but it should not be the first tool you reach for when native HTML already provides the correct behaviour.</p><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>ARIA does not automatically create keyboard behaviour, focus management or browser behaviour. A div with role=&quot;button&quot; is not automatically equivalent to a native button.</p></div></div><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Adding ARIA everywhere can make markup more complicated without improving accessibility. Start with correct native HTML.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>A Complete Accessible Student Form</h2></div></div><p class="concept-intro">Now combine the concepts into a realistic CodeBhavya-style student profile form.</p><ul class="content-points"><li>Every important control has a label.</li><li>Related choices are grouped semantically.</li><li>The browser can perform useful validation.</li><li>The form remains meaningful without CSS.</li><li>The structure can later be connected to a React frontend and Express API.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good Full Stack forms begin with strong HTML. Frameworks should enhance the foundation, not hide or replace it.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;form action=&quot;/students&quot; method=&quot;post&quot;&gt;
+
+    &lt;fieldset&gt;
+        &lt;legend&gt;Student profile&lt;/legend&gt;
+
+        &lt;label for=&quot;studentName&quot;&gt;
+            Full name
+        &lt;/label&gt;
+        &lt;input
+            id=&quot;studentName&quot;
+            name=&quot;studentName&quot;
+            type=&quot;text&quot;
+            autocomplete=&quot;name&quot;
+            required
+        &gt;
+
+        &lt;label for=&quot;email&quot;&gt;
+            College email
+        &lt;/label&gt;
+        &lt;input
+            id=&quot;email&quot;
+            name=&quot;email&quot;
+            type=&quot;email&quot;
+            autocomplete=&quot;email&quot;
+            required
+        &gt;
+
+        &lt;label for=&quot;cgpa&quot;&gt;
+            CGPA
+        &lt;/label&gt;
+        &lt;input
+            id=&quot;cgpa&quot;
+            name=&quot;cgpa&quot;
+            type=&quot;number&quot;
+            min=&quot;0&quot;
+            max=&quot;10&quot;
+            step=&quot;0.01&quot;
+            required
+        &gt;
+
+        &lt;label for=&quot;branch&quot;&gt;
+            Branch
+        &lt;/label&gt;
+        &lt;select
+            id=&quot;branch&quot;
+            name=&quot;branch&quot;
+            required
+        &gt;
+            &lt;option value=&quot;&quot;&gt;
+                Select branch
+            &lt;/option&gt;
+            &lt;option value=&quot;cse&quot;&gt;
+                CSE
+            &lt;/option&gt;
+            &lt;option value=&quot;aiml&quot;&gt;
+                CSE-AI &amp; ML
+            &lt;/option&gt;
+        &lt;/select&gt;
+
+        &lt;fieldset&gt;
+            &lt;legend&gt;Preferred track&lt;/legend&gt;
+
+            &lt;label&gt;
+                &lt;input
+                    type=&quot;radio&quot;
+                    name=&quot;track&quot;
+                    value=&quot;development&quot;
+                    required
+                &gt;
+                Web Development
+            &lt;/label&gt;
+
+            &lt;label&gt;
+                &lt;input
+                    type=&quot;radio&quot;
+                    name=&quot;track&quot;
+                    value=&quot;data&quot;
+                &gt;
+                Data &amp; AI
+            &lt;/label&gt;
+        &lt;/fieldset&gt;
+
+        &lt;label for=&quot;goal&quot;&gt;
+            Career goal
+        &lt;/label&gt;
+        &lt;textarea
+            id=&quot;goal&quot;
+            name=&quot;goal&quot;
+            rows=&quot;5&quot;
+            minlength=&quot;20&quot;
+            maxlength=&quot;500&quot;
+        &gt;&lt;/textarea&gt;
+
+        &lt;button type=&quot;submit&quot;&gt;
+            Save student profile
+        &lt;/button&gt;
+    &lt;/fieldset&gt;
+
+&lt;/form&gt;">Copy</button></header><pre><code>&lt;form action=&quot;/students&quot; method=&quot;post&quot;&gt;
+
+    &lt;fieldset&gt;
+        &lt;legend&gt;Student profile&lt;/legend&gt;
+
+        &lt;label for=&quot;studentName&quot;&gt;
+            Full name
+        &lt;/label&gt;
+        &lt;input
+            id=&quot;studentName&quot;
+            name=&quot;studentName&quot;
+            type=&quot;text&quot;
+            autocomplete=&quot;name&quot;
+            required
+        &gt;
+
+        &lt;label for=&quot;email&quot;&gt;
+            College email
+        &lt;/label&gt;
+        &lt;input
+            id=&quot;email&quot;
+            name=&quot;email&quot;
+            type=&quot;email&quot;
+            autocomplete=&quot;email&quot;
+            required
+        &gt;
+
+        &lt;label for=&quot;cgpa&quot;&gt;
+            CGPA
+        &lt;/label&gt;
+        &lt;input
+            id=&quot;cgpa&quot;
+            name=&quot;cgpa&quot;
+            type=&quot;number&quot;
+            min=&quot;0&quot;
+            max=&quot;10&quot;
+            step=&quot;0.01&quot;
+            required
+        &gt;
+
+        &lt;label for=&quot;branch&quot;&gt;
+            Branch
+        &lt;/label&gt;
+        &lt;select
+            id=&quot;branch&quot;
+            name=&quot;branch&quot;
+            required
+        &gt;
+            &lt;option value=&quot;&quot;&gt;
+                Select branch
+            &lt;/option&gt;
+            &lt;option value=&quot;cse&quot;&gt;
+                CSE
+            &lt;/option&gt;
+            &lt;option value=&quot;aiml&quot;&gt;
+                CSE-AI &amp; ML
+            &lt;/option&gt;
+        &lt;/select&gt;
+
+        &lt;fieldset&gt;
+            &lt;legend&gt;Preferred track&lt;/legend&gt;
+
+            &lt;label&gt;
+                &lt;input
+                    type=&quot;radio&quot;
+                    name=&quot;track&quot;
+                    value=&quot;development&quot;
+                    required
+                &gt;
+                Web Development
+            &lt;/label&gt;
+
+            &lt;label&gt;
+                &lt;input
+                    type=&quot;radio&quot;
+                    name=&quot;track&quot;
+                    value=&quot;data&quot;
+                &gt;
+                Data &amp; AI
+            &lt;/label&gt;
+        &lt;/fieldset&gt;
+
+        &lt;label for=&quot;goal&quot;&gt;
+            Career goal
+        &lt;/label&gt;
+        &lt;textarea
+            id=&quot;goal&quot;
+            name=&quot;goal&quot;
+            rows=&quot;5&quot;
+            minlength=&quot;20&quot;
+            maxlength=&quot;500&quot;
+        &gt;&lt;/textarea&gt;
+
+        &lt;button type=&quot;submit&quot;&gt;
+            Save student profile
+        &lt;/button&gt;
+    &lt;/fieldset&gt;
+
+&lt;/form&gt;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>From HTML Form to MERN Application</h2></div></div><p class="concept-intro">The same form concepts continue into React, Express and MongoDB.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Accessibility starts in HTML and continues through every layer of the application.</p></div></div><div class="real-example"><strong>🌍 Placement Management System</strong><p>A student may fill a placement profile in React. The browser and React validate the interface, Express validates the API request, business rules check eligibility, and MongoDB stores the approved record.</p></div><div class="architecture-flow"><article><span>01</span><h3>Browser Form</h3><ul><li>Labels and controls</li><li>Client-side constraints</li><li>User interaction</li></ul></article><article><span>02</span><h3>React UI</h3><ul><li>Controlled inputs</li><li>Component state</li><li>Client-side feedback</li></ul></article><article><span>03</span><h3>Express API</h3><ul><li>Request parsing</li><li>Validation</li><li>Authentication and authorization</li></ul></article><article><span>04</span><h3>Database</h3><ul><li>Validated records</li><li>Schema constraints</li><li>Persistent application data</li></ul></article></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Form</strong><p>A semantic container for controls whose values can be submitted together.</p></div></article><article><b>02</b><div><strong>Label</strong><p>The semantic name of a form control.</p></div></article><article><b>03</b><div><strong>id</strong><p>Uniquely identifies an element and can connect it to a label.</p></div></article><article><b>04</b><div><strong>name</strong><p>Identifies a submitted form field.</p></div></article><article><b>05</b><div><strong>required</strong><p>A native constraint that prevents an empty value from satisfying the control.</p></div></article><article><b>06</b><div><strong>fieldset</strong><p>Groups related form controls.</p></div></article><article><b>07</b><div><strong>legend</strong><p>Provides the name or explanation for a fieldset.</p></div></article><article><b>08</b><div><strong>Focus</strong><p>The current interactive location for keyboard interaction.</p></div></article><article><b>09</b><div><strong>aria-describedby</strong><p>Associates additional descriptive content with a control.</p></div></article><article><b>10</b><div><strong>aria-invalid</strong><p>Communicates that the current value is invalid when appropriate.</p></div></article><article><b>11</b><div><strong>Native control</strong><p>A built-in browser control that already provides semantics and interaction behaviour.</p></div></article><article><b>12</b><div><strong>Server validation</strong><p>Independent validation performed by the backend before trusting submitted data.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>Why should every important form control have a label?</summary><div class="interview-answer"><p>A label communicates the purpose of the control and provides an accessible name. An explicit label can also move focus to its associated control when activated.</p></div></details><details class="interview-item"><summary><span>02</span>Why is placeholder text not a replacement for a label?</summary><div class="interview-answer"><p>Placeholder text disappears when the user enters a value and is intended as a hint rather than the control&#39;s primary name.</p></div></details><details class="interview-item"><summary><span>03</span>What is the difference between id and name in a form?</summary><div class="interview-answer"><p><code>id</code> identifies an element in the document and can connect a label to it. <code>name</code> identifies the field when form data is submitted.</p></div></details><details class="interview-item"><summary><span>04</span>Why should radio buttons share the same name?</summary><div class="interview-answer"><p>Radio buttons with the same name form one logical selection group, allowing the user to choose one option from that group.</p></div></details><details class="interview-item"><summary><span>05</span>Why is client-side validation not enough?</summary><div class="interview-answer"><p>Client-side validation can be bypassed or modified. The server must independently validate incoming data before using or storing it.</p></div></details><details class="interview-item"><summary><span>06</span>What is the difference between a button and an anchor?</summary><div class="interview-answer"><p>An anchor normally represents navigation to a URL or resource. A button normally performs an action such as submitting a form, opening a menu or triggering JavaScript.</p></div></details><details class="interview-item"><summary><span>07</span>What does aria-describedby do?</summary><div class="interview-answer"><p>It associates additional descriptive text with a control so that assistive technology can expose that information along with the control.</p></div></details><details class="interview-item"><summary><span>08</span>Why is a native button usually better than div role=&quot;button&quot;?</summary><div class="interview-answer"><p>A native button already provides semantics, keyboard interaction and browser behaviour. A custom role does not automatically reproduce all of that behaviour.</p></div></details><details class="interview-item"><summary><span>09</span>What is a visible focus indicator?</summary><div class="interview-answer"><p>It is a visual indication showing which interactive element currently has keyboard focus.</p></div></details><details class="interview-item"><summary><span>10</span>What is the purpose of fieldset and legend?</summary><div class="interview-answer"><p><code>fieldset</code> groups related controls and <code>legend</code> provides the group&#39;s semantic name or explanation.</p></div></details><details class="interview-item"><summary><span>11</span>Should the backend trust required or pattern validation from HTML?</summary><div class="interview-answer"><p>No. HTML validation improves the user experience, but backend validation is still required because requests can be sent without using the browser interface.</p></div></details><details class="interview-item"><summary><span>12</span>Why should positive tabindex values generally be avoided?</summary><div class="interview-answer"><p>They can create a custom focus order that becomes difficult to understand and maintain. Natural DOM order is usually more predictable.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Easy</b></header><h3>Build a Student Registration Form</h3><p>Create a registration form containing full name, email, password, branch and a submit button. Use explicit labels and meaningful name attributes.</p><details><summary>Need a hint?</summary><ul><li>Connect each label using for and id.</li><li>Use type=&quot;email&quot; for the email field.</li><li>Use type=&quot;password&quot; for the password.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Easy</b></header><h3>Repair the Missing Label</h3><p>You receive an input with placeholder=&quot;Enter email&quot; but no label. Refactor it so the field has a proper accessible name.</p><details><summary>Need a hint?</summary><ul><li>Create a visible label.</li><li>Give the input an id.</li><li>Match the label&#39;s for attribute to the input id.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Easy</b></header><h3>CGPA Validator</h3><p>Create a CGPA field that accepts values from 0 to 10 with up to two decimal places.</p><details><summary>Need a hint?</summary><ul><li>Use type=&quot;number&quot;.</li><li>Use min and max.</li><li>Use step=&quot;0.01&quot;.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Easy</b></header><h3>Radio Group Repair</h3><p>Build a preferred-learning-mode group containing Online, Classroom and Hybrid. Only one option should be selectable.</p><details><summary>Need a hint?</summary><ul><li>Use radio inputs.</li><li>Give all three inputs the same name.</li><li>Use fieldset and legend.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Medium</b></header><h3>Accessible Feedback Form</h3><p>Create a feedback form with rating, subject and multi-line comments. Group the rating choices semantically.</p><details><summary>Need a hint?</summary><ul><li>Use radio buttons for one rating.</li><li>Use textarea for comments.</li><li>Give the rating group a legend.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Medium</b></header><h3>Keyboard-Only Audit</h3><p>Build a form and test it without a mouse. Record the focus order from the first field to the submit button.</p><details><summary>Need a hint?</summary><ul><li>Use the Tab key.</li><li>Check whether the order follows the visual reading order.</li><li>Make sure focus remains visible.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Medium</b></header><h3>Accessible Error Message</h3><p>Design a password field with help text explaining the minimum length and an error message for an invalid value.</p><details><summary>Need a hint?</summary><ul><li>Use aria-describedby.</li><li>Use aria-invalid when the field is invalid.</li><li>Explain how the user can fix the problem.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Medium</b></header><h3>Placement Application Form</h3><p>Build a placement form containing name, email, CGPA, graduation year, branch, skills and resume information.</p><details><summary>Need a hint?</summary><ul><li>Use appropriate input types.</li><li>Use fieldset for related choices.</li><li>Use native constraints wherever appropriate.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Medium</b></header><h3>Link or Button?</h3><p>Choose the correct HTML element for these actions: Open Level 3, Submit Form, Copy Code, Visit GitHub and Open Menu.</p><details><summary>Need a hint?</summary><ul><li>Navigation normally uses an anchor.</li><li>Actions normally use buttons.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Hard</b></header><h3>Form Accessibility Audit</h3><p>Audit a form containing missing labels, placeholder-only instructions, poor focus order, colour-only errors and div-based buttons. List every issue and propose a semantic correction.</p><details><summary>Need a hint?</summary><ul><li>Inspect semantics first.</li><li>Then inspect keyboard interaction.</li><li>Then inspect validation and error communication.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Hard</b></header><h3>Client vs Server Validation</h3><p>For a student registration API, list which validation should happen in the browser and which validation must happen again on the server.</p><details><summary>Need a hint?</summary><ul><li>Browser validation improves immediate feedback.</li><li>Server validation is the trust boundary.</li><li>Business rules belong to application logic.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span><b>Placement</b></header><h3>Build Without CSS</h3><p>Create a complete student profile form using HTML only. Disable CSS and verify whether the form remains understandable, keyboard usable and logically ordered.</p><details><summary>Need a hint?</summary><ul><li>Check labels.</li><li>Check heading and grouping structure.</li><li>Check keyboard focus order.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is the primary purpose of the form element?</h3><div class="quiz-options"><button type="button" data-option="0">A. To create CSS layouts</button><button type="button" data-option="1">B. To group controls for user input and submission</button><button type="button" data-option="2">C. To create database tables</button><button type="button" data-option="3">D. To execute JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which attribute connects an explicit label to a form control?</h3><div class="quiz-options"><button type="button" data-option="0">A. name</button><button type="button" data-option="1">B. value</button><button type="button" data-option="2">C. for</button><button type="button" data-option="3">D. placeholder</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which attribute identifies a submitted form field?</h3><div class="quiz-options"><button type="button" data-option="0">A. name</button><button type="button" data-option="1">B. style</button><button type="button" data-option="2">C. class</button><button type="button" data-option="3">D. title</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Why should placeholder text not be the only label?</h3><div class="quiz-options"><button type="button" data-option="0">A. It prevents CSS</button><button type="button" data-option="1">B. It disappears when the user enters a value</button><button type="button" data-option="2">C. It creates a database</button><button type="button" data-option="3">D. It disables JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Which input type is most appropriate for an email address?</h3><div class="quiz-options"><button type="button" data-option="0">A. text</button><button type="button" data-option="1">B. email</button><button type="button" data-option="2">C. number</button><button type="button" data-option="3">D. search</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which control normally allows one choice from a group?</h3><div class="quiz-options"><button type="button" data-option="0">A. Checkbox</button><button type="button" data-option="1">B. Radio button</button><button type="button" data-option="2">C. Textarea</button><button type="button" data-option="3">D. File input</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>What is the purpose of fieldset?</h3><div class="quiz-options"><button type="button" data-option="0">A. To create a database</button><button type="button" data-option="1">B. To group related form controls</button><button type="button" data-option="2">C. To submit JSON</button><button type="button" data-option="3">D. To hide labels</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What does required provide?</h3><div class="quiz-options"><button type="button" data-option="0">A. A native validation constraint</button><button type="button" data-option="1">B. A server connection</button><button type="button" data-option="2">C. A CSS class</button><button type="button" data-option="3">D. A database index</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Which attribute can provide additional descriptive text to a control?</h3><div class="quiz-options"><button type="button" data-option="0">A. aria-describedby</button><button type="button" data-option="1">B. aria-hidden</button><button type="button" data-option="2">C. tabindex</button><button type="button" data-option="3">D. autocomplete</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What does aria-invalid communicate?</h3><div class="quiz-options"><button type="button" data-option="0">A. That the page has no CSS</button><button type="button" data-option="1">B. That a current value is invalid</button><button type="button" data-option="2">C. That a field is hidden</button><button type="button" data-option="3">D. That a form is submitted</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Which is normally preferred for navigation?</h3><div class="quiz-options"><button type="button" data-option="0">A. div</button><button type="button" data-option="1">B. button without action</button><button type="button" data-option="2">C. a with href</button><button type="button" data-option="3">D. span</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Which is normally preferred for submitting a form?</h3><div class="quiz-options"><button type="button" data-option="0">A. button type=&quot;submit&quot;</button><button type="button" data-option="1">B. div</button><button type="button" data-option="2">C. span</button><button type="button" data-option="3">D. h3</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>Why is server-side validation necessary?</h3><div class="quiz-options"><button type="button" data-option="0">A. Browsers cannot display forms</button><button type="button" data-option="1">B. Client-side validation can be bypassed</button><button type="button" data-option="2">C. CSS cannot validate forms</button><button type="button" data-option="3">D. HTML cannot contain inputs</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>What should usually determine keyboard focus order?</h3><div class="quiz-options"><button type="button" data-option="0">A. Random tabindex values</button><button type="button" data-option="1">B. Natural DOM order</button><button type="button" data-option="2">C. Font size</button><button type="button" data-option="3">D. CSS colour</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>Which is usually preferable to div role=&quot;button&quot;?</h3><div class="quiz-options"><button type="button" data-option="0">A. Clickable paragraph</button><button type="button" data-option="1">B. Native button</button><button type="button" data-option="2">C. Clickable heading</button><button type="button" data-option="3">D. Styled span</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Form</strong><p></p></article><article><strong>Form control</strong><p></p></article><article><strong>Label</strong><p></p></article><article><strong>Fieldset</strong><p></p></article><article><strong>Legend</strong><p></p></article><article><strong>Constraint validation</strong><p></p></article><article><strong>Focus</strong><p></p></article><article><strong>Focus order</strong><p></p></article><article><strong>ARIA</strong><p></p></article><article><strong>Accessible name</strong><p></p></article><article><strong>aria-describedby</strong><p></p></article><article><strong>aria-invalid</strong><p></p></article><article><strong>Client-side validation</strong><p></p></article><article><strong>Server-side validation</strong><p></p></article><article><strong>Native control</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>You can now build forms people can actually use.</h2><p>You now understand how semantic form controls, labels, validation, keyboard interaction and accessibility work together. These principles will continue into React forms, API validation and production MERN applications.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 3 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=2">← Previous level</a><a href="lesson.html?level=4">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

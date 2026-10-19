@@ -1,0 +1,1056 @@
+/* =========================================================
+   CODEBHAVYA COMMON CSS
+   Shared Header + Navigation + Footer
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+html {
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#codebhavya-header-container,
+#codebhavya-footer-container {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* Remove unwanted spacing immediately after header */
+#codebhavya-header-container + * {
+    margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   CODEBHAVYA HEADER
+   ========================================================= */
+
+.site-header.cb-site-header {
+    box-sizing: border-box;
+
+    width: 100%;
+    min-height: 90px;
+
+    margin: 0 !important;
+    padding: 0 clamp(24px, 2.6vw, 48px);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #06192c;
+    border-bottom: 2px solid #e2b92f;
+
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.cb-brand {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 18px;
+
+    text-decoration: none;
+
+    flex-shrink: 0;
+}
+
+.cb-brand-logo {
+    width: 72px;
+    height: 72px;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+.cb-brand-name {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(1.72rem, 2vw, 2.2rem);
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    color: #c8def5;
+
+    white-space: nowrap;
+}
+
+.cb-brand-name span {
+    color: #efc63b;
+}
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.cb-desktop-nav {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 5px;
+
+    margin-left: auto;
+}
+
+
+/* Normal navigation links */
+
+.cb-nav-link,
+.cb-progress-link {
+    min-height: 52px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.cb-nav-link {
+    color: #e4edf7;
+}
+
+.cb-nav-link:hover,
+.cb-nav-link:focus-visible {
+    background: #0c2944;
+    color: #ffffff;
+}
+
+
+/* Active link */
+
+.cb-nav-link.is-active {
+    color: #ffffff;
+
+    background: #0c2944;
+}
+
+
+/* My Progress */
+
+.cb-progress-link {
+    margin-left: 4px;
+
+    color: #ffffff;
+
+    background: #1769df;
+}
+
+.cb-progress-link:hover,
+.cb-progress-link:focus-visible {
+    background: #0f58c4;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   LEARN / PRACTICE DROPDOWN WRAPPER
+   ========================================================= */
+
+.cb-nav-dropdown {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   DROPDOWN BUTTON
+   ========================================================= */
+
+.cb-dropdown-trigger {
+    position: relative;
+
+    min-height: 52px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #e4edf7;
+
+    font: inherit;
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+
+/* CodeBhavya dark hover */
+
+.cb-dropdown-trigger:hover,
+.cb-dropdown-trigger:focus-visible,
+.cb-nav-dropdown:hover .cb-dropdown-trigger {
+    background: #0c2944;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   DROPDOWN ARROW
+   ========================================================= */
+
+.cb-dropdown-arrow {
+    width: 18px;
+    height: 18px;
+
+    margin-left: 5px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #efc63b;
+
+    font-size: 1.05rem;
+
+    font-weight: 900;
+
+    line-height: 1;
+
+    transition: transform 0.18s ease;
+}
+
+
+/* Rotate arrow on hover */
+
+.cb-nav-dropdown:hover .cb-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   MEGA MENU
+   ========================================================= */
+
+.cb-mega-panel {
+    position: absolute;
+
+    top: 100%;
+    left: 50%;
+
+    z-index: 10050;
+
+    display: grid;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    background: #081d32;
+
+    border: 1px solid #31597d;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.35);
+
+    transform: translateX(-50%);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.12s ease,
+        visibility 0.12s ease;
+}
+
+
+/* =========================================================
+   PURE HOVER OPEN
+   ========================================================= */
+
+/*
+   The menu opens automatically when the mouse is anywhere
+   inside the complete Learn / Practice dropdown wrapper.
+
+   NO CLICK REQUIRED.
+*/
+
+@media (min-width: 1121px) {
+
+    .cb-nav-dropdown:hover .cb-mega-panel {
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+    }
+}
+
+
+/* =========================================================
+   HOVER BRIDGE
+   ========================================================= */
+
+/*
+   This invisible area makes it easier to move the mouse
+   from the Learn / Practice button into the menu.
+*/
+
+@media (min-width: 1121px) {
+
+    .cb-nav-dropdown::after {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        top: 100%;
+
+        height: 18px;
+
+        background: transparent;
+
+        pointer-events: auto;
+    }
+}
+
+
+/* =========================================================
+   LEARN MENU
+   EXACTLY 4 COLUMNS
+   ========================================================= */
+
+#cbLearnMenu {
+    grid-template-columns:
+        repeat(4, minmax(205px, 1fr));
+
+    width:
+        min(1180px, calc(100vw - 36px));
+}
+
+
+/* =========================================================
+   PRACTICE MENU
+   EXACTLY 3 COLUMNS
+   ========================================================= */
+
+#cbPracticeMenu {
+    grid-template-columns:
+        repeat(3, minmax(235px, 1fr));
+
+    width:
+        min(920px, calc(100vw - 36px));
+}
+
+
+/* =========================================================
+   MEGA MENU GROUPS
+   ========================================================= */
+
+.cb-mega-group {
+    min-width: 0;
+
+    padding: 8px 14px;
+}
+
+
+/* Vertical separators */
+
+.cb-mega-group + .cb-mega-group {
+    border-left:
+        1px solid rgba(126, 164, 199, 0.22);
+}
+
+
+/* =========================================================
+   MEGA MENU TITLES
+   ========================================================= */
+
+.cb-mega-title {
+    margin: 0 0 10px;
+
+    color: #efc63b;
+
+    font-size: 0.92rem;
+
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   MEGA MENU LINKS
+   ========================================================= */
+
+.cb-mega-link {
+    display: block;
+
+    margin: 2px 0;
+
+    padding: 9px 10px;
+
+    border-radius: 7px;
+
+    color: #e4edf7;
+
+    text-decoration: none;
+
+    font-size: 0.92rem;
+
+    line-height: 1.35;
+
+    transition:
+        background 0.16s ease,
+        color 0.16s ease,
+        padding-left 0.16s ease;
+}
+
+.cb-mega-link:hover,
+.cb-mega-link:focus-visible {
+    background: #0c2944;
+
+    color: #ffffff;
+
+    padding-left: 14px;
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
+.cb-mobile-navigation {
+    display: none;
+
+    position: relative;
+}
+
+
+/* Hamburger */
+
+.cb-mobile-navigation > summary {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    border-radius: 8px;
+
+    background: #0c2944;
+
+    cursor: pointer;
+
+    list-style: none;
+}
+
+.cb-mobile-navigation > summary::-webkit-details-marker {
+    display: none;
+}
+
+.cb-mobile-navigation > summary span {
+    width: 22px;
+    height: 2px;
+
+    display: block;
+
+    background: #ffffff;
+
+    border-radius: 2px;
+}
+
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.cb-mobile-menu {
+    position: absolute;
+
+    top: calc(100% + 10px);
+
+    right: 0;
+
+    width:
+        min(330px, calc(100vw - 24px));
+
+    padding: 12px;
+
+    background: #081d32;
+
+    border: 1px solid #31597d;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.35);
+
+    box-sizing: border-box;
+}
+
+
+/* Mobile links */
+
+.cb-mobile-menu a {
+    display: block;
+
+    padding: 11px 12px;
+
+    border-radius: 7px;
+
+    color: #e4edf7;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+
+    font-weight: 650;
+}
+
+.cb-mobile-menu a:hover,
+.cb-mobile-menu a:focus-visible {
+    background: #0c2944;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MOBILE LEARN / PRACTICE
+   ========================================================= */
+
+.cb-mobile-menu details {
+    margin: 3px 0;
+}
+
+.cb-mobile-menu details > summary {
+    padding: 11px 12px;
+
+    border-radius: 7px;
+
+    color: #e4edf7;
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    list-style: none;
+}
+
+.cb-mobile-menu details > summary::-webkit-details-marker {
+    display: none;
+}
+
+.cb-mobile-menu details > summary:hover {
+    background: #0c2944;
+
+    color: #ffffff;
+}
+
+
+.cb-mobile-menu details > div {
+    margin:
+        4px 0 7px 8px;
+
+    padding-left: 7px;
+
+    border-left:
+        2px solid #31597d;
+}
+
+.cb-mobile-menu details > div a {
+    padding: 8px 10px;
+
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.cb-footer-container,
+.footer-container {
+    width: 100%;
+
+    margin: 0 !important;
+
+    padding:
+        42px
+        clamp(24px, 4vw, 60px)
+        20px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(230px, 1.45fr)
+        minmax(125px, 1fr)
+        minmax(125px, 1fr)
+        minmax(125px, 1fr)
+        minmax(125px, 1fr);
+
+    gap: 28px;
+
+    box-sizing: border-box;
+
+    background: #06192c;
+
+    color: #dce8f5;
+
+    border-top: 2px solid #e2b92f;
+}
+
+
+/* =========================================================
+   FOOTER BRAND
+   ========================================================= */
+
+.cb-footer-brand h2,
+.footer-brand h2 {
+    margin: 0 0 10px;
+
+    color: #efc63b;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.55rem;
+
+    font-weight: 800;
+}
+
+.cb-footer-brand p,
+.footer-brand p {
+    margin: 0;
+
+    max-width: 270px;
+
+    color: #b8c9db;
+
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOOTER HEADINGS
+   ========================================================= */
+
+.cb-footer-column h3,
+.footer-column h3 {
+    margin: 0 0 12px;
+
+    color: #efc63b;
+
+    font-size: 0.98rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+   ========================================================= */
+
+.cb-footer-column a,
+.footer-column a {
+    display: block;
+
+    margin: 0 0 7px;
+
+    color: #cbd9e8;
+
+    text-decoration: none;
+
+    font-size: 0.87rem;
+
+    line-height: 1.4;
+
+    transition:
+        color 0.16s ease,
+        padding-left 0.16s ease;
+}
+
+.cb-footer-column a:hover,
+.footer-column a:hover {
+    color: #ffffff;
+
+    padding-left: 4px;
+}
+
+
+/* =========================================================
+   FOOTER BOTTOM
+   ========================================================= */
+
+.cb-footer-bottom,
+.footer-bottom {
+    grid-column: 1 / -1;
+
+    margin-top: 15px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid rgba(126, 164, 199, 0.25);
+
+    text-align: center;
+
+    color: #91a8bf;
+
+    font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   DESKTOP WIDTH ADJUSTMENT
+   ========================================================= */
+
+@media (max-width: 1250px) {
+
+    .cb-desktop-nav {
+        gap: 2px;
+    }
+
+    .cb-nav-link,
+    .cb-progress-link,
+    .cb-dropdown-trigger {
+        padding-left: 9px;
+
+        padding-right: 9px;
+
+        font-size: 0.9rem;
+    }
+
+    .cb-brand {
+        gap: 12px;
+    }
+
+    .cb-brand-name {
+        font-size: 1.75rem;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1120px) {
+
+    .site-header.cb-site-header {
+        min-height: 80px;
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+    }
+
+
+    /* Hide desktop nav */
+
+    .cb-desktop-nav {
+        display: none;
+    }
+
+
+    /* Show mobile navigation */
+
+    .cb-mobile-navigation {
+        display: block;
+    }
+
+
+    /*
+       Desktop mega menus are disabled here.
+       Mobile navigation uses the mobile menu.
+    */
+
+    .cb-mega-panel {
+        position: static;
+
+        width: auto !important;
+
+        transform: none;
+
+        display: none !important;
+
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+
+        box-shadow: none;
+
+        border-radius: 10px;
+    }
+
+
+    .cb-nav-dropdown::after {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   TABLET FOOTER
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .cb-footer-container,
+    .footer-container {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap:
+            28px 22px;
+    }
+}
+
+
+/* =========================================================
+   TABLET MEGA MENU
+   ========================================================= */
+
+@media (max-width: 900px) and (min-width: 621px) {
+
+    #cbLearnMenu,
+    #cbPracticeMenu {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .cb-mega-group + .cb-mega-group {
+        border-left: 0;
+
+        border-top:
+            1px solid rgba(126, 164, 199, 0.22);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 620px) {
+
+    .site-header.cb-site-header {
+        min-height: 70px;
+
+        padding-left: 14px;
+
+        padding-right: 14px;
+    }
+
+
+    .cb-brand {
+        gap: 10px;
+    }
+
+
+    .cb-brand-logo {
+        width: 50px;
+
+        height: 50px;
+    }
+
+
+    .cb-brand-name {
+        font-size: 1.55rem;
+    }
+
+
+    .cb-mobile-menu {
+        right: -2px;
+
+        width:
+            min(320px, calc(100vw - 20px));
+    }
+
+
+    /* Footer one column */
+
+    .cb-footer-container,
+    .footer-container {
+        grid-template-columns: 1fr;
+
+        padding:
+            34px 20px 18px;
+
+        gap: 24px;
+    }
+
+
+    .cb-footer-brand p,
+    .footer-brand p {
+        max-width: none;
+    }
+
+
+    /* Mega menu fallback */
+
+    #cbLearnMenu,
+    #cbPracticeMenu {
+        grid-template-columns: 1fr;
+    }
+
+
+    .cb-mega-group {
+        padding: 8px 4px;
+    }
+
+
+    .cb-mega-link {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .site-header.cb-site-header {
+        padding-left: 10px;
+
+        padding-right: 10px;
+    }
+
+
+    .cb-brand {
+        gap: 8px;
+    }
+
+
+    .cb-brand-logo {
+        width: 44px;
+
+        height: 44px;
+    }
+
+
+    .cb-brand-name {
+        font-size: 1.3rem;
+    }
+
+
+    .cb-mobile-navigation > summary {
+        width: 40px;
+
+        height: 40px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.cb-nav-link:focus-visible,
+.cb-progress-link:focus-visible,
+.cb-dropdown-trigger:focus-visible,
+.cb-mega-link:focus-visible,
+.cb-mobile-menu a:focus-visible {
+    outline:
+        2px solid #efc63b;
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   OVERFLOW PROTECTION
+   ========================================================= */
+
+html,
+body {
+    max-width: 100%;
+
+    overflow-x: hidden;
+}

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn relational design, keys, constraints, joins, NULL and grouped SQL reports with diagrams, a visualizer, query lab and MCQs.">
+
+    
+
+    <title>
+        Level 26 — Databases and SQL for Web Applications | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/databases-sql-web-applications.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt26-skip-link" href="#wt26Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt26Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 26</div><div class="level-badge">LEVEL 26 · DATABASES + SQL</div><h1>Databases and SQL for Web Applications</h1><p class="wt-hero-description">Design related data and explain every row in a grouped SQL report.</p><div class="wt-hero-meta"><span>☕ Java web</span><span>🔗 Relationships</span><span>📊 SQL reports</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>A web application needs a data model that preserves meaning across requests. </li><li>This lesson connects relational tables, keys, constraints and <strong class="wt-content-key">SQL</strong> to the <strong class="wt-content-key">backend</strong> boundaries developed in Levels 22–25. </li><li>You will design a small course-enrollment schema and explain how joins and grouped reports treat missing relationships.</li></ul><ul class="wt-content-points"><li>The interactive lab models a fixed reporting query over local tables. </li><li>It is <strong class="wt-content-key">JavaScript</strong>, not a <strong class="wt-content-key">browser</strong> SQL engine or a deployed database. </li><li>The <strong class="wt-content-key">SQL</strong> examples use SQLite-compatible syntax; other databases may require different types, identity syntax, parameters and pagination.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗃️</span><h3>Design</h3><p>Separate learners, courses and enrollments.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔐</span><h3>Integrity</h3><p>Choose keys and constraints deliberately.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔗</span><h3>Query</h3><p>Compare inner/left joins and filter placement.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📊</span><h3>Report</h3><p>Count matches, group, sort and limit results.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🗃️</span>Relational Data Behind a Web Application</h2><ul class="wt-content-points"><li>A relational <strong class="wt-content-key">database</strong> organizes rows into tables with named columns and rules. </li><li>A learner is an entity; an enrollment describes a learner’s relationship to a course. </li><li>A row should represent one clear fact rather than an unrelated mixture of profile, course and progress values.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> should interact with an authorized <strong class="wt-content-key">backend</strong> API. </li><li>The <strong class="wt-content-key">backend</strong> validates input, performs <strong class="wt-content-key">database</strong> operations and returns an accepted result model. </li><li>Do not expose <strong class="wt-content-key">database</strong> credentials or rely on a hidden <strong class="wt-content-key">frontend</strong> control to protect a record.</li></ul><ul class="wt-content-points"><li>The schema and queries in this lesson are teaching examples. </li><li>The patch does not create a production <strong class="wt-content-key">database</strong>, replace placement-platform tables or modify tracer backends.</li></ul><figure class="wt-diagram"><figcaption>Application data flow</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Frontend</strong><p>Requests an allowed operation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛂</span><strong>Backend</strong><p>Validates and authorizes.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Database</strong><p>Stores facts and enforces rules.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Accepted model</strong><p>Returns deliberate presentation data.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>Entities and Many-to-Many Relationships</h2><ul class="wt-content-points"><li>One learner can enroll in several courses and one course can have several learners. </li><li>A junction table represents that many-to-many relationship: each enrollment references one learner and one course.</li></ul><ul class="wt-content-points"><li>Keeping enrollments separate lets a learner have no enrollment and a course have no learners. </li><li>A comma-separated course list inside a learner row makes referential checks, filtering and updates harder than explicit relationship rows.</li></ul><ul class="wt-content-points"><li>The normal fixture has learners Asha, Ravi and Mina; courses <strong class="wt-content-key">HTML</strong>, <strong class="wt-content-key">JSP</strong> &lt;Views&gt; and SQL &amp; Data. </li><li>Asha completed <strong class="wt-content-key">HTML</strong> with grade 88 and is active in <strong class="wt-content-key">JSP</strong> with no grade. </li><li>Ravi completed <strong class="wt-content-key">HTML</strong> with grade 72. </li><li>Mina and <strong class="wt-content-key">SQL</strong> have no enrollment.</li></ul><figure class="wt-diagram"><figcaption>Enrollment relationship</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Learners</strong><p>learner_id identifies a learner.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Enrollments</strong><p>learner_id + course_id identify the pair.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📚</span><strong>Courses</strong><p>course_id identifies a course.</p></div></div></figure><ul class="wt-content-points"><li>An absent enrollment is not an invalid <strong class="wt-content-key">foreign key</strong>. </li><li>It means no relationship row exists. </li><li>An enrollment pointing to a nonexistent learner or course is a different integrity failure.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🔑</span>Primary Keys, Foreign Keys and Pair Uniqueness</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">primary key</strong> identifies a row. </li><li>A <strong class="wt-content-key">foreign key</strong> requires a referenced relationship to satisfy the <strong class="wt-content-key">database</strong>’s rules. </li><li>A composite enrollment key prevents the same learner/course pair being inserted twice in this model.</li></ul><ul class="wt-content-points"><li>Names and titles are display values rather than stable relationship identifiers. </li><li>Two learners can have the same display name, and a title can change without changing the enrollment references.</li></ul><ul class="wt-content-points"><li>Choose delete behavior deliberately. </li><li>The illustrative schema does not use cascading deletion; with foreign-key enforcement active, a referenced parent cannot simply disappear while leaving its enrollment behind.</li></ul><div class="code-block"><pre><code>CREATE TABLE learners (
+    learner_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
+CREATE TABLE courses (
+    course_id INTEGER PRIMARY KEY,
+    title TEXT NOT NULL
+);
+CREATE TABLE enrollments (
+    learner_id INTEGER NOT NULL REFERENCES learners(learner_id),
+    course_id INTEGER NOT NULL REFERENCES courses(course_id),
+    status TEXT NOT NULL CHECK (status IN (&#x27;active&#x27;, &#x27;completed&#x27;)),
+    grade INTEGER CHECK (grade BETWEEN 0 AND 100),
+    PRIMARY KEY (learner_id, course_id)
+);</code></pre></div><ul class="wt-content-points"><li>SQLite foreign-key enforcement must be enabled for the connection, outside an active <strong class="wt-content-key">transaction</strong>, and verified. </li><li>The <strong class="wt-content-key">validation</strong> script uses PRAGMA foreign_keys = ON. </li><li>These manually supplied integer IDs avoid implying one portable identity-generation syntax for every <strong class="wt-content-key">database</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>Types, Nullability and Constraints</h2><ul class="wt-content-points"><li>NOT <strong class="wt-content-key">NULL</strong> requires a value; CHECK constrains acceptable values; a key constrains identity or pair uniqueness. </li><li>Each rule addresses a different property. </li><li>A CHECK on grade alone permits <strong class="wt-content-key">NULL</strong> in this SQLite example, so a missing grade is allowed deliberately.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">NULL</strong> represents missing or unknown data rather than zero or an empty string. </li><li>Active enrollment with no grade must not be automatically interpreted as grade zero. </li><li>The application still needs bounded input rules and permission checks.</li></ul><ul class="wt-content-points"><li>SQLite has its own type-affinity behavior. </li><li>The <strong class="wt-content-key">SQL</strong> schema is not a <strong class="wt-content-key">promise</strong> that every supplied value has been validated as a bounded JavaScript/Java integer. </li><li>The lab’s application fixture <strong class="wt-content-key">validator</strong> explicitly enforces integer grades or <strong class="wt-content-key">null</strong> and exact enum strings.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔑</span><h3>Identity</h3><p>Keys prevent duplicate identity/pairs.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔗</span><h3>Reference</h3><p>Foreign keys protect relationships.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Value rule</h3><p>A CHECK constrains accepted values.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">❔</span><h3>Missing data</h3><p>Nullable grade means not yet known.</p></article></div><ul class="wt-content-points"><li>A constraint violation is not a reason to silently drop data or report success. </li><li>Translate it into an appropriate application outcome while retaining useful private diagnostics.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧹</span>Normalization and Update Anomalies</h2><ul class="wt-content-points"><li>Separating a course title from each enrollment avoids editing every enrollment row when the title changes. </li><li>Keeping learner identity in its own table likewise avoids inconsistent copies of one person’s profile.</li></ul><ul class="wt-content-points"><li>Normalization is about dependencies and meaningful facts, not simply splitting every column into a separate table. </li><li>An enrollment’s status and grade describe its learner/course pair, so they belong with that relationship in this example.</li></ul><ul class="wt-content-points"><li>Deliberate denormalization can help some workloads, but it introduces synchronization responsibilities. </li><li>Start with a clear source of truth before adding cached counts or repeated labels.</li></ul><div class="code-block"><pre><code>Avoid repeated profile/course data in every enrollment:
+learner_name, learner_email, course_title, status, grade
+
+Prefer related facts:
+learners(learner_id, name)
+courses(course_id, title)
+enrollments(learner_id, course_id, status, grade)</code></pre></div><ul class="wt-content-points"><li>The lab derives enrollment counts from relationship rows instead of trusting a client-supplied count. </li><li>It has no stored aggregate <strong class="wt-content-key">cache</strong> to synchronize.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">📋</span>SELECT, WHERE and Deterministic Ordering</h2><ul class="wt-content-points"><li>SELECT chooses result columns. </li><li>WHERE filters rows by conditions. </li><li>ORDER BY states the intended result order; without it, a particular row order is not guaranteed. </li><li>LIMIT restricts a sorted result in this dialect.</li></ul><ul class="wt-content-points"><li>Read explicit columns and aliases for a stable application <strong class="wt-content-key">contract</strong>. </li><li>Bind values such as a status or minimum count rather than concatenating them into <strong class="wt-content-key">SQL</strong>. </li><li>Dynamic <strong class="wt-content-key">join</strong>/count choices in the lab come from fixed allowlists.</li></ul><ul class="wt-content-points"><li>Pagination syntax varies across <strong class="wt-content-key">database</strong> products. </li><li>Even a stable order needs a suitable tie breaker, and offset-based pagination can shift under concurrent changes. </li><li>The lab orders unique course IDs and limits the finished groups.</li></ul><div class="code-block"><pre><code>SELECT course_id, title
+FROM courses
+ORDER BY course_id
+LIMIT ?;
+
+-- Bind a validated limit; do not concatenate arbitrary SQL.</code></pre></div><ul class="wt-content-points"><li>Filtering and limiting happen at different stages. </li><li>Taking the first course before grouping or HAVING can discard the course that should have met the report threshold.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">✏️</span>INSERT, UPDATE and DELETE with Deliberate Scope</h2><ul class="wt-content-points"><li>INSERT creates a row, UPDATE changes matching rows and DELETE removes matching rows. </li><li>Define a precise predicate before changing stored data; an omitted WHERE can affect many rows. </li><li>Check the intended affected-row count and <strong class="wt-content-key">transaction</strong> outcome.</li></ul><ul class="wt-content-points"><li>A new enrollment must reference existing parents and satisfy pair uniqueness. </li><li>Updating its status should identify the learner/course pair. </li><li>Deleting a parent requires a deliberate relationship policy rather than accidental orphan rows.</li></ul><ul class="wt-content-points"><li>The following statements are examples for a controlled test <strong class="wt-content-key">database</strong>. </li><li>The course lab is read-only and does not execute these mutations or modify a <strong class="wt-content-key">server</strong>.</li></ul><div class="code-block"><pre><code>INSERT INTO enrollments (learner_id, course_id, status, grade)
+VALUES (?, ?, ?, ?);
+
+UPDATE enrollments
+SET status = ?, grade = ?
+WHERE learner_id = ? AND course_id = ?;
+
+DELETE FROM enrollments
+WHERE learner_id = ? AND course_id = ?;</code></pre></div><ul class="wt-content-points"><li>Validate and authorize the operation before accessing data, then check <strong class="wt-content-key">database</strong> constraints too. </li><li>Prepared values do not grant permission to modify the referenced learner.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🔗</span>INNER JOIN and LEFT JOIN</h2><ul class="wt-content-points"><li>An inner <strong class="wt-content-key">join</strong> returns matching row combinations. </li><li>A left <strong class="wt-content-key">join</strong> additionally preserves a left-side row when there is no matching right-side row, filling the right-side columns with <strong class="wt-content-key">NULL</strong>.</li></ul><ul class="wt-content-points"><li>Starting from courses lets the report include <strong class="wt-content-key">SQL</strong> even though nobody enrolled, when the left <strong class="wt-content-key">join</strong> is used. </li><li>An inner <strong class="wt-content-key">join</strong> has no matching enrollment for <strong class="wt-content-key">SQL</strong>, so it contributes no report group.</li></ul><ul class="wt-content-points"><li>Matching one course to two enrollments produces two joined rows. </li><li>Do not mistake those repeated course columns for duplicate course records or add DISTINCT to conceal a legitimate one-to-many <strong class="wt-content-key">join</strong>.</li></ul><div class="code-block"><pre><code>SELECT c.course_id, c.title, e.learner_id, e.status
+FROM courses AS c
+LEFT JOIN enrollments AS e ON e.course_id = c.course_id
+ORDER BY c.course_id, e.learner_id;</code></pre></div><figure class="wt-diagram"><figcaption>Normal joined rows</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>HTML</strong><p>Two matching enrollments.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>JSP</strong><p>One matching enrollment.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📭</span><strong>SQL</strong><p>One null-extended row in a left <strong class="wt-content-key">join</strong>.</p></div></div></figure><ul class="wt-content-points"><li>The lab displays those intermediate rows so the subsequent counts and filters are visible. </li><li>It models only this fixed equijoin, not arbitrary <strong class="wt-content-key">SQL</strong> syntax.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>ON Filters and WHERE Filters Differ</h2><ul class="wt-content-points"><li>For a left <strong class="wt-content-key">join</strong>, placing a right-table condition in ON limits which relationships match while preserving each left course. </li><li>Putting that condition in WHERE filters after null-extension and can remove courses with no qualifying enrollment.</li></ul><ul class="wt-content-points"><li>For completed status in ON, <strong class="wt-content-key">HTML</strong> has two matches while <strong class="wt-content-key">JSP</strong> and SQL retain null-extended rows. </li><li>With completed in WHERE, the latter rows fail the status test and disappear. </li><li>An inner <strong class="wt-content-key">join</strong> does not preserve unmatched courses either way for this fixed predicate.</li></ul><p>The lab’s all-status option omits the status predicate altogether, so switching its ON/WHERE <strong class="wt-content-key">selector</strong> has no effect in that case.</p><div class="code-block"><pre><code>-- Preserve courses with zero completed enrollments:
+LEFT JOIN enrollments e
+  ON e.course_id = c.course_id AND e.status = ?
+
+-- Filter joined rows; unmatched courses do not pass:
+LEFT JOIN enrollments e ON e.course_id = c.course_id
+WHERE e.status = ?</code></pre></div><ul class="wt-content-points"><li>These snippets illustrate different report requirements. </li><li>Choose the placement that answers the intended question instead of assuming the two forms are interchangeable.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">❔</span>NULL, COUNT and AVG</h2><ul class="wt-content-points"><li>COUNT(*) counts joined rows, including a null-extended placeholder from a left <strong class="wt-content-key">join</strong>. </li><li>COUNT(e.learner_id) counts non-null learner values and therefore reports zero enrollments for an unmatched course.</li></ul><ul class="wt-content-points"><li>AVG ignores <strong class="wt-content-key">null</strong> grades. </li><li><strong class="wt-content-key">HTML</strong>’s grades 88 and 72 average to 80. </li><li><strong class="wt-content-key">JSP</strong>’s ungraded enrollment and <strong class="wt-content-key">SQL</strong>’s missing enrollment produce NULL averages, not zero. </li><li>Use an explicit missing-value display rather than treating no grade as a failing grade.</li></ul><ul class="wt-content-points"><li>COUNT and AVG answer different questions. </li><li>One count can report active enrollment even when no graded value exists. </li><li>In the lab, the alternative COUNT(*) mode is labelled as joined-row count to make its difference visible.</li></ul><div class="code-block"><pre><code>SELECT c.course_id, c.title,
+       COUNT(e.learner_id) AS enrollment_count,
+       AVG(e.grade) AS average_grade
+FROM courses c
+LEFT JOIN enrollments e ON e.course_id = c.course_id
+GROUP BY c.course_id, c.title
+ORDER BY c.course_id;</code></pre></div><ul class="wt-content-points"><li>To test for missing values, use IS <strong class="wt-content-key">NULL</strong> or IS NOT NULL rather than = NULL. </li><li><strong class="wt-content-key">SQL</strong> comparisons with <strong class="wt-content-key">NULL</strong> do not behave like ordinary equality between known values.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">📊</span>GROUP BY, HAVING and Report Stages</h2><ul class="wt-content-points"><li><strong class="wt-content-key">GROUP BY</strong> collects rows for aggregate calculation. </li><li>WHERE filters input rows, whereas HAVING filters groups after aggregation. </li><li>Apply the minimum count to the appropriate count expression and only then sort and limit the retained groups.</li></ul><ul class="wt-content-points"><li>Group both course ID and title in the examples. </li><li>Some databases permit particular non-grouped expressions under special rules; avoid relying on an arbitrary title from a group when designing a portable report.</li></ul><ul class="wt-content-points"><li>The lab’s count choice is used consistently in SELECT and HAVING. </li><li>Choosing joined-row count can make an unmatched left course appear to meet a minimum of one, which is wrong if the intended threshold is actual enrollments.</li></ul><div class="code-block"><pre><code>GROUP BY c.course_id, c.title
+HAVING COUNT(e.learner_id) &gt;= ?
+ORDER BY c.course_id
+LIMIT ?;</code></pre></div><figure class="wt-diagram"><figcaption>Logical report stages</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Join</strong><p>Match and null-extend as required.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>WHERE</strong><p>Filter joined rows.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📊</span><strong>Group/HAVING</strong><p>Compute and retain report groups.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Order/limit</strong><p>Return the final bounded report.</p></div></div></figure><ul class="wt-content-points"><li>This is a teaching order for reasoning about results, not a claim about the engine’s physical execution plan. </li><li>The optimizer can choose a different internal strategy.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">⚡</span>Indexes and Query Plans</h2><ul class="wt-content-points"><li>An index can help locate rows or satisfy some ordering and relationship access patterns. </li><li>It also uses space and adds work to mutations. </li><li>An index is not a guarantee that every query becomes faster.</li></ul><ul class="wt-content-points"><li>The enrollment key starts with learner_id. </li><li>A separate index on course_id can support course-oriented lookup in the illustrative schema; inspect the actual workload and plan before adding many indexes.</li></ul><ul class="wt-content-points"><li>EXPLAIN QUERY PLAN can show a SQLite plan. </li><li>Its output is diagnostic and can vary across versions and data sizes. </li><li>A local fixture with three rows does not establish production <strong class="wt-content-key">performance</strong>.</li></ul><div class="code-block"><pre><code>CREATE INDEX enrollments_by_course
+ON enrollments(course_id);
+
+EXPLAIN QUERY PLAN
+SELECT learner_id, status
+FROM enrollments
+WHERE course_id = 101;</code></pre></div><ul class="wt-content-points"><li>Check realistic cardinality, selectivity and <strong class="wt-content-key">database</strong> statistics. </li><li>The <strong class="wt-content-key">browser</strong> lab does not model an optimizer or benchmark index <strong class="wt-content-key">performance</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Transactions, Migrations and Backups</h2><ul class="wt-content-points"><li>Related mutations can require one <strong class="wt-content-key">transaction</strong> so constraints and application invariants are maintained together. </li><li>Level 25 demonstrated the difference between a paired operation and separate auto-committed statements. </li><li>Real isolation and concurrency need database-specific checks.</li></ul><ul class="wt-content-points"><li>Version schema changes as migrations and test them against the existing data. </li><li>Adding NOT <strong class="wt-content-key">NULL</strong> or a relationship constraint can fail if older rows do not satisfy it. </li><li>Do not assume a successful empty-database migration proves an upgrade is safe.</li></ul><ul class="wt-content-points"><li>Backups need a tested restore procedure. </li><li>A <strong class="wt-content-key">frontend</strong> <strong class="wt-content-key">deployment</strong> ZIP is not a database backup. </li><li>Choose migration, backup and recovery methods appropriate to the actual engine and environment.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Atomic work</h3><p>Resolve related changes deliberately.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Migration</h3><p>Version and validate schema changes.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💾</span><h3>Backup</h3><p>Protect <strong class="wt-content-key">database</strong> state separately.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↩️</span><h3>Restore</h3><p>Test recovery, not just backup creation.</p></article></div><ul class="wt-content-points"><li>The schema <strong class="wt-content-key">validation</strong> script creates a temporary local <strong class="wt-content-key">database</strong> only. </li><li>It neither connects to nor migrates CodeBhavya’s production data.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Application Boundaries and Verification</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Database</strong> constraints protect data shape and relationships; <strong class="wt-content-key">backend</strong> authorization protects permitted access. </li><li>Neither can be replaced by hiding a button or trusting a submitted learner ID. </li><li>Use bound values, deliberate outputs and stable public errors.</li></ul><ul class="wt-content-points"><li>Test joins with zero, one and multiple matching rows, status filters in both positions, <strong class="wt-content-key">null</strong> grades and duplicate/orphan mutations. </li><li>Compare actual query results with independently expected rows, not only a visually attractive report.</li></ul><ul class="wt-content-points"><li>The lesson’s fixed <strong class="wt-content-key">SQL</strong> queries are checked in a local SQLite <strong class="wt-content-key">database</strong>. </li><li>Its <strong class="wt-content-key">frontend</strong> lab remains a separate <strong class="wt-content-key">JavaScript</strong> model; those checks do not verify a production connection, JDBC driver, server permissions or concurrent database behavior.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Zero match</h3><p>Left joins preserve a null-extended course.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Counting</h3><p>Count the relationship key for enrollment totals.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">❔</span><h3>No grade</h3><p>Keep a <strong class="wt-content-key">NULL</strong> average distinct from zero.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Integration</h3><p>Check actual <strong class="wt-content-key">deployment</strong> and workload separately.</p></article></div><p>Next, Level 27 develops Web APIs and <strong class="wt-content-key">REST</strong>: the application <strong class="wt-content-key">contract</strong> between the frontend and backend data operations.</p></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — A Relational Course Report</h2><p>Follow related tables through a left join, aggregation, group filtering and bounded output. This approved five-stage player explains a fixed course report; it is not a database execution plan.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="sql">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>SQL COURSE REPORT TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🧩</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Identify related facts</h3><p data-trace-description>Separate learners, courses and their enrollment pairs.</p></div><pre class="trace-code"><code data-trace-code>learners + courses + enrollments</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Model" aria-pressed="true"><span>01</span><strong>Model</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Join" aria-pressed="false"><span>02</span><strong>Join</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Group" aria-pressed="false"><span>03</span><strong>Group</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Retain" aria-pressed="false"><span>04</span><strong>Retain</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Report" aria-pressed="false"><span>05</span><strong>Report</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Keys and references preserve the intended relationships.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Joins, Filters and Course Reports</h2><ul class="wt-content-points"><li>Run a fixed read-only course report over local learner/course/enrollment fixtures. </li><li>This is <strong class="wt-content-key">JavaScript</strong>, not a <strong class="wt-content-key">SQL</strong> interpreter or a database connection. </li><li>The <strong class="wt-content-key">SQL</strong> panel is an explanatory prepared query built from allowlisted choices.</li></ul><ul class="wt-content-points"><li>Compare inner versus left <strong class="wt-content-key">join</strong>, status filters in ON versus WHERE, actual enrollment count versus joined-row count, minimum group count and final limit. </li><li>With all statuses, filter placement makes no difference. </li><li>The minimum applies to the selected count expression. </li><li>Results order by course ID before limiting.</li></ul><ul class="wt-content-points"><li>Normal fixture: <strong class="wt-content-key">HTML</strong> has two completed grades 88/72; <strong class="wt-content-key">JSP</strong> &lt;Views&gt; has one active enrollment with NULL grade; SQL &amp; Data has no enrollment. </li><li>Average grade ignores <strong class="wt-content-key">NULL</strong>. </li><li>Empty fixtures return a completed zero-row result; an orphan fixture fails the model <strong class="wt-content-key">contract</strong> before reporting.</li></ul><div class="wt9-demo wt26-lab"><label for="wt26Method">Simulated method</label><select id="wt26Method"><option>GET</option><option>POST</option></select><label for="wt26Path">Application-relative path</label><select id="wt26Path"><option>/course-report</option><option>/missing</option></select><label for="wt26Join">Join type</label><select id="wt26Join"><option value="left">LEFT JOIN · preserve courses</option><option value="inner">INNER JOIN · matches only</option></select><label for="wt26StatusFilter">Enrollment status</label><select id="wt26StatusFilter"><option value="all">All statuses</option><option value="completed">completed</option><option value="active">active</option></select><label for="wt26Placement">Status predicate location</label><select id="wt26Placement"><option value="on">ON · match condition</option><option value="where">WHERE · filter joined rows</option></select><label for="wt26Count">Count expression</label><select id="wt26Count"><option value="enrollments">COUNT(e.learner_id) · actual enrollment count</option><option value="rows">COUNT(*) · joined-row count</option></select><label for="wt26Min">Minimum selected count · exactly 0–3</label><input id="wt26Min" type="text" value="0" maxlength="8" inputmode="numeric"><label for="wt26Limit">Final group limit · exactly 1–3</label><input id="wt26Limit" type="text" value="3" maxlength="8" inputmode="numeric"><label for="wt26Fixture">Local table fixture</label><select id="wt26Fixture"><option value="normal">Normal relationships</option><option value="empty">Empty tables</option><option value="invalid">Orphan enrollment · invalid fixture</option></select><label for="wt26Variant">Decoded parameter shape</label><select id="wt26Variant"><option value="normal">Six scalar strings</option><option value="missing">Missing limit</option><option value="array">Repeated status value shape</option><option value="extra">Extra field</option></select><div class="wt9-actions"><button class="primary-button" type="button" id="wt26Process">Build course report</button><button class="secondary-button" type="button" id="wt26Reset">Reset demonstration</button></div><p id="wt26Status" role="status">Idle. Local model; no database is connected.</p><h3>Local fixture tables</h3><pre class="wt26-result"><code id="wt26Tables"></code></pre><h3>Prepared SQL and separate parameters</h3><pre class="wt26-result"><code id="wt26SQL">No accepted query yet.</code></pre><h3>Joined rows after ON and WHERE · before grouping</h3><pre class="wt26-result"><code id="wt26Joined">No joined rows yet.</code></pre><h3>Report stage trace</h3><pre class="wt26-result"><code id="wt26Trace">No trace yet.</code></pre><h3>Accepted report rows</h3><pre class="wt26-result"><code id="wt26Model">No accepted report.</code></pre><h3>Simulated response</h3><pre class="wt26-result"><code id="wt26Response">No response yet.</code></pre><h3>Safe text preview</h3><div class="wt26-preview" id="wt26Preview">No report yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Ask Which Rows Survive</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔗</span><h3>Join</h3><p>Check the relationship predicate and match multiplicity.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎯</span><h3>Filter</h3><p>Distinguish ON matching from WHERE removal.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Count</h3><p>Avoid counting a null-extended row as enrollment.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">❔</span><h3>Grade</h3><p>Do not convert absent grades into zeros.</p></article></div><ul class="wt-content-points"><li>If an empty course disappears, inspect both <strong class="wt-content-key">join</strong> type and a right-table WHERE predicate. </li><li>If it reports one learner despite no enrollment, inspect COUNT(*). </li><li>If its average becomes zero, check whether the application incorrectly replaced <strong class="wt-content-key">NULL</strong> grades.</li></ul><ul class="wt-content-points"><li>If duplicate enrollments exist, verify the composite key and whether the <strong class="wt-content-key">database</strong> constraints were actually enabled. </li><li>If an orphan insert succeeds in SQLite, verify foreign_keys on the current connection outside a <strong class="wt-content-key">transaction</strong>.</li></ul><ul class="wt-content-points"><li>The lab validates relationships before computing the report. </li><li>Its stable errors clear old rows; a failed fixture does not leave a previous report looking current.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why use an enrollment junction table?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why use an enrollment junction table?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It represents the many-to-many learner/course relationship and stores facts about that pair.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does the composite enrollment key protect?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does the composite enrollment key protect?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It prevents duplicate learner/course pairs in this schema.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a LEFT JOIN always keep empty courses after WHERE?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a LEFT JOIN always keep empty courses after WHERE?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A right-table WHERE predicate can remove their null-extended rows.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why count e.learner_id rather than star for enrollment totals?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why count e.learner_id rather than star for enrollment totals?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>COUNT of the non-null enrollment key excludes the unmatched placeholder; COUNT(*) counts that joined row.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How does AVG treat missing grades here?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How does AVG treat missing grades here?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It ignores NULL grades; a group with no non-null grade has a NULL average.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do WHERE and HAVING differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do WHERE and HAVING differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>WHERE filters input rows; HAVING filters aggregated groups.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does an index guarantee faster queries?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does an index guarantee faster queries?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Use the actual workload and query plan; indexes also cost storage and mutation work.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Do local SQLite checks verify the deployed backend?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Do local SQLite checks verify the deployed backend?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. They verify the chosen local examples; deployment, driver, authorization and concurrency need separate checks.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain SQL Report Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="A junction row describes one learner/course relationship."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which table represents learner/course membership?</h3><div class="wt8-options"><button type="button" class="wt8-option">The favicon</button><button type="button" class="wt8-option">Enrollments</button><button type="button" class="wt8-option">A CSS rule</button><button type="button" class="wt8-option">A browser timer</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The pair identifies each enrollment uniquely."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What prevents a duplicate learner/course pair in the schema?</h3><div class="wt8-options"><button type="button" class="wt8-option">A title color</button><button type="button" class="wt8-option">A session cookie</button><button type="button" class="wt8-option">The composite primary key</button><button type="button" class="wt8-option">The result limit</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A left join supplies a null-extended right-side row when there is no match."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which join preserves a course with no enrollment before later filters?</h3><div class="wt8-options"><button type="button" class="wt8-option">LEFT JOIN from courses</button><button type="button" class="wt8-option">INNER JOIN only</button><button type="button" class="wt8-option">An arbitrary UPDATE</button><button type="button" class="wt8-option">A DELETE</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="WHERE acts after the left join has produced its rows."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Where can a right-table status filter remove those empty courses?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only in a comment</button><button type="button" class="wt8-option">In the favicon</button><button type="button" class="wt8-option">In a backup filename</button><button type="button" class="wt8-option">In WHERE</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The matched enrollment ID is null on an unmatched left-join row."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which count reports actual matched enrollments?</h3><div class="wt8-options"><button type="button" class="wt8-option">COUNT(*) always</button><button type="button" class="wt8-option">COUNT(e.learner_id)</button><button type="button" class="wt8-option">The number of course titles</button><button type="button" class="wt8-option">The page height</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="AVG ignores NULL rather than counting it as zero."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What is the average of grades 88, 72 and NULL?</h3><div class="wt8-options"><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">53.33 always</button><button type="button" class="wt8-option">80</button><button type="button" class="wt8-option">NULL always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="NULL needs its own missing-value test."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. How is missing grade tested in SQL?</h3><div class="wt8-options"><button type="button" class="wt8-option">IS NULL</button><button type="button" class="wt8-option">Always = NULL</button><button type="button" class="wt8-option">font-size</button><button type="button" class="wt8-option">ORDER BY NULL first only</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="HAVING applies to aggregated groups."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which clause filters report groups by their count?</h3><div class="wt8-options"><button type="button" class="wt8-option">WHERE count always</button><button type="button" class="wt8-option">The HTML title</button><button type="button" class="wt8-option">A foreign key</button><button type="button" class="wt8-option">HAVING</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Do not assume a query order without ORDER BY."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which clause establishes the intended result order?</h3><div class="wt8-options"><button type="button" class="wt8-option">A primary-key declaration alone</button><button type="button" class="wt8-option">ORDER BY</button><button type="button" class="wt8-option">A browser refresh</button><button type="button" class="wt8-option">A table comment</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The fixed model guard requires enrollment references to exist."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does the lab do with an orphan fixture?</h3><div class="wt8-options"><button type="button" class="wt8-option">Silently inserts a learner</button><button type="button" class="wt8-option">Ignores every relationship</button><button type="button" class="wt8-option">Rejects the model before reporting</button><button type="button" class="wt8-option">Always renders a successful report</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The local validation uses PRAGMA foreign_keys=ON outside a transaction."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What must the SQLite constraint check enable?</h3><div class="wt8-options"><button type="button" class="wt8-option">Foreign-key enforcement on the connection</button><button type="button" class="wt8-option">Browser cookies</button><button type="button" class="wt8-option">JSP execution</button><button type="button" class="wt8-option">A cloud login</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The backend must separately check permitted access and mutations."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Do prepared parameters replace authorization?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only for grades</button><button type="button" class="wt8-option">Only with JOIN</button><button type="button" class="wt8-option">No</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt26QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict the Exact Report</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Default left report</h3><p>All/on/enrollment count/min0/limit3: <strong class="wt-content-key">HTML</strong> count2 average80, <strong class="wt-content-key">JSP</strong> count1 NULL, SQL count0 NULL.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔗</span><h3>Inner report</h3><p>Change to inner: <strong class="wt-content-key">HTML</strong> and <strong class="wt-content-key">JSP</strong> only; SQL has no matching enrollment.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎯</span><h3>Completed in ON</h3><p>Left/completed/on: HTML2, JSP0, SQL0. All courses remain.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Completed in WHERE</h3><p>Left/completed/where: HTML2 only. The zero-match courses disappear.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Joined-row trap</h3><p>Left/completed/on/count rows/min1: <strong class="wt-content-key">JSP</strong> and <strong class="wt-content-key">SQL</strong> each show count1, despite zero enrollments.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📊</span><h3>Filter before limit</h3><p>Left/active/on/enrollment count/min1/limit1: <strong class="wt-content-key">JSP</strong> is the single retained group.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Rejected fixture</h3><p>Choose orphan: 500 and no old report. Empty: 200 and a completed zero-row message.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Invalid parameters</h3><p>Try minimum 00, limit 03, missing/repeated/extra shape: 400 before fixture reporting.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Entities:</strong> One clear fact per row.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Relationships:</strong> Junction table for many-to-many.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Keys:</strong> Identity and pair uniqueness.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧱</span><strong>Constraints:</strong> Preserve references and accepted values.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>Filters:</strong> ON and WHERE have different left-join effects.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔢</span><strong>Counts:</strong> Count matches rather than placeholders.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">❔</span><strong>NULL:</strong> Missing grade is not zero.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📊</span><strong>Groups:</strong> HAVING filters computed groups.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚡</span><strong>Indexes:</strong> Verify actual plans and workloads.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Verification:</strong> Separate local SQL from deployed integration.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Relational table"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Relational table</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Relational table</h4><p>A set of rows organized into named columns and rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Primary key"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Primary key</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Primary key</h4><p>A key identifying a row uniquely.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Foreign key"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Foreign key</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Foreign key</h4><p>A relationship constraint referencing a parent key.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Junction table"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Junction table</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Junction table</h4><p>A table representing pairs in a many-to-many relationship.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Normalization"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Normalization</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Normalization</h4><p>Organizing facts around meaningful dependencies to reduce anomalies.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term LEFT JOIN"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>LEFT JOIN</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>LEFT JOIN</h4><p>A join preserving unmatched left rows with null right-side values.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term NULL"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>NULL</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>NULL</h4><p>A marker for missing or unknown data.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Aggregate"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Aggregate</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Aggregate</h4><p>A calculation over rows, such as COUNT or AVG.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term HAVING"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>HAVING</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>HAVING</h4><p>A condition applied to aggregated groups.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Migration"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Migration</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Migration</h4><p>A versioned change to a database schema or related data.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Design an Enrollment Report</h2><ul class="wt-content-points"><li>Specify learners, courses and enrollments with appropriate keys, references, nullability and status/grade constraints. </li><li>Explain why a missing enrollment differs from an orphan reference and why grade <strong class="wt-content-key">NULL</strong> differs from zero.</li></ul><ul class="wt-content-points"><li>Build a report that preserves courses with no qualifying enrollment, counts actual matches and displays a missing average deliberately. </li><li>Place the status predicate in ON, apply a group threshold with HAVING, then order and limit the retained groups.</li></ul><ul class="wt-content-points"><li>Test duplicate pairs, orphan inserts, invalid grade/status, empty tables, <strong class="wt-content-key">null</strong> grades and ON/WHERE differences. </li><li>Verify constraints on the actual <strong class="wt-content-key">database</strong> connection and separate those results from <strong class="wt-content-key">authorization</strong>, concurrency and deployment checks.</li></ul><p><strong>Success criterion:</strong> predict the exact course rows and counts before executing the query. Next: Level 27 — Web APIs and <strong class="wt-content-key">REST</strong>.</p></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 26 Complete?</h2><p>Explain the schema relationships and constraints, reproduce the join/filter/count differences, and distinguish NULL averages from zero. Identify the production checks that local SQLite and browser-model tests do not establish. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="jdbc-database-connectivity.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">JDBC and Database Connectivity</span><span class="nav-action">Review Level 25</span></a></div><div class="topic-nav-side next"><a href="web-apis-rest.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Web APIs and REST</span><span class="nav-action">Open Level 27</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="databases-sql-web-applications.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=21" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=18" defer></script>
+</body></html>

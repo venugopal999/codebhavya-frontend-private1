@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 30: Placement Capstone Studio | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=30"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=30">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class="active " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">30</div><div><p class="eyebrow">PART 6 • PRODUCTION MERN • LEVEL 30</p><h1>Placement Capstone Studio</h1><p>Build, explain, test, deploy and defend a complete MERN application using the engineering skills developed throughout the course.</p><div class="lesson-meta"><span>⏱ 100–140 min</span><span>◈ Advanced Beginner → Intermediate</span><span>▣ 18 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Convert a real-world problem into clear application requirements.</p></article><article><b>02</b><p>Design a complete MERN architecture before writing code.</p></article><article><b>03</b><p>Create a practical MongoDB data model and API contract.</p></article><article><b>04</b><p>Organize React, Express, Node.js and Mongoose modules cleanly.</p></article><article><b>05</b><p>Implement authentication, authorization, validation and error handling.</p></article><article><b>06</b><p>Design frontend state and API boundaries.</p></article><article><b>07</b><p>Plan unit, integration and end-to-end testing.</p></article><article><b>08</b><p>Prepare an application for deployment and observability.</p></article><article><b>09</b><p>Write professional project documentation and a strong README.</p></article><article><b>10</b><p>Present and defend the project during interviews or placement evaluations.</p></article><article><b>11</b><p>Explain technical decisions, trade-offs and future improvements.</p></article><article><b>12</b><p>Turn the completed project into a portfolio-ready engineering story.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Capstone Mindset &amp; Requirements</h2></div></div><p class="concept-intro">A capstone project is not simply a collection of pages. It should demonstrate that you can understand a problem, design a solution, implement it systematically and explain your engineering decisions.</p><ul class="content-points"><li>Start with a real problem rather than starting with technologies.</li><li>Identify users, responsibilities and important workflows.</li><li>Separate must-have requirements from optional enhancements.</li><li>Define success criteria before implementation.</li><li>Keep the first version small enough to finish.</li><li>Document assumptions and constraints.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A strong capstone begins with a clear problem, users and measurable requirements.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const project = {
+problem: &quot;Manage student placement activities&quot;,
+users: [&quot;student&quot;, &quot;recruiter&quot;, &quot;admin&quot;],
+coreFeatures: [
+&quot;authentication&quot;,
+&quot;student profiles&quot;,
+&quot;job postings&quot;,
+&quot;applications&quot;,
+&quot;placement dashboard&quot;
+],
+successCriteria: [
+&quot;secure&quot;,
+&quot;usable&quot;,
+&quot;tested&quot;,
+&quot;deployable&quot;
+]
+};
+
+console.log(project);">Copy</button></header><pre><code>const project = {
+problem: &quot;Manage student placement activities&quot;,
+users: [&quot;student&quot;, &quot;recruiter&quot;, &quot;admin&quot;],
+coreFeatures: [
+&quot;authentication&quot;,
+&quot;student profiles&quot;,
+&quot;job postings&quot;,
+&quot;applications&quot;,
+&quot;placement dashboard&quot;
+],
+successCriteria: [
+&quot;secure&quot;,
+&quot;usable&quot;,
+&quot;tested&quot;,
+&quot;deployable&quot;
+]
+};
+
+console.log(project);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Problem Statement &amp; User Roles</h2></div></div><p class="concept-intro">For this course capstone, consider a Placement Management Platform that connects students, recruiters and administrators.</p><ul class="content-points"><li>Students can create profiles and view suitable opportunities.</li><li>Recruiters can publish openings and review applications.</li><li>Administrators can manage users, opportunities and placement records.</li><li>Each role should have only the permissions it needs.</li><li>Role-based access should be enforced on the backend.</li><li>The frontend should reflect permissions but must not be the only security boundary.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Authentication identifies a user; authorization controls that user&#39;s permitted actions.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const roles = {
+student: [
+&quot;viewJobs&quot;,
+&quot;apply&quot;,
+&quot;manageProfile&quot;
+],
+recruiter: [
+&quot;createJob&quot;,
+&quot;viewApplications&quot;
+],
+admin: [
+&quot;manageUsers&quot;,
+&quot;manageJobs&quot;,
+&quot;viewReports&quot;
+]
+};
+
+console.log(roles);">Copy</button></header><pre><code>const roles = {
+student: [
+&quot;viewJobs&quot;,
+&quot;apply&quot;,
+&quot;manageProfile&quot;
+],
+recruiter: [
+&quot;createJob&quot;,
+&quot;viewApplications&quot;
+],
+admin: [
+&quot;manageUsers&quot;,
+&quot;manageJobs&quot;,
+&quot;viewReports&quot;
+]
+};
+
+console.log(roles);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Functional &amp; Non-Functional Requirements</h2></div></div><p class="concept-intro">Professional projects need both functional requirements and quality requirements.</p><ul class="content-points"><li>Functional requirements describe what the system does.</li><li>Non-functional requirements describe how well the system should operate.</li><li>Security, performance, reliability and usability are important non-functional requirements.</li><li>Requirements should be testable whenever possible.</li><li>Avoid adding features simply because a technology makes them possible.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A project is complete when its important requirements are satisfied, not when every possible feature is added.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const requirements = {
+functional: [
+&quot;register&quot;,
+&quot;login&quot;,
+&quot;createProfile&quot;,
+&quot;createJob&quot;,
+&quot;applyForJob&quot;,
+&quot;trackApplication&quot;
+],
+nonFunctional: [
+&quot;secure authentication&quot;,
+&quot;validated input&quot;,
+&quot;consistent errors&quot;,
+&quot;responsive UI&quot;,
+&quot;acceptable response time&quot;
+]
+};
+
+console.log(requirements);">Copy</button></header><pre><code>const requirements = {
+functional: [
+&quot;register&quot;,
+&quot;login&quot;,
+&quot;createProfile&quot;,
+&quot;createJob&quot;,
+&quot;applyForJob&quot;,
+&quot;trackApplication&quot;
+],
+nonFunctional: [
+&quot;secure authentication&quot;,
+&quot;validated input&quot;,
+&quot;consistent errors&quot;,
+&quot;responsive UI&quot;,
+&quot;acceptable response time&quot;
+]
+};
+
+console.log(requirements);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Architecture &amp; Module Boundaries</h2></div></div><p class="concept-intro">Before implementation, divide the application into understandable boundaries.</p><ul class="content-points"><li>React handles presentation and user interaction.</li><li>The API client handles communication with the backend.</li><li>Express handles HTTP routing and middleware.</li><li>Controllers translate HTTP requests into application operations.</li><li>Services contain reusable business logic.</li><li>Mongoose handles database models and persistence.</li><li>MongoDB stores application data.</li><li>Authentication and security should cross the appropriate boundaries.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good architecture makes responsibilities obvious and limits unnecessary coupling.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Frontend
+|
+v
+API Client
+|
+v
+Express Routes
+|
+v
+Controllers
+|
+v
+Services
+|
+v
+Mongoose
+|
+v
+MongoDB
+
+Security, validation, logging and testing
+surround the application layers.">Copy</button></header><pre><code>Frontend
+|
+v
+API Client
+|
+v
+Express Routes
+|
+v
+Controllers
+|
+v
+Services
+|
+v
+Mongoose
+|
+v
+MongoDB
+
+Security, validation, logging and testing
+surround the application layers.</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Database Schema &amp; Data Model</h2></div></div><p class="concept-intro">The database should represent the important entities and relationships in the problem domain.</p><ul class="content-points"><li>Possible collections include users, profiles, jobs and applications.</li><li>Users contain identity and authorization information.</li><li>Profiles contain additional student or recruiter information.</li><li>Jobs contain company, role, eligibility and deadline information.</li><li>Applications connect users with jobs.</li><li>References are useful when related records have independent lifecycles.</li><li>Indexes should support important query patterns.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Model the domain first; then choose embedding, references and indexes according to actual access patterns.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="User
+|
++---- Profile
+|
++---- Application ----&gt; Job
+|
++---- Recruiter
+
+Application fields:
+
+* studentId
+* jobId
+* status
+* appliedAt
+
+Example status:
+&quot;applied&quot; -&gt; &quot;shortlisted&quot; -&gt; &quot;selected&quot;">Copy</button></header><pre><code>User
+|
++---- Profile
+|
++---- Application ----&gt; Job
+|
++---- Recruiter
+
+Application fields:
+
+* studentId
+* jobId
+* status
+* appliedAt
+
+Example status:
+&quot;applied&quot; -&gt; &quot;shortlisted&quot; -&gt; &quot;selected&quot;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>API Design</h2></div></div><p class="concept-intro">A capstone should expose a predictable API rather than scattering database operations throughout the frontend.</p><ul class="content-points"><li>Use resource-oriented endpoints.</li><li>Choose HTTP methods according to the operation.</li><li>Validate request data before business logic.</li><li>Return consistent response structures.</li><li>Use meaningful HTTP status codes.</li><li>Protect private endpoints with authentication middleware.</li><li>Document important request and response examples.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A good API is predictable, validated, secure and easy for another developer to consume.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="GET    /api/jobs
+GET    /api/jobs/:id
+POST   /api/jobs
+PATCH  /api/jobs/:id
+DELETE /api/jobs/:id
+
+POST   /api/applications
+GET    /api/applications/me
+
+POST   /api/auth/register
+POST   /api/auth/login
+GET    /api/auth/me">Copy</button></header><pre><code>GET    /api/jobs
+GET    /api/jobs/:id
+POST   /api/jobs
+PATCH  /api/jobs/:id
+DELETE /api/jobs/:id
+
+POST   /api/applications
+GET    /api/applications/me
+
+POST   /api/auth/register
+POST   /api/auth/login
+GET    /api/auth/me</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Authentication &amp; Authorization</h2></div></div><p class="concept-intro">Authentication becomes especially important when different users have different permissions.</p><ul class="content-points"><li>Register users securely.</li><li>Hash passwords before storage.</li><li>Authenticate login requests.</li><li>Issue and validate authentication credentials.</li><li>Protect private API routes.</li><li>Check roles and ownership before sensitive operations.</li><li>Never trust role information supplied only by the browser.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Security decisions must be enforced by the backend, even when the frontend already hides restricted controls.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function createJob(req, res, next) {
+try {
+if (!req.user) {
+return res.status(401).json({
+message: &quot;Authentication required&quot;
+});
+}
+
+if (req.user.role !== &quot;recruiter&quot; &amp;&amp;
+    req.user.role !== &quot;admin&quot;) {
+  return res.status(403).json({
+    message: &quot;Insufficient permission&quot;
+  });
+}
+
+// Create the job here.
+
+res.status(201).json({
+  message: &quot;Job created&quot;
+});
+
+} catch (error) {
+next(error);
+}
+}">Copy</button></header><pre><code>async function createJob(req, res, next) {
+try {
+if (!req.user) {
+return res.status(401).json({
+message: &quot;Authentication required&quot;
+});
+}
+
+if (req.user.role !== &quot;recruiter&quot; &amp;&amp;
+    req.user.role !== &quot;admin&quot;) {
+  return res.status(403).json({
+    message: &quot;Insufficient permission&quot;
+  });
+}
+
+// Create the job here.
+
+res.status(201).json({
+  message: &quot;Job created&quot;
+});
+
+} catch (error) {
+next(error);
+}
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>React Application Structure</h2></div></div><p class="concept-intro">A large React application becomes easier to maintain when UI responsibilities are separated into components and feature modules.</p><ul class="content-points"><li>Create reusable layout components.</li><li>Organize pages around application features.</li><li>Keep feature-specific components close to their feature.</li><li>Separate API communication from presentation components.</li><li>Use controlled forms for important user input.</li><li>Represent loading, error, empty and success states explicitly.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Feature-oriented organization helps a project grow without turning every file into a global dependency.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="src/
+components/
+layouts/
+pages/
+features/
+auth/
+jobs/
+applications/
+profile/
+services/
+api.js
+hooks/
+context/
+utils/
+tests/
+App.jsx
+main.jsx">Copy</button></header><pre><code>src/
+components/
+layouts/
+pages/
+features/
+auth/
+jobs/
+applications/
+profile/
+services/
+api.js
+hooks/
+context/
+utils/
+tests/
+App.jsx
+main.jsx</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>State &amp; API Management</h2></div></div><p class="concept-intro">React state should have clear ownership. Not every value needs to be global.</p><ul class="content-points"><li>Local UI state belongs close to the component that uses it.</li><li>Shared application state can use Context or another state solution.</li><li>Server data should be treated differently from temporary UI state.</li><li>Keep API calls behind a consistent client layer.</li><li>Handle loading, success, empty and error states.</li><li>Avoid duplicating the same server data unnecessarily.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Clear state ownership reduces bugs and makes frontend behavior easier to reason about.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function loadJobs() {
+setLoading(true);
+setError(&quot;&quot;);
+
+try {
+const response = await api.get(&quot;/jobs&quot;);
+setJobs(response.data);
+} catch (error) {
+setError(&quot;Unable to load jobs&quot;);
+} finally {
+setLoading(false);
+}
+}">Copy</button></header><pre><code>async function loadJobs() {
+setLoading(true);
+setError(&quot;&quot;);
+
+try {
+const response = await api.get(&quot;/jobs&quot;);
+setJobs(response.data);
+} catch (error) {
+setError(&quot;Unable to load jobs&quot;);
+} finally {
+setLoading(false);
+}
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>Backend Implementation Strategy</h2></div></div><p class="concept-intro">Build backend features in vertical slices so each important workflow can be completed and tested end-to-end.</p><ul class="content-points"><li>Start with one complete feature.</li><li>Create the model.</li><li>Create validation rules.</li><li>Create service logic.</li><li>Create the controller.</li><li>Connect the route.</li><li>Add authentication and authorization.</li><li>Test the endpoint.</li><li>Connect the React interface.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A vertical feature slice gives you working software earlier than building every layer separately.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Feature:
+&quot;Create Job&quot;
+
+Model
+-&gt; Validation
+-&gt; Service
+-&gt; Controller
+-&gt; Route
+-&gt; Auth Middleware
+-&gt; API Test
+-&gt; React Form">Copy</button></header><pre><code>Feature:
+&quot;Create Job&quot;
+
+Model
+-&gt; Validation
+-&gt; Service
+-&gt; Controller
+-&gt; Route
+-&gt; Auth Middleware
+-&gt; API Test
+-&gt; React Form</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Validation, Errors &amp; Security</h2></div></div><p class="concept-intro">A portfolio project should demonstrate defensive programming rather than assuming every request is correct.</p><ul class="content-points"><li>Validate required fields.</li><li>Validate data types and ranges.</li><li>Reject unexpected input where appropriate.</li><li>Sanitize data according to the application&#39;s needs.</li><li>Use centralized error handling.</li><li>Avoid exposing stack traces or sensitive details.</li><li>Use secure configuration and environment variables.</li><li>Apply appropriate rate limiting and security headers.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Treat every external input as untrusted until it passes the required validation and authorization checks.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function validateJob(input) {
+if (!input.title || input.title.trim() === &quot;&quot;) {
+throw new Error(&quot;Job title is required&quot;);
+}
+
+if (!input.company || input.company.trim() === &quot;&quot;) {
+throw new Error(&quot;Company is required&quot;);
+}
+
+if (!Number.isInteger(input.openings) ||
+input.openings &lt; 1) {
+throw new Error(&quot;Openings must be a positive integer&quot;);
+}
+
+return true;
+}">Copy</button></header><pre><code>function validateJob(input) {
+if (!input.title || input.title.trim() === &quot;&quot;) {
+throw new Error(&quot;Job title is required&quot;);
+}
+
+if (!input.company || input.company.trim() === &quot;&quot;) {
+throw new Error(&quot;Company is required&quot;);
+}
+
+if (!Number.isInteger(input.openings) ||
+input.openings &lt; 1) {
+throw new Error(&quot;Openings must be a positive integer&quot;);
+}
+
+return true;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>Testing Strategy</h2></div></div><p class="concept-intro">Testing demonstrates that the application works intentionally rather than accidentally.</p><ul class="content-points"><li>Unit-test pure business logic.</li><li>Test API endpoints through integration tests.</li><li>Test important React components and user interactions.</li><li>Test authentication and authorization behavior.</li><li>Test validation and error cases.</li><li>Use end-to-end tests for critical user workflows.</li><li>Run tests automatically before deployment.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Test both successful paths and failure paths because production systems encounter both.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="describe(&quot;job validation&quot;, () =&gt; {
+it(&quot;rejects a missing title&quot;, () =&gt; {
+expect(() =&gt; {
+validateJob({
+company: &quot;Example&quot;,
+openings: 2
+});
+}).toThrow();
+});
+
+it(&quot;accepts valid data&quot;, () =&gt; {
+expect(
+validateJob({
+title: &quot;Software Engineer&quot;,
+company: &quot;Example&quot;,
+openings: 2
+})
+).toBe(true);
+});
+});">Copy</button></header><pre><code>describe(&quot;job validation&quot;, () =&gt; {
+it(&quot;rejects a missing title&quot;, () =&gt; {
+expect(() =&gt; {
+validateJob({
+company: &quot;Example&quot;,
+openings: 2
+});
+}).toThrow();
+});
+
+it(&quot;accepts valid data&quot;, () =&gt; {
+expect(
+validateJob({
+title: &quot;Software Engineer&quot;,
+company: &quot;Example&quot;,
+openings: 2
+})
+).toBe(true);
+});
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Deployment &amp; Observability</h2></div></div><p class="concept-intro">A project becomes much more credible when you can explain how it moves from source code to a running production system.</p><ul class="content-points"><li>Build the React application for production.</li><li>Configure production environment variables.</li><li>Deploy the backend and frontend.</li><li>Connect the production database securely.</li><li>Use HTTPS.</li><li>Monitor application health.</li><li>Collect useful logs and metrics.</li><li>Prepare backups and recovery procedures.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Deployment is part of software engineering, not an afterthought added after coding.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Developer
+|
+v
+Git Repository
+|
+v
+CI Checks
+|
++---- Tests
++---- Build
+|
+v
+Production
+|
++---- Frontend
++---- API
++---- MongoDB
++---- Logs
++---- Metrics
++---- Alerts">Copy</button></header><pre><code>Developer
+|
+v
+Git Repository
+|
+v
+CI Checks
+|
++---- Tests
++---- Build
+|
+v
+Production
+|
++---- Frontend
++---- API
++---- MongoDB
++---- Logs
++---- Metrics
++---- Alerts</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Performance &amp; Production Hardening</h2></div></div><p class="concept-intro">Before presenting a project, identify unnecessary work, expensive queries and avoidable failure points.</p><ul class="content-points"><li>Optimize database queries and indexes.</li><li>Avoid unnecessary API requests.</li><li>Paginate large datasets.</li><li>Optimize React rendering where measurement justifies it.</li><li>Compress and cache appropriate assets.</li><li>Use production builds.</li><li>Protect expensive endpoints.</li><li>Measure before making performance claims.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Production hardening combines performance, security, reliability and controlled failure behavior.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="GET /api/jobs?page=2&amp;limit=20
+
+Database:
+filter
+-&gt; index
+-&gt; sort
+-&gt; limit
+
+Frontend:
+request
+-&gt; loading
+-&gt; data
+-&gt; render
+
+Goal:
+Do useful work once and avoid unnecessary repeated work.">Copy</button></header><pre><code>GET /api/jobs?page=2&amp;limit=20
+
+Database:
+filter
+-&gt; index
+-&gt; sort
+-&gt; limit
+
+Frontend:
+request
+-&gt; loading
+-&gt; data
+-&gt; render
+
+Goal:
+Do useful work once and avoid unnecessary repeated work.</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Documentation &amp; README</h2></div></div><p class="concept-intro">A strong README allows another developer or interviewer to understand the project without asking you basic questions.</p><ul class="content-points"><li>Explain the problem.</li><li>Describe major features.</li><li>Show the technology stack.</li><li>Include architecture information.</li><li>Document installation steps.</li><li>Document environment variables without exposing secrets.</li><li>Explain important API endpoints.</li><li>Describe testing.</li><li>Explain deployment.</li><li>Include screenshots or a short demonstration when appropriate.</li><li>Mention limitations and future improvements.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Documentation turns a code repository into a project that other people can understand and evaluate.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="# Placement Management Platform
+
+## Problem
+Manage student placement workflows.
+
+## Stack
+React
+Node.js
+Express
+MongoDB
+Mongoose
+
+## Features
+* Authentication
+* Profiles
+* Job postings
+* Applications
+* Dashboards
+
+## Testing
+Unit + integration + end-to-end
+
+## Deployment
+Frontend + API + MongoDB">Copy</button></header><pre><code># Placement Management Platform
+
+## Problem
+Manage student placement workflows.
+
+## Stack
+React
+Node.js
+Express
+MongoDB
+Mongoose
+
+## Features
+* Authentication
+* Profiles
+* Job postings
+* Applications
+* Dashboards
+
+## Testing
+Unit + integration + end-to-end
+
+## Deployment
+Frontend + API + MongoDB</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>Portfolio Presentation &amp; Demo</h2></div></div><p class="concept-intro">The project should tell a clear engineering story when presented in a placement interview.</p><ul class="content-points"><li>Start with the problem, not the technology list.</li><li>Explain who uses the system.</li><li>Show the architecture.</li><li>Demonstrate one important workflow from beginning to end.</li><li>Explain one meaningful technical challenge.</li><li>Describe how you tested the system.</li><li>Explain security decisions.</li><li>Explain deployment and monitoring.</li><li>Be honest about limitations.</li><li>Show what you would improve with more time.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A good project presentation demonstrates understanding, not memorization.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Presentation Flow:
+1. Problem
+2. Users
+3. Requirements
+4. Architecture
+5. Database
+6. API
+7. Frontend
+8. Security
+9. Testing
+10. Deployment
+11. Demo
+12. Challenges
+13. Future Improvements">Copy</button></header><pre><code>Presentation Flow:
+1. Problem
+2. Users
+3. Requirements
+4. Architecture
+5. Database
+6. API
+7. Frontend
+8. Security
+9. Testing
+10. Deployment
+11. Demo
+12. Challenges
+13. Future Improvements</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>Project Defence &amp; Viva</h2></div></div><p class="concept-intro">Project defence questions test whether you understand the decisions behind your implementation.</p><ul class="content-points"><li>Be able to explain every major technology used.</li><li>Know why MongoDB was selected for the project.</li><li>Explain why the API is separated from React.</li><li>Explain authentication and authorization separately.</li><li>Explain your most important database indexes.</li><li>Explain how errors are handled.</li><li>Explain how you tested the application.</li><li>Explain how the application is deployed.</li><li>Explain one trade-off you made.</li><li>Explain what you would redesign at larger scale.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>In a defence, explain reasoning and trade-offs instead of only describing code.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Interviewer:
+&quot;Why did you separate controllers and services?&quot;
+
+Strong answer structure:
+1. State the responsibility of each layer.
+2. Explain how separation improves maintenance.
+3. Give an example from the project.
+4. Mention the trade-off.
+5. Explain how tests benefit from the separation.">Copy</button></header><pre><code>Interviewer:
+&quot;Why did you separate controllers and services?&quot;
+
+Strong answer structure:
+1. State the responsibility of each layer.
+2. Explain how separation improves maintenance.
+3. Give an example from the project.
+4. Mention the trade-off.
+5. Explain how tests benefit from the separation.</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Final Placement Checklist</h2></div></div><p class="concept-intro">Use this checklist before publishing the capstone or presenting it during a placement interview.</p><ul class="content-points"><li>Problem statement is clear.</li><li>Requirements are documented.</li><li>Architecture is understandable.</li><li>Database schema is documented.</li><li>API endpoints are documented.</li><li>Authentication works securely.</li><li>Authorization is enforced on the backend.</li><li>Input validation is implemented.</li><li>Errors are handled consistently.</li><li>Important workflows are tested.</li><li>Environment variables are protected.</li><li>Production deployment works.</li><li>Health checks and logs are available.</li><li>README is complete.</li><li>Screenshots or demo material are ready.</li><li>Git history is understandable.</li><li>Project limitations are documented.</li><li>Interview questions have been practiced.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A placement-ready project is more than working code: it includes architecture, quality, documentation and the ability to defend your decisions.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const finalChecklist = [
+   &quot;problem&quot;,
+   &quot;requirements&quot;,
+   &quot;architecture&quot;,
+   &quot;database&quot;,
+   &quot;api&quot;,
+   &quot;authentication&quot;,
+   &quot;authorization&quot;,
+   &quot;validation&quot;,
+   &quot;testing&quot;,
+   &quot;deployment&quot;,
+   &quot;observability&quot;,
+   &quot;documentation&quot;,
+   &quot;demo&quot;,
+   &quot;defence&quot;
+   ];
+
+const ready = finalChecklist.every(Boolean);
+
+console.log(
+ready
+? &quot;Capstone ready for presentation&quot;
+: &quot;Complete the missing areas&quot;
+);">Copy</button></header><pre><code>const finalChecklist = [
+   &quot;problem&quot;,
+   &quot;requirements&quot;,
+   &quot;architecture&quot;,
+   &quot;database&quot;,
+   &quot;api&quot;,
+   &quot;authentication&quot;,
+   &quot;authorization&quot;,
+   &quot;validation&quot;,
+   &quot;testing&quot;,
+   &quot;deployment&quot;,
+   &quot;observability&quot;,
+   &quot;documentation&quot;,
+   &quot;demo&quot;,
+   &quot;defence&quot;
+   ];
+
+const ready = finalChecklist.every(Boolean);
+
+console.log(
+ready
+? &quot;Capstone ready for presentation&quot;
+: &quot;Complete the missing areas&quot;
+);</code></pre></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Capstone</strong><p>A substantial project that demonstrates integrated skills.</p></div></article><article><b>02</b><div><strong>Requirement</strong><p>A capability or quality the system must satisfy.</p></div></article><article><b>03</b><div><strong>Architecture</strong><p>The high-level structure and relationships between system components.</p></div></article><article><b>04</b><div><strong>Module Boundary</strong><p>A defined responsibility boundary between parts of an application.</p></div></article><article><b>05</b><div><strong>Authentication</strong><p>The process of verifying a user&#39;s identity.</p></div></article><article><b>06</b><div><strong>Authorization</strong><p>The process of determining what an authenticated user may do.</p></div></article><article><b>07</b><div><strong>API Contract</strong><p>An agreed structure for requests, responses and endpoint behavior.</p></div></article><article><b>08</b><div><strong>Controller</strong><p>A layer that handles HTTP-level request and response concerns.</p></div></article><article><b>09</b><div><strong>Service</strong><p>A layer containing reusable application or business logic.</p></div></article><article><b>10</b><div><strong>Data Model</strong><p>The structure used to represent application data and relationships.</p></div></article><article><b>11</b><div><strong>Validation</strong><p>Checking whether input satisfies required rules.</p></div></article><article><b>12</b><div><strong>Integration Test</strong><p>A test that verifies multiple components working together.</p></div></article><article><b>13</b><div><strong>End-to-End Test</strong><p>A test that verifies a complete user workflow.</p></div></article><article><b>14</b><div><strong>Deployment</strong><p>The process of making an application available in an environment.</p></div></article><article><b>15</b><div><strong>Observability</strong><p>Understanding system behavior through logs, metrics and related signals.</p></div></article><article><b>16</b><div><strong>README</strong><p>Project documentation that explains how to understand and use the repository.</p></div></article><article><b>17</b><div><strong>Trade-off</strong><p>A design decision where improving one property may affect another.</p></div></article><article><b>18</b><div><strong>Project Defence</strong><p>The process of explaining and justifying implementation decisions.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>Explain the architecture of your MERN capstone.</summary><div class="interview-answer"><p>Describe React on the frontend, the API client, Express routes and middleware, controllers and services, Mongoose and MongoDB, followed by authentication, testing, deployment and observability.</p></div></details><details class="interview-item"><summary><span>02</span>Why did you choose MERN for the project?</summary><div class="interview-answer"><p>Explain the suitability of JavaScript across the application, React&#39;s component model, Express&#39;s API capabilities and MongoDB&#39;s document-oriented model. Relate the answer to the project&#39;s actual requirements.</p></div></details><details class="interview-item"><summary><span>03</span>Why should React not connect directly to MongoDB?</summary><div class="interview-answer"><p>The backend should enforce authentication, authorization, validation and business rules and should control access to the database.</p></div></details><details class="interview-item"><summary><span>04</span>What is the difference between authentication and authorization?</summary><div class="interview-answer"><p>Authentication verifies identity. Authorization determines which actions an authenticated user is permitted to perform.</p></div></details><details class="interview-item"><summary><span>05</span>Why do you need backend authorization if the frontend hides buttons?</summary><div class="interview-answer"><p>Frontend controls are for user experience, not security. A malicious client can send requests directly to the API, so the backend must enforce permissions.</p></div></details><details class="interview-item"><summary><span>06</span>Why separate controllers and services?</summary><div class="interview-answer"><p>Controllers can focus on HTTP concerns while services contain reusable application logic. This improves organization, testing and maintainability.</p></div></details><details class="interview-item"><summary><span>07</span>How did you design your MongoDB collections?</summary><div class="interview-answer"><p>Start with domain entities and important access patterns, then decide where embedding, references and indexes make sense.</p></div></details><details class="interview-item"><summary><span>08</span>When would you embed data in MongoDB?</summary><div class="interview-answer"><p>Embedding is useful when related data is frequently accessed together, has a suitable size and does not require an independent lifecycle.</p></div></details><details class="interview-item"><summary><span>09</span>When would you use references?</summary><div class="interview-answer"><p>References are useful when related documents are large, independently managed, shared across records or need separate lifecycles.</p></div></details><details class="interview-item"><summary><span>10</span>How did you handle validation?</summary><div class="interview-answer"><p>Validate incoming data at the API boundary and apply model-level constraints where appropriate, while keeping business rules in the application layer.</p></div></details><details class="interview-item"><summary><span>11</span>How did you handle errors?</summary><div class="interview-answer"><p>Use predictable application errors, centralized Express error handling and safe production responses while logging useful diagnostic information.</p></div></details><details class="interview-item"><summary><span>12</span>How would you test the project?</summary><div class="interview-answer"><p>Use unit tests for isolated logic, integration tests for API and database workflows, component tests for important UI behavior and end-to-end tests for critical user journeys.</p></div></details><details class="interview-item"><summary><span>13</span>How do you protect secrets?</summary><div class="interview-answer"><p>Keep secrets in environment configuration or a secret-management system and never commit credentials to the repository.</p></div></details><details class="interview-item"><summary><span>14</span>How would you improve the project for 100 times more users?</summary><div class="interview-answer"><p>Measure bottlenecks first, then consider database indexing, pagination, caching, horizontal scaling, connection management, asynchronous processing and stronger observability where justified.</p></div></details><details class="interview-item"><summary><span>15</span>What was the hardest technical problem in your project?</summary><div class="interview-answer"><p>Explain one real problem, the evidence you collected, the options you considered, the solution you implemented and what you learned.</p></div></details><details class="interview-item"><summary><span>16</span>What trade-off did you make?</summary><div class="interview-answer"><p>Choose a real decision such as implementation simplicity versus abstraction, embedding versus references, or feature scope versus delivery time.</p></div></details><details class="interview-item"><summary><span>17</span>How is your project deployed?</summary><div class="interview-answer"><p>Explain the frontend build, backend deployment, environment configuration, database connection, HTTPS, health checks, logs and monitoring.</p></div></details><details class="interview-item"><summary><span>18</span>What would you improve if you had another month?</summary><div class="interview-answer"><p>Identify concrete improvements such as stronger testing, accessibility, performance, analytics, security hardening, better UX or additional domain features.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span></header><h3>Write the Problem Statement</h3><p>Write a one-page problem statement for a Placement Management Platform.</p></article><article class="practice-card"><header><span>CHALLENGE 02</span></header><h3>Design the Architecture</h3><p>Draw the frontend, API, backend, database and observability boundaries.</p></article><article class="practice-card"><header><span>CHALLENGE 03</span></header><h3>Design the Database</h3><p>Design collections for users, jobs and applications.</p></article><article class="practice-card"><header><span>CHALLENGE 04</span></header><h3>Design the API</h3><p>Create endpoints for job listing, job creation and applying for a job.</p></article><article class="practice-card"><header><span>CHALLENGE 05</span></header><h3>Add Authorization</h3><p>Define which roles can create jobs and which can apply.</p></article><article class="practice-card"><header><span>CHALLENGE 06</span></header><h3>Create Test Cases</h3><p>Write positive and negative test cases for applying to a job.</p></article><article class="practice-card"><header><span>CHALLENGE 07</span></header><h3>Prepare Deployment</h3><p>Create a production deployment checklist.</p></article><article class="practice-card"><header><span>CHALLENGE 08</span></header><h3>Write the README</h3><p>Create the major headings for the capstone README.</p></article><article class="practice-card"><header><span>CHALLENGE 09</span></header><h3>Prepare a Demo</h3><p>Create a five-minute project demonstration.</p></article><article class="practice-card"><header><span>CHALLENGE 10</span></header><h3>Prepare Defence Answers</h3><p>Write answers to five technical questions about your own implementation.</p></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What should normally come before implementation of a capstone?</h3><div class="quiz-options"><button type="button" data-option="0">A. Deploying MongoDB</button><button type="button" data-option="1">B. Defining the problem and requirements</button><button type="button" data-option="2">C. Installing a UI library</button><button type="button" data-option="3">D. Writing CSS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which layer should normally contain HTTP-specific request and response handling?</h3><div class="quiz-options"><button type="button" data-option="0">A. Database</button><button type="button" data-option="1">B. Controller</button><button type="button" data-option="2">C. MongoDB</button><button type="button" data-option="3">D. React CSS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Where should backend authorization be enforced?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only in CSS</button><button type="button" data-option="1">B. Only in React</button><button type="button" data-option="2">C. On the server</button><button type="button" data-option="3">D. Only in README</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which technology stores the documents in this MERN architecture?</h3><div class="quiz-options"><button type="button" data-option="0">A. React</button><button type="button" data-option="1">B. Express</button><button type="button" data-option="2">C. MongoDB</button><button type="button" data-option="3">D. CSS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What is the primary purpose of an API contract?</h3><div class="quiz-options"><button type="button" data-option="0">A. Define UI colors</button><button type="button" data-option="1">B. Define predictable request and response behavior</button><button type="button" data-option="2">C. Store passwords</button><button type="button" data-option="3">D. Replace testing</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Why should secrets not be committed to Git?</h3><div class="quiz-options"><button type="button" data-option="0">A. They make React slower</button><button type="button" data-option="1">B. They can expose sensitive credentials</button><button type="button" data-option="2">C. They break CSS</button><button type="button" data-option="3">D. They prevent MongoDB indexing</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which test is most suitable for a complete user workflow?</h3><div class="quiz-options"><button type="button" data-option="0">A. Unit test</button><button type="button" data-option="1">B. End-to-end test</button><button type="button" data-option="2">C. Lint rule</button><button type="button" data-option="3">D. CSS test</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What is a useful purpose of database indexes?</h3><div class="quiz-options"><button type="button" data-option="0">A. Improve relevant query performance</button><button type="button" data-option="1">B. Replace authentication</button><button type="button" data-option="2">C. Create React components</button><button type="button" data-option="3">D. Encrypt passwords</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Which is a non-functional requirement?</h3><div class="quiz-options"><button type="button" data-option="0">A. User can apply for a job</button><button type="button" data-option="1">B. User can create a profile</button><button type="button" data-option="2">C. Application provides secure authentication</button><button type="button" data-option="3">D. Recruiter can create a job</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What does observability help you understand?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only CSS layout</button><button type="button" data-option="1">B. System behavior using signals such as logs and metrics</button><button type="button" data-option="2">C. Only database names</button><button type="button" data-option="3">D. Only Git branches</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Why is a README important for a placement project?</h3><div class="quiz-options"><button type="button" data-option="0">A. It replaces source code</button><button type="button" data-option="1">B. It explains the project to other developers and evaluators</button><button type="button" data-option="2">C. It stores passwords</button><button type="button" data-option="3">D. It automatically fixes bugs</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>What should you discuss when explaining a technical trade-off?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only the final code</button><button type="button" data-option="1">B. The alternatives, reasoning and consequences</button><button type="button" data-option="2">C. Only the project title</button><button type="button" data-option="3">D. Only the programming language</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>Why should the frontend not be considered the security boundary?</h3><div class="quiz-options"><button type="button" data-option="0">A. Users can bypass browser UI and call APIs directly</button><button type="button" data-option="1">B. React cannot display buttons</button><button type="button" data-option="2">C. CSS is insecure</button><button type="button" data-option="3">D. MongoDB cannot store roles</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>What should you do before making performance claims?</h3><div class="quiz-options"><button type="button" data-option="0">A. Guess</button><button type="button" data-option="1">B. Measure relevant behavior</button><button type="button" data-option="2">C. Remove all tests</button><button type="button" data-option="3">D. Disable logging</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>What makes a capstone placement-ready?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only a large number of files</button><button type="button" data-option="1">B. Working code plus architecture, quality, documentation and defendable decisions</button><button type="button" data-option="2">C. Only attractive colors</button><button type="button" data-option="3">D. Only a deployed URL</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Capstone</strong><p></p></article><article><strong>Requirement</strong><p></p></article><article><strong>Architecture</strong><p></p></article><article><strong>Module Boundary</strong><p></p></article><article><strong>API Contract</strong><p></p></article><article><strong>Authentication</strong><p></p></article><article><strong>Authorization</strong><p></p></article><article><strong>Controller</strong><p></p></article><article><strong>Service</strong><p></p></article><article><strong>Data Model</strong><p></p></article><article><strong>Validation</strong><p></p></article><article><strong>Unit Test</strong><p></p></article><article><strong>Integration Test</strong><p></p></article><article><strong>End-to-End Test</strong><p></p></article><article><strong>Deployment</strong><p></p></article><article><strong>Observability</strong><p></p></article><article><strong>Trade-off</strong><p></p></article><article><strong>Project Defence</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Placement Capstone Complete!</h2><p>Congratulations! You have reached the final level of the CodeBhavya Full Stack / MERN course. You have moved from web fundamentals through JavaScript, React, Node.js, Express, MongoDB and production engineering to a complete capstone workflow. You can now design, implement, test, deploy, document and defend a MERN application.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 30 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=29">← Previous level</a><a href="index.html#roadmap">Return to roadmap →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

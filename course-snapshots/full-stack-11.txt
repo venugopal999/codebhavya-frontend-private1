@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 11: DOM &amp; Events | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=11"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=11">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class="active " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">11</div><div><p class="eyebrow">JavaScript Engineering · Level 11</p><h1>DOM &amp; Events</h1><p>The DOM is the bridge between JavaScript and the webpage. In this level, you will learn how browsers represent HTML as a tree, how JavaScript finds and changes elements, and how events travel through nested elements to create interactive interfaces.</p><div class="lesson-meta"><span>◈ Intermediate</span><span>▣ 20 concepts</span><span>✓ 12 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand the DOM and DOM tree.</p></article><article><b>02</b><p>Understand elements, nodes and relationships.</p></article><article><b>03</b><p>Select DOM elements safely.</p></article><article><b>04</b><p>Use querySelector() and querySelectorAll().</p></article><article><b>05</b><p>Read and update text content.</p></article><article><b>06</b><p>Work with attributes and data attributes.</p></article><article><b>07</b><p>Add and remove CSS classes.</p></article><article><b>08</b><p>Create, insert and remove DOM elements.</p></article><article><b>09</b><p>Register event listeners with addEventListener().</p></article><article><b>10</b><p>Understand the event object.</p></article><article><b>11</b><p>Distinguish target from currentTarget.</p></article><article><b>12</b><p>Prevent default browser behaviour.</p></article><article><b>13</b><p>Understand event bubbling and capturing.</p></article><article><b>14</b><p>Control propagation when necessary.</p></article><article><b>15</b><p>Use event delegation for dynamic collections.</p></article><article><b>16</b><p>Handle keyboard and form events.</p></article><article><b>17</b><p>Build interactive UI state with DOM events.</p></article><article><b>18</b><p>Avoid common DOM performance and event-handling mistakes.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>What Is the DOM?</h2></div></div><p class="concept-intro">The DOM is the browser&#39;s programming representation of an HTML document.</p><div class="explanation-list"><p>When the browser loads HTML, it creates a structured document tree. JavaScript can access that tree through browser APIs and can read, modify, create or remove nodes.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The DOM turns a static HTML document into a structure that JavaScript can program.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;main&gt;
+  &lt;h1&gt;CodeBhavya&lt;/h1&gt;
+  &lt;p&gt;Learn Full Stack Development&lt;/p&gt;
+&lt;/main&gt;">Copy</button></header><pre><code>&lt;main&gt;
+  &lt;h1&gt;CodeBhavya&lt;/h1&gt;
+  &lt;p&gt;Learn Full Stack Development&lt;/p&gt;
+&lt;/main&gt;</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>Document</h3><ul><li>The complete webpage document.</li><li>Available through the document object.</li></ul></article><article><span>02</span><h3>Element</h3><ul><li>Represents an HTML element such as main, h1 or p.</li><li>Elements can contain other elements.</li></ul></article><article><span>03</span><h3>Text</h3><ul><li>Text inside elements is represented in the DOM.</li><li>JavaScript can read and update text.</li></ul></article><article><span>04</span><h3>Relationship</h3><ul><li>Elements can have parent, child and sibling relationships.</li><li>These relationships form the DOM tree.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>The DOM Tree</h2></div></div><p class="concept-intro">HTML becomes a hierarchical tree of nodes.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Thinking in parent-child relationships makes DOM traversal much easier.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;body&gt;
+  &lt;main&gt;
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+    &lt;p&gt;Hello JavaScript&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/body&gt;">Copy</button></header><pre><code>&lt;body&gt;
+  &lt;main&gt;
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+    &lt;p&gt;Hello JavaScript&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/body&gt;</code></pre></div><div class="url-breakdown"><article><code>Parent</code><p>An element that contains another element.</p></article><article><code>Child</code><p>An element directly contained inside another element.</p></article><article><code>Sibling</code><p>Elements that share the same parent.</p></article><article><code>Descendant</code><p>Any element nested somewhere inside another element.</p></article></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>document</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>body</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>main</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>h1 → Welcome</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>p → Hello JavaScript</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Selecting Elements</h2></div></div><p class="concept-intro">Before JavaScript can modify a webpage, it normally needs a reference to the relevant DOM element.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>querySelector() uses CSS selector syntax, making it flexible and familiar.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const title =
+  document.querySelector(&quot;h1&quot;);
+
+const button =
+  document.querySelector(&quot;#saveButton&quot;);
+
+console.log(title);
+console.log(button);">Copy</button></header><pre><code>const title =
+  document.querySelector(&quot;h1&quot;);
+
+const button =
+  document.querySelector(&quot;#saveButton&quot;);
+
+console.log(title);
+console.log(button);</code></pre></div><div class="method-grid"><article class="method-card"><b>querySelector()</b><p>Returns the first element matching a CSS selector.</p><code>document.querySelector(&quot;.card&quot;)</code></article><article class="method-card"><b>querySelectorAll()</b><p>Returns all elements matching a CSS selector.</p><code>document.querySelectorAll(&quot;.card&quot;)</code></article><article class="method-card"><b>getElementById()</b><p>Finds an element using its id.</p><code>document.getElementById(&quot;saveButton&quot;)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>querySelector() and querySelectorAll()</h2></div></div><p class="concept-intro">CSS selectors can be reused when selecting DOM elements.</p><ul class="content-points"><li>Use #id for an id.</li><li>Use .class for a class.</li><li>Use tag names such as button or p.</li><li>Use attribute selectors when needed.</li><li>querySelector() returns the first match.</li><li>querySelectorAll() returns all matching elements.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good selectors make DOM code readable and maintainable.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const input =
+  document.querySelector(&#39;input[name=&quot;email&quot;]&#39;);
+
+const cards =
+  document.querySelectorAll(&quot;.course-card&quot;);">Copy</button></header><pre><code>const input =
+  document.querySelector(&#39;input[name=&quot;email&quot;]&#39;);
+
+const cards =
+  document.querySelectorAll(&quot;.course-card&quot;);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Reading and Changing Text</h2></div></div><p class="concept-intro">JavaScript can update the visible text of an element.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use textContent when you simply need to display text.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not use innerHTML with untrusted user input because inserting untrusted HTML can create security problems.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const heading =
+  document.querySelector(&quot;h1&quot;);
+
+console.log(heading.textContent);
+
+heading.textContent =
+  &quot;Learn JavaScript&quot;;">Copy</button></header><pre><code>const heading =
+  document.querySelector(&quot;h1&quot;);
+
+console.log(heading.textContent);
+
+heading.textContent =
+  &quot;Learn JavaScript&quot;;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Attributes and Data Attributes</h2></div></div><p class="concept-intro">DOM elements contain attributes that provide additional information.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>data-* attributes are useful for attaching small pieces of application metadata to DOM elements.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;button
+  class=&quot;course&quot;
+  data-level=&quot;11&quot;&gt;
+  Open Level
+&lt;/button&gt;">Copy</button></header><pre><code>&lt;button
+  class=&quot;course&quot;
+  data-level=&quot;11&quot;&gt;
+  Open Level
+&lt;/button&gt;</code></pre></div><div class="method-grid"><article class="method-card"><b>getAttribute()</b><p>Reads the value of an attribute.</p><code>button.getAttribute(&quot;data-id&quot;)</code></article><article class="method-card"><b>setAttribute()</b><p>Creates or updates an attribute.</p><code>button.setAttribute(&quot;disabled&quot;, &quot;&quot;)</code></article><article class="method-card"><b>removeAttribute()</b><p>Removes an attribute.</p><code>input.removeAttribute(&quot;disabled&quot;)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Classes and Styles</h2></div></div><p class="concept-intro">JavaScript can change the appearance of elements by modifying classes.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Changing classes is usually cleaner than repeatedly setting individual inline styles.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const card =
+  document.querySelector(&quot;.card&quot;);
+
+card.classList.add(&quot;active&quot;);
+
+card.classList.remove(&quot;hidden&quot;);
+
+card.classList.toggle(&quot;selected&quot;);">Copy</button></header><pre><code>const card =
+  document.querySelector(&quot;.card&quot;);
+
+card.classList.add(&quot;active&quot;);
+
+card.classList.remove(&quot;hidden&quot;);
+
+card.classList.toggle(&quot;selected&quot;);</code></pre></div><div class="method-grid"><article class="method-card"><b>classList.add()</b><p>Adds one or more CSS classes.</p><code>card.classList.add(&quot;active&quot;)</code></article><article class="method-card"><b>classList.remove()</b><p>Removes CSS classes.</p><code>card.classList.remove(&quot;hidden&quot;)</code></article><article class="method-card"><b>classList.toggle()</b><p>Adds a class if missing or removes it if present.</p><code>menu.classList.toggle(&quot;open&quot;)</code></article><article class="method-card"><b>classList.contains()</b><p>Checks whether an element contains a class.</p><code>menu.classList.contains(&quot;open&quot;)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Creating DOM Elements</h2></div></div><p class="concept-intro">JavaScript can create new elements and add them to the document.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Dynamic interfaces are often built by creating, configuring and inserting DOM elements.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const item =
+  document.createElement(&quot;li&quot;);
+
+item.textContent =
+  &quot;JavaScript&quot;;
+
+const list =
+  document.querySelector(&quot;ul&quot;);
+
+list.append(item);">Copy</button></header><pre><code>const item =
+  document.createElement(&quot;li&quot;);
+
+item.textContent =
+  &quot;JavaScript&quot;;
+
+const list =
+  document.querySelector(&quot;ul&quot;);
+
+list.append(item);</code></pre></div><div class="method-grid"><article class="method-card"><b>createElement()</b><p>Creates a new DOM element.</p><code>document.createElement(&quot;li&quot;)</code></article><article class="method-card"><b>append()</b><p>Adds nodes or text at the end of an element.</p><code>list.append(item)</code></article><article class="method-card"><b>prepend()</b><p>Adds nodes or text at the beginning.</p><code>list.prepend(item)</code></article><article class="method-card"><b>remove()</b><p>Removes an element from the DOM.</p><code>item.remove()</code></article></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Create an element</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Configure its content</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Configure classes or attributes</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Insert it into the DOM</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Browser renders the updated interface</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Event Listeners</h2></div></div><p class="concept-intro">Events allow JavaScript to react when something happens in the browser.</p><div class="explanation-list"><p>addEventListener() registers a function that runs when the specified event occurs. It is the recommended general mechanism for registering DOM event handlers and supports multiple listeners and capture options. </p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>An event listener connects a browser event to JavaScript behaviour.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const button =
+  document.querySelector(&quot;#save&quot;);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; {
+    console.log(&quot;Saved&quot;);
+  }
+);">Copy</button></header><pre><code>const button =
+  document.querySelector(&quot;#save&quot;);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; {
+    console.log(&quot;Saved&quot;);
+  }
+);</code></pre></div><div class="method-grid"><article class="method-card"><b>addEventListener()</b><p>Registers a function for an event.</p><code>button.addEventListener(&quot;click&quot;, save)</code></article><article class="method-card"><b>removeEventListener()</b><p>Removes a previously registered listener.</p><code>button.removeEventListener(&quot;click&quot;, save)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>The Event Object</h2></div></div><p class="concept-intro">When an event occurs, the browser provides information about that event.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The event object gives the handler context about what happened.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="button.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    console.log(event.type);
+    console.log(event.target);
+  }
+);">Copy</button></header><pre><code>button.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    console.log(event.type);
+    console.log(event.target);
+  }
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>target vs currentTarget</h2></div></div><p class="concept-intro">These two properties are easy to confuse but become important with nested elements and event delegation.</p><div class="explanation-list"><p>target is the element where the event originated. currentTarget is the element whose listener is currently executing.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>When debugging delegated events, always ask whether you need target or currentTarget.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const card =
+  document.querySelector(&quot;.card&quot;);
+
+card.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    console.log(event.target);
+    console.log(event.currentTarget);
+  }
+);">Copy</button></header><pre><code>const card =
+  document.querySelector(&quot;.card&quot;);
+
+card.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    console.log(event.target);
+    console.log(event.currentTarget);
+  }
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>Preventing Default Behaviour</h2></div></div><p class="concept-intro">Some browser events have built-in behaviour that JavaScript can prevent.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use preventDefault() when your application intentionally replaces a browser default action.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>preventDefault() does not stop event propagation. These are two different concepts.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const form =
+  document.querySelector(&quot;form&quot;);
+
+form.addEventListener(
+  &quot;submit&quot;,
+  event =&gt; {
+    event.preventDefault();
+
+    console.log(&quot;Custom submit handling&quot;);
+  }
+);">Copy</button></header><pre><code>const form =
+  document.querySelector(&quot;form&quot;);
+
+form.addEventListener(
+  &quot;submit&quot;,
+  event =&gt; {
+    event.preventDefault();
+
+    console.log(&quot;Custom submit handling&quot;);
+  }
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Event Bubbling</h2></div></div><p class="concept-intro">Most DOM events propagate from the target upward through ancestor elements.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Bubbling allows parent elements to observe events originating from their descendants.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const card =
+  document.querySelector(&quot;.card&quot;);
+
+const button =
+  document.querySelector(&quot;.card button&quot;);
+
+card.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;card&quot;)
+);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;button&quot;)
+);">Copy</button></header><pre><code>const card =
+  document.querySelector(&quot;.card&quot;);
+
+const button =
+  document.querySelector(&quot;.card button&quot;);
+
+card.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;card&quot;)
+);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;button&quot;)
+);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>button
+card</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>User clicks the button</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Button listener runs</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Event continues upward</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Card listener runs</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Further ancestors can receive the event</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Event Capturing</h2></div></div><p class="concept-intro">Capturing is the phase where the event travels from ancestors toward the target.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Capture and bubble describe the direction in which event listeners are processed.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="document.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;document&quot;),
+  { capture: true }
+);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;button&quot;)
+);">Copy</button></header><pre><code>document.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;document&quot;),
+  { capture: true }
+);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; console.log(&quot;button&quot;)
+);</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Event starts at the browser</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Capture phase travels down ancestors</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Target is reached</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Target listener runs</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Bubbling can then travel upward</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>stopPropagation()</h2></div></div><p class="concept-intro">Sometimes an event should not continue through the propagation path.</p><div class="explanation-list"><p>stopPropagation() prevents the event from continuing to other elements in the capture or bubble path. It does not prevent other listeners attached to the same element from running.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Stop propagation only when there is a clear reason to prevent ancestor listeners from receiving the event.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not use stopPropagation() everywhere. It can make event behaviour harder to understand and can interfere with parent components.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="button.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    event.stopPropagation();
+
+    console.log(&quot;button only&quot;);
+  }
+);">Copy</button></header><pre><code>button.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    event.stopPropagation();
+
+    console.log(&quot;button only&quot;);
+  }
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>Event Delegation</h2></div></div><p class="concept-intro">Event delegation uses bubbling to handle events from many child elements with one parent listener.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Event delegation is especially useful when a container manages many similar or dynamic children.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const list =
+  document.querySelector(&quot;#courses&quot;);
+
+list.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    const item =
+      event.target.closest(&quot;[data-course]&quot;);
+
+    if (!item) return;
+
+    console.log(
+      item.dataset.course
+    );
+  }
+);">Copy</button></header><pre><code>const list =
+  document.querySelector(&quot;#courses&quot;);
+
+list.addEventListener(
+  &quot;click&quot;,
+  event =&gt; {
+    const item =
+      event.target.closest(&quot;[data-course]&quot;);
+
+    if (!item) return;
+
+    console.log(
+      item.dataset.course
+    );
+  }
+);</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>Parent listener</h3><ul><li>One listener is attached to the container.</li><li>It observes bubbled events from descendants.</li></ul></article><article><span>02</span><h3>Event target</h3><ul><li>The clicked child becomes event.target.</li><li>closest() can locate the intended ancestor.</li></ul></article><article><span>03</span><h3>Dynamic content</h3><ul><li>New children can often work without adding new listeners.</li><li>This is useful for lists that change over time.</li></ul></article><article><span>04</span><h3>Result</h3><ul><li>Fewer listeners can simplify large interactive collections.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>Keyboard Events</h2></div></div><p class="concept-intro">Keyboard events allow interfaces to respond to user keyboard actions.</p><ul class="content-points"><li>event.key gives the key value.</li><li>Keyboard events can support shortcuts.</li><li>Keyboard interaction is important for accessibility.</li><li>Do not make mouse-only interfaces when keyboard interaction is expected.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good interactive interfaces should consider both pointer and keyboard users.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="document.addEventListener(
+  &quot;keydown&quot;,
+  event =&gt; {
+    console.log(event.key);
+
+    if (event.key === &quot;Enter&quot;) {
+      console.log(&quot;Enter pressed&quot;);
+    }
+  }
+);">Copy</button></header><pre><code>document.addEventListener(
+  &quot;keydown&quot;,
+  event =&gt; {
+    console.log(event.key);
+
+    if (event.key === &quot;Enter&quot;) {
+      console.log(&quot;Enter pressed&quot;);
+    }
+  }
+);</code></pre></div><div class="method-grid"><article class="method-card"><b>keydown</b><p>Fires when a key is pressed down.</p><code>input.addEventListener(&quot;keydown&quot;, handler)</code></article><article class="method-card"><b>keyup</b><p>Fires when a key is released.</p><code>input.addEventListener(&quot;keyup&quot;, handler)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Forms and Validation</h2></div></div><p class="concept-intro">Forms are one of the most important sources of DOM events in real applications.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Form handling is a complete pipeline: capture → validate → provide feedback → submit.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const form =
+  document.querySelector(&quot;#loginForm&quot;);
+
+form.addEventListener(
+  &quot;submit&quot;,
+  event =&gt; {
+    event.preventDefault();
+
+    const email =
+      document.querySelector(&quot;#email&quot;).value;
+
+    if (!email) {
+      console.log(&quot;Email is required&quot;);
+      return;
+    }
+
+    console.log(&quot;Form is valid&quot;);
+  }
+);">Copy</button></header><pre><code>const form =
+  document.querySelector(&quot;#loginForm&quot;);
+
+form.addEventListener(
+  &quot;submit&quot;,
+  event =&gt; {
+    event.preventDefault();
+
+    const email =
+      document.querySelector(&quot;#email&quot;).value;
+
+    if (!email) {
+      console.log(&quot;Email is required&quot;);
+      return;
+    }
+
+    console.log(&quot;Form is valid&quot;);
+  }
+);</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>User submits the form</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>submit event fires</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Prevent default navigation when required</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Read form values</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Validate input</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Show errors or continue</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>Send data to an API when appropriate</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>Building Interactive UI State</h2></div></div><p class="concept-intro">Many interfaces are simply different visual states controlled by JavaScript.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Interactive UI can often be understood as state + event + transition + rendering.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const button =
+  document.querySelector(&quot;#menuButton&quot;);
+
+const menu =
+  document.querySelector(&quot;#menu&quot;);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; {
+    menu.classList.toggle(&quot;open&quot;);
+  }
+);">Copy</button></header><pre><code>const button =
+  document.querySelector(&quot;#menuButton&quot;);
+
+const menu =
+  document.querySelector(&quot;#menu&quot;);
+
+button.addEventListener(
+  &quot;click&quot;,
+  () =&gt; {
+    menu.classList.toggle(&quot;open&quot;);
+  }
+);</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>State</h3><ul><li>Menu is either open or closed.</li></ul></article><article><span>02</span><h3>Event</h3><ul><li>User clicks the menu button.</li></ul></article><article><span>03</span><h3>Logic</h3><ul><li>JavaScript toggles the relevant class.</li></ul></article><article><span>04</span><h3>Rendering</h3><ul><li>CSS displays the corresponding visual state.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>DOM Performance and Clean Event Handling</h2></div></div><p class="concept-intro">DOM code should be predictable, efficient and easy to maintain.</p><ul class="content-points"><li>Cache frequently used DOM references when appropriate.</li><li>Avoid unnecessary repeated DOM queries inside tight loops.</li><li>Prefer class changes over large amounts of inline styling.</li><li>Use event delegation for suitable large or dynamic collections.</li><li>Remove listeners when components or long-lived objects no longer need them.</li><li>Keep event handlers focused on one responsibility.</li><li>Avoid unnecessary DOM updates.</li><li>Separate data processing from rendering logic.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good DOM code is not just code that works; it should remain understandable as the interface grows.</p></div></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>DOM Event Propagation Tracer</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>const card = document.querySelector(&quot;.card&quot;);</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>const button = document.querySelector(&quot;.card button&quot;);</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>card.addEventListener(&quot;click&quot;, cardHandler);</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>button.addEventListener(&quot;click&quot;, buttonHandler);</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>function cardHandler(event) {</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>  console.log(&quot;card&quot;, event.target);</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>}</code></div><div data-trace-line="7"><span class="trace-line-number">08</span><code>function buttonHandler(event) {</code></div><div data-trace-line="8"><span class="trace-line-number">09</span><code>  console.log(&quot;button&quot;, event.target);</code></div><div data-trace-line="9"><span class="trace-line-number">10</span><code>}</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>DOM</strong><p>The browser&#39;s object representation of an HTML document.</p></div></article><article><b>02</b><div><strong>Node</strong><p>A unit in the DOM tree, such as an element or text node.</p></div></article><article><b>03</b><div><strong>querySelector()</strong><p>Returns the first element matching a CSS selector.</p></div></article><article><b>04</b><div><strong>querySelectorAll()</strong><p>Returns all elements matching a CSS selector.</p></div></article><article><b>05</b><div><strong>textContent</strong><p>Reads or writes text content.</p></div></article><article><b>06</b><div><strong>classList</strong><p>Provides methods for adding, removing and toggling CSS classes.</p></div></article><article><b>07</b><div><strong>addEventListener()</strong><p>Registers an event listener.</p></div></article><article><b>08</b><div><strong>Event object</strong><p>Contains information about an event.</p></div></article><article><b>09</b><div><strong>target</strong><p>The element where an event originated.</p></div></article><article><b>10</b><div><strong>currentTarget</strong><p>The element whose listener is currently running.</p></div></article><article><b>11</b><div><strong>preventDefault()</strong><p>Prevents the browser&#39;s default action.</p></div></article><article><b>12</b><div><strong>Bubbling</strong><p>Event propagation from the target toward ancestors.</p></div></article><article><b>13</b><div><strong>Capturing</strong><p>Event propagation from ancestors toward the target.</p></div></article><article><b>14</b><div><strong>stopPropagation()</strong><p>Prevents further propagation through the event path.</p></div></article><article><b>15</b><div><strong>Event delegation</strong><p>Using an ancestor listener to handle events from descendants.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is the DOM?</summary><div class="interview-answer"><p>The DOM is the browser&#39;s object-based representation of an HTML document that JavaScript can read and modify.</p></div></details><details class="interview-item"><summary><span>02</span>What is the difference between HTML and the DOM?</summary><div class="interview-answer"><p>HTML is the document markup, while the DOM is the browser-created object structure representing that document.</p></div></details><details class="interview-item"><summary><span>03</span>What does querySelector() return?</summary><div class="interview-answer"><p>It returns the first element matching the supplied CSS selector, or null if there is no match.</p></div></details><details class="interview-item"><summary><span>04</span>What does querySelectorAll() return?</summary><div class="interview-answer"><p>It returns a collection of all elements matching the selector.</p></div></details><details class="interview-item"><summary><span>05</span>What is the difference between textContent and innerHTML?</summary><div class="interview-answer"><p>textContent works with text, while innerHTML parses and inserts HTML markup.</p></div></details><details class="interview-item"><summary><span>06</span>Why should untrusted data not be inserted using innerHTML?</summary><div class="interview-answer"><p>Untrusted HTML can create security vulnerabilities such as cross-site scripting.</p></div></details><details class="interview-item"><summary><span>07</span>What is addEventListener()?</summary><div class="interview-answer"><p>It registers a function that runs when a specified event occurs on an EventTarget.</p></div></details><details class="interview-item"><summary><span>08</span>What is an event object?</summary><div class="interview-answer"><p>It is an object supplied to the event handler containing information about the event.</p></div></details><details class="interview-item"><summary><span>09</span>What is event.target?</summary><div class="interview-answer"><p>It identifies the element where the event originally occurred.</p></div></details><details class="interview-item"><summary><span>10</span>What is event.currentTarget?</summary><div class="interview-answer"><p>It identifies the element whose event listener is currently executing.</p></div></details><details class="interview-item"><summary><span>11</span>What is event bubbling?</summary><div class="interview-answer"><p>It is the propagation phase in which an event travels from the target toward ancestor elements.</p></div></details><details class="interview-item"><summary><span>12</span>What is event capturing?</summary><div class="interview-answer"><p>It is the propagation phase in which the event travels from ancestors toward the target.</p></div></details><details class="interview-item"><summary><span>13</span>Does bubbling happen by default?</summary><div class="interview-answer"><p>For events that bubble, listeners registered normally with addEventListener() participate in the bubbling phase by default.</p></div></details><details class="interview-item"><summary><span>14</span>What does preventDefault() do?</summary><div class="interview-answer"><p>It prevents the browser&#39;s default action associated with an event.</p></div></details><details class="interview-item"><summary><span>15</span>What does stopPropagation() do?</summary><div class="interview-answer"><p>It prevents the event from continuing through the capture or bubble propagation path.</p></div></details><details class="interview-item"><summary><span>16</span>What is event delegation?</summary><div class="interview-answer"><p>It is a technique where an ancestor handles events from its descendants, usually using event bubbling.</p></div></details><details class="interview-item"><summary><span>17</span>Why is event delegation useful?</summary><div class="interview-answer"><p>It can reduce the number of listeners and works well for dynamic collections of elements.</p></div></details><details class="interview-item"><summary><span>18</span>How do you create a DOM element?</summary><div class="interview-answer"><p>Use document.createElement() and then configure and insert the resulting element.</p></div></details><details class="interview-item"><summary><span>19</span>How can JavaScript toggle a CSS class?</summary><div class="interview-answer"><p>Use element.classList.toggle(&#39;className&#39;).</p></div></details><details class="interview-item"><summary><span>20</span>Why are keyboard events important?</summary><div class="interview-answer"><p>They allow interfaces to support keyboard users and accessibility requirements rather than depending only on mouse interaction.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Basic</b></header><h3>Change a Heading</h3><p>Select an h1 element and change its text to &#39;Welcome to CodeBhavya&#39; when the page loads.</p><details><summary>Need a hint?</summary><ul><li>Use document.querySelector().</li><li>Store the element in a variable.</li><li>Assign the new value to textContent.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Basic</b></header><h3>Button Counter</h3><p>Create a button and a counter. Each click should increase the displayed counter by one.</p><details><summary>Need a hint?</summary><ul><li>Store the current count in a variable.</li><li>Use addEventListener(&#39;click&#39;, ...).</li><li>Update the DOM after changing the count.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Basic</b></header><h3>Toggle Menu</h3><p>Create a menu button that toggles an &#39;open&#39; CSS class on a navigation panel.</p><details><summary>Need a hint?</summary><ul><li>Select both the button and menu.</li><li>Listen for click.</li><li>Use classList.toggle().</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Basic</b></header><h3>Dynamic Course</h3><p>Create a new li element using JavaScript, set its text to &#39;JavaScript&#39;, and append it to an existing ul.</p><details><summary>Need a hint?</summary><ul><li>Use document.createElement(&#39;li&#39;).</li><li>Set textContent.</li><li>Use append() to insert the element.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Intermediate</b></header><h3>Form Validation</h3><p>Handle a form submission and prevent the default action when the email field is empty.</p><details><summary>Need a hint?</summary><ul><li>Listen for the submit event.</li><li>Use event.preventDefault().</li><li>Read the input value.</li><li>Only prevent normal submission when your validation requires it.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Intermediate</b></header><h3>Keyboard Shortcut</h3><p>Listen for keydown and print &#39;Search opened&#39; when the user presses the &#39;/&#39; key.</p><details><summary>Need a hint?</summary><ul><li>Listen on document.</li><li>Inspect event.key.</li><li>Compare it with &#39;/&#39;.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Intermediate</b></header><h3>Event Bubbling Demo</h3><p>Create a button inside a div. Add click listeners to both and observe the order in which the handlers run.</p><details><summary>Need a hint?</summary><ul><li>Add one listener to the button.</li><li>Add another listener to the parent div.</li><li>Click the button and observe bubbling.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Intermediate</b></header><h3>Stop Propagation</h3><p>Modify the previous example so the button handler prevents the parent click handler from running.</p><details><summary>Need a hint?</summary><ul><li>Receive the event object.</li><li>Call event.stopPropagation().</li><li>Do not use preventDefault() for this task.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Advanced</b></header><h3>Event Delegation</h3><p>Create a list of courses using data-course attributes. Attach one click listener to the list and print the selected course.</p><details><summary>Need a hint?</summary><ul><li>Use one listener on the parent list.</li><li>Read event.target.</li><li>closest(&#39;[data-course]&#39;) can help when the clicked element is nested.</li><li>Use dataset.course to read the value.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Advanced</b></header><h3>Interactive Course List</h3><p>Build a small course list where clicking a course selects it, adds an active class, and displays its name in a status area. Use event delegation rather than one listener per course.</p><details><summary>Need a hint?</summary><ul><li>Attach one click listener to the list.</li><li>Find the clicked course using closest().</li><li>Remove active from the previous selection.</li><li>Add active to the new selection.</li><li>Update the status element using textContent.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What does DOM stand for?</h3><div class="quiz-options"><button type="button" data-option="0">A. Document Object Model</button><button type="button" data-option="1">B. Data Object Manager</button><button type="button" data-option="2">C. Document Oriented Model</button><button type="button" data-option="3">D. Dynamic Object Method</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which method returns the first matching element?</h3><div class="quiz-options"><button type="button" data-option="0">A. querySelector()</button><button type="button" data-option="1">B. querySelectorAll()</button><button type="button" data-option="2">C. getElements()</button><button type="button" data-option="3">D. findAll()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which property is suitable for safely setting plain text?</h3><div class="quiz-options"><button type="button" data-option="0">A. innerHTML</button><button type="button" data-option="1">B. textContent</button><button type="button" data-option="2">C. htmlText</button><button type="button" data-option="3">D. outerHTML</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which method registers an event listener?</h3><div class="quiz-options"><button type="button" data-option="0">A. listen()</button><button type="button" data-option="1">B. onEvent()</button><button type="button" data-option="2">C. addEventListener()</button><button type="button" data-option="3">D. registerEvent()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Where did the event originally occur?</h3><div class="quiz-options"><button type="button" data-option="0">A. currentTarget</button><button type="button" data-option="1">B. target</button><button type="button" data-option="2">C. sourceTarget</button><button type="button" data-option="3">D. origin</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which method prevents default browser behaviour?</h3><div class="quiz-options"><button type="button" data-option="0">A. stopPropagation()</button><button type="button" data-option="1">B. preventDefault()</button><button type="button" data-option="2">C. cancelEvent()</button><button type="button" data-option="3">D. stopDefault()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which direction describes bubbling?</h3><div class="quiz-options"><button type="button" data-option="0">A. Ancestor to target</button><button type="button" data-option="1">B. Target to ancestor</button><button type="button" data-option="2">C. Document to browser</button><button type="button" data-option="3">D. Browser to document</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>Which option enables capture for addEventListener()?</h3><div class="quiz-options"><button type="button" data-option="0">A. { bubble: true }</button><button type="button" data-option="1">B. { capture: true }</button><button type="button" data-option="2">C. { target: true }</button><button type="button" data-option="3">D. { phase: &#39;capture&#39; }</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>What does stopPropagation() control?</h3><div class="quiz-options"><button type="button" data-option="0">A. CSS rendering</button><button type="button" data-option="1">B. Default browser actions</button><button type="button" data-option="2">C. Event propagation</button><button type="button" data-option="3">D. DOM creation</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What is event delegation?</h3><div class="quiz-options"><button type="button" data-option="0">A. Removing all listeners</button><button type="button" data-option="1">B. Using a parent listener for descendant events</button><button type="button" data-option="2">C. Disabling bubbling</button><button type="button" data-option="3">D. Creating custom events only</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Which property toggles a CSS class?</h3><div class="quiz-options"><button type="button" data-option="0">A. classList.toggle()</button><button type="button" data-option="1">B. class.toggle()</button><button type="button" data-option="2">C. style.toggle()</button><button type="button" data-option="3">D. css.toggle()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Which method creates a new DOM element?</h3><div class="quiz-options"><button type="button" data-option="0">A. newElement()</button><button type="button" data-option="1">B. createNode()</button><button type="button" data-option="2">C. document.createElement()</button><button type="button" data-option="3">D. document.newElement()</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>DOM</strong><p></p></article><article><strong>Node</strong><p></p></article><article><strong>Element</strong><p></p></article><article><strong>Event</strong><p></p></article><article><strong>Event listener</strong><p></p></article><article><strong>target</strong><p></p></article><article><strong>currentTarget</strong><p></p></article><article><strong>Bubbling</strong><p></p></article><article><strong>Capturing</strong><p></p></article><article><strong>Event delegation</strong><p></p></article><article><strong>preventDefault()</strong><p></p></article><article><strong>stopPropagation()</strong><p></p></article><article><strong>classList</strong><p></p></article><article><strong>dataset</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Level 11 Complete — Control the Browser</h2><p>You can now connect JavaScript to the DOM, respond to user events, control event propagation and build interactive browser interfaces.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 11 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=10">← Previous level</a><a href="lesson.html?level=12">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

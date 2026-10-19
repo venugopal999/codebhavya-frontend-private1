@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn DOM selection, text, attributes, properties, classes and node updates with diagrams, a visualizer, live editor and MCQs.">
+
+    
+
+    <title>
+        Level 16 — DOM and Browser Programming | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/dom-browser-programming.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt16-skip-link" href="#wt16Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt16Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 16</div><div class="level-badge">LEVEL 16 · BROWSER</div><h1>DOM and Browser Programming</h1><p class="wt-hero-description">Inspect the document tree and make targeted, understandable page updates.</p><div class="wt-hero-meta"><span>🌳 DOM tree</span><span>🔎 Selection</span><span>🛠️ Live updates</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 15 transformed a workshop collection as data. </li><li>This lesson connects that data to the <strong class="wt-content-key">browser</strong>’s document tree. </li><li>You will select elements, read properties, change text, create and remove nodes, apply classes and inspect the current result.</li></ul><ul class="wt-content-points"><li>Our task is a local workshop-card editor. </li><li>Its controls update a small preview region without replacing the site header, sidebar or footer. </li><li>You will distinguish a source <strong class="wt-content-key">HTML</strong> file from the live <strong class="wt-content-key">DOM</strong> and explain why a page update disappears after a reload unless a deliberate persistence mechanism exists.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌳</span><h3>Tree</h3><p>Identify elements, text nodes and relationships.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Selection</h3><p>Choose selectors and handle a missing match.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛠️</span><h3>Updates</h3><p>Use targeted text, property and node operations.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Usability</h3><p>Keep labels, status and focus meaningful after changes.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🌳</span>DOM — The Browser’s Document Tree</h2><ul class="wt-content-points"><li>The Document <strong class="wt-content-key">Object</strong> Model represents the document as objects that scripts can inspect and change. </li><li>The <strong class="wt-content-key">browser</strong> parses <strong class="wt-content-key">HTML</strong> into a tree, and scripts can then change that live tree. </li><li>The current <strong class="wt-content-key">DOM</strong> can differ from the text originally downloaded in the <strong class="wt-content-key">HTML</strong> file.</li></ul><ul class="wt-content-points"><li>The document contains elements, text and other node kinds. </li><li>An article is an element node; the words inside its heading belong to a text node. </li><li>Whitespace between elements can also be a text node, which matters when traversing all child nodes.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">DOM</strong> update does not rewrite your <strong class="wt-content-key">GitHub</strong> file. </li><li>Changing a title with <strong class="wt-content-key">textContent</strong> affects this document instance. </li><li>Reloading normally starts again from the delivered page and its initialization code.</li></ul><figure class="wt-diagram"><figcaption>Workshop preview tree</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>document</strong><p>The loaded page document.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📚</span><strong>ul preview</strong><p>The collection container.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>li → article</strong><p>One workshop card.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>h4 + p</strong><p>Its title and explanatory text.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🌐</span>document, window and the Browser Environment</h2><ul class="wt-content-points"><li>Document is the main entry point for the page’s document tree. </li><li>Window exposes the <strong class="wt-content-key">browser</strong> window’s environment, including facilities such as timers and viewport information. </li><li>These are <strong class="wt-content-key">browser</strong> APIs, not keywords built into the <strong class="wt-content-key">JavaScript</strong> language.</li></ul><ul class="wt-content-points"><li>A pure <strong class="wt-content-key">function</strong> can calculate a record without document. </li><li>A <strong class="wt-content-key">rendering</strong> <strong class="wt-content-key">function</strong> needs the document or a node to update. </li><li>Keeping those responsibilities separate makes it easier to inspect a calculation without confusing it with layout behavior.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">DOM</strong> tree and the rendered layout are related but different. </li><li>An element can exist in the <strong class="wt-content-key">DOM</strong> while being hidden from <strong class="wt-content-key">rendering</strong>. </li><li>Counting element nodes does not prove the content is readable or operable.</li></ul><div class="code-block"><pre><code>const preview = document.getElementById(&quot;preview&quot;);
+console.log(window.innerWidth);
+console.log(preview !== null);</code></pre></div><ul class="wt-content-points"><li>Window.innerWidth is viewport information, not the width of every content panel. </li><li>Use the appropriate element measurement when the question concerns a card or container.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">⏱️</span>Initialize After the Required Elements Exist</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">selector</strong> can return no match because the element is absent or because the script ran before parsing reached it. </li><li>An external classic script with <strong class="wt-content-key">defer</strong> can run after parsing. </li><li>DOMContentLoaded is another useful initialization point when you need the parsed document.</li></ul><ul class="wt-content-points"><li>For a script that might be loaded after DOMContentLoaded has already fired, checking document.readyState avoids registering a <strong class="wt-content-key">listener</strong> for an <strong class="wt-content-key">event</strong> that will not happen again. </li><li>Keep initialization idempotent if the application can call it more than once, so listeners are not duplicated.</li></ul><ul class="wt-content-points"><li>This course’s lesson scripts are included in the page and initialize once on DOMContentLoaded. </li><li>A component loader with a different lifecycle would need to account for its own insertion and cleanup.</li></ul><div class="code-block"><pre><code>function initPreview() {
+  const preview = document.getElementById(&quot;preview&quot;);
+  if (!preview) return;
+  // Set up this preview once.
+}
+if (document.readyState === &quot;loading&quot;) {
+  document.addEventListener(&quot;DOMContentLoaded&quot;, initPreview, { once: true });
+} else {
+  initPreview();
+}</code></pre></div></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Select One Element and Check the Result</h2><ul class="wt-content-points"><li>GetElementById looks up an ID string and returns the matching element or <strong class="wt-content-key">null</strong>. </li><li>It does not take a <strong class="wt-content-key">CSS</strong> # prefix. </li><li>QuerySelector takes a <strong class="wt-content-key">CSS</strong> <strong class="wt-content-key">selector</strong> and returns the first matching element or null. </li><li>A malformed <strong class="wt-content-key">selector</strong> can throw a SyntaxError rather than merely return no match.</li></ul><ul class="wt-content-points"><li>IDs should be unique within the document. </li><li>A first-match <strong class="wt-content-key">selector</strong> is not a repair for duplicate IDs. </li><li><strong class="wt-content-key">Scope</strong> a query to the preview element when the action should affect its cards rather than unrelated cards in the lesson or sidebar.</li></ul><ul class="wt-content-points"><li>Do not concatenate arbitrary user input into a <strong class="wt-content-key">selector</strong> and assume the resulting selector is valid. </li><li>Generated IDs and controlled selectors simplify this lab. </li><li>For an actual arbitrary identifier in a <strong class="wt-content-key">selector</strong>, use appropriate escaping such as <strong class="wt-content-key">CSS</strong>.escape.</li></ul><div class="code-block"><pre><code>const preview = document.getElementById(&quot;preview&quot;);
+const firstTitle = preview?.querySelector(&quot;.card-title&quot;);
+if (firstTitle) {
+  firstTitle.textContent = &quot;HTML Workshop&quot;;
+}</code></pre></div><ul class="wt-content-points"><li>Optional chaining avoids a property access on <strong class="wt-content-key">null</strong> here. </li><li>It does not prove a required preview was successfully loaded; a real initialization failure should still be diagnosed rather than silently ignored everywhere.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">📚</span>Select Many — Static and Live Collections</h2><ul class="wt-content-points"><li>QuerySelectorAll returns a static NodeList of matching elements. </li><li>Its membership is a snapshot from the query time. </li><li>If another card is inserted later, query again to obtain a list that includes it. </li><li>The referenced elements themselves can still change; static does not mean frozen nodes.</li></ul><ul class="wt-content-points"><li>Some other collections are live, such as an element’s children HTMLCollection. </li><li>Its membership changes as the <strong class="wt-content-key">DOM</strong> changes. </li><li>Iterating a live collection while removing elements can skip items if the indexes shift.</li></ul><ul class="wt-content-points"><li>A NodeList is not an ordinary <strong class="wt-content-key">array</strong> with every array method. </li><li>You can iterate it or convert it with <strong class="wt-content-key">Array</strong>.from when you want array operations. </li><li>Choose a fresh query for an inspector that should reflect the current preview.</li></ul><div class="code-block"><pre><code>const before = preview.querySelectorAll(&quot;.card&quot;);
+// Insert another card here.
+const after = preview.querySelectorAll(&quot;.card&quot;);
+console.log(before.length, after.length);
+const titles = Array.from(after, card =&gt;
+  card.querySelector(&quot;.card-title&quot;).textContent
+);</code></pre></div><ul class="wt-content-points"><li>The lab’s inspector reads the current preview after each operation. </li><li>It does not reuse the initialization query and then pretend that it counts newly added cards.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>textContent — Update Text Deliberately</h2><ul class="wt-content-points"><li><strong class="wt-content-key">TextContent</strong> reads or sets textual content. </li><li>Setting it on an element replaces that element’s children with text, so choose the intended leaf element. </li><li>Updating the title heading preserves the <strong class="wt-content-key">rest</strong> of the article; setting the whole article’s <strong class="wt-content-key">textContent</strong> would remove its note and badge.</li></ul><ul class="wt-content-points"><li>InnerHTML parses markup. </li><li>It is useful in carefully controlled situations, but placing untrusted text into it can create an <strong class="wt-content-key">injection</strong> risk. </li><li>This lab uses createElement and <strong class="wt-content-key">textContent</strong> so a supplied label such as <code>&lt;strong&gt;HTML&lt;/strong&gt;</code> remains literal text.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">TextContent</strong> is not a measurement of what is visually readable. </li><li>It can include text from hidden descendants. </li><li>InnerText has rendering-aware behavior and different costs; choose the property that matches the task.</li></ul><div class="code-block"><pre><code>const title = card.querySelector(&quot;.card-title&quot;);
+title.textContent = userSuppliedTitle;
+// Literal text, not parsed HTML markup.</code></pre></div><ul class="wt-content-points"><li>The preview editor changes a title and note separately. </li><li>Its inspectable snapshot shows the same literal text instead of interpreting angle brackets as an instruction to build new elements.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Attributes and Properties — Related, Not Identical</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">HTML</strong> attribute is part of the element’s attribute representation. </li><li>A <strong class="wt-content-key">DOM</strong> property can expose current state. </li><li>Some properties reflect attributes closely; others have distinct current and default states. </li><li>Input.value is a common example: typing changes the current value without necessarily changing the value attribute.</li></ul><ul class="wt-content-points"><li>A boolean attribute such as disabled depends on its presence. </li><li>Disabled="false" still supplies the disabled attribute. </li><li>Use button.disabled = false or removeAttribute("disabled") when you intend to enable the button.</li></ul><ul class="wt-content-points"><li>Set attributes such as aria-pressed to the strings "true" or "false" according to the actual toggle state. </li><li>Adding ARIA does not create the behavior it describes; the handler still has to perform the action.</li></ul><div class="code-block"><pre><code>button.disabled = cards.length === 0;
+button.setAttribute(&quot;aria-pressed&quot;, highlighted ? &quot;true&quot; : &quot;false&quot;);
+console.log(input.value); // current user entry
+console.log(input.getAttribute(&quot;value&quot;)); // attribute representation</code></pre></div><ul class="wt-content-points"><li>In this lab, edit/remove/highlight controls are disabled when no card exists. </li><li>The highlight toggle’s aria-pressed state is synchronized with the selected card’s class.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🧷</span>dataset — Small Data Attributes</h2><ul class="wt-content-points"><li>Data attributes can associate a small identifier with an element. </li><li>Data-card-id is exposed as element.dataset.cardId. </li><li>Dataset values are strings; storing data-count="3" does not make dataset.count a Number automatically.</li></ul><ul class="wt-content-points"><li>Use a stable generated ID to match a select option with a preview card. </li><li>A display title may change, contain spaces or be duplicated, so it is a poor identity key. </li><li>Do not put private secrets in data attributes; they are visible in the client document.</li></ul><ul class="wt-content-points"><li>A dataset is not a <strong class="wt-content-key">database</strong> or proof of trustworthy input. </li><li>The lab generates its own card IDs and restricts actions to the preview’s current cards.</li></ul><div class="code-block"><pre><code>card.dataset.cardId = &quot;card-1&quot;;
+console.log(card.dataset.cardId); // &quot;card-1&quot;
+// HTML representation: data-card-id=&quot;card-1&quot;</code></pre></div><ul class="wt-content-points"><li>When a title is edited, the card keeps its ID. </li><li>Adding two cards with the same title is allowed; their generated IDs remain different.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🎨</span>classList and Styles — Keep Presentation in CSS</h2><ul class="wt-content-points"><li>ClassList.add, remove and toggle update class tokens without replacing every existing class. </li><li>A two-argument toggle can apply a boolean state deterministically. </li><li>This is useful for a highlighted card whose appearance is already defined in <strong class="wt-content-key">CSS</strong>.</li></ul><ul class="wt-content-points"><li>Element.style exposes inline declarations. </li><li>It does not report every declaration from stylesheets. </li><li>GetComputedStyle reads resolved style information for an element; its result should not be confused with the original stylesheet text.</li></ul><ul class="wt-content-points"><li>A meaningful state needs more than color. </li><li>The lab’s highlight state changes the border and adds a visible “Highlighted” badge while updating the toggle’s pressed state. </li><li>Selection and highlighting are separate concepts.</li></ul><div class="code-block"><pre><code>card.classList.toggle(&quot;is-highlighted&quot;, highlighted);
+badge.hidden = !highlighted;
+// CSS controls the actual border and badge presentation.
+const resolvedColor = getComputedStyle(card).color;</code></pre></div><ul class="wt-content-points"><li>Avoid continuously replacing style strings for every small state change. </li><li>A scoped class is easier to review and does not accidentally remove unrelated inline properties.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Create, Populate and Insert Nodes</h2><ul class="wt-content-points"><li>CreateElement makes an element that is initially disconnected from the document. </li><li>Set its text and attributes, assemble its children, then insert it into the intended container. </li><li>Creation by itself does not display anything on the page.</li></ul><ul class="wt-content-points"><li>Append can append nodes or strings; appendChild accepts a node. </li><li>Appending an already connected node moves that node rather than cloning it. </li><li>CloneNode creates a copy under its rules, but does not automatically copy <strong class="wt-content-key">event</strong> listeners registered with addEventListener.</li></ul><ul class="wt-content-points"><li>A DocumentFragment can group nodes before insertion. </li><li>It is a useful organization tool, not a guarantee that any particular application becomes faster. </li><li>Match the approach to the number of updates and the code’s clarity.</li></ul><div class="code-block"><pre><code>const item = document.createElement(&quot;li&quot;);
+const article = document.createElement(&quot;article&quot;);
+const title = document.createElement(&quot;h4&quot;);
+title.className = &quot;card-title&quot;;
+title.textContent = &quot;HTML Workshop&quot;;
+article.append(title);
+item.append(article);
+preview.append(item);</code></pre></div><ul class="wt-content-points"><li>The lab creates a list item containing an article, heading, note and badge. </li><li>It sets the user’s text as <strong class="wt-content-key">textContent</strong> before insertion and limits the preview to six cards.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Traverse the Tree — Elements or All Nodes?</h2><ul class="wt-content-points"><li>ParentElement, children and nextElementSibling work with element relationships. </li><li>ChildNodes and nextSibling can also include text or comment nodes. </li><li>A formatting newline can therefore be the next sibling even when the next visible card is an element.</li></ul><ul class="wt-content-points"><li>Closest searches the element itself and then its ancestors for a matching <strong class="wt-content-key">selector</strong>. </li><li>QuerySelector searches matching descendants. </li><li>These directions matter when locating the containing card or a title inside it.</li></ul><ul class="wt-content-points"><li>Keep traversal scoped and purposeful. </li><li>A handler should not climb until it finds any article in the entire document if the intended card belongs only to the preview.</li></ul><div class="code-block"><pre><code>const title = card.querySelector(&quot;.card-title&quot;);
+const owner = title.closest(&quot;article&quot;);
+console.log(owner === card); // true in this structure
+console.log(preview.children.length); // current element children</code></pre></div><ul class="wt-content-points"><li>The lab’s empty-state paragraph is outside the list. </li><li>That keeps the list’s element children aligned with its actual card count.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🗑️</span>Remove and Replace — Understand What Survives</h2><ul class="wt-content-points"><li>Element.remove disconnects that element from its parent. </li><li>A <strong class="wt-content-key">JavaScript</strong> variable can still refer to the detached <strong class="wt-content-key">object</strong> afterward. </li><li>Removing an element from the document does not automatically erase every reference or <strong class="wt-content-key">listener</strong> associated with it.</li></ul><ul class="wt-content-points"><li>ReplaceChildren replaces a container’s children with the supplied nodes or text. </li><li>It is useful for a deliberate reset, but replacing a subtree can remove focused controls, selection state and node-specific listeners. </li><li>A targeted update often preserves more useful state.</li></ul><ul class="wt-content-points"><li>The editor adds, edits and removes preview nodes directly. </li><li>Reset intentionally rebuilds only the preview cards and selection options. </li><li>The input controls, status region, lesson content and global shell remain in place.</li></ul><div class="code-block"><pre><code>const cardItem = card.closest(&quot;li&quot;);
+cardItem.remove();
+// The item is detached; a variable may still refer to it.
+
+preview.replaceChildren(); // clear only this container</code></pre></div><ul class="wt-content-points"><li>When the selected card is removed, select the next remaining card, or the previous one when appropriate. </li><li>If none remain, show an empty message and focus the title input so a new card can be created.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">⌨️</span>DOM Changes, Focus and Feedback</h2><ul class="wt-content-points"><li>A successful <strong class="wt-content-key">DOM</strong> mutation should remain understandable to the person using the page. </li><li>Use labeled native controls, a concise status region and a meaningful focus path. </li><li>An article is content; it does not need to become a pretend button just to select it.</li></ul><ul class="wt-content-points"><li>Do not move focus after every ordinary text update. </li><li>Save and highlight keep the action control available. </li><li>Removing the last card disables actions that require a selected card, so the lab deliberately returns focus to the editable title field.</li></ul><ul class="wt-content-points"><li>A role="status" region announces concise updates in supporting assistive technology. </li><li>Replacing an entire live preview on every keystroke can be noisy. </li><li>The editor runs on explicit buttons and announces one outcome rather than broadcasting the full <strong class="wt-content-key">DOM</strong> snapshot.</li></ul><div class="code-block"><pre><code>status.textContent = &quot;Card removed. Two cards remain.&quot;;
+if (remainingCards.length &gt; 0) {
+  selector.focus();
+} else {
+  titleInput.focus();
+}</code></pre></div><ul class="wt-content-points"><li>Native <strong class="wt-content-key">keyboard</strong> and assistive-technology behavior should still be tested in a <strong class="wt-content-key">browser</strong>. </li><li>A correct attribute or <strong class="wt-content-key">DOM</strong> snapshot alone is not a full <strong class="wt-content-key">accessibility</strong> result. </li><li><strong class="wt-content-key">Event</strong> propagation and form <strong class="wt-content-key">validation</strong> are developed further in Level 17.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">📐</span>Browser Measurements and Persistence</h2><ul class="wt-content-points"><li>GetBoundingClientRect reports an element’s box relative to the viewport. </li><li>Scrolling can change its reported position. </li><li>Window.innerWidth describes the viewport; scrollHeight and clientHeight answer different questions about content and visible area. </li><li>Do not infer a card’s layout from its title length alone.</li></ul><ul class="wt-content-points"><li>Reading layout after frequent writes can have a <strong class="wt-content-key">performance</strong> cost. </li><li>Prefer a clear update followed by the measurements you actually need, rather than repeatedly alternating tiny writes and reads inside a large <strong class="wt-content-key">loop</strong>.</li></ul><ul class="wt-content-points"><li>A local <strong class="wt-content-key">DOM</strong> editor does not save to <strong class="wt-content-key">GitHub</strong> or a server. </li><li>Storage APIs offer deliberate client persistence, but storage can be unavailable and stored text needs <strong class="wt-content-key">validation</strong> when read back. </li><li>This lab intentionally resets its preview on page reload; only the course’s completion marker uses the established local storage behavior.</li></ul><div class="code-block"><pre><code>const box = card.getBoundingClientRect();
+console.log(box.width, box.height);
+console.log(box.top); // viewport-relative position</code></pre></div><ul class="wt-content-points"><li>Use the <strong class="wt-content-key">browser</strong>’s Elements and <strong class="wt-content-key">accessibility</strong> inspection tools to review the live structure, computed styles and properties. </li><li>View Source usually shows delivered <strong class="wt-content-key">HTML</strong> rather than every subsequent <strong class="wt-content-key">DOM</strong> mutation.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — A DOM Update Journey</h2><p>Follow a fixed card-creation example through selection, creation, population, insertion and inspection. Use the approved timeline and playback controls. This visualizer explains the operations; the live lab below performs actual preview updates.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="dom">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>DOM UPDATE TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🔎</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Find the intended preview region</h3><p data-trace-description>Use a fixed ID and check that the preview exists.</p></div><pre class="trace-code"><code data-trace-code>document.getElementById(&quot;preview&quot;)</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Select" aria-pressed="true"><span>01</span><strong>Select</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Create" aria-pressed="false"><span>02</span><strong>Create</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Populate" aria-pressed="false"><span>03</span><strong>Populate</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Insert" aria-pressed="false"><span>04</span><strong>Insert</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Inspect" aria-pressed="false"><span>05</span><strong>Inspect</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>A null result must be handled. The operation stays scoped to the preview, not the global page shell.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Live DOM Card Editor</h2><ul class="wt-content-points"><li>Select a card, edit its title and note, then save the text. </li><li>Add a new card from the fields, toggle its highlight or remove the selected card. </li><li>The preview uses actual list items and articles built with <strong class="wt-content-key">DOM</strong> methods; the inspector reads their current text and class state.</li></ul><ul class="wt-content-points"><li>Titles must contain 1–60 characters after trimming; notes may be blank and are limited to 180 characters. </li><li>The preview holds at most six cards. </li><li>Duplicate titles are allowed because identity comes from generated IDs. </li><li>Angle brackets remain literal text.</li></ul><ul class="wt-content-points"><li>Remove all cards to test the empty state, then add one again. </li><li>Reset restores the three starting cards and their unhighlighted state. </li><li>Changes are local to this page visit and are not saved to the website repository.</li></ul><div class="wt9-demo"><label for="wt16Selected">Selected preview card</label><select id="wt16Selected"></select><label for="wt16Title">Title / new-card title</label><input type="text" id="wt16Title" maxlength="60" autocomplete="off"><label for="wt16Note">Note / new-card note</label><textarea id="wt16Note" maxlength="180" rows="3"></textarea><div class="wt9-actions"><button type="button" class="primary-button" id="wt16Save">Save text</button><button type="button" class="secondary-button" id="wt16Add">Add card</button><button type="button" class="secondary-button" id="wt16Highlight" aria-pressed="false">Toggle highlight</button><button type="button" class="secondary-button" id="wt16Remove">Remove selected</button><button type="button" class="secondary-button" id="wt16Reset">Reset preview</button></div><p id="wt16Status" role="status">Preview is ready.</p><h3>Live preview</h3><p id="wt16Empty" hidden>No cards remain. Enter a title and add a new card.</p><ul id="wt16Preview" class="wt16-preview" aria-label="Workshop preview cards"></ul><h3>Last operation</h3><pre class="trace-code"><code id="wt16Code"></code></pre><h3>Current DOM snapshot</h3><pre class="wt16-result"><code id="wt16Snapshot"></code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Structure, Timing and Current State</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Selection</h3><p>Check IDs, selectors, <strong class="wt-content-key">scope</strong> and <strong class="wt-content-key">null</strong> results.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏱️</span><h3>Timing</h3><p>Check whether the required nodes exist at initialization.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Text</h3><p>Inspect the leaf updated and whether markup was unintentionally parsed.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>State</h3><p>Check disabled controls, pressed state, focus and current counts.</p></article></div><ul class="wt-content-points"><li>If an added card is absent from a saved NodeList, perform a fresh query before assuming append failed. </li><li>If editing deletes the note, inspect whether <strong class="wt-content-key">textContent</strong> was assigned to the entire article. </li><li>If disabled="false" leaves a button disabled, use the boolean property or remove the attribute.</li></ul><ul class="wt-content-points"><li>If a reset causes an action to fire twice, inspect duplicate <strong class="wt-content-key">listener</strong> registration. </li><li>If removing a card loses the <strong class="wt-content-key">keyboard</strong> path, decide which surviving control should receive focus. </li><li>If the inspector reports data but the card is invisible, inspect <strong class="wt-content-key">CSS</strong> and <strong class="wt-content-key">rendering</strong> rather than claiming the DOM count proves visual success.</li></ul><ul class="wt-content-points"><li>Use a minimal failing sequence: add one card, edit its title, toggle highlight, remove it, then reset. </li><li>Confirm each operation changes only the intended preview and that the source page remains intact.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a DOM update rewrite the original HTML file?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a DOM update rewrite the original HTML file?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It changes the live document instance. Repository or server persistence requires a separate deliberate mechanism.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does querySelector return when no element matches?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does querySelector return when no element matches?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Null. Check it before accessing properties; an invalid selector can instead throw a SyntaxError.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is querySelectorAll a live collection?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is querySelectorAll a live collection?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Its NodeList membership is static. Query again to include newly inserted matching elements.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why use textContent for a user-provided title?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why use textContent for a user-provided title?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It supplies literal text rather than parsing markup. Target the heading so unrelated article children survive.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does disabled=&quot;false&quot; enable a button?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does disabled=&quot;false&quot; enable a button?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A boolean disabled attribute is active when present. Set the disabled property to false or remove the attribute.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does append do with a node already in the document?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does append do with a node already in the document?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It moves that node to the new location rather than automatically cloning it.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does remove erase every JavaScript reference?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does remove erase every JavaScript reference?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. The node is disconnected, but existing references can still point to that object.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What should happen after removing the last selected card?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What should happen after removing the last selected card?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Show a clear empty state, disable actions requiring a selection and preserve a usable focus path, such as the title field for adding a card.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain the Live Document</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Document provides APIs for selecting and updating the loaded document."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which object is the main entry point for this page’s document tree?</h3><div class="wt8-options"><button type="button" class="wt8-option">Number</button><button type="button" class="wt8-option">document</button><button type="button" class="wt8-option">JSON</button><button type="button" class="wt8-option">Math</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="GetElementById takes the ID string; querySelector uses CSS selectors."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What argument belongs in getElementById for id=&quot;preview&quot;?</h3><div class="wt8-options"><button type="button" class="wt8-option">&quot;#preview&quot;</button><button type="button" class="wt8-option">&quot;.preview&quot;</button><button type="button" class="wt8-option">&quot;preview&quot;</button><button type="button" class="wt8-option">&quot;&lt;preview&gt;&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="It returns null, which must be checked before property access."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What does a valid querySelector return with no match?</h3><div class="wt8-options"><button type="button" class="wt8-option">null</button><button type="button" class="wt8-option">[]</button><button type="button" class="wt8-option">false</button><button type="button" class="wt8-option">A blank element</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A querySelectorAll NodeList does not automatically gain newly inserted matches."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which collection has static query-time membership?</h3><div class="wt8-options"><button type="button" class="wt8-option">element.children</button><button type="button" class="wt8-option">Every HTMLCollection</button><button type="button" class="wt8-option">All browser collections</button><button type="button" class="wt8-option">querySelectorAll NodeList</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="TextContent writes text rather than parsing it as HTML markup."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which property supplies literal user text to a title?</h3><div class="wt8-options"><button type="button" class="wt8-option">innerHTML</button><button type="button" class="wt8-option">textContent</button><button type="button" class="wt8-option">outerHTML</button><button type="button" class="wt8-option">style</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Target the title leaf when you need to preserve the article’s other children."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What happens when textContent is set on an entire article?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only its first heading changes</button><button type="button" class="wt8-option">Its attributes all disappear</button><button type="button" class="wt8-option">Its child content is replaced with text</button><button type="button" class="wt8-option">A copy is saved to GitHub</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The disabled property controls native disabled state; a present boolean attribute remains active."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. How do you enable a disabled native button?</h3><div class="wt8-options"><button type="button" class="wt8-option">disabled=&quot;false&quot;</button><button type="button" class="wt8-option">aria-disabled=&quot;false&quot; only</button><button type="button" class="wt8-option">Set className to enabled</button><button type="button" class="wt8-option">button.disabled = false</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Data attribute values are exposed as strings."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What type is dataset.cardId?</h3><div class="wt8-options"><button type="button" class="wt8-option">string</button><button type="button" class="wt8-option">number always</button><button type="button" class="wt8-option">boolean</button><button type="button" class="wt8-option">A DOM node</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="ClassList operates on class tokens and can synchronize a boolean state."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which method changes one class token without replacing all class names?</h3><div class="wt8-options"><button type="button" class="wt8-option">textContent</button><button type="button" class="wt8-option">classList.toggle</button><button type="button" class="wt8-option">replaceChildren</button><button type="button" class="wt8-option">getAttribute</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A node is moved to its new parent/location; cloning is a separate operation."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does appending an already connected node normally do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Clones it with all listeners</button><button type="button" class="wt8-option">Throws in every case</button><button type="button" class="wt8-option">Moves the node</button><button type="button" class="wt8-option">Writes the source file</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Detached nodes can still be referenced by JavaScript."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What does element.remove do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Erases every variable referencing it</button><button type="button" class="wt8-option">Deletes the repository file</button><button type="button" class="wt8-option">Disables all browser events</button><button type="button" class="wt8-option">Disconnects it from its parent</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The preview is local to this visit; reset/reload restores its defined starting state."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Which statement fits the live editor’s persistence?</h3><div class="wt8-options"><button type="button" class="wt8-option">Reload restores its starting preview</button><button type="button" class="wt8-option">All edits save to GitHub</button><button type="button" class="wt8-option">Every DOM change becomes an HTML attribute</button><button type="button" class="wt8-option">The compiler backend stores the cards</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt16QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Check Specific DOM Operations</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Literal markup</h3><p>Save a title containing <strong> tags as typed text. Expected: the brackets appear literally; no nested strong element is created.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Insertion</h3><p>Add one card to the three starting cards. Expected: four list items and a unique generated ID.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎨</span><h3>Highlight</h3><p>Toggle twice. Expected: class and badge turn on, then off; aria-pressed follows the selected state.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✏️</span><h3>Leaf update</h3><p>Edit a heading. Expected: its note and generated ID remain available.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Empty state</h3><p>Remove every card. Expected: count zero, clear empty message and disabled selection actions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Rebuild</h3><p>Reset after editing and removing. Expected: three original unhighlighted cards.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Static query</h3><ul class="wt-content-points"><li>Save querySelectorAll results, insert a card, then query again. </li><li>Expected: saved membership stays unchanged; fresh membership includes the addition.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Keyboard path</h3><p>Use Tab and native buttons to remove the last card, then add one. Expected: focus remains on a useful surviving control.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌳</span><strong>DOM:</strong> The live document tree can differ from source HTML.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Select:</strong> Use the correct selector API and check a missing match.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📚</span><strong>Collections:</strong> Distinguish static snapshots from live membership.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>Text:</strong> Update a leaf with literal textContent.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Properties:</strong> Current state and attribute representation can differ.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧷</span><strong>Identity:</strong> Use generated IDs rather than editable titles.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎨</span><strong>Classes:</strong> Synchronize CSS state and meaningful feedback.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Insert:</strong> Creation and connection are separate operations.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗑️</span><strong>Remove:</strong> Detachment does not erase every reference.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⌨️</span><strong>Review:</strong> Test focus, status, rendering and persistence expectations.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term DOM"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>DOM</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>DOM</h4><p>The object representation and APIs for the document tree.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Node"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Node</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Node</h4><p>An object in the document tree, such as an element or text node.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Element"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Element</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Element</h4><p>A node representing an HTML or other markup element.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Selector"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Selector</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Selector</h4><p>A pattern used to identify matching elements.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term NodeList"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>NodeList</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>NodeList</h4><p>A collection of nodes; querySelectorAll supplies a static one.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Attribute"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Attribute</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Attribute</h4><p>A named value in an element’s attribute representation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Property"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Property</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Property</h4><p>A field on a DOM object that may expose current state.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Dataset"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Dataset</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Dataset</h4><p>The string-valued interface to an element’s data attributes.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Detached node"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Detached node</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Detached node</h4><p>A node disconnected from the document or its previous parent.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Focus"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Focus</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Focus</h4><p>The current target for keyboard interaction in the document.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Scoped Preview Editor</h2><ul class="wt-content-points"><li>Build a labeled card editor with a list preview. </li><li>Generate stable IDs, set user text with <strong class="wt-content-key">textContent</strong>, and create <strong class="wt-content-key">semantic</strong> list items containing articles. </li><li>Add, edit, highlight and remove cards without replacing unrelated page content.</li></ul><ul class="wt-content-points"><li>Keep a six-card teaching limit, title and note limits, synchronized disabled/pressed states and a clear zero-card outcome. </li><li>Target the title and note for edits. </li><li>Use a fresh query for the inspector. </li><li>Announce a concise result and choose a useful focus target when removing the last selected card.</li></ul><ul class="wt-content-points"><li>Test literal angle brackets, duplicate titles, a rejected blank title, six-card capacity, removal to zero, addition after zero and reset. </li><li>Inspect node structure, visible text, class state and <strong class="wt-content-key">keyboard</strong> behavior. </li><li>State explicitly whether the data persists after reload.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain each update in terms of selection, node/property changes and connection to the live document. </li><li>Level 17 will deepen events, propagation and form <strong class="wt-content-key">validation</strong>.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 16 Complete?</h2><p>Before marking complete, create a scoped preview update, distinguish text from markup, handle missing selections and demonstrate the empty-state keyboard path. Completion is a local study marker rather than an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="javascript-arrays-objects-logic.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">JavaScript Arrays, Objects and Logic</span><span class="nav-action">Review Level 15</span></a></div><div class="topic-nav-side next"><a href="javascript-events-forms.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">JavaScript Events and Forms</span><span class="nav-action">Open Level 17</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="dom-browser-programming.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=11" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=8" defer></script>
+</body></html>

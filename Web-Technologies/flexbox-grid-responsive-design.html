@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn Flexbox, Grid, responsive conditions, flexible sizing and layout review with diagrams, a visualizer, viewport lab and MCQs.">
+
+    
+
+    <title>
+        Level 13 — Flexbox, Grid and Responsive Design | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/flexbox-grid-responsive-design.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt13-skip-link" href="#wt13Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt13Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 13</div><div class="level-badge">LEVEL 13 · CSS</div><h1>Flexbox, Grid and Responsive Design</h1><p class="wt-hero-description">Arrange content with clear axes, shared tracks and responsive changes learners can use.</p><div class="wt-hero-meta"><span>↔️ Flexbox</span><span>🗂️ Grid</span><span>📱 Responsive</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 12 measured the space a box needs. </li><li>This lesson organizes several boxes into useful layouts. </li><li>You will choose <strong class="wt-content-key">Flexbox</strong> or <strong class="wt-content-key">Grid</strong>, reason about axes and tracks, use flexible sizing and adapt a page when the viewport becomes narrower.</li></ul><ul class="wt-content-points"><li>The goal is a workshop resource collection that remains readable and operable across screen sizes. </li><li>You will compare actual rendered examples in a local preview, preserve the source order, and explain why a layout wraps, shrinks or overflows.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↔️</span><h3>Flexbox</h3><p>Arrange related items along a main axis with suitable sizing and wrapping.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗂️</span><h3>Grid</h3><p>Define tracks and place content in a consistent row/column arrangement.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📱</span><h3>Responsive design</h3><p>Adapt to available space and test intermediate widths, not only named devices.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Usability</h3><p>Keep readable content, meaningful order and visible <strong class="wt-content-key">keyboard</strong> focus.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Choose the Layout from the Task</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Flexbox</strong> focuses on arranging items along a main axis. </li><li>It is useful for action groups, navigation items and a row or column of related content. </li><li><strong class="wt-content-key">Grid</strong> focuses on a track system across rows and columns, making it useful when the columns should align across several rows.</li></ul><ul class="wt-content-points"><li>A wrapping flex container can have several lines, but each line distributes its available space independently. </li><li>A <strong class="wt-content-key">grid</strong> can keep a shared column structure across its rows. </li><li>Neither tool replaces <strong class="wt-content-key">semantic</strong> <strong class="wt-content-key">HTML</strong> or guarantees accessibility merely because a particular display value is present.</li></ul><ul class="wt-content-points"><li>You can combine them. </li><li>A resource collection can be a <strong class="wt-content-key">grid</strong>, while the actions inside each card use flex. </li><li>Start with the relationships the content needs instead of forcing the whole page into one layout method.</li></ul><figure class="wt-diagram"><figcaption>One resource page, different layout tasks</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Card collection · Grid</strong><p>Shared columns organize the larger collection.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">↔️</span><strong>Card actions · Flexbox</strong><p>Buttons share an axis and wrap when needed.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📖</span><strong>Reading text · Normal flow</strong><p>Paragraphs grow naturally with the explanation.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Containers and Direct Items</h2><ul class="wt-content-points"><li>Applying display: flex or display: <strong class="wt-content-key">grid</strong> changes the layout of that element’s direct items. </li><li>The container controls the overall arrangement. </li><li>The items can have their own sizing or placement rules. </li><li>Grandchildren do not all become items in the outer container just because they are nested somewhere within it.</li></ul><div class="code-block"><pre><code>&lt;div class=&quot;actions&quot;&gt;
+  &lt;button type=&quot;button&quot;&gt;Inspect&lt;/button&gt;
+  &lt;button type=&quot;button&quot;&gt;Reset&lt;/button&gt;
+&lt;/div&gt;
+
+.actions { display: flex; gap: 12px; }</code></pre></div><ul class="wt-content-points"><li>In this example, the two buttons are flex items. </li><li>If you wrap both buttons in another div, that wrapper becomes the direct item unless you also choose a layout for the wrapper. </li><li>Inspect the actual structure when a layout rule appears to affect the wrong element.</li></ul><ul class="wt-content-points"><li>Keep the <strong class="wt-content-key">HTML</strong> purpose intact. </li><li>A nav can be a flex container, and an article collection can use <strong class="wt-content-key">grid</strong>. </li><li>The display value describes layout rather than deciding what the content means.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">↔️</span>Flex Axes — Direction Changes the Question</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Flexbox</strong> has a main axis and a perpendicular cross axis. </li><li>Flex-direction chooses the main axis: row follows the inline direction and column follows the block direction. </li><li>In a typical left-to-right horizontal writing mode, a row runs horizontally and a column runs vertically.</li></ul><ul class="wt-content-points"><li>This is why “justify-content is horizontal” is an unreliable rule. </li><li>Its meaning follows the main axis. </li><li>When flex-direction changes, the physical direction of the main axis changes too. </li><li>Direction and writing mode can also affect which physical edge is the start.</li></ul><div class="code-block"><pre><code>.actions { display: flex; flex-direction: row; }
+.steps { display: flex; flex-direction: column; }</code></pre></div><figure class="wt-diagram"><figcaption>Typical horizontal writing mode</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">↔️</span><strong>row · main axis</strong><p>Items progress along the inline direction.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">↕️</span><strong>column · main axis</strong><p>Items progress along the block direction.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📐</span><strong>cross axis</strong><p>Perpendicular to whichever main axis was chosen.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Flex Alignment — Space and Item Position</h2><ul class="wt-content-points"><li>Justify-content distributes items or space on the main axis when there is space to distribute. </li><li>Align-items sets the cross-axis alignment of the items in a line. </li><li>Align-self can adjust an individual item’s cross-axis alignment.</li></ul><ul class="wt-content-points"><li>Align-content concerns the distribution of flex lines in a multi-line container with appropriate extra cross-axis space. </li><li>It is different from align-items. </li><li>A single line with no relevant extra space may not show the effect you expected.</li></ul><ul class="wt-content-points"><li>Auto margins and flexible growth can consume space before a distribution keyword has much visible work to do. </li><li>When center or space-between appears ineffective, inspect the actual free space and item sizing before changing the property name.</li></ul><div class="code-block"><pre><code>.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}</code></pre></div><ul class="wt-content-points"><li>This toolbar example assumes a row in ordinary horizontal writing mode. </li><li>Center aligns items across that row; space-between distributes any relevant remaining main-axis space.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Wrapping and gap — Make Room for More Content</h2><ul class="wt-content-points"><li>The default flex-wrap value is nowrap. </li><li>Items remain in one flex line; they may shrink according to their sizing rules, or overflow if their constraints prevent fitting. </li><li>Flex-wrap: wrap allows additional lines. </li><li>It does not make long text inside each item automatically safe.</li></ul><ul class="wt-content-points"><li>Gap supplies separation between items or lines. </li><li>It is easier to maintain than manually assigning several asymmetric child margins for a simple action group. </li><li>A gap still consumes layout space, so include it when predicting whether several items can fit.</li></ul><div class="code-block"><pre><code>.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.actions &gt; button { flex: 0 1 auto; }</code></pre></div><ul class="wt-content-points"><li>A wrapped row should have enough room for its meaningful controls and labels. </li><li>Try a longer label as well as a smaller viewport. </li><li>Do not shrink the font until the action is unreadable merely to keep every button in one row.</li></ul><ul class="wt-content-points"><li>In the lab, a deliberate non-wrapping row uses fixed item bases so you can observe overflow. </li><li>That case is a comparison, not a recommended default for a narrow learning page.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">📏</span>flex-grow, flex-shrink and flex-basis</h2><ul class="wt-content-points"><li>Flex-basis supplies a starting main size for flex sizing. </li><li>Flex-grow describes how positive free space is distributed. </li><li>Flex-shrink participates in distributing negative free space; its effect also depends on the basis and applicable minimum constraints. </li><li>These factors are not promises of a final fixed width.</li></ul><ul class="wt-content-points"><li>The flex shorthand combines those decisions. </li><li>Writing the three parts explicitly helps a beginner explain the behavior. </li><li>In flex: 1 1 140px, the item can grow, can shrink and begins from a 140px basis before the algorithm resolves the layout.</li></ul><div class="code-block"><pre><code>.resource { flex: 1 1 140px; min-width: 0; }
+.fixed-action { flex: 0 0 8rem; }</code></pre></div><ul class="wt-content-points"><li>The fixed-action example deliberately neither grows nor shrinks from its basis. </li><li>Use that choice only when its content and surrounding space support it. </li><li>Equal growth factors do not always make final widths equal when starting bases or constraints differ.</li></ul><ul class="wt-content-points"><li>A basis of auto can use a relevant main-size property or content according to the applicable sizing rules. </li><li>Avoid treating flex-basis as simply another spelling of min-width.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🧵</span>Minimum Sizes, Long Text and Source Order</h2><ul class="wt-content-points"><li>A flex or <strong class="wt-content-key">grid</strong> item’s automatic minimum can be influenced by its content. </li><li>A long unbroken token may prevent the item from shrinking as expected. </li><li>A targeted min-width: 0, suitable wrapping or a local scroller can help, depending on the content.</li></ul><ul class="wt-content-points"><li>Use overflow-wrap: anywhere for a token that may break without losing its purpose. </li><li>A code sample or data table may instead need a local horizontal scroller. </li><li>Do not globally clip every card to hide the overflow.</li></ul><ul class="wt-content-points"><li>Flex order, reversed directions and <strong class="wt-content-key">Grid</strong> placement can change the visual arrangement. </li><li>They do not automatically provide an equally useful reading or <strong class="wt-content-key">keyboard</strong> order. </li><li>Put the meaningful sequence in the document first, then use layout for presentation.</li></ul><div class="code-block"><pre><code>.resource { min-width: 0; }
+.resource .identifier { overflow-wrap: anywhere; }</code></pre></div><ul class="wt-content-points"><li>In the lab, cards remain in source order 1 through 6 for every scenario. </li><li>Use <strong class="wt-content-key">keyboard</strong> navigation through their disclosure summaries to compare that sequence with the visual arrangement.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🗂️</span>Grid — Columns, Rows and Tracks</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">grid</strong> container defines a track arrangement. </li><li>A column track is the space between adjacent column lines; a row track is the space between adjacent row lines. </li><li>Grid-template-columns declares explicit column tracks, while grid-template-rows can declare explicit row tracks.</li></ul><ul class="wt-content-points"><li>If you supply three columns and enough items for more than one row, automatic placement can create additional rows. </li><li>Explicit tracks and automatically created tracks are related but different parts of the <strong class="wt-content-key">grid</strong>. </li><li>Do not assume a three-column declaration limits the collection to exactly three items.</li></ul><div class="code-block"><pre><code>.resources {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}</code></pre></div><ul class="wt-content-points"><li>This example requests three shared columns across the rows. </li><li>Under the applicable sizing conditions, each 1fr track takes an equal share of the available flexible space after other relevant contributions such as gaps. </li><li>The minmax lower bound helps avoid an automatic minimum unexpectedly holding the track open.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">📍</span>Grid Lines, Spans and Named Areas</h2><ul class="wt-content-points"><li>Tracks are bounded by lines. </li><li>An item can be placed between lines or span a number of tracks. </li><li>For a three-column <strong class="wt-content-key">grid</strong>, there are four boundary lines across those explicit columns. </li><li>The gap is spacing between tracks, not a separate content column.</li></ul><ul class="wt-content-points"><li>Named areas can make a small page structure readable, such as a header, main content, related panel and footer. </li><li>They should describe the intended layout while the <strong class="wt-content-key">HTML</strong> source remains meaningful. </li><li>A named area in a template must form a valid rectangular region.</li></ul><div class="code-block"><pre><code>.featured { grid-column: 1 / -1; }
+
+.layout {
+  display: grid;
+  grid-template-areas: &quot;main aside&quot;;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.main-panel { grid-area: main; }
+.related-panel { grid-area: aside; }</code></pre></div><ul class="wt-content-points"><li>In the simple explicit-grid example, 1 / -1 spans from the first to the last explicit <strong class="wt-content-key">grid</strong> line. </li><li>When adapting the layout, preserve the logical source sequence rather than using placement to conceal a poorly ordered document.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>fr, minmax and Content Constraints</h2><ul class="wt-content-points"><li>The fr unit represents a share of flexible <strong class="wt-content-key">grid</strong> space. </li><li>It is not “one fraction of the entire viewport.” The available space is affected by the container, fixed tracks, gaps and the sizing algorithm.</li></ul><ul class="wt-content-points"><li>Minmax defines a lower and upper track sizing bound. </li><li>A common flexible pattern is minmax(0, 1fr), which allows the track’s lower bound to be zero. </li><li>The item’s own content and overflow behavior still require attention.</li></ul><div class="code-block"><pre><code>.two-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 16px;
+}</code></pre></div><ul class="wt-content-points"><li>If the simple definite-size case has 600px available inside the container and one 16px gap, there are 584px left for these flexible shares under the stated uncomplicated conditions. </li><li>The 1fr and 2fr tracks divide that flexible space in a 1-to-2 relationship. </li><li>This arithmetic does not describe every intrinsic-size case.</li></ul><ul class="wt-content-points"><li>Avoid declaring several percentage columns that already consume 100% and then forgetting the gaps. </li><li>Inspect the actual available track space when a row unexpectedly becomes wider than its parent.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>auto-fit and auto-fill — A Responsive Track Pattern</h2><ul class="wt-content-points"><li>Repeat can create tracks automatically based on how many fit. </li><li>Auto-fill keeps the generated track slots, including empty ones in the relevant case. </li><li>Auto-fit collapses eligible empty repeated tracks after placement so occupied tracks can use the space. </li><li>With enough items to occupy the slots, the difference may not be visible.</li></ul><ul class="wt-content-points"><li>Choose a sensible minimum so cards remain readable. </li><li>A minimum wider than the narrow container can itself cause overflow. </li><li>The following pattern limits the minimum to the container width when the available space is smaller than the preferred card minimum.</li></ul><div class="code-block"><pre><code>.resources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 16px;
+}</code></pre></div><ul class="wt-content-points"><li>Test the resulting collection with few items as well as many items. </li><li>Automatic tracks reduce the need for some width breakpoints, but they do not replace all <strong class="wt-content-key">responsive</strong> decisions, such as menu behavior, typography or the handling of a large data table.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">📱</span>Responsive Foundations — Viewport and Flexible Content</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Responsive</strong> design adapts a useful page to the available space and interaction context. </li><li>Include the viewport metadata for ordinary mobile page sizing. </li><li>Then use flexible components, constraints and appropriate layout changes rather than a collection of unrelated fixed-width pages.</li></ul><div class="code-block"><pre><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+
+.page { width: min(100% - 2rem, 70rem); margin-inline: auto; }
+img { max-width: 100%; height: auto; }</code></pre></div><ul class="wt-content-points"><li>Do not disable zoom to make a layout seem fixed. </li><li>Enlarged text and zoom can change the effective space available to the page. </li><li>Inspect whether controls wrap, text remains readable and content can still be reached.</li></ul><ul class="wt-content-points"><li>A viewport width is a <strong class="wt-content-key">CSS</strong> measurement context, not a dependable label for the device model or input method. </li><li>A wide window can be resized, and a device can use a different orientation. </li><li>Choose <strong class="wt-content-key">responsive</strong> rules according to where the content needs a change.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">📐</span>Media Queries — Change the Layout at a Useful Boundary</h2><ul class="wt-content-points"><li>A media query applies its rules when the stated condition matches. </li><li>A minimum-width condition can build from a simple narrow layout toward wider arrangements. </li><li>A maximum-width condition can adapt a wider default downward. </li><li>Keep the conditions and rule order understandable.</li></ul><div class="code-block"><pre><code>.resources { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 341px) {
+  .resources { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 521px) {
+  .resources { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}</code></pre></div><ul class="wt-content-points"><li>These boundaries are teaching values for the lab, not universal phone and tablet sizes. </li><li>If two conditions match, the cascade still resolves competing declarations. </li><li>In this example the later wider rule supplies three columns once its condition matches.</li></ul><ul class="wt-content-points"><li>Test at the boundary and on either side of it. </li><li>A collection that looks correct at 320px and 1000px can still have an awkward transition between them. </li><li>Media queries query the relevant media environment, which for the lab preview is its own frame viewport.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Reflow, Motion and Interaction Preferences</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">responsive</strong> review includes more than the number of columns. </li><li>Check readable text, growing explanations, focus visibility, menus, long content and the order of interactive elements. </li><li>Do not hide essential information at small widths to make the screenshot look simpler.</li></ul><ul class="wt-content-points"><li>Respect reduced-motion preferences where animations are unnecessary for understanding. </li><li>A transition can become immediate while the state change still works. </li><li>The shared interview cards in this course keep their question/answer behavior when the animation is reduced.</li></ul><ul class="wt-content-points"><li>Use hover as an enhancement rather than the only way to reveal essential content. </li><li>A <strong class="wt-content-key">keyboard</strong> or touch user still needs a usable route. </li><li>Keep native controls, labels and visible focus when the layout changes.</li></ul><div class="code-block"><pre><code>@media (prefers-reduced-motion: reduce) {
+  .card-motion { transition: none; }
+}</code></pre></div><ul class="wt-content-points"><li>The rule targets motion that you control. </li><li>It does not prove the whole page is accessible or every third-party component respects the preference. </li><li>Verify actual tasks and record the checks you performed.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Responsive Layout Journey</h2><p>Follow the source order, grid choice and matching viewport rules. Use the same numbered timeline and playback controls as the previous lessons. The last stage asks you to verify content and keyboard use as well as the visual arrangement.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="responsive">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>RESPONSIVE LAYOUT TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📄</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Begin with a meaningful source order</h3><p data-trace-description>Six resource cards appear in document order 1 through 6.</p></div><pre class="trace-code"><code data-trace-code>HTML order: 1 → 2 → 3 → 4 → 5 → 6</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Source" aria-pressed="true"><span>01</span><strong>Source</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Tracks" aria-pressed="false"><span>02</span><strong>Tracks</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Narrow" aria-pressed="false"><span>03</span><strong>Narrow</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Wider" aria-pressed="false"><span>04</span><strong>Wider</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Review" aria-pressed="false"><span>05</span><strong>Review</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>A useful reading and keyboard sequence is the foundation. Layout must not be used to repair an illogical source order.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Layout and Viewport Lab</h2><ul class="wt-content-points"><li>Compare wrapping <strong class="wt-content-key">Flexbox</strong>, deliberate non-wrapping Flexbox, a fixed three-column <strong class="wt-content-key">Grid</strong> and a responsive Grid. </li><li>The preview is a separate local document containing six cards in a stable source order. </li><li>Change its actual frame width to compare how the <strong class="wt-content-key">CSS</strong> responds.</li></ul><ul class="wt-content-points"><li>If the selected preview is wider than your lesson panel, scroll horizontally in the preview wrapper. </li><li>This keeps the chosen teaching viewport rather than silently shrinking it. </li><li>The fixed <strong class="wt-content-key">grid</strong> and non-wrapping flex cases are deliberately useful comparisons; they may be awkward on narrow widths.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">responsive</strong> <strong class="wt-content-key">Grid</strong> uses one column at 240px, two at 420px and three at 640px under its stated rules. </li><li>The explanation describes expected behavior of the fixed examples; it does not read or certify the <strong class="wt-content-key">browser</strong>’s entire layout.</li></ul><div class="wt9-demo"><label for="wt13Layout">Layout example</label><select id="wt13Layout"><option value="flex-wrap">Flexbox with wrapping</option><option value="flex-nowrap">Flexbox without wrapping</option><option value="grid-fixed">Grid: fixed three columns</option><option value="grid-responsive" selected>Grid: responsive columns</option></select><label for="wt13Width">Preview viewport width</label><select id="wt13Width"><option value="240">240px</option><option value="420">420px</option><option value="640" selected>640px</option></select><label for="wt13Content">Content stress test</label><select id="wt13Content"><option value="normal">Short explanations</option><option value="long">Long explanations and a long token</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt13Apply">Apply layout</button><button type="button" class="secondary-button" id="wt13Reset">Reset lab</button></div><p id="wt13Status" role="status">Default responsive Grid preview at 640px.</p><div class="wt13-preview-wrap" tabindex="0" aria-label="Scrollable layout preview"><iframe id="wt13Preview" title="Flexbox Grid responsive layout preview" sandbox="" loading="lazy"></iframe></div><h3>CSS supplied to the preview</h3><pre class="trace-code"><code id="wt13Rules"></code></pre><p id="wt13Expected"></p></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Explain the Layout Constraint</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Container</h3><p>Confirm the intended display value and which elements are direct items.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Size</h3><p>Inspect basis, tracks, gaps, minimums and available container space.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📐</span><h3>Conditions</h3><p>Check the actual viewport and which media-query rules match.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Behavior</h3><p>Test reading sequence, <strong class="wt-content-key">keyboard</strong> focus, content growth and local scrolling.</p></article></div><ul class="wt-content-points"><li>If a flex action row does not wrap, check flex-wrap and item constraints. </li><li>If a <strong class="wt-content-key">grid</strong> collection is wider than its parent, check fixed track minimums, unbroken content and the contribution of gaps. </li><li>If a breakpoint has no effect, inspect its condition, <strong class="wt-content-key">selector</strong> and the later competing rules.</li></ul><ul class="wt-content-points"><li>When visual order changes, verify that the intended task can still be followed by <strong class="wt-content-key">keyboard</strong>. </li><li>If long text overlaps, inspect fixed heights and overflow. </li><li>Prefer a targeted correction to globally hiding content or reducing every font size.</li></ul><ul class="wt-content-points"><li>Use <strong class="wt-content-key">browser</strong> tools to inspect the actual layout and computed declarations. </li><li>The lab’s expected-result text supports a guided comparison; a real project needs its own measured review.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why can a wrapped flex row look different from a grid row?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why can a wrapped flex row look different from a grid row?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Each flex line distributes its space independently. Grid can keep shared column tracks aligned across several rows.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is justify-content always horizontal?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is justify-content always horizontal?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. In Flexbox it follows the main axis, which depends on direction and writing mode.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between align-items and align-content?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between align-items and align-content?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Align-items concerns items in a line; align-content concerns the distribution of lines in a multi-line flex context with relevant extra space.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does flex-basis guarantee the final width?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does flex-basis guarantee the final width?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It supplies a starting size before growth, shrinking and constraints determine the result.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does minmax(0, 1fr) help address?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does minmax(0, 1fr) help address?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It gives the track a zero lower bound instead of an automatic minimum. The item’s content and overflow still need appropriate handling.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do auto-fit and auto-fill differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do auto-fit and auto-fill differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Auto-fit can collapse eligible empty repeated tracks after placement; auto-fill keeps generated slots. With no empty slots their result may look similar.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does changing CSS order repair keyboard order?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does changing CSS order repair keyboard order?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Put the meaningful sequence in the HTML and verify the actual reading and focus paths.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How should a breakpoint be chosen?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How should a breakpoint be chosen?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Choose where the content needs a useful layout change and test around that boundary, rather than assuming one universal device size.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain the Arrangement</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The layout acts on direct items; grandchildren are not automatically all outer flex items."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which elements normally become items when a container uses display: flex?</h3><div class="wt8-options"><button type="button" class="wt8-option">Every descendant</button><button type="button" class="wt8-option">Its direct items</button><button type="button" class="wt8-option">Only elements with IDs</button><button type="button" class="wt8-option">Only headings</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Column follows the block direction, which is vertical in the stated common writing mode."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. In a typical horizontal writing mode with flex-direction: column, which axis is the main axis?</h3><div class="wt8-options"><button type="button" class="wt8-option">Horizontal</button><button type="button" class="wt8-option">Diagonal</button><button type="button" class="wt8-option">Vertical block direction</button><button type="button" class="wt8-option">Always the screen width</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Align-items sets the cross-axis alignment for flex items; justify-items is not the Flexbox alignment control."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which property aligns flex items on the cross axis?</h3><div class="wt8-options"><button type="button" class="wt8-option">align-items</button><button type="button" class="wt8-option">grid-template-rows</button><button type="button" class="wt8-option">font-size</button><button type="button" class="wt8-option">justify-items</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Wrapping permits more flex lines; item sizes and content constraints still matter."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What allows a flex collection to create additional lines?</h3><div class="wt8-options"><button type="button" class="wt8-option">z-index</button><button type="button" class="wt8-option">position: fixed</button><button type="button" class="wt8-option">overflow: hidden</button><button type="button" class="wt8-option">flex-wrap: wrap</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="It is the starting basis before the flex algorithm resolves growth, shrinking and constraints."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. In flex: 1 1 140px, what is 140px?</h3><div class="wt8-options"><button type="button" class="wt8-option">A mandatory final width</button><button type="button" class="wt8-option">The flex basis</button><button type="button" class="wt8-option">A grid gap</button><button type="button" class="wt8-option">A margin</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The declaration defines three flexible column tracks in the stated grid example."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What does repeat(3, minmax(0, 1fr)) request here?</h3><div class="wt8-options"><button type="button" class="wt8-option">Three fixed 1px columns</button><button type="button" class="wt8-option">One column with three margins</button><button type="button" class="wt8-option">Three flexible columns with a zero lower bound</button><button type="button" class="wt8-option">Three absolute-positioned elements</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The flexible space is determined by the container and track sizing context, including other relevant contributions."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What does 1fr refer to?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always the whole viewport</button><button type="button" class="wt8-option">One physical device pixel</button><button type="button" class="wt8-option">The font size</button><button type="button" class="wt8-option">A share of flexible grid space</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Inspect the actual item and content, then use appropriate minimum-size and wrapping/scrolling behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which can help an item shrink when an automatic minimum is the problem?</h3><div class="wt8-options"><button type="button" class="wt8-option">A targeted min-width: 0</button><button type="button" class="wt8-option">A huge z-index</button><button type="button" class="wt8-option">A smaller ID</button><button type="button" class="wt8-option">Deleting the viewport metadata</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="This empty-track behavior can let occupied tracks use space; the distinction may be invisible when tracks are all occupied."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What can auto-fit do after placement that auto-fill does not do in the relevant case?</h3><div class="wt8-options"><button type="button" class="wt8-option">Disable focus</button><button type="button" class="wt8-option">Collapse eligible empty repeated tracks</button><button type="button" class="wt8-option">Turn text into a button</button><button type="button" class="wt8-option">Remove the whole grid</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The 341px minimum-width rule matches, but the 521px rule does not."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. At 420px, which column count is expected in this lab’s responsive Grid?</h3><div class="wt8-options"><button type="button" class="wt8-option">One</button><button type="button" class="wt8-option">Three</button><button type="button" class="wt8-option">Two</button><button type="button" class="wt8-option">Six</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Visual placement is not a substitute for meaningful document order and keyboard testing."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Does CSS visual reordering automatically produce a logical keyboard order?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes, for all controls</button><button type="button" class="wt8-option">Yes, if Grid is used</button><button type="button" class="wt8-option">Yes, with a wide screen</button><button type="button" class="wt8-option">No; source order and actual focus behavior need review</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Test actual content growth and transitions between layout conditions, including keyboard use."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Which is a useful responsive test?</h3><div class="wt8-options"><button type="button" class="wt8-option">Narrow, intermediate and wide widths with longer content</button><button type="button" class="wt8-option">Only one desktop screenshot</button><button type="button" class="wt8-option">Hiding all mobile instructions</button><button type="button" class="wt8-option">Disabling zoom</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt13QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Compare Specific Cases</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↔️</span><h3>Axes</h3><ul class="wt-content-points"><li>Change a row to a column. </li><li>Expected: the main axis changes; explain alignment using axis names rather than only horizontal/vertical.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Wrap comparison</h3><ul class="wt-content-points"><li>Use six fixed 140px items with gaps, then compare wrapping and non-wrapping. </li><li>Expected: the non-wrapping case needs enough width or access to overflow.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗂️</span><h3>Shared tracks</h3><p>Use a three-column <strong class="wt-content-key">grid</strong> with six cards. Expected: two rows share the same column structure under the fixed-track example.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📱</span><h3>Viewport rules</h3><p>Test <strong class="wt-content-key">responsive</strong> <strong class="wt-content-key">Grid</strong> at 240px, 420px and 640px. Expected: one, two and three columns respectively.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📐</span><h3>Boundary checks</h3><ul class="wt-content-points"><li>Test just below and above the lesson’s 341px and 521px minimum-width conditions in a standalone <strong class="wt-content-key">browser</strong> example. </li><li>Expected: the matching rule changes at its boundary.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Long token</h3><ul class="wt-content-points"><li>Place a long resource identifier inside a card with suitable wrapping. </li><li>Expected: it remains available without pushing the whole page wider.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Focus order</h3><p>Tab through the six native disclosure summaries. Expected: source sequence 1–6 stays meaningful at each width.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Few-item grid</h3><ul class="wt-content-points"><li>Compare auto-fill and auto-fit with fewer items than available tracks. </li><li>Expected: eligible empty tracks behave differently; describe the actual inspected result.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Items:</strong> Container layout acts on direct items.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">↔️</span><strong>Axes:</strong> Flex direction defines main and cross axes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>Alignment:</strong> Name the axis and inspect free space.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>Wrapping:</strong> Use wrapping where controls should create new lines.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📏</span><strong>Flex sizing:</strong> Basis, growth, shrinking and constraints determine sizes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Grid:</strong> Shared tracks organize columns and rows.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧮</span><strong>Tracks:</strong> fr and minmax operate within a track sizing context.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📱</span><strong>Responsive:</strong> Choose conditions where content needs change.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧵</span><strong>Content:</strong> Long tokens and enlarged text must remain available.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⌨️</span><strong>Order:</strong> Preserve a meaningful source and keyboard sequence.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Flex container"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Flex container</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Flex container</h4><p>An element establishing a Flexbox layout for its items.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Main axis"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Main axis</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Main axis</h4><p>The axis along which flex items are arranged, determined by direction.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Cross axis"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Cross axis</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Cross axis</h4><p>The axis perpendicular to the flex main axis.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Flex basis"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Flex basis</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Flex basis</h4><p>The starting main-size basis used during flex sizing.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Grid track"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Grid track</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Grid track</h4><p>The area between adjacent grid lines, forming a row or column.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Fraction unit"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Fraction unit</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Fraction unit</h4><p>A share of flexible grid space, written fr.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Media query"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Media query</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Media query</h4><p>A condition controlling when a set of CSS rules applies.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Breakpoint"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Breakpoint</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Breakpoint</h4><p>A chosen condition boundary where the layout or presentation changes.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Viewport"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Viewport</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Viewport</h4><p>The viewing area used by the relevant document’s media and layout context.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Reflow"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Reflow</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Reflow</h4><p>The adaptation of content arrangement as available space or presentation changes.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Responsive Resource Collection</h2><ul class="wt-content-points"><li>Build a <strong class="wt-content-key">semantic</strong> workshop resource page with six article cards. </li><li>Keep their source order meaningful. </li><li>Use <strong class="wt-content-key">Grid</strong> for the collection and <strong class="wt-content-key">Flexbox</strong> for each card’s action group. </li><li>Make the narrow default readable, then add wider conditions only where the collection needs more columns.</li></ul><ul class="wt-content-points"><li>Use sensible gaps, minimum-size handling, flexible text panels and visible focus. </li><li>Include a long identifier and a longer explanation in one card. </li><li>Keep essential information and controls available at every width; do not use <strong class="wt-content-key">CSS</strong> reordering as a repair for an illogical document sequence.</li></ul><ul class="wt-content-points"><li>Test at 240px, 420px and 640px for the teaching conditions, then test nearby and intermediate widths in your own <strong class="wt-content-key">browser</strong>. </li><li>Try zoom, enlarged text and <strong class="wt-content-key">keyboard</strong> navigation through native controls. </li><li>Record one actual finding and the correction that resolves it.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain why <strong class="wt-content-key">Flexbox</strong> and <strong class="wt-content-key">Grid</strong> were chosen, identify the matching responsive rules, demonstrate stable keyboard order and preserve readable content. </li><li>The next lesson introduces <strong class="wt-content-key">JavaScript</strong> fundamentals for adding behavior.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 13 Complete?</h2><p>Before marking complete, build a wrapping action group, a track-based collection and a responsive change you can explain. Test a long token and a keyboard path at more than one width. Completion is a local study milestone, not an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="css-box-model-layout.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">CSS Box Model and Layout</span><span class="nav-action">Review Level 12</span></a></div><div class="topic-nav-side next"><a href="javascript-fundamentals.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">JavaScript Fundamentals</span><span class="nav-action">Open Level 14</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="flexbox-grid-responsive-design.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=8" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=5" defer></script>
+</body></html>

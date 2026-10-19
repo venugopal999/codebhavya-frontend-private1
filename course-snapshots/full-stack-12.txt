@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 12: Async JavaScript &amp; APIs | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=12"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=12">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class="active " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">12</div><div><p class="eyebrow">JavaScript Engineering · Level 12</p><h1>Async JavaScript &amp; APIs</h1><p>Real web applications cannot wait for every network request, timer, file operation or browser task to finish before doing anything else. JavaScript uses asynchronous programming to keep applications responsive. In this level, you will learn how Promises work, how async/await is built on Promises, how Fetch communicates with APIs, and how the event loop coordinates asynchronous work.</p><div class="lesson-meta"><span>◈ Intermediate</span><span>▣ 24 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand synchronous and asynchronous execution.</p></article><article><b>02</b><p>Understand why asynchronous programming is necessary in web applications.</p></article><article><b>03</b><p>Understand the lifecycle of a Promise.</p></article><article><b>04</b><p>Use then(), catch() and finally().</p></article><article><b>05</b><p>Chain multiple Promises correctly.</p></article><article><b>06</b><p>Avoid floating Promises and broken chains.</p></article><article><b>07</b><p>Use async functions.</p></article><article><b>08</b><p>Use await correctly.</p></article><article><b>09</b><p>Handle async failures using try/catch.</p></article><article><b>10</b><p>Understand that async functions return Promises.</p></article><article><b>11</b><p>Understand the JavaScript event loop at a practical level.</p></article><article><b>12</b><p>Understand tasks and microtasks.</p></article><article><b>13</b><p>Use Fetch to communicate with APIs.</p></article><article><b>14</b><p>Understand Response objects and HTTP status codes.</p></article><article><b>15</b><p>Parse JSON responses.</p></article><article><b>16</b><p>Send GET and POST requests.</p></article><article><b>17</b><p>Handle network and HTTP failures separately.</p></article><article><b>18</b><p>Use Promise.all() for independent requests.</p></article><article><b>19</b><p>Understand Promise.allSettled(), Promise.race() and Promise.any().</p></article><article><b>20</b><p>Cancel suitable requests using AbortController.</p></article><article><b>21</b><p>Build reliable API-loading interfaces.</p></article><article><b>22</b><p>Design useful loading, success and error states.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Why Asynchronous JavaScript Exists</h2></div></div><p class="concept-intro">JavaScript often needs to start work that finishes later.</p><div class="explanation-list"><p>Browser applications regularly perform operations whose completion time is unknown. Network requests, timers, user interactions and other browser operations should not freeze the entire interface while JavaScript waits.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Asynchronous JavaScript does not mean JavaScript runs everything simultaneously. It means work can be scheduled so the main execution flow does not wait unnecessarily.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;Start&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;Finished later&quot;);
+}, 1000);
+
+console.log(&quot;End&quot;);">Copy</button></header><pre><code>console.log(&quot;Start&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;Finished later&quot;);
+}, 1000);
+
+console.log(&quot;End&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Start
+End
+Finished later</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>JavaScript starts executing</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Synchronous statements run immediately</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Timer is registered with the browser</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>JavaScript continues</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>The callback becomes eligible later</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>The event loop eventually allows the callback to run</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Synchronous vs Asynchronous Execution</h2></div></div><p class="concept-intro">Understanding the difference between synchronous and asynchronous code is the foundation of this entire level.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Synchronous code follows the current execution order. Asynchronous APIs allow completion to happen later.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;A&quot;);
+
+console.log(&quot;B&quot;);
+
+console.log(&quot;C&quot;);">Copy</button></header><pre><code>console.log(&quot;A&quot;);
+
+console.log(&quot;B&quot;);
+
+console.log(&quot;C&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>A
+B
+C</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>What Is a Promise?</h2></div></div><p class="concept-intro">A Promise represents the eventual result of an asynchronous operation.</p><div class="explanation-list"><p>A Promise starts in a pending state. It can later become fulfilled when the operation succeeds or rejected when the operation fails.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A Promise is a future result, not the final result itself.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const promise = new Promise((resolve, reject) =&gt; {
+
+  setTimeout(() =&gt; {
+    resolve(&quot;Data received&quot;);
+  }, 1000);
+
+});">Copy</button></header><pre><code>const promise = new Promise((resolve, reject) =&gt; {
+
+  setTimeout(() =&gt; {
+    resolve(&quot;Data received&quot;);
+  }, 1000);
+
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Creating and Settling Promises</h2></div></div><p class="concept-intro">A Promise is created with a function that receives resolve and reject.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>resolve represents success; reject represents failure.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A Promise should represent a meaningful asynchronous operation. Creating unnecessary Promise wrappers around already-Promise-based APIs usually makes code harder to understand.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function getUser() {
+
+  return new Promise((resolve, reject) =&gt; {
+
+    const success = true;
+
+    if (success) {
+      resolve({
+        id: 1,
+        name: &quot;Ravi&quot;
+      });
+    } else {
+      reject(
+        new Error(&quot;User not found&quot;)
+      );
+    }
+
+  });
+
+}">Copy</button></header><pre><code>function getUser() {
+
+  return new Promise((resolve, reject) =&gt; {
+
+    const success = true;
+
+    if (success) {
+      resolve({
+        id: 1,
+        name: &quot;Ravi&quot;
+      });
+    } else {
+      reject(
+        new Error(&quot;User not found&quot;)
+      );
+    }
+
+  });
+
+}</code></pre></div><div class="method-grid"><article class="method-card"><b>resolve()</b><p>Marks the Promise as successfully fulfilled.</p><code>resolve(&quot;Success&quot;)</code></article><article class="method-card"><b>reject()</b><p>Marks the Promise as rejected.</p><code>reject(new Error(&quot;Failed&quot;))</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>then(), catch() and finally()</h2></div></div><p class="concept-intro">Promise methods allow code to react when asynchronous work succeeds or fails.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Promise chains provide a structured way to express success, failure and cleanup.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="getUser()
+  .then(user =&gt; {
+    console.log(user.name);
+  })
+  .catch(error =&gt; {
+    console.error(error.message);
+  })
+  .finally(() =&gt; {
+    console.log(&quot;Request finished&quot;);
+  });">Copy</button></header><pre><code>getUser()
+  .then(user =&gt; {
+    console.log(user.name);
+  })
+  .catch(error =&gt; {
+    console.error(error.message);
+  })
+  .finally(() =&gt; {
+    console.log(&quot;Request finished&quot;);
+  });</code></pre></div><div class="method-grid"><article class="method-card"><b>then()</b><p>Runs when the Promise is fulfilled.</p><code>promise.then(value =&gt; console.log(value))</code></article><article class="method-card"><b>catch()</b><p>Handles rejection or errors propagated through the chain.</p><code>promise.catch(error =&gt; console.error(error))</code></article><article class="method-card"><b>finally()</b><p>Runs after the Promise settles regardless of success or failure.</p><code>promise.finally(() =&gt; hideLoader())</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Promise Chaining</h2></div></div><p class="concept-intro">The return value of one then() handler becomes the input to the next step.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Return the next Promise when the following step depends on it.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Forgetting return inside a Promise chain can cause later handlers to run before the asynchronous operation has completed.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="getUser()
+
+  .then(user =&gt; {
+    return getProfile(user.id);
+  })
+
+  .then(profile =&gt; {
+    return getCourses(profile.courseId);
+  })
+
+  .then(courses =&gt; {
+    console.log(courses);
+  })
+
+  .catch(error =&gt; {
+    console.error(error);
+  });">Copy</button></header><pre><code>getUser()
+
+  .then(user =&gt; {
+    return getProfile(user.id);
+  })
+
+  .then(profile =&gt; {
+    return getCourses(profile.courseId);
+  })
+
+  .then(courses =&gt; {
+    console.log(courses);
+  })
+
+  .catch(error =&gt; {
+    console.error(error);
+  });</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Get user</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Wait for user Promise</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Use user id</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Get profile</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Wait for profile Promise</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Get courses</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>Display courses</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">08</div><div class="flow-content"><strong>Handle failures</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Floating Promises</h2></div></div><p class="concept-intro">One of the most important professional Promise mistakes is starting asynchronous work without returning or handling it.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>When a Promise operation belongs to a chain, return it so the chain can track its completion.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The getProfile() Promise is not returned. The next then() cannot reliably receive its result.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function loadData() {
+
+  return getUser()
+
+    .then(user =&gt; {
+
+      return getProfile(user.id);
+
+    })
+
+    .then(profile =&gt; {
+
+      console.log(profile);
+
+    });
+
+}">Copy</button></header><pre><code>function loadData() {
+
+  return getUser()
+
+    .then(user =&gt; {
+
+      return getProfile(user.id);
+
+    })
+
+    .then(profile =&gt; {
+
+      console.log(profile);
+
+    });
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>async Functions</h2></div></div><p class="concept-intro">The async keyword creates a function whose return value is always a Promise.</p><div class="explanation-list"><p>Even when an async function returns a normal value, JavaScript wraps that value in a fulfilled Promise.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>async does not make a function synchronous. It makes Promise-based asynchronous code easier to write.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function getMessage() {
+
+  return &quot;Hello CodeBhavya&quot;;
+
+}
+
+const result = getMessage();
+
+console.log(result);">Copy</button></header><pre><code>async function getMessage() {
+
+  return &quot;Hello CodeBhavya&quot;;
+
+}
+
+const result = getMessage();
+
+console.log(result);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Promise { &quot;Hello CodeBhavya&quot; }</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>await</h2></div></div><p class="concept-intro">await lets an async function wait for a Promise before continuing that function.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>await makes asynchronous code read more like sequential code without blocking the entire program.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>await does not freeze the entire JavaScript runtime. It suspends the surrounding async function while the awaited Promise is pending.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function loadUser() {
+
+  const user =
+    await getUser();
+
+  console.log(user);
+
+}">Copy</button></header><pre><code>async function loadUser() {
+
+  const user =
+    await getUser();
+
+  console.log(user);
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Call async function</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Start getUser()</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Reach await</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Async function pauses at that point</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Other JavaScript work can continue</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Promise settles</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>Async function resumes</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">08</div><div class="flow-content"><strong>user receives the fulfilled value</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>try/catch with async/await</h2></div></div><p class="concept-intro">try/catch provides a natural error-handling structure for async/await.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use try/catch when an async operation can reject and the current function is responsible for handling that failure.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function loadUser() {
+
+  try {
+
+    const user =
+      await getUser();
+
+    console.log(user);
+
+  } catch (error) {
+
+    console.error(
+      &quot;Failed:&quot;,
+      error.message
+    );
+
+  }
+
+}">Copy</button></header><pre><code>async function loadUser() {
+
+  try {
+
+    const user =
+      await getUser();
+
+    console.log(user);
+
+  } catch (error) {
+
+    console.error(
+      &quot;Failed:&quot;,
+      error.message
+    );
+
+  }
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Start asynchronous operation</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>await Promise</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Success → continue inside try</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Failure → control moves to catch</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Handle or report the error</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Fetch API Fundamentals</h2></div></div><p class="concept-intro">Fetch is the modern browser API for making HTTP requests.</p><div class="explanation-list"><p>fetch() returns a Promise that fulfills with a Response object when the request receives a response. The response body is then read using methods such as json(), which are themselves asynchronous.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Fetch separates receiving the HTTP response from reading and parsing its body.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="fetch(&quot;/api/courses&quot;)
+  .then(response =&gt; {
+    return response.json();
+  })
+  .then(data =&gt; {
+    console.log(data);
+  })
+  .catch(error =&gt; {
+    console.error(error);
+  });">Copy</button></header><pre><code>fetch(&quot;/api/courses&quot;)
+  .then(response =&gt; {
+    return response.json();
+  })
+  .then(data =&gt; {
+    console.log(data);
+  })
+  .catch(error =&gt; {
+    console.error(error);
+  });</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Call fetch(url)</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Browser sends HTTP request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Fetch returns a Promise</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Promise fulfills with Response</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Read response body</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Parse JSON</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>Use application data</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>The Response Object</h2></div></div><p class="concept-intro">The Response object contains status and body information about an HTTP response.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Network failure and HTTP failure are not exactly the same thing.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>fetch() does not automatically reject merely because the server returns 404 or 500. Check response.ok or response.status yourself.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const response =
+  await fetch(&quot;/api/courses&quot;);
+
+console.log(response.status);
+console.log(response.ok);">Copy</button></header><pre><code>const response =
+  await fetch(&quot;/api/courses&quot;);
+
+console.log(response.status);
+console.log(response.ok);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Parsing JSON</h2></div></div><p class="concept-intro">Many web APIs return structured data in JSON format.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The HTTP response and the parsed application data are separate stages.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const response =
+  await fetch(&quot;/api/student&quot;);
+
+const student =
+  await response.json();
+
+console.log(student.name);">Copy</button></header><pre><code>const response =
+  await fetch(&quot;/api/student&quot;);
+
+const student =
+  await response.json();
+
+console.log(student.name);</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Receive Response</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Check response.ok</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Call response.json()</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Wait for JSON parsing</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Receive JavaScript value</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Use the data</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Professional GET Request Pattern</h2></div></div><p class="concept-intro">A production-style GET request should explicitly handle HTTP failures.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A clean API helper should convert an unsuccessful HTTP response into an error that its caller can handle.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function loadCourses() {
+
+  const response =
+    await fetch(&quot;/api/courses&quot;);
+
+  if (!response.ok) {
+
+    throw new Error(
+      `HTTP error: ${response.status}`
+    );
+
+  }
+
+  return response.json();
+
+}">Copy</button></header><pre><code>async function loadCourses() {
+
+  const response =
+    await fetch(&quot;/api/courses&quot;);
+
+  if (!response.ok) {
+
+    throw new Error(
+      `HTTP error: ${response.status}`
+    );
+
+  }
+
+  return response.json();
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Start request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Await Response</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Check response.ok</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Throw if HTTP status is unsuccessful</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Parse JSON</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Return application data</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>GET Request with Loading and Error States</h2></div></div><p class="concept-intro">A real interface needs more than a successful data path.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Professional async UI usually has loading, success, empty and error states.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function loadCourses() {
+
+  showLoading();
+
+  try {
+
+    const response =
+      await fetch(&quot;/api/courses&quot;);
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+    }
+
+    const courses =
+      await response.json();
+
+    renderCourses(courses);
+
+  } catch (error) {
+
+    showError(
+      &quot;Unable to load courses.&quot;
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}">Copy</button></header><pre><code>async function loadCourses() {
+
+  showLoading();
+
+  try {
+
+    const response =
+      await fetch(&quot;/api/courses&quot;);
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+    }
+
+    const courses =
+      await response.json();
+
+    renderCourses(courses);
+
+  } catch (error) {
+
+    showError(
+      &quot;Unable to load courses.&quot;
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>Loading</h3><ul><li>Tell the user that work has started.</li><li>Prevent confusing blank screens.</li></ul></article><article><span>02</span><h3>Success</h3><ul><li>Parse the response.</li><li>Render the received data.</li></ul></article><article><span>03</span><h3>Failure</h3><ul><li>Show a useful error state.</li><li>Do not expose unnecessary technical details.</li></ul></article><article><span>04</span><h3>Cleanup</h3><ul><li>Remove loading state regardless of success or failure.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>POST Requests</h2></div></div><p class="concept-intro">Fetch can also send data to a server.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A POST request sends a representation of data to the server; the server decides whether that data is valid.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Never assume that client-side validation alone is sufficient. The server must validate incoming data too.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function createStudent(student) {
+
+  const response =
+    await fetch(&quot;/api/students&quot;, {
+
+      method: &quot;POST&quot;,
+
+      headers: {
+        &quot;Content-Type&quot;:
+          &quot;application/json&quot;
+      },
+
+      body: JSON.stringify(student)
+
+    });
+
+  if (!response.ok) {
+    throw new Error(
+      `HTTP error: ${response.status}`
+    );
+  }
+
+  return response.json();
+
+}">Copy</button></header><pre><code>async function createStudent(student) {
+
+  const response =
+    await fetch(&quot;/api/students&quot;, {
+
+      method: &quot;POST&quot;,
+
+      headers: {
+        &quot;Content-Type&quot;:
+          &quot;application/json&quot;
+      },
+
+      body: JSON.stringify(student)
+
+    });
+
+  if (!response.ok) {
+    throw new Error(
+      `HTTP error: ${response.status}`
+    );
+  }
+
+  return response.json();
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>Network Errors vs HTTP Errors</h2></div></div><p class="concept-intro">Not every failed request reaches the same stage.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Reliable API code handles transport failure, HTTP failure and data-parsing failure.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Promise.all()</h2></div></div><p class="concept-intro">Independent asynchronous operations can often run concurrently.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use concurrency when operations are independent.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not use Promise.all merely because it exists. If operation B depends on the result of A, sequential execution may be necessary.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const [
+  courses,
+  instructors,
+  announcements
+] = await Promise.all([
+
+  fetchCourses(),
+  fetchInstructors(),
+  fetchAnnouncements()
+
+]);">Copy</button></header><pre><code>const [
+  courses,
+  instructors,
+  announcements
+] = await Promise.all([
+
+  fetchCourses(),
+  fetchInstructors(),
+  fetchAnnouncements()
+
+]);</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Start courses request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Start instructors request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Start announcements request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Wait for all</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Receive all results</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Continue together</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>Promise.allSettled(), race() and any()</h2></div></div><p class="concept-intro">JavaScript provides several ways to coordinate multiple Promises.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Choose the Promise combinator based on the business requirement, not simply on convenience.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const results =
+  await Promise.allSettled([
+    loadPrimary(),
+    loadBackup(),
+    loadOptional()
+  ]);
+
+results.forEach(result =&gt; {
+
+  if (result.status === &quot;fulfilled&quot;) {
+    console.log(result.value);
+  } else {
+    console.log(result.reason);
+  }
+
+});">Copy</button></header><pre><code>const results =
+  await Promise.allSettled([
+    loadPrimary(),
+    loadBackup(),
+    loadOptional()
+  ]);
+
+results.forEach(result =&gt; {
+
+  if (result.status === &quot;fulfilled&quot;) {
+    console.log(result.value);
+  } else {
+    console.log(result.reason);
+  }
+
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>The JavaScript Event Loop</h2></div></div><p class="concept-intro">The event loop explains how JavaScript can coordinate asynchronous work while executing JavaScript on the main thread.</p><div class="explanation-list"><p>The synchronous code runs first. Promise reactions are scheduled as microtasks, while the timer callback is scheduled as a task. After the current synchronous work completes, the microtask is processed before the timer callback in this example.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The event loop coordinates when queued asynchronous callbacks become eligible to run.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;A&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;Timer&quot;);
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log(&quot;Promise&quot;);
+});
+
+console.log(&quot;B&quot;);">Copy</button></header><pre><code>console.log(&quot;A&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;Timer&quot;);
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log(&quot;Promise&quot;);
+});
+
+console.log(&quot;B&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>A
+B
+Promise
+Timer</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Run synchronous JavaScript</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Register timer task</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Register Promise reaction</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Finish synchronous code</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Process microtasks</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Process eligible task such as timer callback</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>Continue event-loop processing</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">21</div><div><p class="section-label">CONCEPT 21</p><h2>Tasks and Microtasks</h2></div></div><p class="concept-intro">Not all queued asynchronous callbacks are handled in exactly the same queue.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A zero-delay timer does not mean &#39;run immediately&#39;. It schedules a task that runs after the current work and applicable microtasks.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;1&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;2&quot;);
+}, 0);
+
+queueMicrotask(() =&gt; {
+  console.log(&quot;3&quot;);
+});
+
+console.log(&quot;4&quot;);">Copy</button></header><pre><code>console.log(&quot;1&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;2&quot;);
+}, 0);
+
+queueMicrotask(() =&gt; {
+  console.log(&quot;3&quot;);
+});
+
+console.log(&quot;4&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>1
+4
+3
+2</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">22</div><div><p class="section-label">CONCEPT 22</p><h2>Promise and Event Loop Tracer</h2></div></div><p class="concept-intro">Use the execution order to predict asynchronous output before running the code.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Predicting event-loop ordering is an important JavaScript interview skill.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;Start&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;Timer&quot;);
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log(&quot;Promise&quot;);
+});
+
+console.log(&quot;End&quot;);">Copy</button></header><pre><code>console.log(&quot;Start&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;Timer&quot;);
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log(&quot;Promise&quot;);
+});
+
+console.log(&quot;End&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Start
+End
+Promise
+Timer</pre></div><div class="url-breakdown"><article><code>Step 1</code><p>Start is printed synchronously.</p></article><article><code>Step 2</code><p>The timer callback is scheduled as a task.</p></article><article><code>Step 3</code><p>The Promise reaction is scheduled as a microtask.</p></article><article><code>Step 4</code><p>End is printed synchronously.</p></article><article><code>Step 5</code><p>The microtask runs.</p></article><article><code>Step 6</code><p>The timer task runs.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">23</div><div><p class="section-label">CONCEPT 23</p><h2>AbortController and Request Cancellation</h2></div></div><p class="concept-intro">Some asynchronous requests should be cancelled when they are no longer useful.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Cancellation is useful for requests that become irrelevant, such as stale searches or navigation-away scenarios.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const controller =
+  new AbortController();
+
+try {
+
+  const response =
+    await fetch(&quot;/api/search&quot;, {
+      signal: controller.signal
+    });
+
+  const data =
+    await response.json();
+
+} catch (error) {
+
+  if (error.name === &quot;AbortError&quot;) {
+    console.log(&quot;Request cancelled&quot;);
+  } else {
+    console.error(error);
+  }
+
+}
+
+controller.abort();">Copy</button></header><pre><code>const controller =
+  new AbortController();
+
+try {
+
+  const response =
+    await fetch(&quot;/api/search&quot;, {
+      signal: controller.signal
+    });
+
+  const data =
+    await response.json();
+
+} catch (error) {
+
+  if (error.name === &quot;AbortError&quot;) {
+    console.log(&quot;Request cancelled&quot;);
+  } else {
+    console.error(error);
+  }
+
+}
+
+controller.abort();</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Create AbortController</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Pass its signal to fetch</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Start request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Decide the request is no longer needed</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Call controller.abort()</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Handle AbortError</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">24</div><div><p class="section-label">CONCEPT 24</p><h2>Designing Reliable API Functions</h2></div></div><p class="concept-intro">API code should have a clear responsibility and predictable error behaviour.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A reusable API function should either provide valid data or clearly communicate failure.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Avoid hiding every error inside a low-level API helper and returning undefined. Callers need a predictable success/failure contract.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function getCourses() {
+
+  const response =
+    await fetch(&quot;/api/courses&quot;);
+
+  if (!response.ok) {
+
+    throw new Error(
+      `Request failed: ${response.status}`
+    );
+
+  }
+
+  return response.json();
+
+}">Copy</button></header><pre><code>async function getCourses() {
+
+  const response =
+    await fetch(&quot;/api/courses&quot;);
+
+  if (!response.ok) {
+
+    throw new Error(
+      `Request failed: ${response.status}`
+    );
+
+  }
+
+  return response.json();
+
+}</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>Request</h3><ul><li>Build the request.</li><li>Send it with Fetch.</li></ul></article><article><span>02</span><h3>Validation</h3><ul><li>Check HTTP response status.</li><li>Reject unsuccessful responses.</li></ul></article><article><span>03</span><h3>Parsing</h3><ul><li>Convert response data into JavaScript values.</li></ul></article><article><span>04</span><h3>Consumer</h3><ul><li>Let the caller decide how the UI should respond.</li></ul></article></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Async JavaScript Execution Tracer</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>console.log(&quot;Start&quot;);</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>setTimeout(() =&gt; {</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>  console.log(&quot;Timer&quot;);</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>}, 0);</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>Promise.resolve().then(() =&gt; {</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>  console.log(&quot;Promise&quot;);</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>});</code></div><div data-trace-line="7"><span class="trace-line-number">08</span><code>console.log(&quot;End&quot;);</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Asynchronous</strong><p>Work whose completion occurs later rather than immediately in the current execution flow.</p></div></article><article><b>02</b><div><strong>Promise</strong><p>An object representing the eventual success or failure of an asynchronous operation.</p></div></article><article><b>03</b><div><strong>Pending</strong><p>Initial Promise state before it fulfills or rejects.</p></div></article><article><b>04</b><div><strong>Fulfilled</strong><p>Promise state representing successful completion.</p></div></article><article><b>05</b><div><strong>Rejected</strong><p>Promise state representing failure.</p></div></article><article><b>06</b><div><strong>then()</strong><p>Registers handling for fulfilled Promise results.</p></div></article><article><b>07</b><div><strong>catch()</strong><p>Handles Promise rejection and errors propagated through a chain.</p></div></article><article><b>08</b><div><strong>finally()</strong><p>Runs after a Promise settles regardless of success or failure.</p></div></article><article><b>09</b><div><strong>async</strong><p>Declares a function that returns a Promise.</p></div></article><article><b>10</b><div><strong>await</strong><p>Suspends the surrounding async function until a Promise settles.</p></div></article><article><b>11</b><div><strong>Fetch</strong><p>Browser API for making HTTP requests.</p></div></article><article><b>12</b><div><strong>Response</strong><p>Object representing the HTTP response received by Fetch.</p></div></article><article><b>13</b><div><strong>response.ok</strong><p>Boolean indicating whether the HTTP status is in the successful 200 range.</p></div></article><article><b>14</b><div><strong>JSON</strong><p>Text-based data format commonly used for API communication.</p></div></article><article><b>15</b><div><strong>Promise.all()</strong><p>Waits for multiple Promises and rejects when one rejects.</p></div></article><article><b>16</b><div><strong>Promise.allSettled()</strong><p>Waits for every Promise and reports each outcome.</p></div></article><article><b>17</b><div><strong>Promise.race()</strong><p>Settles according to the first Promise to settle.</p></div></article><article><b>18</b><div><strong>Promise.any()</strong><p>Fulfills when the first Promise fulfills.</p></div></article><article><b>19</b><div><strong>Event loop</strong><p>The runtime mechanism that coordinates execution of queued asynchronous work.</p></div></article><article><b>20</b><div><strong>Microtask</strong><p>A high-priority queued job such as a Promise reaction.</p></div></article><article><b>21</b><div><strong>AbortController</strong><p>API used to signal cancellation to compatible asynchronous operations.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is asynchronous JavaScript?</summary><div class="interview-answer"><p>It is a programming model where operations can complete later without forcing the current JavaScript execution to wait for them synchronously.</p></div></details><details class="interview-item"><summary><span>02</span>Why do we need asynchronous programming in browsers?</summary><div class="interview-answer"><p>Browsers perform operations such as network requests and timers whose completion time is unknown. Asynchronous programming allows the application to remain responsive while those operations are pending.</p></div></details><details class="interview-item"><summary><span>03</span>What is a Promise?</summary><div class="interview-answer"><p>A Promise represents the eventual result of an asynchronous operation and can be pending, fulfilled or rejected.</p></div></details><details class="interview-item"><summary><span>04</span>What are the three Promise states?</summary><div class="interview-answer"><p>Pending, fulfilled and rejected.</p></div></details><details class="interview-item"><summary><span>05</span>What does then() do?</summary><div class="interview-answer"><p>It registers a handler that runs when the Promise is fulfilled and returns another Promise for chaining.</p></div></details><details class="interview-item"><summary><span>06</span>What does catch() do?</summary><div class="interview-answer"><p>It handles Promise rejection and errors propagated through the Promise chain.</p></div></details><details class="interview-item"><summary><span>07</span>What does finally() do?</summary><div class="interview-answer"><p>It runs after a Promise settles regardless of whether it fulfilled or rejected.</p></div></details><details class="interview-item"><summary><span>08</span>What is Promise chaining?</summary><div class="interview-answer"><p>It is connecting asynchronous operations by returning Promises from then() handlers and handling their results in subsequent handlers.</p></div></details><details class="interview-item"><summary><span>09</span>What is a floating Promise?</summary><div class="interview-answer"><p>It is an asynchronous Promise that is started but not properly returned, awaited or otherwise handled by the surrounding logic.</p></div></details><details class="interview-item"><summary><span>10</span>What does async do to a function?</summary><div class="interview-answer"><p>It makes the function return a Promise and allows await to be used inside the function.</p></div></details><details class="interview-item"><summary><span>11</span>What does await do?</summary><div class="interview-answer"><p>It suspends the surrounding async function until the awaited Promise settles and then provides its fulfilled value or throws its rejection.</p></div></details><details class="interview-item"><summary><span>12</span>Does await block the entire JavaScript runtime?</summary><div class="interview-answer"><p>No. It suspends the surrounding async function while allowing other work to continue.</p></div></details><details class="interview-item"><summary><span>13</span>What does fetch() return?</summary><div class="interview-answer"><p>fetch() returns a Promise that fulfills with a Response object when a response is received.</p></div></details><details class="interview-item"><summary><span>14</span>Does fetch() reject when the server returns 404?</summary><div class="interview-answer"><p>Normally no. Fetch fulfills with a Response, so application code should check response.ok or response.status.</p></div></details><details class="interview-item"><summary><span>15</span>Why should response.ok be checked?</summary><div class="interview-answer"><p>Because an HTTP error status such as 404 or 500 does not by itself cause fetch() to reject.</p></div></details><details class="interview-item"><summary><span>16</span>How do you parse JSON from a Fetch response?</summary><div class="interview-answer"><p>Call await response.json() inside an async function or return response.json() in a Promise chain.</p></div></details><details class="interview-item"><summary><span>17</span>What is Promise.all() used for?</summary><div class="interview-answer"><p>It waits for multiple independent Promises and fulfills when all fulfill, while rejecting if one rejects.</p></div></details><details class="interview-item"><summary><span>18</span>When should Promise.all() be avoided?</summary><div class="interview-answer"><p>It should not be used when operations depend on each other or when one failure should not discard all other results.</p></div></details><details class="interview-item"><summary><span>19</span>What is the difference between Promise.all() and Promise.allSettled()?</summary><div class="interview-answer"><p>Promise.all() rejects when one Promise rejects, while Promise.allSettled() waits for every Promise and reports each result.</p></div></details><details class="interview-item"><summary><span>20</span>What is the event loop?</summary><div class="interview-answer"><p>It is the runtime mechanism that coordinates execution of synchronous JavaScript and queued asynchronous callbacks.</p></div></details><details class="interview-item"><summary><span>21</span>What is a microtask?</summary><div class="interview-answer"><p>A microtask is a queued job such as a Promise reaction that is processed after the current JavaScript stack completes and before the next eligible task.</p></div></details><details class="interview-item"><summary><span>22</span>Why can Promise callbacks run before setTimeout callbacks?</summary><div class="interview-answer"><p>Promise reactions are microtasks, while timer callbacks are tasks. Microtasks are processed before the next task in the relevant event-loop cycle.</p></div></details><details class="interview-item"><summary><span>23</span>What is AbortController used for?</summary><div class="interview-answer"><p>It provides a signal that can be used to cancel compatible operations such as Fetch requests.</p></div></details><details class="interview-item"><summary><span>24</span>What is the difference between a network error and an HTTP error?</summary><div class="interview-answer"><p>A network error can cause fetch() to reject, while an HTTP error such as 404 normally produces a Response whose ok property is false.</p></div></details><details class="interview-item"><summary><span>25</span>Why should loading, success and error states be designed separately?</summary><div class="interview-answer"><p>Because asynchronous operations have different phases and users need clear feedback about whether work is running, completed, empty or failed.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Basic</b></header><h3>Create a Promise</h3><p>Create a Promise that resolves with the message &#39;Learning JavaScript&#39; after one second.</p><details><summary>Need a hint?</summary><ul><li>Use new Promise().</li><li>Use setTimeout() inside the Promise.</li><li>Call resolve() after one second.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Basic</b></header><h3>Handle Promise Success</h3><p>Create a Promise that resolves with the number 100 and print the value using then().</p><details><summary>Need a hint?</summary><ul><li>Create a Promise.</li><li>Call resolve(100).</li><li>Attach a then() handler.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Basic</b></header><h3>Handle Promise Failure</h3><p>Create a rejected Promise containing an Error and display the error message using catch().</p><details><summary>Need a hint?</summary><ul><li>Use reject(new Error(...)).</li><li>Attach catch() to the Promise.</li><li>Read error.message.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Intermediate</b></header><h3>Promise Chain</h3><p>Create three asynchronous functions: getUser(), getProfile() and getCourses(). Chain them so the result of one operation is passed to the next.</p><details><summary>Need a hint?</summary><ul><li>Each function should return a Promise.</li><li>Return the next Promise from each then() handler.</li><li>Use a final then() for the courses.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Intermediate</b></header><h3>Fix the Floating Promise</h3><p>Fix this code so the second then() receives the profile data.</p><details><summary>Need a hint?</summary><ul><li>The getProfile() Promise is not being returned.</li><li>Add return before getProfile().</li><li>Then the next then() can receive its result.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Intermediate</b></header><h3>Convert to async/await</h3><p>Convert a Promise chain that loads a user and profile into an async function using await.</p><details><summary>Need a hint?</summary><ul><li>Create an async function.</li><li>Use await for getUser().</li><li>Pass the user id to getProfile().</li><li>Use try/catch for failures.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Intermediate</b></header><h3>Fetch JSON</h3><p>Use fetch() to retrieve JSON from an API endpoint and print the parsed JavaScript object.</p><details><summary>Need a hint?</summary><ul><li>Use await fetch(url).</li><li>Store the Response object.</li><li>Use await response.json().</li><li>Print the resulting data.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Intermediate</b></header><h3>Handle HTTP Errors</h3><p>Create a Fetch function that throws an Error when response.ok is false.</p><details><summary>Need a hint?</summary><ul><li>Await fetch().</li><li>Check response.ok.</li><li>Throw a new Error when it is false.</li><li>Put the operation inside try/catch.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Advanced</b></header><h3>Parallel API Requests</h3><p>Load courses, instructors and announcements concurrently using Promise.all().</p><details><summary>Need a hint?</summary><ul><li>Call all three functions before awaiting the combined result.</li><li>Pass the Promises into Promise.all().</li><li>Destructure the resulting array if useful.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Advanced</b></header><h3>Event Loop Prediction</h3><p>Predict the output before running this code:</p><details><summary>Need a hint?</summary><ul><li>Run synchronous statements first.</li><li>Remember that Promise reactions are microtasks.</li><li>Remember that setTimeout creates a task.</li><li>Write the output order before executing the program.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Advanced</b></header><h3>API Loading State</h3><p>Build a loadCourses() function that displays a loading message, fetches courses, renders success data, displays an error on failure and always removes the loading state.</p><details><summary>Need a hint?</summary><ul><li>Start with showLoading().</li><li>Use try/catch/finally.</li><li>Check response.ok.</li><li>Use response.json().</li><li>Use finally() or finally block for cleanup.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span><b>Advanced</b></header><h3>Cancellable Search</h3><p>Create a search function using AbortController so a previous Fetch request can be cancelled when a new search begins.</p><details><summary>Need a hint?</summary><ul><li>Keep the current controller in a variable.</li><li>Abort the previous controller before creating a new one.</li><li>Pass controller.signal to fetch().</li><li>Handle AbortError separately.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>Which state means a Promise has not completed?</h3><div class="quiz-options"><button type="button" data-option="0">A. pending</button><button type="button" data-option="1">B. waiting</button><button type="button" data-option="2">C. open</button><button type="button" data-option="3">D. running</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which method handles a fulfilled Promise?</h3><div class="quiz-options"><button type="button" data-option="0">A. catch()</button><button type="button" data-option="1">B. then()</button><button type="button" data-option="2">C. error()</button><button type="button" data-option="3">D. resolve()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which method handles Promise rejection?</h3><div class="quiz-options"><button type="button" data-option="0">A. catch()</button><button type="button" data-option="1">B. rejectHandler()</button><button type="button" data-option="2">C. error()</button><button type="button" data-option="3">D. fail()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>What does async make a function return?</h3><div class="quiz-options"><button type="button" data-option="0">A. An array</button><button type="button" data-option="1">B. A callback</button><button type="button" data-option="2">C. A Promise</button><button type="button" data-option="3">D. A string</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Where can await normally be used?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only inside loops</button><button type="button" data-option="1">B. Inside async functions and supported module contexts</button><button type="button" data-option="2">C. Only inside callbacks</button><button type="button" data-option="3">D. Only inside classes</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>What does fetch() return?</h3><div class="quiz-options"><button type="button" data-option="0">A. Response</button><button type="button" data-option="1">B. Promise</button><button type="button" data-option="2">C. JSON</button><button type="button" data-option="3">D. Array</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>What should normally be checked after fetch() before treating an HTTP response as successful?</h3><div class="quiz-options"><button type="button" data-option="0">A. response.ok</button><button type="button" data-option="1">B. response.ready</button><button type="button" data-option="2">C. response.complete</button><button type="button" data-option="3">D. response.valid</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>Which method parses a JSON response body?</h3><div class="quiz-options"><button type="button" data-option="0">A. response.parse()</button><button type="button" data-option="1">B. response.json()</button><button type="button" data-option="2">C. JSON.response()</button><button type="button" data-option="3">D. response.data()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>What happens when fetch receives a normal 404 response?</h3><div class="quiz-options"><button type="button" data-option="0">A. fetch always rejects</button><button type="button" data-option="1">B. fetch normally fulfills with a Response</button><button type="button" data-option="2">C. The browser crashes</button><button type="button" data-option="3">D. The Promise is cancelled</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Which Promise combinator waits for all results and rejects if one rejects?</h3><div class="quiz-options"><button type="button" data-option="0">A. Promise.any()</button><button type="button" data-option="1">B. Promise.race()</button><button type="button" data-option="2">C. Promise.all()</button><button type="button" data-option="3">D. Promise.first()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Which combinator reports both fulfilled and rejected results?</h3><div class="quiz-options"><button type="button" data-option="0">A. Promise.allSettled()</button><button type="button" data-option="1">B. Promise.all()</button><button type="button" data-option="2">C. Promise.any()</button><button type="button" data-option="3">D. Promise.race()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Which combinator fulfills when the first Promise fulfills?</h3><div class="quiz-options"><button type="button" data-option="0">A. Promise.all()</button><button type="button" data-option="1">B. Promise.any()</button><button type="button" data-option="2">C. Promise.race()</button><button type="button" data-option="3">D. Promise.first()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>What is a microtask?</h3><div class="quiz-options"><button type="button" data-option="0">A. A CSS task</button><button type="button" data-option="1">B. A queued JavaScript job such as a Promise reaction</button><button type="button" data-option="2">C. A network request</button><button type="button" data-option="3">D. A DOM element</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>Which normally runs before a zero-delay timer callback?</h3><div class="quiz-options"><button type="button" data-option="0">A. A Promise microtask</button><button type="button" data-option="1">B. A later timer</button><button type="button" data-option="2">C. The next page load</button><button type="button" data-option="3">D. Nothing</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>What does AbortController provide?</h3><div class="quiz-options"><button type="button" data-option="0">A. JSON parsing</button><button type="button" data-option="1">B. Request cancellation signaling</button><button type="button" data-option="2">C. Promise creation</button><button type="button" data-option="3">D. DOM selection</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Asynchronous</strong><p></p></article><article><strong>Promise</strong><p></p></article><article><strong>Pending</strong><p></p></article><article><strong>Fulfilled</strong><p></p></article><article><strong>Rejected</strong><p></p></article><article><strong>Promise chaining</strong><p></p></article><article><strong>async</strong><p></p></article><article><strong>await</strong><p></p></article><article><strong>Fetch API</strong><p></p></article><article><strong>Response</strong><p></p></article><article><strong>JSON</strong><p></p></article><article><strong>HTTP status</strong><p></p></article><article><strong>response.ok</strong><p></p></article><article><strong>Event loop</strong><p></p></article><article><strong>Microtask</strong><p></p></article><article><strong>Task</strong><p></p></article><article><strong>Concurrency</strong><p></p></article><article><strong>AbortController</strong><p></p></article><article><strong>Floating Promise</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Level 12 Complete — Master Asynchronous JavaScript</h2><p>You can now reason about Promises, async/await, Fetch, HTTP failures, concurrent requests and event-loop execution. You are ready to build browser applications that communicate with real backend services.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 12 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=11">← Previous level</a><a href="lesson.html?level=13">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

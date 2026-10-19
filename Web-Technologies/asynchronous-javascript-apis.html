@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn promises, async/await, Fetch, JSON validation, cancellation and request ownership with diagrams, a visualizer, loader lab and MCQs.">
+
+    
+
+    <title>
+        Level 18 — Asynchronous JavaScript and APIs | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/asynchronous-javascript-apis.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt18-skip-link" href="#wt18Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt18Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 18</div><div class="level-badge">LEVEL 18 · ASYNC</div><h1>Asynchronous JavaScript and APIs</h1><p class="wt-hero-description">Handle waiting, failures and competing responses with clear, owned outcomes.</p><div class="wt-hero-meta"><span>📦 Promises</span><span>📨 Fetch + JSON</span><span>🧭 Request ownership</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 17 handled a local form synchronously. </li><li>A real page may need to wait for a <strong class="wt-content-key">response</strong> while the learner keeps using it. </li><li>This lesson introduces promises, <strong class="wt-content-key">async</strong>/<strong class="wt-content-key">await</strong>, HTTP responses, JSON parsing, cancellation and result ownership.</li></ul><ul class="wt-content-points"><li>Our task is a workshop-catalog loader with clear idle, loading, success, empty, error and canceled outcomes. </li><li>You will distinguish a network failure from an <strong class="wt-content-key">HTTP</strong> error, validate parsed data before <strong class="wt-content-key">rendering</strong> and prevent an older response from replacing a newer request’s result.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏳</span><h3>Async flow</h3><p>Explain when code waits and when other work can proceed.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Responses</h3><p>Check <strong class="wt-content-key">HTTP</strong> status before interpreting a body.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Data contract</h3><p>Separate valid <strong class="wt-content-key">JSON</strong> from acceptable workshop records.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Ownership</h3><p>Let only the newest <strong class="wt-content-key">request</strong> update the current result.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">⏱️</span>Asynchronous Work and the Event Loop</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JavaScript</strong> code in a <strong class="wt-content-key">browser</strong> context generally runs each job to completion before another job runs on that same thread. </li><li><strong class="wt-content-key">Browser</strong> facilities can handle waiting work such as timers and network operations, then arrange for callbacks or <strong class="wt-content-key">promise</strong> reactions to run later.</li></ul><ul class="wt-content-points"><li>Asynchronous does not mean every line runs simultaneously or that heavy <strong class="wt-content-key">JavaScript</strong> computation automatically moves to another thread. </li><li>A long synchronous <strong class="wt-content-key">loop</strong> can still block interaction and <strong class="wt-content-key">rendering</strong>. </li><li>Awaiting a <strong class="wt-content-key">promise</strong> yields control from the <strong class="wt-content-key">async</strong> function while it is suspended; it does not freeze the whole browser.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Promise</strong> reactions run as microtasks. </li><li>A zero-delay timer queues later work; it does not guarantee that its callback runs immediately or at an exact wall-clock time.</li></ul><div class="code-block"><pre><code>console.log(&quot;A&quot;);
+setTimeout(() =&gt; console.log(&quot;B&quot;), 0);
+Promise.resolve().then(() =&gt; console.log(&quot;C&quot;));
+console.log(&quot;D&quot;);
+// In this simple example: A, D, C, B</code></pre></div><ul class="wt-content-points"><li>The ordinary logs run first. </li><li>The <strong class="wt-content-key">promise</strong> reaction is processed before the later timer task in this example. </li><li>Do not generalize this small trace into a <strong class="wt-content-key">promise</strong> about the timing of every network <strong class="wt-content-key">response</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🔔</span>Callbacks — A Starting Point</h2><ul class="wt-content-points"><li>A callback is a <strong class="wt-content-key">function</strong> supplied to another operation. </li><li><strong class="wt-content-key">Event</strong> listeners from the previous lesson are callbacks. </li><li>A timer callback receives control after the timer becomes eligible and the <strong class="wt-content-key">event</strong> <strong class="wt-content-key">loop</strong> can run it.</li></ul><ul class="wt-content-points"><li>Not every callback is asynchronous: <strong class="wt-content-key">Array</strong>.map calls its callback synchronously. </li><li>Judge the operation’s <strong class="wt-content-key">contract</strong> rather than assuming that passing a <strong class="wt-content-key">function</strong> always schedules it for later.</li></ul><ul class="wt-content-points"><li>Several nested dependent callbacks can make success and failure paths difficult to follow. </li><li>Promises provide a composable representation of an eventual outcome.</li></ul><div class="code-block"><pre><code>setTimeout(() =&gt; {
+  console.log(&quot;Timer callback ran&quot;);
+}, 500);
+
+const doubled = [1, 2].map(value =&gt; value * 2);
+// map finishes synchronously here: [2, 4]</code></pre></div><ul class="wt-content-points"><li>The 500ms value is a scheduling delay, not an exact observed duration. </li><li>A busy page or background-tab policy can delay when the callback actually runs.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Promises — Pending, Fulfilled or Rejected</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">promise</strong> represents an eventual result. </li><li>It begins pending and can settle as fulfilled with a value or rejected with a reason. </li><li>Once settled, its outcome does not switch from fulfillment to rejection or vice versa.</li></ul><ul class="wt-content-points"><li>Calling resolve can adopt another <strong class="wt-content-key">promise</strong>’s outcome; resolution and immediate fulfillment are therefore not always the same moment. </li><li>For beginner examples, focus on the observable eventual fulfillment or rejection.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">Promise</strong> constructor’s executor runs synchronously. </li><li>Use the constructor when adapting a callback operation, rather than wrapping an already promise-based <strong class="wt-content-key">fetch</strong> call in an unnecessary new <strong class="wt-content-key">Promise</strong>.</li></ul><div class="code-block"><pre><code>function wait(milliseconds) {
+  return new Promise(resolve =&gt; {
+    setTimeout(resolve, milliseconds);
+  });
+}
+wait(500).then(() =&gt; console.log(&quot;Wait completed&quot;));</code></pre></div><ul class="wt-content-points"><li>The executor schedules a timer immediately; the returned <strong class="wt-content-key">promise</strong> remains pending until that timer callback resolves it. </li><li>The local lab adapts timers into a cancelable simulated <strong class="wt-content-key">response</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🔗</span>then, catch and Returning the Next Step</h2><ul class="wt-content-points"><li>Then returns a new <strong class="wt-content-key">promise</strong>. </li><li>Its callback can return an ordinary value, return another <strong class="wt-content-key">promise</strong>, or throw an error. </li><li>Returning the next asynchronous step makes the chain wait for it and carries failures along the chain.</li></ul><ul class="wt-content-points"><li>Catch handles a rejection from the chain before it. </li><li>Returning a fallback value from catch can turn the later chain into a fulfilled result. </li><li>Throwing again preserves a failure path for later handling.</li></ul><ul class="wt-content-points"><li>A missing return can let a chain proceed before an inner operation finishes. </li><li>Keep the relationship between stages explicit rather than nesting an unreturned <strong class="wt-content-key">promise</strong> and expecting the outer chain to wait.</li></ul><div class="code-block"><pre><code>fetch(&quot;/api/workshops&quot;)
+  .then(response =&gt; {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.error(error.message));</code></pre></div><ul class="wt-content-points"><li>The /<strong class="wt-content-key">api</strong>/workshops path is a hypothetical endpoint used in teaching examples; a project must provide that endpoint before using this code. </li><li>The lab uses local predefined responses for predictable practice.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧵</span>async and await — Read the Sequence Clearly</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">async</strong> <strong class="wt-content-key">function</strong> returns a promise. </li><li>Returning a normal value fulfills its returned <strong class="wt-content-key">promise</strong> with that value; an uncaught error rejects it. </li><li><strong class="wt-content-key">Await</strong> suspends the <strong class="wt-content-key">function</strong> until the awaited value’s promise behavior settles and then supplies the fulfilled value or throws the rejection reason.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Await</strong> makes dependent steps readable without making them synchronous <strong class="wt-content-key">browser</strong> operations. </li><li>Code outside the suspended <strong class="wt-content-key">function</strong> can continue to run. </li><li>An <strong class="wt-content-key">async</strong> <strong class="wt-content-key">function</strong> can still execute substantial synchronous work before or between awaits.</li></ul><ul class="wt-content-points"><li>A try/catch around an awaited operation can handle its rejection. </li><li>Calling a promise-returning operation without awaiting or returning it can leave a failure outside that intended path.</li></ul><div class="code-block"><pre><code>async function loadCatalog() {
+  const response = await fetch(&quot;/api/workshops&quot;);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+  return data;
+}</code></pre></div><ul class="wt-content-points"><li><strong class="wt-content-key">Fetch</strong> supplies a <strong class="wt-content-key">response</strong> object and json supplies parsed body data in two asynchronous stages. </li><li>A <strong class="wt-content-key">response</strong> variable is not already the catalog <strong class="wt-content-key">array</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>try, catch and finally — Outcome and Cleanup</h2><ul class="wt-content-points"><li>Use try for the intended operation, catch for the failure path and finally for cleanup that should run after either outcome. </li><li>Finally is suitable for clearing a timer or releasing a <strong class="wt-content-key">request</strong>’s resources.</li></ul><ul class="wt-content-points"><li>A finally block can still alter control flow if it returns or throws, potentially overriding an earlier result. </li><li>Keep cleanup free of an unnecessary returned value or new error.</li></ul><ul class="wt-content-points"><li>Cleanup must also respect result <strong class="wt-content-key">ownership</strong>. </li><li>An older <strong class="wt-content-key">request</strong>’s finally block should not turn off the newer request’s loading state merely because the older operation has ended.</li></ul><div class="code-block"><pre><code>setLoading(true);
+try {
+  const data = await loadCatalog();
+  showCatalog(data);
+} catch (error) {
+  showError(error.message);
+} finally {
+  setLoading(false);
+}</code></pre></div><ul class="wt-content-points"><li>This simple example assumes one active <strong class="wt-content-key">request</strong>. </li><li>The later <strong class="wt-content-key">ownership</strong> example adds an ID guard before changing the UI in finally. </li><li>Handle expected cancellation separately from a <strong class="wt-content-key">request</strong> error that the learner should retry.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🌐</span>HTTP and an API Response Contract</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">API</strong> exposes an agreed interaction: endpoint, method, headers, <strong class="wt-content-key">request</strong> data and response format. </li><li>A client should know which fields and types the <strong class="wt-content-key">response</strong> is expected to contain. </li><li><strong class="wt-content-key">HTTP</strong> status and <strong class="wt-content-key">JSON</strong> structure answer different questions.</li></ul><ul class="wt-content-points"><li>A 200-range status commonly represents <strong class="wt-content-key">HTTP</strong> success. </li><li>A 404 <strong class="wt-content-key">response</strong> means the requested resource was not found; a 500 response indicates a server-side error class. </li><li>The appropriate interface <strong class="wt-content-key">response</strong> depends on the <strong class="wt-content-key">API</strong>’s documented contract.</li></ul><ul class="wt-content-points"><li>An empty <strong class="wt-content-key">JSON</strong> <strong class="wt-content-key">array</strong> can be a successful result with no workshops. </li><li>A malformed body or unacceptable record shape is a different outcome. </li><li>A 204 <strong class="wt-content-key">response</strong> has no content, so do not blindly demand a <strong class="wt-content-key">JSON</strong> body for every successful status.</li></ul><figure class="wt-diagram"><figcaption>Separate response decisions</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Transport</strong><p>Did the client receive a <strong class="wt-content-key">response</strong> or encounter a failure?</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>HTTP status</strong><p>Does the status meet the operation’s <strong class="wt-content-key">contract</strong>?</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>Body format</strong><p>Can the promised representation be parsed?</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Record contract</strong><p>Are the parsed fields and values acceptable?</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Fetch — Check the Response Before Parsing</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Fetch</strong> returns a <strong class="wt-content-key">promise</strong> for a Response. </li><li><strong class="wt-content-key">HTTP</strong> error statuses such as 404 do not normally reject that <strong class="wt-content-key">promise</strong> by themselves. </li><li>Check <strong class="wt-content-key">response</strong>.ok or the expected status, then choose how to handle the response.</li></ul><ul class="wt-content-points"><li>A network or <strong class="wt-content-key">browser</strong> access failure can reject <strong class="wt-content-key">fetch</strong> without a usable response. </li><li>An application can also fail later during body reading, parsing or <strong class="wt-content-key">validation</strong>. </li><li>Keep these stages distinct while debugging.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Response</strong>.ok is true for statuses 200 through 299. </li><li>A body-reading method such as <strong class="wt-content-key">json</strong> is asynchronous and normally consumes the body stream. </li><li>Do not assume you can read the same body repeatedly without cloning or another deliberate strategy.</li></ul><div class="code-block"><pre><code>const response = await fetch(&quot;/api/workshops&quot;, {
+  headers: { Accept: &quot;application/json&quot; }
+});
+if (!response.ok) {
+  throw new Error(`HTTP ${response.status}`);
+}
+const data = await response.json();</code></pre></div><ul class="wt-content-points"><li>This <strong class="wt-content-key">request</strong> header communicates a preferred <strong class="wt-content-key">response</strong> representation; it does not force the server to return valid JSON or the expected fields. </li><li>The next step still needs <strong class="wt-content-key">validation</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>JSON Parsing Is Not Schema Validation</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Json</strong> parses a <strong class="wt-content-key">response</strong> body into a JavaScript value. </li><li>Valid <strong class="wt-content-key">JSON</strong> can represent a string, number, <strong class="wt-content-key">null</strong>, object or array. </li><li>Parsing successfully does not prove that a value is the catalog you expected.</li></ul><ul class="wt-content-points"><li>Our catalog <strong class="wt-content-key">contract</strong> is a dense <strong class="wt-content-key">array</strong> with at most 20 records. </li><li>Each record has a unique non-empty string ID of at most 40 characters, a non-empty title of at most 80 characters, and integer capacity/reserved values from 0–1000 with reserved not exceeding capacity.</li></ul><ul class="wt-content-points"><li>IDs and titles are trimmed before uniqueness and <strong class="wt-content-key">rendering</strong> checks. </li><li>Reject the whole payload if the <strong class="wt-content-key">contract</strong> fails. </li><li>Avoid displaying an invalid availability count or silently turning an absent capacity into zero. </li><li>Derive remaining only from accepted numeric fields.</li></ul><div class="code-block"><pre><code>if (!Array.isArray(data)) {
+  throw new Error(&quot;Expected a workshop array&quot;);
+}
+for (const workshop of data) {
+  if (!Number.isInteger(workshop.capacity) ||
+      !Number.isInteger(workshop.reserved) ||
+      workshop.reserved &gt; workshop.capacity) {
+    throw new Error(&quot;Invalid workshop record&quot;);
+  }
+}</code></pre></div><ul class="wt-content-points"><li>This abbreviated snippet illustrates the idea. </li><li>The lab’s <strong class="wt-content-key">validator</strong> also checks lengths, lower/upper bounds, uniqueness and sparse slots before <strong class="wt-content-key">rendering</strong> its predefined payload.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>UI States — Loading Is Part of the Task</h2><ul class="wt-content-points"><li>A useful loader begins idle, shows loading while work is pending, and ends with success, empty, error or canceled. </li><li>Clear stale results when starting a new <strong class="wt-content-key">request</strong>, or deliberately label them as old if the product chooses to retain them.</li></ul><ul class="wt-content-points"><li>Use a concise status and an appropriate busy state for the result region. </li><li>An empty result should explain that no workshops were returned; it should not look like an unfinished loading screen. </li><li>Keep a retry action available after a recoverable failure.</li></ul><ul class="wt-content-points"><li>The lab keeps Load enabled so you can start overlapping requests deliberately. </li><li>Cancel applies to the newest pending <strong class="wt-content-key">request</strong>. </li><li>Its <strong class="wt-content-key">request</strong> log explains earlier completions that were ignored.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏳</span><h3>Loading</h3><p>A pending <strong class="wt-content-key">response</strong> is owned by the newest <strong class="wt-content-key">request</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Success / empty</h3><p>Accepted records or a clear zero-record outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Error</h3><p><strong class="wt-content-key">HTTP</strong>, transport, parsing or schema failure.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✋</span><h3>Canceled</h3><p>The active <strong class="wt-content-key">request</strong> was intentionally aborted.</p></article></div></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">✋</span>AbortController and Timeouts</h2><ul class="wt-content-points"><li>AbortController provides a signal that compatible operations can observe. </li><li>Pass its signal to <strong class="wt-content-key">fetch</strong>, then call abort when the result is no longer needed. </li><li>The operation can reject with an AbortError; cancellation is different from reporting a <strong class="wt-content-key">server</strong> failure.</li></ul><ul class="wt-content-points"><li>Aborting does not guarantee that a <strong class="wt-content-key">server</strong> never received or processed a <strong class="wt-content-key">request</strong>. </li><li>For a real write operation, retry and cancellation policies need the <strong class="wt-content-key">server</strong>’s documented behavior. </li><li>A read-only catalog has different consequences from creating a payment or reservation.</li></ul><ul class="wt-content-points"><li>A timeout can be implemented by aborting after a chosen deadline and clearing the timer in finally. </li><li>Record whether the deadline or the learner initiated cancellation if those outcomes need different messages.</li></ul><div class="code-block"><pre><code>const controller = new AbortController();
+const timer = setTimeout(() =&gt; controller.abort(), 5000);
+try {
+  const response = await fetch(&quot;/api/workshops&quot;, {
+    signal: controller.signal
+  });
+  // Check status, parse and validate here.
+} finally {
+  clearTimeout(timer);
+}</code></pre></div><ul class="wt-content-points"><li>The lab uses an AbortController with a local timer-backed <strong class="wt-content-key">response</strong>. </li><li>Its Cancel control demonstrates signal-based rejection without making a network <strong class="wt-content-key">request</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Overlapping Requests — Newest Result Owns the UI</h2><ul class="wt-content-points"><li>A slow <strong class="wt-content-key">request</strong> can finish after a later, faster request. </li><li>Without an <strong class="wt-content-key">ownership</strong> rule, the older result can overwrite the learner’s more recent choice. </li><li>Speed alone is not a reliable ordering policy.</li></ul><ul class="wt-content-points"><li>Give each <strong class="wt-content-key">request</strong> an increasing ID. </li><li>Before writing success, empty, error or cleanup state, verify that it still owns the current UI. </li><li>Canceling old work can save resources, but <strong class="wt-content-key">ownership</strong> checks remain valuable when an operation cannot be canceled or is already completing.</li></ul><ul class="wt-content-points"><li>The lab intentionally allows older requests to continue when a new one starts. </li><li>Their completions are logged as ignored, while only the newest <strong class="wt-content-key">request</strong> can change the current result. </li><li>Reset and page exit abort pending work and invalidate its <strong class="wt-content-key">ownership</strong>.</li></ul><div class="code-block"><pre><code>const requestId = ++latestRequestId;
+try {
+  const data = await loadCatalog();
+  if (requestId !== latestRequestId) return;
+  showCatalog(data);
+} finally {
+  if (requestId === latestRequestId) setLoading(false);
+}</code></pre></div><ul class="wt-content-points"><li>Guard failures and finally as well as success. </li><li>An obsolete <strong class="wt-content-key">request</strong> should not replace a newer error message or turn off its busy state.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🤝</span>Sequential Work, Promise.all and allSettled</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Await</strong> dependent steps in sequence when the second needs the first’s result. </li><li>Start independent operations before awaiting the group if they can run concurrently. </li><li><strong class="wt-content-key">Promise</strong>.all accepts an iterable of values/promises and fulfills with results in input order, not completion order.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Promise</strong>.all rejects when an input rejects; that does not automatically cancel other already-started operations. </li><li><strong class="wt-content-key">Promise</strong>.allSettled waits for every input to settle and reports each outcome. </li><li>Choose the behavior that fits the task.</li></ul><ul class="wt-content-points"><li>Avoid a forEach(<strong class="wt-content-key">async</strong> ...) <strong class="wt-content-key">loop</strong> when the caller expects a completed batch before continuing. </li><li>Use a suitable for...of <strong class="wt-content-key">loop</strong> for sequential work or map to create promises followed by an explicit group <strong class="wt-content-key">await</strong>.</li></ul><div class="code-block"><pre><code>const catalogPromise = loadCatalog();
+const noticePromise = loadNotices();
+const [catalog, notices] = await Promise.all([
+  catalogPromise, noticePromise
+]);</code></pre></div><ul class="wt-content-points"><li>These helper names illustrate two independent <strong class="wt-content-key">API</strong> tasks. </li><li>Their endpoints and failure policies must be implemented by the application. </li><li>A group <strong class="wt-content-key">await</strong> changes coordination, not the <strong class="wt-content-key">server</strong>’s capacity or authorization rules.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🔐</span>CORS, Credentials and Safe Rendering</h2><ul class="wt-content-points"><li>Cross-origin <strong class="wt-content-key">browser</strong> requests are governed by access rules such as <strong class="wt-content-key">CORS</strong>. </li><li>The <strong class="wt-content-key">server</strong> supplies the appropriate <strong class="wt-content-key">response</strong> headers; client JavaScript cannot simply grant itself permission. </li><li>A no-cors <strong class="wt-content-key">request</strong> can yield an opaque <strong class="wt-content-key">response</strong> that the script cannot read as ordinary JSON, so it is not a repair for an API that needs readable data.</li></ul><ul class="wt-content-points"><li>Credentials handling depends on the <strong class="wt-content-key">request</strong> options, origins and <strong class="wt-content-key">server</strong> policy. </li><li>Keep private <strong class="wt-content-key">API</strong> keys and <strong class="wt-content-key">server</strong> secrets out of downloadable frontend files. </li><li>A browser-visible key is not made private by placing it in an external <strong class="wt-content-key">JavaScript</strong> file.</li></ul><ul class="wt-content-points"><li>Treat <strong class="wt-content-key">response</strong> text as data when <strong class="wt-content-key">rendering</strong> labels. </li><li>Create elements and use <strong class="wt-content-key">textContent</strong> rather than inserting server-provided strings as raw <strong class="wt-content-key">HTML</strong>. </li><li>Keep failures understandable without exposing internal <strong class="wt-content-key">server</strong> traces to a learner.</li></ul><div class="code-block"><pre><code>const title = document.createElement(&quot;h4&quot;);
+title.textContent = acceptedWorkshop.title;
+card.append(title);</code></pre></div><ul class="wt-content-points"><li>The local lab renders only accepted records with <strong class="wt-content-key">textContent</strong> and uses predefined <strong class="wt-content-key">response</strong> scenarios. </li><li>It does not contact external endpoints or store catalog data between visits.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Async Response Journey</h2><p>Follow one fixed successful response through loading, status, parsing, validation and rendering. Use the approved timeline and playback controls. The live lab separately exercises success and failure paths with local simulated responses.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="async">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>ASYNC API RESPONSE TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">⏳</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Start and own a catalog request</h3><p data-trace-description>Assign a request ID and show loading while the promise is pending.</p></div><pre class="trace-code"><code data-trace-code>requestId = ++latestRequestId</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Start" aria-pressed="true"><span>01</span><strong>Start</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Status" aria-pressed="false"><span>02</span><strong>Status</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Parse" aria-pressed="false"><span>03</span><strong>Parse</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Validate" aria-pressed="false"><span>04</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Render" aria-pressed="false"><span>05</span><strong>Render</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Only this request may write the current result while it remains the latest owner.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Async Catalog Loader</h2><ul class="wt-content-points"><li>This is a local <strong class="wt-content-key">response</strong> simulation. </li><li>It uses real promises, timers, AbortController and <strong class="wt-content-key">Response</strong>.<strong class="wt-content-key">json</strong> with predefined bodies; it does not call a live API. </li><li>Choose a scenario and delay, then Load. </li><li>Inspect the state, accepted cards, payload and <strong class="wt-content-key">request</strong> log.</li></ul><ul class="wt-content-points"><li>Try success, an empty catalog, <strong class="wt-content-key">HTTP</strong> 404, network failure, malformed <strong class="wt-content-key">JSON</strong> and invalid record shape. </li><li>Cancel while the newest <strong class="wt-content-key">request</strong> is loading. </li><li>Reset cancels pending work and returns to idle. </li><li>The timer delay is a teaching setting, not an exact timing guarantee.</li></ul><ul class="wt-content-points"><li>For a race, start slow success at 1500ms, then switch to fast empty at 500ms and Load again. </li><li>The newest empty result should remain after the earlier success completes. </li><li>The log identifies the obsolete result as ignored. </li><li>You can also start a fast earlier <strong class="wt-content-key">request</strong> and a slow newer one to check that old cleanup does not clear the newer loading state.</li></ul><div class="wt9-demo"><label for="wt18Scenario">Simulated response scenario</label><select id="wt18Scenario"><option value="success">Success: four workshop records</option><option value="empty">Success: empty catalog</option><option value="http">HTTP error: 404 response</option><option value="network">Network failure: rejected request</option><option value="json">Successful status: malformed JSON</option><option value="schema">Successful JSON: invalid record shape</option></select><label for="wt18Delay">Scheduled response delay</label><select id="wt18Delay"><option value="500">500ms · faster</option><option value="1500">1500ms · slower</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt18Load">Load simulated catalog</button><button type="button" class="secondary-button" id="wt18Cancel" disabled>Cancel newest request</button><button type="button" class="secondary-button" id="wt18Reset">Reset lab</button></div><p id="wt18Status" role="status">Idle. Choose a simulated response and load it.</p><div id="wt18Output" aria-busy="false"><h3>Accepted catalog cards</h3><ul id="wt18Cards" class="wt18-cards"></ul><h3>Accepted payload</h3><pre class="wt18-result"><code id="wt18Payload">No accepted payload yet.</code></pre></div><h3>Request log</h3><pre class="trace-code"><code id="wt18Log">[]</code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Locate the Failed Stage</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏳</span><h3>Pending</h3><p>Check whether the awaited operation ever settles and whether cancellation is wired.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Response</h3><p>Separate a rejected <strong class="wt-content-key">request</strong> from a received error status.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Data</h3><p>Inspect body parsing and the accepted record <strong class="wt-content-key">contract</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Ownership</h3><p>Check every UI write, including catch and finally.</p></article></div><ul class="wt-content-points"><li>If a 404 still reaches a success callback, inspect <strong class="wt-content-key">response</strong>.ok rather than assuming <strong class="wt-content-key">fetch</strong> rejects every unsuccessful HTTP status. </li><li>If <strong class="wt-content-key">JSON</strong> parsing fails, inspect the body and representation; the <strong class="wt-content-key">server</strong> may have returned an HTML error page. </li><li>If an older result replaces a newer query, check its <strong class="wt-content-key">request</strong> ID before <strong class="wt-content-key">rendering</strong>.</li></ul><ul class="wt-content-points"><li>If loading disappears while the latest <strong class="wt-content-key">request</strong> is pending, inspect an older finally block. </li><li>If cancellation leaves an unhandled rejection, make sure the canceled operation still has a rejection handler. </li><li>If a <strong class="wt-content-key">CORS</strong> failure appears, inspect the <strong class="wt-content-key">server</strong>’s access policy rather than attempting to read an opaque no-cors response.</li></ul><ul class="wt-content-points"><li>Use the deterministic lab cases to isolate one stage. </li><li>A malformed body should fail parsing; an over-reserved record should fail <strong class="wt-content-key">validation</strong>. </li><li>Neither should leave accepted cards visible under the new error state.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does async automatically move heavy code off the main thread?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does async automatically move heavy code off the main thread?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. An async function can still perform blocking synchronous work. Await suspends that function while an awaited promise is pending.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does an async function return?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does an async function return?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A promise. A returned value fulfills it; an uncaught error rejects it.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does fetch reject just because HTTP status is 404?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does fetch reject just because HTTP status is 404?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Normally no. It can fulfill with a Response whose ok value is false. Inspect the status explicitly.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why await response.json separately?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why await response.json separately?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Reading and parsing the response body is asynchronous and can fail independently of receiving the response.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does valid JSON prove the catalog record shape is valid?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does valid JSON prove the catalog record shape is valid?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Validate types, bounds, unique IDs and relationships according to the application contract.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why guard finally with the request ID?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why guard finally with the request ID?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>An older request must not clear a newer request’s loading state or change its current UI outcome.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does Promise.all cancel other inputs when one rejects?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does Promise.all cancel other inputs when one rejects?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Rejection of the group does not automatically cancel already-started operations.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What should an empty successful response show?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What should an empty successful response show?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A clear zero-record result and a finished loading state, rather than an error or perpetual spinner.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Predict the Async Outcome</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Async functions return promises that adopt their returned value or reject on an uncaught error."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. What does an async function return?</h3><div class="wt8-options"><button type="button" class="wt8-option">A DOM node always</button><button type="button" class="wt8-option">A promise</button><button type="button" class="wt8-option">Only undefined</button><button type="button" class="wt8-option">An HTTP status</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Synchronous logs run first; the promise reaction runs before the later timer task in this example."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Which order fits the simple A/timer B/promise C/D example?</h3><div class="wt8-options"><button type="button" class="wt8-option">A B C D</button><button type="button" class="wt8-option">A C D B</button><button type="button" class="wt8-option">A D C B</button><button type="button" class="wt8-option">D A B C</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Returning the body-reading promise connects its completion and failure to the outer chain."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What should a promise chain return when the next step reads JSON?</h3><div class="wt8-options"><button type="button" class="wt8-option">response.json()</button><button type="button" class="wt8-option">response.status only</button><button type="button" class="wt8-option">A click handler</button><button type="button" class="wt8-option">Nothing always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="HTTP error status is distinct from a transport rejection; inspect the response."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. How does fetch normally handle a received HTTP 404?</h3><div class="wt8-options"><button type="button" class="wt8-option">Rejects before producing any Response</button><button type="button" class="wt8-option">Returns parsed JSON immediately</button><button type="button" class="wt8-option">Automatically retries forever</button><button type="button" class="wt8-option">Fulfills with a Response whose ok is false</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Ok is an HTTP-status check, not JSON or schema validation."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does response.ok represent?</h3><div class="wt8-options"><button type="button" class="wt8-option">Valid record fields</button><button type="button" class="wt8-option">A status in the 200–299 range</button><button type="button" class="wt8-option">A parsed array</button><button type="button" class="wt8-option">A canceled signal</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Body reading/parsing can fail independently of receiving a successful status."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What can response.json() do after a successful HTTP status?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only succeed</button><button type="button" class="wt8-option">Reserve workshop places</button><button type="button" class="wt8-option">Reject on malformed JSON</button><button type="button" class="wt8-option">Change GitHub content</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Valid JSON can have an unacceptable shape or invalid field relationships."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What is required after successfully parsing a catalog body?</h3><div class="wt8-options"><button type="button" class="wt8-option">Trust every field</button><button type="button" class="wt8-option">Render strings with innerHTML</button><button type="button" class="wt8-option">Treat null as an empty array always</button><button type="button" class="wt8-option">Validate the expected record contract</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A compatible operation can observe the AbortController signal."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which API supplies a signal for cancellation?</h3><div class="wt8-options"><button type="button" class="wt8-option">AbortController</button><button type="button" class="wt8-option">Array.map</button><button type="button" class="wt8-option">FormData</button><button type="button" class="wt8-option">classList</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Cleanup writes must respect the current request owner."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Why can an older finally block cause a UI bug?</h3><div class="wt8-options"><button type="button" class="wt8-option">It always throws</button><button type="button" class="wt8-option">It can clear loading for a newer request</button><button type="button" class="wt8-option">It validates too many records</button><button type="button" class="wt8-option">It changes promise input order</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The result array corresponds to the original input ordering."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. In what order does Promise.all supply fulfilled group results?</h3><div class="wt8-options"><button type="button" class="wt8-option">Completion speed order</button><button type="button" class="wt8-option">Reverse input order</button><button type="button" class="wt8-option">Input order</button><button type="button" class="wt8-option">HTTP status order</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Group rejection does not itself cancel the underlying operations."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What happens to other started operations when Promise.all rejects?</h3><div class="wt8-options"><button type="button" class="wt8-option">They are automatically aborted</button><button type="button" class="wt8-option">They become successful</button><button type="button" class="wt8-option">Their endpoints are deleted</button><button type="button" class="wt8-option">They can continue unless separately canceled</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="An accepted empty array is a completed zero-record outcome."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. What should the latest successful empty catalog show?</h3><div class="wt8-options"><button type="button" class="wt8-option">A clear empty outcome with loading finished</button><button type="button" class="wt8-option">An endless loading state</button><button type="button" class="wt8-option">The previous request’s cards</button><button type="button" class="wt8-option">A guaranteed network error</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt18QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Reproduce Specific Async Outcomes</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Success</h3><p>Load success. Expected: four accepted records with remaining counts 18, 0, 30 and 12; total 60.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Empty</h3><p>Load empty. Expected: no cards, accepted [] and a completed empty status.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>HTTP error</h3><p>Load <strong class="wt-content-key">HTTP</strong> 404. Expected: status-stage failure; no accepted payload.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Parse failure</h3><p>Load malformed <strong class="wt-content-key">JSON</strong>. Expected: parsing failure after the successful <strong class="wt-content-key">response</strong> status.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Contract failure</h3><p>Load invalid record shape. Expected: <strong class="wt-content-key">validation</strong> rejection before cards are rendered.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✋</span><h3>Cancel</h3><p>Cancel during the scheduled delay. Expected: canceled state, busy false and no accepted cards.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Slow old result</h3><p>Start slow success then fast empty. Expected: newest empty persists; old success is logged as ignored.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Old cleanup</h3><ul class="wt-content-points"><li>Start fast success then slow empty. </li><li>Expected: loading stays true for the newer <strong class="wt-content-key">request</strong> after the old completion; finally the newest empty appears.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⏳</span><strong>Async:</strong> Waiting can yield control; heavy synchronous work still blocks.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Promise:</strong> Track eventual fulfillment or rejection.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Chain:</strong> Return the next promise to connect its outcome.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧵</span><strong>Await:</strong> Suspend the async function, not the whole browser.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Fetch:</strong> Check status before reading the body.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Contract:</strong> Parsing and validation are separate stages.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">💬</span><strong>UI:</strong> Idle, loading, success, empty, error and canceled are explicit.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✋</span><strong>Abort:</strong> Handle cancellation and release timers/listeners.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Ownership:</strong> Guard success, failure and cleanup writes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🤝</span><strong>Groups:</strong> Choose sequential or grouped work deliberately.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Promise"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Promise</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Promise</h4><p>A representation of an eventual fulfillment value or rejection reason.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Pending"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Pending</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Pending</h4><p>The promise has not yet settled into fulfillment or rejection.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Fulfillment"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Fulfillment</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Fulfillment</h4><p>Successful settlement with a value.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Rejection"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Rejection</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Rejection</h4><p>Unsuccessful settlement with a reason.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Await"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Await</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Await</h4><p>An operation that suspends an async function until the awaited outcome is available.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Response"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Response</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Response</h4><p>The Fetch API representation of a received response and its body access.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JSON"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JSON</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JSON</h4><p>A text data representation that can be parsed into JavaScript values.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Schema validation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Schema validation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Schema validation</h4><p>Checking a parsed value against an expected data contract.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Abort signal"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Abort signal</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Abort signal</h4><p>A signal that compatible work observes to support cancellation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Request ownership"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Request ownership</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Request ownership</h4><p>A rule deciding which asynchronous operation may update the current UI.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Loader with Owned Outcomes</h2><ul class="wt-content-points"><li>Write an asynchronous catalog loader around an implemented endpoint or the lesson’s local <strong class="wt-content-key">response</strong> adapter. </li><li>Show idle/loading/success/empty/error/canceled clearly. </li><li>Check the <strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">contract</strong>, await body parsing and validate accepted records before rendering them as text.</li></ul><ul class="wt-content-points"><li>Use an AbortController for compatible cancellation and increasing <strong class="wt-content-key">request</strong> IDs to protect every UI write. </li><li>Keep older completion and cleanup from replacing the newest result. </li><li>Reset or page cleanup should cancel pending work and invalidate it without leaving an unhandled rejection.</li></ul><ul class="wt-content-points"><li>Test all six <strong class="wt-content-key">response</strong> scenarios, cancellation, reset while pending and both request-order races. </li><li>Record which stage fails and whether the newest busy state remains correct. </li><li>Use a timer-controlled test for logic, then inspect real <strong class="wt-content-key">browser</strong> timing, controls and <strong class="wt-content-key">accessibility</strong> feedback.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain the <strong class="wt-content-key">promise</strong> path, distinguish transport/<strong class="wt-content-key">HTTP</strong>/parse/schema outcomes and demonstrate stable result ownership. </li><li>Level 19 will introduce <strong class="wt-content-key">browser</strong> storage and other web APIs.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 18 Complete?</h2><p>Before marking complete, explain an awaited response, handle one failure at each relevant stage and demonstrate cancellation plus both overlapping-request cases. Completion is a local study marker rather than an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="javascript-events-forms.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">JavaScript Events and Forms</span><span class="nav-action">Review Level 17</span></a></div><div class="topic-nav-side next"><a href="browser-storage-web-apis.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Browser Storage and Web APIs</span><span class="nav-action">Open Level 19</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="asynchronous-javascript-apis.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=13" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=10" defer></script>
+</body></html>

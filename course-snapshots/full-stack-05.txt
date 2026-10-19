@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 5: Responsive Layouts | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=5"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=5">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class="active " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">05</div><div><p class="eyebrow">WEB FOUNDATIONS</p><h1>Responsive Layouts</h1><p>Learn how professional websites adapt to different screen sizes using mobile-first thinking, fluid sizing, Flexbox, Grid, media queries, responsive typography and careful overflow control.</p><div class="lesson-meta"><span>⏱ Estimated learning time: 4–5 hours</span><span>◈ Beginner → Intermediate</span><span>▣ 23 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Explain what responsive web design means.</p></article><article><b>02</b><p>Understand why mobile-first development is useful.</p></article><article><b>03</b><p>Build fluid layouts using percentages and max-width.</p></article><article><b>04</b><p>Understand the difference between width, min-width and max-width.</p></article><article><b>05</b><p>Use Flexbox for one-dimensional layouts.</p></article><article><b>06</b><p>Understand the main axis and cross axis.</p></article><article><b>07</b><p>Control alignment using justify-content and align-items.</p></article><article><b>08</b><p>Use flex-wrap and gap effectively.</p></article><article><b>09</b><p>Build responsive card layouts using CSS Grid.</p></article><article><b>10</b><p>Use repeat() and minmax() to create flexible grids.</p></article><article><b>11</b><p>Write useful media queries.</p></article><article><b>12</b><p>Choose breakpoints based on content instead of device names.</p></article><article><b>13</b><p>Create responsive navigation and cards.</p></article><article><b>14</b><p>Build responsive typography and images.</p></article><article><b>15</b><p>Identify and prevent horizontal overflow.</p></article><article><b>16</b><p>Use browser DevTools to test multiple viewport sizes.</p></article><article><b>17</b><p>Understand the difference between adaptive and fluid behaviour.</p></article><article><b>18</b><p>Debug common responsive-layout problems.</p></article><article><b>19</b><p>Prepare layouts that can later be used inside React applications.</p></article><article><b>20</b><p>Build a complete responsive CodeBhavya-style learning page.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>1. What Is Responsive Design?</h2></div></div><ul class="content-points"><li>The layout can change according to available width.</li><li>Columns can become rows on smaller screens.</li><li>Navigation can change presentation.</li><li>Images and text can scale within reasonable limits.</li><li>Controls should remain usable with touch and keyboard input.</li><li>Responsive design is about the interface, not about targeting specific phone models.</li></ul><div class="explanation-list"><p>Responsive design means creating interfaces that adapt to the available screen and interaction space. A responsive website should remain usable on phones, tablets, laptops and large displays without requiring a separate website for every device.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".container {
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 20px;
+}">Copy</button></header><pre><code>.container {
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 20px;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The goal is not to make everything smaller. The goal is to make the interface appropriate for the available space.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>2. The Viewport</h2></div></div><ul class="content-points"><li>Desktop screens usually provide more horizontal space.</li><li>Mobile screens provide much less horizontal space.</li><li>The same content may need different arrangements.</li><li>Browser DevTools can simulate different viewport dimensions.</li></ul><div class="explanation-list"><p>The viewport is the visible area in which a webpage is displayed. Responsive CSS commonly reacts to the viewport width.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="/* The layout can respond to viewport width */
+
+@media (max-width: 700px) {
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+}">Copy</button></header><pre><code>/* The layout can respond to viewport width */
+
+@media (max-width: 700px) {
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Responsive behaviour should be tested across a range of widths, not just one phone and one laptop.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>3. Mobile-First CSS</h2></div></div><ul class="content-points"><li>Start with the simplest usable layout.</li><li>Add larger-screen improvements through media queries.</li><li>Avoid assuming that desktop is the default.</li><li>Mobile-first CSS often produces cleaner responsive rules.</li></ul><div class="explanation-list"><p>Mobile-first development starts with a layout that works well in a narrow viewport and then enhances it for larger screens.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".course-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 800px) {
+    .course-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}">Copy</button></header><pre><code>.course-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 800px) {
+    .course-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Notice that the base layout works on mobile. The media query adds the larger-screen arrangement.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>4. Fluid Widths</h2></div></div><ul class="content-points"><li>Percentages can create fluid widths.</li><li>width: 100% allows an element to fill its containing block.</li><li>max-width prevents content from becoming excessively wide.</li><li>margin-inline: auto can center a constrained container.</li></ul><div class="explanation-list"><p>A fluid layout allows elements to use available space instead of forcing a fixed width everywhere.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>The content can shrink on a mobile screen while remaining comfortably constrained on a large desktop screen.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".content {
+    width: 100%;
+    max-width: 900px;
+    margin-inline: auto;
+}">Copy</button></header><pre><code>.content {
+    width: 100%;
+    max-width: 900px;
+    margin-inline: auto;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>5. width, min-width and max-width</h2></div></div><ul class="content-points"><li>width defines a preferred size.</li><li>min-width defines the smallest allowed size.</li><li>max-width defines the largest allowed size.</li><li>Combining width: 100% with max-width is a common responsive pattern.</li></ul><div class="explanation-list"><p>These three properties provide different forms of size control.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".article {
+    width: 100%;
+    max-width: 760px;
+    min-width: 0;
+}">Copy</button></header><pre><code>.article {
+    width: 100%;
+    max-width: 760px;
+    min-width: 0;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>min-width: 0 is especially useful for preventing flex and grid children from refusing to shrink because of long content.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>6. Flexbox — The One-Dimensional Layout System</h2></div></div><ul class="content-points"><li>display: flex activates Flexbox.</li><li>flex-direction chooses row or column.</li><li>justify-content controls the main axis.</li><li>align-items controls the cross axis.</li><li>gap creates space between flex items.</li><li>flex-wrap allows items to move onto additional lines.</li></ul><div class="explanation-list"><p>Flexbox is designed for arranging items along one primary axis. It is excellent for navigation bars, toolbars, button groups, card rows and many component-level layouts.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}">Copy</button></header><pre><code>.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Flexbox is usually easiest to understand when you identify the main axis first.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>7. Main Axis and Cross Axis</h2></div></div><ul class="content-points"><li>With flex-direction: row, the main axis is horizontal.</li><li>With flex-direction: column, the main axis is vertical.</li><li>justify-content operates on the main axis.</li><li>align-items operates on the cross axis.</li></ul><div class="explanation-list"><p>Flexbox alignment depends on the direction of the flex container.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>For a row-based menu, justify-content distributes items horizontally while align-items controls vertical alignment.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".menu {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+}">Copy</button></header><pre><code>.menu {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>8. justify-content</h2></div></div><ul class="content-points"><li>flex-start places items toward the beginning.</li><li>center places items in the center.</li><li>flex-end places items toward the end.</li><li>space-between distributes free space between items.</li><li>space-around and space-evenly distribute free space in different ways.</li></ul><div class="explanation-list"><p>justify-content distributes flex items along the main axis.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".toolbar {
+    display: flex;
+    justify-content: space-between;
+}">Copy</button></header><pre><code>.toolbar {
+    display: flex;
+    justify-content: space-between;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Use justify-content according to the layout requirement instead of memorizing one preferred value.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>9. align-items</h2></div></div><ul class="content-points"><li>center is common for navigation bars and toolbars.</li><li>flex-start aligns items toward the beginning.</li><li>flex-end aligns items toward the end.</li><li>stretch can make items fill the available cross-axis space.</li></ul><div class="explanation-list"><p>align-items controls how flex items are aligned across the cross axis.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>A centered header logo and navigation items commonly use align-items: center.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".header {
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+}">Copy</button></header><pre><code>.header {
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>10. flex-wrap and gap</h2></div></div><ul class="content-points"><li>nowrap is the default.</li><li>wrap allows multiple flex lines.</li><li>gap creates consistent spacing between items.</li><li>gap is often cleaner than applying margins to every child.</li></ul><div class="explanation-list"><p>Flex items can overflow when there is not enough horizontal space. flex-wrap allows them to move onto another line.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}">Copy</button></header><pre><code>.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Wrapping is useful for tags, filters, buttons and compact navigation groups.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>11. Flexible Flex Items</h2></div></div><ul class="content-points"><li>flex-grow controls how an item can consume extra space.</li><li>flex-shrink controls whether it can shrink.</li><li>flex-basis provides the starting size.</li><li>The shorthand flex combines these ideas.</li></ul><div class="explanation-list"><p>Flex items can grow, shrink and use a preferred basis. These controls help create layouts that adapt to available space.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".sidebar {
+    flex: 0 0 240px;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+}">Copy</button></header><pre><code>.sidebar {
+    flex: 0 0 240px;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The min-width: 0 pattern is important when a flex child contains long text or wide content.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>12. CSS Grid</h2></div></div><ul class="content-points"><li>display: grid activates Grid.</li><li>grid-template-columns defines columns.</li><li>grid-template-rows defines rows.</li><li>gap controls spacing.</li><li>fr represents a flexible fraction of available space.</li></ul><div class="explanation-list"><p>CSS Grid is a two-dimensional layout system. It is particularly useful when a design needs rows and columns to work together.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>A three-column course-card layout can be expressed naturally with Grid.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}">Copy</button></header><pre><code>.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>13. repeat() and minmax()</h2></div></div><ul class="content-points"><li>repeat() avoids writing the same track repeatedly.</li><li>minmax() defines a lower and upper bound.</li><li>auto-fit allows the browser to fit as many columns as practical.</li><li>This pattern can create highly flexible card grids.</li></ul><div class="explanation-list"><p>repeat() reduces repetitive grid declarations. minmax() allows a track to have a minimum and maximum size.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".course-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(240px, 1fr)
+        );
+    gap: 20px;
+}">Copy</button></header><pre><code>.course-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(240px, 1fr)
+        );
+    gap: 20px;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Grid can sometimes provide responsive behaviour with fewer explicit breakpoints.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>14. Media Queries</h2></div></div><ul class="content-points"><li>max-width applies rules below a threshold.</li><li>min-width applies rules above a threshold.</li><li>Media queries can respond to more than just width.</li><li>Use breakpoints where the content needs them.</li></ul><div class="explanation-list"><p>Media queries apply CSS conditionally when the environment satisfies a condition.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="/* Base mobile layout */
+
+.course-grid {
+    grid-template-columns: 1fr;
+}
+
+/* Larger screens */
+
+@media (min-width: 768px) {
+    .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1100px) {
+    .course-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}">Copy</button></header><pre><code>/* Base mobile layout */
+
+.course-grid {
+    grid-template-columns: 1fr;
+}
+
+/* Larger screens */
+
+@media (min-width: 768px) {
+    .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1100px) {
+    .course-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>15. Breakpoints Should Follow Content</h2></div></div><ul class="content-points"><li>Do not design only for one specific phone model.</li><li>Do not assume every tablet has the same width.</li><li>Watch for cramped navigation.</li><li>Watch for unreadably narrow columns.</li><li>Introduce a breakpoint when the design needs one.</li></ul><div class="explanation-list"><p>A common mistake is creating breakpoints only for named devices. Professional responsive design starts with the content and changes the layout when the content begins to fail.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="@media (min-width: 820px) {
+    .layout {
+        grid-template-columns: 240px 1fr;
+    }
+}">Copy</button></header><pre><code>@media (min-width: 820px) {
+    .layout {
+        grid-template-columns: 240px 1fr;
+    }
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>820px is not a magical tablet number. It is simply an example breakpoint chosen because the layout may need two columns at that width.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>16. Responsive Typography</h2></div></div><ul class="content-points"><li>rem provides predictable root-relative sizing.</li><li>max-width can control paragraph line length.</li><li>clamp() can create fluid but bounded font sizes.</li><li>Line-height should remain comfortable at every size.</li></ul><div class="explanation-list"><p>Text should remain readable across different viewport sizes. Responsive typography can use relative units and controlled scaling.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>clamp() allows the heading to scale with the viewport while remaining between a minimum and maximum size.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.1;
+}
+
+p {
+    max-width: 70ch;
+}">Copy</button></header><pre><code>h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.1;
+}
+
+p {
+    max-width: 70ch;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>17. Responsive Images</h2></div></div><ul class="content-points"><li>max-width: 100% prevents the image from exceeding its container.</li><li>height: auto preserves the aspect ratio.</li><li>display: block can remove unexpected inline spacing.</li><li>For important responsive image delivery, HTML also provides srcset and sizes.</li></ul><div class="explanation-list"><p>Images should normally remain inside their containing area instead of creating horizontal overflow.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}">Copy</button></header><pre><code>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>18. Preventing Horizontal Overflow</h2></div></div><ul class="content-points"><li>Check fixed-width elements.</li><li>Check large images.</li><li>Check long unbroken strings.</li><li>Check flex children that refuse to shrink.</li><li>Check wide tables and code blocks.</li><li>Use min-width: 0 where appropriate.</li><li>Do not blindly hide overflow before finding the real cause.</li></ul><div class="explanation-list"><p>Horizontal scrolling is one of the most common responsive-layout problems.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".content {
+    min-width: 0;
+}
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+}">Copy</button></header><pre><code>.content {
+    min-width: 0;
+}
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>overflow-x: hidden can hide symptoms without fixing the underlying layout problem. Diagnose first.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>19. Responsive Navigation</h2></div></div><ul class="content-points"><li>Navigation links may wrap.</li><li>Links may move into a vertical layout.</li><li>A menu button can reveal navigation on small screens.</li><li>Interactive controls must remain keyboard accessible.</li><li>The mobile navigation should not leave large empty areas.</li></ul><div class="explanation-list"><p>Navigation is often one of the first components that becomes crowded on smaller screens.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 650px) {
+    .site-nav {
+        flex-direction: column;
+    }
+}">Copy</button></header><pre><code>.site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 650px) {
+    .site-nav {
+        flex-direction: column;
+    }
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Responsive navigation is not simply about hiding links. The alternative interaction must remain understandable and accessible.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>20. Testing Responsive Interfaces</h2></div></div><ul class="content-points"><li>Test narrow mobile widths.</li><li>Test medium tablet-like widths.</li><li>Test normal desktop widths.</li><li>Test very wide screens.</li><li>Look for overflow.</li><li>Look for cramped text.</li><li>Check interactive controls.</li><li>Inspect layout rules in DevTools.</li></ul><div class="explanation-list"><p>Responsive development requires repeated testing. Browser DevTools provides viewport simulation and inspection tools.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="/* A useful testing sequence
+
+320px
+375px
+480px
+768px
+1024px
+1440px
+1600px
+
+The exact widths are examples,
+not required breakpoints. */">Copy</button></header><pre><code>/* A useful testing sequence
+
+320px
+375px
+480px
+768px
+1024px
+1440px
+1600px
+
+The exact widths are examples,
+not required breakpoints. */</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Testing several widths exposes problems that may remain invisible at one chosen screen size.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">21</div><div><p class="section-label">CONCEPT 21</p><h2>21. Flexbox vs Grid</h2></div></div><ul class="content-points"><li>Flexbox is primarily one-dimensional.</li><li>Grid is primarily two-dimensional.</li><li>Flexbox is excellent for component internals and alignment.</li><li>Grid is excellent for page sections and card matrices.</li><li>Real interfaces often use both.</li></ul><div class="explanation-list"><p>Flexbox and Grid are complementary rather than competing technologies.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>A page can use Grid for the major structure and Flexbox inside each component.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".page {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}">Copy</button></header><pre><code>.page {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">22</div><div><p class="section-label">CONCEPT 22</p><h2>22. Adaptive vs Fluid Layouts</h2></div></div><ul class="content-points"><li>Fluid sizing responds continuously.</li><li>Media queries can introduce structural changes.</li><li>Grid&#39;s minmax() can provide fluid columns.</li><li>Breakpoints can change navigation or major page structure.</li><li>Good responsive design combines the approaches when useful.</li></ul><div class="explanation-list"><p>Fluid layouts continuously use available space, while adaptive layouts may switch between defined arrangements at specific thresholds. Modern interfaces commonly combine both strategies.</p></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">23</div><div><p class="section-label">CONCEPT 23</p><h2>23. Responsive CSS in React</h2></div></div><ul class="content-points"><li>React manages component structure and behaviour.</li><li>CSS manages presentation and layout.</li><li>Avoid using JavaScript for every visual breakpoint.</li><li>Use CSS media queries for purely visual changes.</li><li>Use JavaScript only when the interaction genuinely depends on viewport information.</li></ul><div class="explanation-list"><p>Responsive CSS remains CSS even when the UI is rendered by React. Components should expose sensible structure and classes while CSS handles most visual adaptation.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function CourseCard() {
+    return (
+        &lt;article className=&quot;course-card&quot;&gt;
+            &lt;h2&gt;React&lt;/h2&gt;
+            &lt;p&gt;Component-based UI development.&lt;/p&gt;
+            &lt;button&gt;Start&lt;/button&gt;
+        &lt;/article&gt;
+    );
+}">Copy</button></header><pre><code>function CourseCard() {
+    return (
+        &lt;article className=&quot;course-card&quot;&gt;
+            &lt;h2&gt;React&lt;/h2&gt;
+            &lt;p&gt;Component-based UI development.&lt;/p&gt;
+            &lt;button&gt;Start&lt;/button&gt;
+        &lt;/article&gt;
+    );
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>This separation makes React components easier to reuse across different screen sizes.</p></div></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Responsive Design</strong><p>A design approach where the interface adapts to different available screen sizes and interaction conditions.</p></div></article><article><b>02</b><div><strong>Mobile-First</strong><p>Starting with a narrow-screen layout and progressively enhancing it for larger screens.</p></div></article><article><b>03</b><div><strong>Viewport</strong><p>The visible area of the browser in which a webpage is displayed.</p></div></article><article><b>04</b><div><strong>max-width</strong><p>Sets the largest size an element is allowed to reach.</p></div></article><article><b>05</b><div><strong>Flexbox</strong><p>A one-dimensional CSS layout system for arranging and aligning items along a main axis.</p></div></article><article><b>06</b><div><strong>Main Axis</strong><p>The primary direction in which Flexbox items are laid out.</p></div></article><article><b>07</b><div><strong>Cross Axis</strong><p>The axis perpendicular to the Flexbox main axis.</p></div></article><article><b>08</b><div><strong>flex-wrap</strong><p>Allows flex items to move onto additional lines when necessary.</p></div></article><article><b>09</b><div><strong>CSS Grid</strong><p>A two-dimensional layout system based on rows and columns.</p></div></article><article><b>10</b><div><strong>minmax()</strong><p>A Grid function that defines a minimum and maximum size for a track.</p></div></article><article><b>11</b><div><strong>Media Query</strong><p>A CSS condition that applies rules when specified environmental conditions are satisfied.</p></div></article><article><b>12</b><div><strong>Breakpoint</strong><p>A point where the layout changes because the current arrangement no longer works well.</p></div></article><article><b>13</b><div><strong>Fluid Layout</strong><p>A layout that continuously adapts its dimensions to available space.</p></div></article><article><b>14</b><div><strong>Horizontal Overflow</strong><p>Content extending beyond the available horizontal space and potentially causing unwanted scrolling.</p></div></article><article><b>15</b><div><strong>gap</strong><p>A CSS property used to create consistent space between items in Flexbox and Grid layouts.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is responsive web design?</summary><div class="interview-answer"><p>Responsive web design creates interfaces that adapt to different available screen sizes and interaction environments while keeping content usable and accessible.</p></div></details><details class="interview-item"><summary><span>02</span>What is mobile-first development?</summary><div class="interview-answer"><p>Mobile-first development starts with a narrow-screen layout and then adds enhancements for larger screens using progressive CSS rules.</p></div></details><details class="interview-item"><summary><span>03</span>What is the difference between Flexbox and Grid?</summary><div class="interview-answer"><p>Flexbox is primarily a one-dimensional layout system, while Grid is primarily a two-dimensional system for rows and columns. They are often used together.</p></div></details><details class="interview-item"><summary><span>04</span>Explain justify-content and align-items.</summary><div class="interview-answer"><p>In Flexbox, justify-content controls alignment along the main axis, while align-items controls alignment along the cross axis.</p></div></details><details class="interview-item"><summary><span>05</span>What happens to the main axis when flex-direction changes?</summary><div class="interview-answer"><p>With row, the main axis is horizontal. With column, the main axis becomes vertical.</p></div></details><details class="interview-item"><summary><span>06</span>Why is min-width: 0 useful in responsive layouts?</summary><div class="interview-answer"><p>Flex and Grid children can otherwise refuse to shrink because of their content&#39;s minimum size. min-width: 0 allows the item to shrink within its available space.</p></div></details><details class="interview-item"><summary><span>07</span>Why use max-width with width: 100%?</summary><div class="interview-answer"><p>width: 100% allows the element to use available space while max-width prevents it from becoming unnecessarily wide on large screens.</p></div></details><details class="interview-item"><summary><span>08</span>What is a media query?</summary><div class="interview-answer"><p>A media query conditionally applies CSS rules according to environmental conditions such as viewport width.</p></div></details><details class="interview-item"><summary><span>09</span>Why should breakpoints follow content rather than device names?</summary><div class="interview-answer"><p>Device dimensions vary widely. A content-based breakpoint is more reliable because it changes the layout when the current arrangement actually becomes unsuitable.</p></div></details><details class="interview-item"><summary><span>10</span>How can horizontal overflow be debugged?</summary><div class="interview-answer"><p>Inspect wide elements, fixed widths, images, long strings, tables and flex or grid children. Use DevTools to identify which element exceeds the viewport before deciding how to fix it.</p></div></details><details class="interview-item"><summary><span>11</span>What does minmax() do in CSS Grid?</summary><div class="interview-answer"><p>minmax() defines a lower and upper size for a Grid track, allowing flexible but controlled column dimensions.</p></div></details><details class="interview-item"><summary><span>12</span>Why should JavaScript not control every responsive visual change?</summary><div class="interview-answer"><p>CSS is designed to handle presentation and media-query changes efficiently. Using JavaScript for every visual breakpoint adds unnecessary complexity and can create synchronization problems.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Easy</b></header><h3>Practice 01 — Mobile-First Course Card</h3><p>Create a course card that works comfortably on a narrow mobile screen and then enhance its spacing and typography for larger screens.</p><details><summary>Need a hint?</summary><ul><li>Start with the mobile layout as the default CSS.</li><li>Use width: 100% with a sensible max-width.</li><li>Add a min-width media query for larger screens.</li><li>Test the card at several viewport widths.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Easy</b></header><h3>Practice 02 — Flexbox Toolbar</h3><p>Build a toolbar containing a logo, search area and action buttons. Use Flexbox to align the items and make the toolbar wrap when space becomes limited.</p><details><summary>Need a hint?</summary><ul><li>Start with display: flex.</li><li>Use align-items: center for vertical alignment.</li><li>Use gap instead of individual margins where possible.</li><li>Add flex-wrap: wrap and test a narrow viewport.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Easy</b></header><h3>Practice 03 — Flexbox Axis Challenge</h3><p>Create the same navigation component using both flex-direction: row and flex-direction: column. Explain how justify-content and align-items change meaning when the direction changes.</p><details><summary>Need a hint?</summary><ul><li>First identify the main axis.</li><li>Test justify-content with row.</li><li>Change flex-direction to column.</li><li>Observe that the main axis has changed.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Medium</b></header><h3>Practice 04 — Three-Column Course Grid</h3><p>Create six CodeBhavya course cards using CSS Grid. Display three columns on wide screens, two on medium screens and one on narrow screens.</p><details><summary>Need a hint?</summary><ul><li>Start with grid-template-columns: 1fr.</li><li>Add a medium breakpoint with repeat(2, 1fr).</li><li>Add a larger breakpoint with repeat(3, 1fr).</li><li>Use gap to maintain consistent spacing.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Medium</b></header><h3>Practice 05 — Auto-Fit Grid</h3><p>Rebuild the course grid using repeat(auto-fit, minmax(...)). Try to make the browser choose a practical number of columns without explicitly specifying every breakpoint.</p><details><summary>Need a hint?</summary><ul><li>Activate CSS Grid first.</li><li>Use repeat(auto-fit, ...).</li><li>Give minmax() a reasonable minimum card width.</li><li>Resize the viewport and observe when columns appear or disappear.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Medium</b></header><h3>Practice 06 — Responsive Typography</h3><p>Create a hero heading that scales between a minimum and maximum size while remaining readable on mobile and desktop.</p><details><summary>Need a hint?</summary><ul><li>Use rem for the minimum and maximum values.</li><li>Use clamp() to create a fluid middle value.</li><li>Keep line-height comfortable.</li><li>Test both very narrow and very wide screens.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Easy</b></header><h3>Practice 07 — Responsive Image</h3><p>Create a course banner image that never exceeds its container and keeps its original aspect ratio.</p><details><summary>Need a hint?</summary><ul><li>Start with max-width: 100%.</li><li>Use height: auto.</li><li>Try display: block to remove inline-image spacing.</li><li>Test with both a small and large image.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Hard</b></header><h3>Practice 08 — Overflow Detective</h3><p>Build a page that intentionally creates horizontal overflow. Use DevTools to find the element causing it and fix the actual cause instead of simply hiding overflow on the body.</p><details><summary>Need a hint?</summary><ul><li>Look for fixed-width elements.</li><li>Inspect images and long text.</li><li>Check flex and grid children.</li><li>Try min-width: 0 on the affected component when appropriate.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Medium</b></header><h3>Practice 09 — Responsive Navigation</h3><p>Create a navigation bar that displays links horizontally on wide screens and changes to a vertical arrangement on smaller screens.</p><details><summary>Need a hint?</summary><ul><li>Use Flexbox for the navigation.</li><li>Start with a row layout.</li><li>Use a media query to change the direction.</li><li>Make sure links remain keyboard accessible.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Medium</b></header><h3>Practice 10 — Sidebar to Stacked Layout</h3><p>Create a dashboard with a sidebar and content area on desktop. On smaller screens, change it to a single-column layout.</p><details><summary>Need a hint?</summary><ul><li>Grid is a good choice for the desktop structure.</li><li>Give the sidebar a controlled column size.</li><li>Give the content column min-width: 0.</li><li>At a smaller breakpoint, change the layout to one column.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Hard</b></header><h3>Practice 11 — Breakpoint Investigation</h3><p>Create a layout that becomes cramped at a particular width. Resize the browser and determine the width at which a breakpoint should be introduced based on the content rather than a device category.</p><details><summary>Need a hint?</summary><ul><li>Resize the viewport gradually instead of jumping between phone and desktop.</li><li>Look for the first point where content becomes uncomfortable.</li><li>Place the breakpoint near that point.</li><li>Do not call the breakpoint &#39;tablet&#39; just because of the chosen width.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span><b>Hard</b></header><h3>Practice 12 — Responsive CodeBhavya Page</h3><p>Build a complete CodeBhavya-style learning page containing a header, hero, course cards, practice section and footer. The entire page must remain usable from mobile through large desktop widths.</p><details><summary>Need a hint?</summary><ul><li>Start with a mobile-first single-column structure.</li><li>Use Grid for major card collections and Flexbox for component-level alignment.</li><li>Use max-width containers to prevent excessive line lengths.</li><li>Test the complete page at multiple viewport widths and fix overflow before adding decorative styling.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is the main goal of responsive design?</h3><div class="quiz-options"><button type="button" data-option="0">A. Make every element smaller</button><button type="button" data-option="1">B. Create separate HTML for every device</button><button type="button" data-option="2">C. Adapt the interface to available space</button><button type="button" data-option="3">D. Remove mobile users</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>What does mobile-first mean?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only design for mobile</button><button type="button" data-option="1">B. Start with a narrow-screen layout and enhance it for larger screens</button><button type="button" data-option="2">C. Use JavaScript for mobile</button><button type="button" data-option="3">D. Hide desktop content</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which property activates Flexbox?</h3><div class="quiz-options"><button type="button" data-option="0">A. display: flex</button><button type="button" data-option="1">B. position: flex</button><button type="button" data-option="2">C. layout: flex</button><button type="button" data-option="3">D. flex: display</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which property controls the Flexbox main axis?</h3><div class="quiz-options"><button type="button" data-option="0">A. align-items</button><button type="button" data-option="1">B. justify-content</button><button type="button" data-option="2">C. text-align</button><button type="button" data-option="3">D. vertical-align</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Which property controls the Flexbox cross axis?</h3><div class="quiz-options"><button type="button" data-option="0">A. align-items</button><button type="button" data-option="1">B. justify-content</button><button type="button" data-option="2">C. float</button><button type="button" data-option="3">D. position</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>What does flex-wrap do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Changes font size</button><button type="button" data-option="1">B. Allows items to move onto additional lines</button><button type="button" data-option="2">C. Creates Grid columns</button><button type="button" data-option="3">D. Hides overflow</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which system is primarily two-dimensional?</h3><div class="quiz-options"><button type="button" data-option="0">A. Flexbox</button><button type="button" data-option="1">B. CSS Grid</button><button type="button" data-option="2">C. Inline layout</button><button type="button" data-option="3">D. Positioning</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What does 1fr represent in CSS Grid?</h3><div class="quiz-options"><button type="button" data-option="0">A. One fixed pixel</button><button type="button" data-option="1">B. One flexible fraction of available space</button><button type="button" data-option="2">C. One viewport</button><button type="button" data-option="3">D. One font size</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>What does minmax() provide?</h3><div class="quiz-options"><button type="button" data-option="0">A. A minimum and maximum track size</button><button type="button" data-option="1">B. A color range</button><button type="button" data-option="2">C. A font range only</button><button type="button" data-option="3">D. Two breakpoints automatically</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Which unit is based on viewport width?</h3><div class="quiz-options"><button type="button" data-option="0">A. rem</button><button type="button" data-option="1">B. em</button><button type="button" data-option="2">C. vw</button><button type="button" data-option="3">D. px</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>What is a media query used for?</h3><div class="quiz-options"><button type="button" data-option="0">A. Writing HTML</button><button type="button" data-option="1">B. Conditionally applying CSS</button><button type="button" data-option="2">C. Creating JavaScript functions</button><button type="button" data-option="3">D. Storing data</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Why should breakpoints follow content?</h3><div class="quiz-options"><button type="button" data-option="0">A. All devices have identical widths</button><button type="button" data-option="1">B. Content determines when a layout becomes unsuitable</button><button type="button" data-option="2">C. Device names are required by CSS</button><button type="button" data-option="3">D. Breakpoints are only for phones</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>Which rule helps an image remain within its container?</h3><div class="quiz-options"><button type="button" data-option="0">A. max-width: 100%</button><button type="button" data-option="1">B. width: 5000px</button><button type="button" data-option="2">C. min-width: 1000px</button><button type="button" data-option="3">D. position: fixed</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>What is a common cause of horizontal overflow?</h3><div class="quiz-options"><button type="button" data-option="0">A. A fixed-width element wider than its container</button><button type="button" data-option="1">B. Using gap</button><button type="button" data-option="2">C. Using semantic HTML</button><button type="button" data-option="3">D. Using rem</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>Which CSS function can create bounded fluid typography?</h3><div class="quiz-options"><button type="button" data-option="0">A. clamp()</button><button type="button" data-option="1">B. repeat()</button><button type="button" data-option="2">C. minmax()</button><button type="button" data-option="3">D. calc-grid()</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Responsive Design</strong><p></p></article><article><strong>Viewport</strong><p></p></article><article><strong>Mobile-First</strong><p></p></article><article><strong>Fluid Layout</strong><p></p></article><article><strong>Flexbox</strong><p></p></article><article><strong>Main Axis</strong><p></p></article><article><strong>Cross Axis</strong><p></p></article><article><strong>Flex Wrap</strong><p></p></article><article><strong>CSS Grid</strong><p></p></article><article><strong>fr</strong><p></p></article><article><strong>minmax()</strong><p></p></article><article><strong>Media Query</strong><p></p></article><article><strong>Breakpoint</strong><p></p></article><article><strong>Overflow</strong><p></p></article><article><strong>clamp()</strong><p></p></article></div></section><nav class="lesson-nav"><a href="lesson.html?level=4">← Previous level</a><a href="lesson.html?level=6">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

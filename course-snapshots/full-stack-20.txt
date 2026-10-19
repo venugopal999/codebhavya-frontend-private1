@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 20: Express.js Fundamentals &amp; REST APIs | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=20"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=20">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class="active " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">20</div><div><p class="eyebrow">PART 4 • NODE &amp; EXPRESS • LEVEL 20</p><h1>Express.js Fundamentals &amp; REST APIs</h1><p>Learn Express.js from the ground up: applications, routes, middleware, request and response objects, REST API design, CRUD operations, status codes, error handling, and professional project structure.</p><div class="lesson-meta"><span>⏱ 3–4 Hours</span><span>◈ Intermediate</span><span>▣ 16 concepts</span><span>✓ 10 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand why Express.js is used with Node.js.</p></article><article><b>02</b><p>Create and start an Express application.</p></article><article><b>03</b><p>Understand the Express request-response lifecycle.</p></article><article><b>04</b><p>Create GET, POST, PUT, PATCH, and DELETE routes.</p></article><article><b>05</b><p>Understand and use Express middleware.</p></article><article><b>06</b><p>Parse JSON request bodies with express.json().</p></article><article><b>07</b><p>Use route parameters and query parameters.</p></article><article><b>08</b><p>Send structured JSON responses.</p></article><article><b>09</b><p>Use appropriate HTTP status codes.</p></article><article><b>10</b><p>Design REST-style resource endpoints.</p></article><article><b>11</b><p>Build a small in-memory CRUD API.</p></article><article><b>12</b><p>Handle unknown routes with 404 responses.</p></article><article><b>13</b><p>Create Express error-handling middleware.</p></article><article><b>14</b><p>Understand professional Express project organization.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Why Express.js?</h2></div></div><p class="concept-intro">Node.js provides the runtime for server-side JavaScript. Express.js is a lightweight web framework that makes it much easier to build HTTP servers and REST APIs with Node.js.</p><ul class="content-points"><li>Express runs on top of Node.js.</li><li>It simplifies routing and request handling.</li><li>It provides a middleware system.</li><li>It makes JSON APIs easier to build.</li><li>It supports scalable application structures.</li><li>It is widely used in MERN applications.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Express does not replace Node.js. Express uses Node.js and provides a simpler programming model for web servers and APIs.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;Server running on port 3000&quot;);
+});">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;Server running on port 3000&quot;);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Creating an Express Application</h2></div></div><p class="concept-intro">An Express application starts by importing Express, creating an application object, defining routes, and starting a server.</p><ul class="content-points"><li>Install Express using npm.</li><li>Import the Express package.</li><li>Create an Express application.</li><li>Define routes.</li><li>Start listening on a port.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The app object represents your Express application. Routes and middleware are attached to this object.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+const PORT = 3000;
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Welcome to CodeBhavya&quot;);
+});
+
+app.listen(PORT, () =&gt; {
+  console.log(&quot;Server running at http://localhost:&quot; + PORT);
+});">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+const PORT = 3000;
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Welcome to CodeBhavya&quot;);
+});
+
+app.listen(PORT, () =&gt; {
+  console.log(&quot;Server running at http://localhost:&quot; + PORT);
+});</code></pre></div><div class="code-box premium-code-box"><header><span>TERMINAL</span><button type="button" data-copy="npm init -y
+npm install express
+node server.js">Copy</button></header><pre><code>npm init -y
+npm install express
+node server.js</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Express Request-Response Lifecycle</h2></div></div><p class="concept-intro">Every HTTP request enters the Express application and moves through middleware and route handlers before a response is sent back to the client.</p><ul class="content-points"><li>Client sends an HTTP request.</li><li>Express receives the request.</li><li>Middleware can inspect or modify the request.</li><li>Express finds a matching route.</li><li>The route handler performs the required work.</li><li>The server sends a response.</li><li>The client receives the response.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Middleware and routes form the processing pipeline between an incoming request and the final response.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Client
+  |
+  v
+Express Application
+  |
+  v
+Middleware
+  |
+  v
+Route
+  |
+  v
+Route Handler
+  |
+  v
+Response
+  |
+  v
+Client">Copy</button></header><pre><code>Client
+  |
+  v
+Express Application
+  |
+  v
+Middleware
+  |
+  v
+Route
+  |
+  v
+Route Handler
+  |
+  v
+Response
+  |
+  v
+Client</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>GET Routes</h2></div></div><p class="concept-intro">GET routes are normally used when a client wants to retrieve data from the server.</p><ul class="content-points"><li>app.get() creates a GET route.</li><li>The first argument is the URL path.</li><li>The second argument is the request handler.</li><li>req represents the request.</li><li>res represents the response.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use GET when the main purpose of the request is retrieving a resource.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Home Page&quot;);
+});
+
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.send(&quot;About CodeBhavya&quot;);
+});
+
+app.get(&quot;/courses&quot;, (req, res) =&gt; {
+  res.json([
+    &quot;C Programming&quot;,
+    &quot;Data Structures&quot;,
+    &quot;Python&quot;,
+    &quot;Full Stack&quot;
+  ]);
+});
+
+app.listen(3000);">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Home Page&quot;);
+});
+
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.send(&quot;About CodeBhavya&quot;);
+});
+
+app.get(&quot;/courses&quot;, (req, res) =&gt; {
+  res.json([
+    &quot;C Programming&quot;,
+    &quot;Data Structures&quot;,
+    &quot;Python&quot;,
+    &quot;Full Stack&quot;
+  ]);
+});
+
+app.listen(3000);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>POST, PUT, PATCH and DELETE</h2></div></div><p class="concept-intro">REST APIs use different HTTP methods to communicate the intended operation on a resource.</p><ul class="content-points"><li>POST usually creates a new resource.</li><li>PUT usually replaces an existing resource.</li><li>PATCH partially updates an existing resource.</li><li>DELETE removes a resource.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>HTTP methods communicate the intended operation while the URL identifies the resource.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.post(&quot;/products&quot;, (req, res) =&gt; {
+  res.send(&quot;Create product&quot;);
+});
+
+app.put(&quot;/products/10&quot;, (req, res) =&gt; {
+  res.send(&quot;Replace product 10&quot;);
+});
+
+app.patch(&quot;/products/10&quot;, (req, res) =&gt; {
+  res.send(&quot;Update product 10&quot;);
+});
+
+app.delete(&quot;/products/10&quot;, (req, res) =&gt; {
+  res.send(&quot;Delete product 10&quot;);
+});">Copy</button></header><pre><code>app.post(&quot;/products&quot;, (req, res) =&gt; {
+  res.send(&quot;Create product&quot;);
+});
+
+app.put(&quot;/products/10&quot;, (req, res) =&gt; {
+  res.send(&quot;Replace product 10&quot;);
+});
+
+app.patch(&quot;/products/10&quot;, (req, res) =&gt; {
+  res.send(&quot;Update product 10&quot;);
+});
+
+app.delete(&quot;/products/10&quot;, (req, res) =&gt; {
+  res.send(&quot;Delete product 10&quot;);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Middleware</h2></div></div><p class="concept-intro">Middleware functions run during the request-response pipeline. They can inspect requests, modify data, perform authentication, log activity, or stop a request.</p><ul class="content-points"><li>Middleware receives req, res, and next.</li><li>next() passes control to the next middleware or route.</li><li>Middleware can execute before route handlers.</li><li>Multiple middleware functions can be chained.</li><li>Authentication and logging are common use cases.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Calling next() is important when middleware should allow the request to continue.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const logger = (req, res, next) =&gt; {
+  console.log(req.method, req.url);
+  next();
+};
+
+app.use(logger);
+
+app.get(&quot;/courses&quot;, (req, res) =&gt; {
+  res.json({
+    message: &quot;Courses loaded&quot;
+  });
+});">Copy</button></header><pre><code>const logger = (req, res, next) =&gt; {
+  console.log(req.method, req.url);
+  next();
+};
+
+app.use(logger);
+
+app.get(&quot;/courses&quot;, (req, res) =&gt; {
+  res.json({
+    message: &quot;Courses loaded&quot;
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Built-in JSON Middleware</h2></div></div><p class="concept-intro">REST APIs commonly receive JSON data in POST, PUT, and PATCH requests. Express provides express.json() to parse JSON request bodies.</p><ul class="content-points"><li>JSON request data is available through req.body.</li><li>express.json() should normally be registered before routes that need it.</li><li>Without JSON parsing middleware, req.body may be undefined.</li><li>The parsed object can be validated before storing it.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>express.json() converts an incoming JSON request body into a JavaScript object available through req.body.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+app.post(&quot;/students&quot;, (req, res) =&gt; {
+  const student = req.body;
+
+  res.status(201).json({
+    message: &quot;Student received&quot;,
+    data: student
+  });
+});
+
+app.listen(3000);">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+app.post(&quot;/students&quot;, (req, res) =&gt; {
+  const student = req.body;
+
+  res.status(201).json({
+    message: &quot;Student received&quot;,
+    data: student
+  });
+});
+
+app.listen(3000);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Route Parameters</h2></div></div><p class="concept-intro">Route parameters represent dynamic values inside a URL path. They are useful when addressing one specific resource.</p><ul class="content-points"><li>Parameters are defined using :name syntax.</li><li>Values are available through req.params.</li><li>Route parameters are commonly used for IDs.</li><li>A route such as /students/:id can represent one student.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Route parameters identify a specific resource inside the URL path.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.get(&quot;/students/:id&quot;, (req, res) =&gt; {
+  const studentId = req.params.id;
+
+  res.json({
+    message: &quot;Student requested&quot;,
+    id: studentId
+  });
+});">Copy</button></header><pre><code>app.get(&quot;/students/:id&quot;, (req, res) =&gt; {
+  const studentId = req.params.id;
+
+  res.json({
+    message: &quot;Student requested&quot;,
+    id: studentId
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Query Parameters</h2></div></div><p class="concept-intro">Query parameters are optional values placed after a question mark in a URL. They are commonly used for filtering, searching, sorting, and pagination.</p><ul class="content-points"><li>Query parameters are accessed through req.query.</li><li>They are optional by nature.</li><li>Multiple query parameters can be supplied.</li><li>They are useful for search and filtering.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use route parameters for resource identity and query parameters for optional request controls.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.get(&quot;/courses&quot;, (req, res) =&gt; {
+  const category = req.query.category;
+  const page = req.query.page;
+
+  res.json({
+    category: category,
+    page: page
+  });
+});">Copy</button></header><pre><code>app.get(&quot;/courses&quot;, (req, res) =&gt; {
+  const category = req.query.category;
+  const page = req.query.page;
+
+  res.json({
+    category: category,
+    page: page
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>Sending JSON Responses</h2></div></div><p class="concept-intro">REST APIs generally communicate using JSON. Express provides res.json() for sending JavaScript objects and arrays as JSON responses.</p><ul class="content-points"><li>res.json() automatically serializes JavaScript values.</li><li>Objects are useful for structured API responses.</li><li>Arrays are useful for collections.</li><li>A consistent response structure improves frontend development.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JSON creates a common language between frontend clients and backend APIs.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.get(&quot;/profile&quot;, (req, res) =&gt; {
+  res.json({
+    id: 101,
+    name: &quot;Bhavya&quot;,
+    role: &quot;Student&quot;,
+    skills: [
+      &quot;JavaScript&quot;,
+      &quot;Node.js&quot;,
+      &quot;Express.js&quot;
+    ]
+  });
+});">Copy</button></header><pre><code>app.get(&quot;/profile&quot;, (req, res) =&gt; {
+  res.json({
+    id: 101,
+    name: &quot;Bhavya&quot;,
+    role: &quot;Student&quot;,
+    skills: [
+      &quot;JavaScript&quot;,
+      &quot;Node.js&quot;,
+      &quot;Express.js&quot;
+    ]
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>HTTP Status Codes</h2></div></div><p class="concept-intro">Status codes tell the client what happened when the server processed a request.</p><ul class="content-points"><li>200 means the request succeeded.</li><li>201 means a resource was created.</li><li>204 means the request succeeded without a response body.</li><li>400 means the request is invalid.</li><li>401 means authentication is required or invalid.</li><li>403 means access is forbidden.</li><li>404 means the requested resource was not found.</li><li>409 indicates a conflict.</li><li>500 indicates an unexpected server-side failure.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A good API communicates both the result and the appropriate HTTP status code.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.post(&quot;/products&quot;, (req, res) =&gt; {
+  const product = req.body;
+
+  res.status(201).json({
+    message: &quot;Product created&quot;,
+    data: product
+  });
+});">Copy</button></header><pre><code>app.post(&quot;/products&quot;, (req, res) =&gt; {
+  const product = req.body;
+
+  res.status(201).json({
+    message: &quot;Product created&quot;,
+    data: product
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>REST Resource Design</h2></div></div><p class="concept-intro">REST-style APIs organize application data around resources. URLs normally use nouns, while HTTP methods communicate actions.</p><ul class="content-points"><li>Use resource names instead of action-heavy URLs.</li><li>Prefer plural resource names for collections.</li><li>Use HTTP methods to express operations.</li><li>Use IDs to identify individual resources.</li><li>Keep endpoint naming consistent.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>REST design separates the resource name from the operation being performed on that resource.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="GET     /products
+GET     /products/:id
+POST    /products
+PUT     /products/:id
+PATCH   /products/:id
+DELETE  /products/:id">Copy</button></header><pre><code>GET     /products
+GET     /products/:id
+POST    /products
+PUT     /products/:id
+PATCH   /products/:id
+DELETE  /products/:id</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Building a Small CRUD API</h2></div></div><p class="concept-intro">A CRUD API supports Create, Read, Update, and Delete operations. The following example uses an in-memory array so you can understand the Express flow before introducing a database.</p><ul class="content-points"><li>Create with POST.</li><li>Read all resources with GET.</li><li>Read one resource using a route parameter.</li><li>Update with PATCH.</li><li>Delete with DELETE.</li><li>A real application would normally persist data in a database.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>CRUD is the foundation of many business APIs. Databases replace the in-memory array when the application becomes persistent.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+let products = [
+  {
+    id: 1,
+    name: &quot;Laptop&quot;,
+    price: 55000
+  },
+  {
+    id: 2,
+    name: &quot;Keyboard&quot;,
+    price: 1500
+  }
+];
+
+app.get(&quot;/products&quot;, (req, res) =&gt; {
+  res.json(products);
+});
+
+app.get(&quot;/products/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  const product = products.find(item =&gt; item.id === id);
+
+  if (!product) {
+    return res.status(404).json({
+      error: &quot;Product not found&quot;
+    });
+  }
+
+  res.json(product);
+});
+
+app.post(&quot;/products&quot;, (req, res) =&gt; {
+  const product = {
+    id: Date.now(),
+    name: req.body.name,
+    price: req.body.price
+  };
+
+  products.push(product);
+
+  res.status(201).json(product);
+});
+
+app.patch(&quot;/products/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  const product = products.find(item =&gt; item.id === id);
+
+  if (!product) {
+    return res.status(404).json({
+      error: &quot;Product not found&quot;
+    });
+  }
+
+  if (req.body.name !== undefined) {
+    product.name = req.body.name;
+  }
+
+  if (req.body.price !== undefined) {
+    product.price = req.body.price;
+  }
+
+  res.json(product);
+});
+
+app.delete(&quot;/products/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  const index = products.findIndex(item =&gt; item.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({
+      error: &quot;Product not found&quot;
+    });
+  }
+
+  products.splice(index, 1);
+
+  res.status(204).send();
+});
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;API running on port 3000&quot;);
+});">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+let products = [
+  {
+    id: 1,
+    name: &quot;Laptop&quot;,
+    price: 55000
+  },
+  {
+    id: 2,
+    name: &quot;Keyboard&quot;,
+    price: 1500
+  }
+];
+
+app.get(&quot;/products&quot;, (req, res) =&gt; {
+  res.json(products);
+});
+
+app.get(&quot;/products/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  const product = products.find(item =&gt; item.id === id);
+
+  if (!product) {
+    return res.status(404).json({
+      error: &quot;Product not found&quot;
+    });
+  }
+
+  res.json(product);
+});
+
+app.post(&quot;/products&quot;, (req, res) =&gt; {
+  const product = {
+    id: Date.now(),
+    name: req.body.name,
+    price: req.body.price
+  };
+
+  products.push(product);
+
+  res.status(201).json(product);
+});
+
+app.patch(&quot;/products/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  const product = products.find(item =&gt; item.id === id);
+
+  if (!product) {
+    return res.status(404).json({
+      error: &quot;Product not found&quot;
+    });
+  }
+
+  if (req.body.name !== undefined) {
+    product.name = req.body.name;
+  }
+
+  if (req.body.price !== undefined) {
+    product.price = req.body.price;
+  }
+
+  res.json(product);
+});
+
+app.delete(&quot;/products/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  const index = products.findIndex(item =&gt; item.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({
+      error: &quot;Product not found&quot;
+    });
+  }
+
+  products.splice(index, 1);
+
+  res.status(204).send();
+});
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;API running on port 3000&quot;);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>404 Handling</h2></div></div><p class="concept-intro">If no route matches the incoming request, Express can return a custom 404 response.</p><ul class="content-points"><li>A 404 means the requested route or resource was not found.</li><li>The 404 handler should normally be placed after valid routes.</li><li>It can return JSON for an API.</li><li>Clear error messages help frontend developers.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Put the catch-all 404 middleware after your normal route definitions so valid routes get a chance to respond first.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.use((req, res) =&gt; {
+  res.status(404).json({
+    error: &quot;Route not found&quot;,
+    path: req.originalUrl
+  });
+});">Copy</button></header><pre><code>app.use((req, res) =&gt; {
+  res.status(404).json({
+    error: &quot;Route not found&quot;,
+    path: req.originalUrl
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Error-Handling Middleware</h2></div></div><p class="concept-intro">Express supports special error-handling middleware with four parameters: err, req, res, and next.</p><ul class="content-points"><li>Error middleware has four parameters.</li><li>It should normally be registered after routes.</li><li>next(error) can pass an error to the error handler.</li><li>A centralized handler keeps error responses consistent.</li><li>Production applications should avoid exposing sensitive internal details.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Centralized error handling prevents every route from implementing completely different error-response logic.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.get(&quot;/demo-error&quot;, (req, res, next) =&gt; {
+  const error = new Error(&quot;Something went wrong&quot;);
+
+  next(error);
+});
+
+app.use((err, req, res, next) =&gt; {
+  console.error(err.message);
+
+  res.status(500).json({
+    error: &quot;Internal server error&quot;
+  });
+});">Copy</button></header><pre><code>app.get(&quot;/demo-error&quot;, (req, res, next) =&gt; {
+  const error = new Error(&quot;Something went wrong&quot;);
+
+  next(error);
+});
+
+app.use((err, req, res, next) =&gt; {
+  console.error(err.message);
+
+  res.status(500).json({
+    error: &quot;Internal server error&quot;
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>Organizing an Express Application</h2></div></div><p class="concept-intro">As an Express project grows, keeping everything inside one server.js file becomes difficult. A professional application separates responsibilities.</p><ul class="content-points"><li>Routes define API endpoints.</li><li>Controllers contain request-handling logic.</li><li>Services contain reusable business logic.</li><li>Middleware contains cross-cutting request processing.</li><li>Models represent database structures.</li><li>Configuration stores environment-specific settings.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Separation of concerns makes an Express application easier to test, maintain, debug, and extend.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="project/
+|
+├── server.js
+├── app.js
+|
+├── routes/
+|   └── product.routes.js
+|
+├── controllers/
+|   └── product.controller.js
+|
+├── services/
+|   └── product.service.js
+|
+├── middleware/
+|   └── error.middleware.js
+|
+├── models/
+|   └── product.model.js
+|
+└── package.json">Copy</button></header><pre><code>project/
+|
+├── server.js
+├── app.js
+|
+├── routes/
+|   └── product.routes.js
+|
+├── controllers/
+|   └── product.controller.js
+|
+├── services/
+|   └── product.service.js
+|
+├── middleware/
+|   └── error.middleware.js
+|
+├── models/
+|   └── product.model.js
+|
+└── package.json</code></pre></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Trace an Express CRUD Request</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>app.use(express.json());</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>app.get(&#39;/products/:id&#39;, (req, res) =&gt; {</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>  const id = Number(req.params.id);</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>  const product = products.find(item =&gt; item.id === id);</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>  if (!product) {</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>    return res.status(404).json({ error: &#39;Product not found&#39; });</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>  }</code></div><div data-trace-line="7"><span class="trace-line-number">08</span><code>  res.json(product);</code></div><div data-trace-line="8"><span class="trace-line-number">09</span><code>});</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Express.js</strong><p>A web framework running on top of Node.js.</p></div></article><article><b>02</b><div><strong>Application</strong><p>The Express app object that holds routes and middleware.</p></div></article><article><b>03</b><div><strong>Route</strong><p>A method and path combination that handles a request.</p></div></article><article><b>04</b><div><strong>Middleware</strong><p>A function that runs during the request-response pipeline.</p></div></article><article><b>05</b><div><strong>next()</strong><p>Passes control to the next middleware or handler.</p></div></article><article><b>06</b><div><strong>req</strong><p>Express request object.</p></div></article><article><b>07</b><div><strong>res</strong><p>Express response object.</p></div></article><article><b>08</b><div><strong>req.params</strong><p>Contains route parameter values.</p></div></article><article><b>09</b><div><strong>req.query</strong><p>Contains query parameter values.</p></div></article><article><b>10</b><div><strong>req.body</strong><p>Contains parsed request body data.</p></div></article><article><b>11</b><div><strong>res.json()</strong><p>Sends a JavaScript value as JSON.</p></div></article><article><b>12</b><div><strong>REST</strong><p>A resource-oriented approach to designing HTTP APIs.</p></div></article><article><b>13</b><div><strong>CRUD</strong><p>Create, Read, Update, and Delete.</p></div></article><article><b>14</b><div><strong>404</strong><p>Indicates that a requested route or resource was not found.</p></div></article><article><b>15</b><div><strong>Error Middleware</strong><p>Express middleware using the signature err, req, res, next.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is Express.js?</summary><div class="interview-answer"><p>Express.js is a lightweight web framework for Node.js that simplifies routing, middleware, HTTP request handling, and REST API development.</p></div></details><details class="interview-item"><summary><span>02</span>Is Express.js a replacement for Node.js?</summary><div class="interview-answer"><p>No. Express.js runs on top of Node.js and provides higher-level tools for building web applications and APIs.</p></div></details><details class="interview-item"><summary><span>03</span>What is middleware?</summary><div class="interview-answer"><p>Middleware is a function that runs during the request-response lifecycle and can inspect or modify the request, send a response, or pass control using next().</p></div></details><details class="interview-item"><summary><span>04</span>What is req.params?</summary><div class="interview-answer"><p>req.params contains values captured from dynamic route parameters such as /users/:id.</p></div></details><details class="interview-item"><summary><span>05</span>What is req.query?</summary><div class="interview-answer"><p>req.query contains optional query-string values such as ?page=2 or ?search=node.</p></div></details><details class="interview-item"><summary><span>06</span>Why is express.json() used?</summary><div class="interview-answer"><p>express.json() parses incoming JSON request bodies so that the data becomes available through req.body.</p></div></details><details class="interview-item"><summary><span>07</span>What is the difference between PUT and PATCH?</summary><div class="interview-answer"><p>PUT is commonly used to replace an entire resource, while PATCH is commonly used to partially update a resource.</p></div></details><details class="interview-item"><summary><span>08</span>What does REST mean?</summary><div class="interview-answer"><p>REST is an architectural style that commonly organizes APIs around resources and uses HTTP methods to represent operations.</p></div></details><details class="interview-item"><summary><span>09</span>What is a 404 response?</summary><div class="interview-answer"><p>A 404 response indicates that the requested route or resource could not be found.</p></div></details><details class="interview-item"><summary><span>10</span>What is special about Express error middleware?</summary><div class="interview-answer"><p>Express error-handling middleware uses four parameters: err, req, res, and next.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span></header><h3>Hello Express Server</h3><p>Create an Express server on port 3000 with a GET / route that returns a welcome message.</p></article><article class="practice-card"><header><span>CHALLENGE 02</span></header><h3>Course API</h3><p>Create GET /courses that returns an array containing three course names as JSON.</p></article><article class="practice-card"><header><span>CHALLENGE 03</span></header><h3>Student Parameter</h3><p>Create GET /students/:id and return the requested student ID.</p></article><article class="practice-card"><header><span>CHALLENGE 04</span></header><h3>Search API</h3><p>Create GET /search and read a query parameter named q.</p></article><article class="practice-card"><header><span>CHALLENGE 05</span></header><h3>Create Product</h3><p>Create POST /products that reads name and price from req.body and returns a 201 response.</p></article><article class="practice-card"><header><span>CHALLENGE 06</span></header><h3>404 Middleware</h3><p>Create a catch-all middleware that returns JSON with status 404.</p></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>Express.js is primarily used with which runtime?</h3><div class="quiz-options"><button type="button" data-option="0">A. Node.js</button><button type="button" data-option="1">B. Python</button><button type="button" data-option="2">C. Java</button><button type="button" data-option="3">D. PHP</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which method is normally used to retrieve a resource?</h3><div class="quiz-options"><button type="button" data-option="0">A. POST</button><button type="button" data-option="1">B. GET</button><button type="button" data-option="2">C. DELETE</button><button type="button" data-option="3">D. PATCH</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which object contains route parameters?</h3><div class="quiz-options"><button type="button" data-option="0">A. req.body</button><button type="button" data-option="1">B. req.query</button><button type="button" data-option="2">C. req.params</button><button type="button" data-option="3">D. req.routeData</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which middleware parses JSON request bodies?</h3><div class="quiz-options"><button type="button" data-option="0">A. express.json()</button><button type="button" data-option="1">B. express.body()</button><button type="button" data-option="2">C. express.parse()</button><button type="button" data-option="3">D. express.data()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Which method is commonly used for partial updates?</h3><div class="quiz-options"><button type="button" data-option="0">A. GET</button><button type="button" data-option="1">B. POST</button><button type="button" data-option="2">C. PATCH</button><button type="button" data-option="3">D. OPTIONS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which status code means Created?</h3><div class="quiz-options"><button type="button" data-option="0">A. 200</button><button type="button" data-option="1">B. 201</button><button type="button" data-option="2">C. 204</button><button type="button" data-option="3">D. 404</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which status code represents Not Found?</h3><div class="quiz-options"><button type="button" data-option="0">A. 201</button><button type="button" data-option="1">B. 301</button><button type="button" data-option="2">C. 404</button><button type="button" data-option="3">D. 500</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>How many parameters does Express error middleware normally define?</h3><div class="quiz-options"><button type="button" data-option="0">A. 2</button><button type="button" data-option="1">B. 3</button><button type="button" data-option="2">C. 4</button><button type="button" data-option="3">D. 5</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Which method sends JSON to the client?</h3><div class="quiz-options"><button type="button" data-option="0">A. res.json()</button><button type="button" data-option="1">B. res.data()</button><button type="button" data-option="2">C. res.object()</button><button type="button" data-option="3">D. res.sendJsonData()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What does next() usually do in middleware?</h3><div class="quiz-options"><button type="button" data-option="0">A. Stops the server</button><button type="button" data-option="1">B. Starts a database</button><button type="button" data-option="2">C. Passes control forward</button><button type="button" data-option="3">D. Deletes the request</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Express.js</strong><p></p></article><article><strong>Route</strong><p></p></article><article><strong>Middleware</strong><p></p></article><article><strong>Request</strong><p></p></article><article><strong>Response</strong><p></p></article><article><strong>REST API</strong><p></p></article><article><strong>CRUD</strong><p></p></article><article><strong>Route Parameter</strong><p></p></article><article><strong>Query Parameter</strong><p></p></article><article><strong>HTTP Status Code</strong><p></p></article><article><strong>JSON</strong><p></p></article><article><strong>Error Middleware</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Level 20 Complete — Express.js Fundamentals &amp; REST APIs</h2><p>You can now create Express applications, design routes, use middleware, handle JSON requests, build REST-style CRUD APIs, return correct status codes, and structure Express applications for larger projects.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 20 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=19">← Previous level</a><a href="lesson.html?level=21">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

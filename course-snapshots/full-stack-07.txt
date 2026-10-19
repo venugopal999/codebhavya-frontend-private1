@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 7: Git, npm &amp; Project Workflow | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=7"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=7">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class="active " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">07</div><div><p class="eyebrow">WEB FOUNDATIONS</p><h1>Git, npm &amp; Project Workflow</h1><p>Learn the professional workflow used to track code, manage JavaScript packages, collaborate with teams and create reproducible projects with Git, GitHub and npm.</p><div class="lesson-meta"><span>⏱ Estimated learning time: 4–5 hours</span><span>◈ Beginner → Intermediate</span><span>▣ 28 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Explain why version control is important.</p></article><article><b>02</b><p>Understand repositories, commits, branches and working trees.</p></article><article><b>03</b><p>Use common Git commands safely.</p></article><article><b>04</b><p>Understand the difference between working files, staging and commits.</p></article><article><b>05</b><p>Create and inspect Git history.</p></article><article><b>06</b><p>Create branches and merge changes.</p></article><article><b>07</b><p>Understand remote repositories and GitHub.</p></article><article><b>08</b><p>Clone, pull and push repositories.</p></article><article><b>09</b><p>Use .gitignore correctly.</p></article><article><b>10</b><p>Understand merge conflicts and conflict resolution.</p></article><article><b>11</b><p>Understand what npm is and why JavaScript projects use it.</p></article><article><b>12</b><p>Understand package.json and package-lock.json.</p></article><article><b>13</b><p>Distinguish dependencies from devDependencies.</p></article><article><b>14</b><p>Understand semantic versioning.</p></article><article><b>15</b><p>Use npm install and npm ci correctly.</p></article><article><b>16</b><p>Create useful npm scripts.</p></article><article><b>17</b><p>Understand node_modules and why it is normally not committed.</p></article><article><b>18</b><p>Understand reproducible project setup.</p></article><article><b>19</b><p>Understand environment configuration at a basic level.</p></article><article><b>20</b><p>Use a clean project workflow from initialization to delivery.</p></article><article><b>21</b><p>Avoid common Git and npm mistakes.</p></article><article><b>22</b><p>Prepare a project structure suitable for later React and Node.js work.</p></article><article><b>23</b><p>Understand a basic team Git workflow.</p></article><article><b>24</b><p>Apply Git and npm together in a realistic JavaScript project.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>1. Why Version Control Matters</h2></div></div><ul class="content-points"><li>Track changes over time.</li><li>Understand who changed what and when.</li><li>Return to an earlier working version.</li><li>Experiment without destroying the main code.</li><li>Collaborate with other developers.</li><li>Create a reliable project history.</li></ul><div class="explanation-list"><p>Software changes continuously. Developers need a reliable way to record changes, understand history, recover earlier versions and collaborate without accidentally overwriting each other&#39;s work. Version control systems solve these problems.</p></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Git is not a backup system alone. It is a version-control system that records meaningful changes to a project.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>2. What Is Git?</h2></div></div><ul class="content-points"><li>Git runs locally on your computer.</li><li>A repository contains project history.</li><li>Commits record snapshots of tracked changes.</li><li>Branches allow parallel lines of development.</li><li>Remote repositories allow collaboration and sharing.</li></ul><div class="explanation-list"><p>Git is a distributed version-control system. A Git repository contains project files together with metadata describing the project&#39;s history.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git --version
+
+git init">Copy</button></header><pre><code>git --version
+
+git init</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Git and GitHub are not the same thing. Git is the version-control technology. GitHub is a platform that can host Git repositories and collaboration tools.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>3. Working Tree, Staging Area and Repository</h2></div></div><ul class="content-points"><li>Working tree contains the files you are currently editing.</li><li>Staging area contains changes selected for the next commit.</li><li>Repository contains committed history.</li><li>git add moves selected changes toward the next commit.</li><li>git commit records the staged snapshot.</li></ul><div class="explanation-list"><p>Git can be understood through three important areas: the working tree, the staging area and the repository history.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Working Tree
+     ↓
+   git add
+     ↓
+Staging Area
+     ↓
+ git commit
+     ↓
+Repository History">Copy</button></header><pre><code>Working Tree
+     ↓
+   git add
+     ↓
+Staging Area
+     ↓
+ git commit
+     ↓
+Repository History</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The staging area gives you control over exactly which changes belong in the next commit.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>4. git init and git status</h2></div></div><ul class="content-points"><li>Initialize Git once for a new repository.</li><li>Use git status frequently.</li><li>Status tells you which files are untracked.</li><li>Status also identifies modified and staged files.</li></ul><div class="explanation-list"><p>git init creates a new Git repository in the current directory. git status then shows the current state of the working tree and staging area.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="mkdir student-dashboard
+cd student-dashboard
+
+git init
+
+git status">Copy</button></header><pre><code>mkdir student-dashboard
+cd student-dashboard
+
+git init
+
+git status</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>git status is one of the safest and most useful Git commands. When unsure about the state of a repository, check status first.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>5. git add and the Staging Area</h2></div></div><ul class="content-points"><li>You can stage individual files.</li><li>You can stage directories.</li><li>Staging allows a commit to contain a deliberate set of changes.</li><li>Review staged changes before committing when necessary.</li></ul><div class="explanation-list"><p>git add stages changes for the next commit. Staging does not permanently save the changes to history; it prepares them for a commit.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git add index.html
+
+git add css/
+git add js/
+
+git status">Copy</button></header><pre><code>git add index.html
+
+git add css/
+git add js/
+
+git status</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>6. git commit</h2></div></div><ul class="content-points"><li>Commit only meaningful changes.</li><li>Use clear commit messages.</li><li>Keep commits reasonably focused.</li><li>A commit provides a point in project history.</li></ul><div class="explanation-list"><p>A commit records a snapshot of staged changes in Git history. Good commit messages describe the meaningful change.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git commit -m &quot;Add responsive course cards&quot;">Copy</button></header><pre><code>git commit -m &quot;Add responsive course cards&quot;</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Avoid messages such as &#39;changes&#39;, &#39;update&#39;, or &#39;done&#39;. A useful message tells another developer what changed.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>7. Reading Git History</h2></div></div><ul class="content-points"><li>See previous commits.</li><li>Identify commit authors.</li><li>Read commit messages.</li><li>Find commit IDs.</li><li>Investigate when a change was introduced.</li></ul><div class="explanation-list"><p>Git history allows developers to understand how the project evolved.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git log
+
+git log --oneline">Copy</button></header><pre><code>git log
+
+git log --oneline</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A clean history can make debugging and collaboration much easier.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>8. Branches</h2></div></div><ul class="content-points"><li>The main branch represents an important integration line.</li><li>Feature branches isolate work.</li><li>Branches make experimentation safer.</li><li>Branches can later be merged.</li></ul><div class="explanation-list"><p>A branch provides an independent line of development. Developers commonly create branches for features, fixes or experiments.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git branch
+
+git switch -c feature/course-search
+
+git branch">Copy</button></header><pre><code>git branch
+
+git switch -c feature/course-search
+
+git branch</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Modern Git commonly uses git switch for branch operations. Older workflows often use git checkout.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>9. Merging Branches</h2></div></div><ul class="content-points"><li>Move to the branch that should receive the changes.</li><li>Merge the source branch.</li><li>Git may perform the merge automatically.</li><li>Conflicts can occur when changes overlap.</li></ul><div class="explanation-list"><p>Merging combines changes from one branch into another.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git switch main
+
+git merge feature/course-search">Copy</button></header><pre><code>git switch main
+
+git merge feature/course-search</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>10. Merge Conflicts</h2></div></div><ul class="content-points"><li>Conflicts are normal in collaborative development.</li><li>Git marks conflicting regions.</li><li>A developer must choose the intended final content.</li><li>Remove conflict markers.</li><li>Test the project after resolving the conflict.</li><li>Stage the resolved file and complete the merge.</li></ul><div class="explanation-list"><p>A merge conflict occurs when Git cannot automatically determine which competing changes should remain.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;h1&gt;CodeBhavya Courses&lt;/h1&gt;
+=======
+&lt;h1&gt;CodeBhavya Learning Hub&lt;/h1&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/header">Copy</button></header><pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;h1&gt;CodeBhavya Courses&lt;/h1&gt;
+=======
+&lt;h1&gt;CodeBhavya Learning Hub&lt;/h1&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/header</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Never blindly choose one side without understanding the intended behaviour.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>11. GitHub and Remote Repositories</h2></div></div><ul class="content-points"><li>Local Git repositories can connect to remote repositories.</li><li>origin is a common name for the main remote.</li><li>Remote repositories enable collaboration and sharing.</li><li>Pull requests can be used to review changes before integration.</li></ul><div class="explanation-list"><p>A remote repository provides a shared location for Git history and collaboration. GitHub is one popular platform for hosting Git repositories.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git remote -v
+
+git remote add origin &lt;repository-url&gt;">Copy</button></header><pre><code>git remote -v
+
+git remote add origin &lt;repository-url&gt;</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The exact hosting platform is less important than understanding the Git concepts behind the workflow.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>12. clone, pull and push</h2></div></div><ul class="content-points"><li>clone creates a local copy of a remote repository.</li><li>pull retrieves and integrates remote changes.</li><li>push sends local commits to a remote repository.</li><li>A developer should understand the current branch before pushing.</li></ul><div class="explanation-list"><p>These commands connect local development with remote repository history.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git clone &lt;repository-url&gt;
+
+git pull
+
+git push">Copy</button></header><pre><code>git clone &lt;repository-url&gt;
+
+git pull
+
+git push</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A safe habit is to inspect status and understand the current branch before performing destructive or collaborative operations.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>13. .gitignore</h2></div></div><ul class="content-points"><li>node_modules is normally generated from package metadata.</li><li>Environment files may contain sensitive configuration.</li><li>Build output may be generated automatically.</li><li>Operating-system files usually do not belong in the repository.</li></ul><div class="explanation-list"><p>The .gitignore file tells Git which files or directories should normally not be tracked.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="node_modules/
+.env
+.env.local
+
+dist/
+coverage/
+
+.DS_Store">Copy</button></header><pre><code>node_modules/
+.env
+.env.local
+
+dist/
+coverage/
+
+.DS_Store</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A .gitignore file should be created early in a project rather than after unwanted files have already been committed.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>14. Git Revert vs Destructive History Changes</h2></div></div><ul class="content-points"><li>git revert is often safer for shared history.</li><li>History rewriting requires greater care.</li><li>Never rewrite shared history casually.</li><li>Understand whether other developers already depend on the commits.</li></ul><div class="explanation-list"><p>Git provides multiple ways to undo work. Reverting a commit creates a new commit that reverses an earlier change, while some other commands rewrite history.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git revert &lt;commit-id&gt;">Copy</button></header><pre><code>git revert &lt;commit-id&gt;</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The important professional habit is to understand whether your undo operation creates a new history entry or rewrites existing history.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>15. What Is npm?</h2></div></div><ul class="content-points"><li>Install project dependencies.</li><li>Manage package versions.</li><li>Define reusable project scripts.</li><li>Share package metadata.</li><li>Create reproducible project setups.</li></ul><div class="explanation-list"><p>npm is the package manager commonly used with Node.js and JavaScript projects. It helps developers install packages, manage versions and run project scripts.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="npm --version
+
+npm init">Copy</button></header><pre><code>npm --version
+
+npm init</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>npm is a tool and ecosystem, while Node.js is a JavaScript runtime.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>16. package.json</h2></div></div><ul class="content-points"><li>Project name and version can be defined.</li><li>Scripts provide repeatable commands.</li><li>Dependencies describe runtime packages.</li><li>devDependencies describe development-only packages.</li><li>Other project metadata can also be included.</li></ul><div class="explanation-list"><p>package.json describes important metadata and configuration for a JavaScript project.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="{
+    &quot;name&quot;: &quot;student-dashboard&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;scripts&quot;: {
+        &quot;dev&quot;: &quot;node server.js&quot;,
+        &quot;test&quot;: &quot;node test.js&quot;
+    },
+    &quot;dependencies&quot;: {},
+    &quot;devDependencies&quot;: {}
+}">Copy</button></header><pre><code>{
+    &quot;name&quot;: &quot;student-dashboard&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;scripts&quot;: {
+        &quot;dev&quot;: &quot;node server.js&quot;,
+        &quot;test&quot;: &quot;node test.js&quot;
+    },
+    &quot;dependencies&quot;: {},
+    &quot;devDependencies&quot;: {}
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>17. Dependencies vs devDependencies</h2></div></div><ul class="content-points"><li>express is commonly used as a runtime dependency.</li><li>eslint is commonly used as a development dependency.</li><li>The distinction helps communicate project requirements.</li><li>Exact deployment behaviour depends on the package manager configuration and environment.</li></ul><div class="explanation-list"><p>Dependencies are packages required by the application at runtime. Development dependencies support activities such as testing, linting, formatting or building.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="npm install express
+
+npm install --save-dev eslint">Copy</button></header><pre><code>npm install express
+
+npm install --save-dev eslint</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not classify a package only by habit. Ask whether the deployed application needs it to run.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>18. node_modules</h2></div></div><ul class="content-points"><li>It can become very large.</li><li>It is generated from package metadata and lock information.</li><li>It is normally excluded from Git.</li><li>Another developer can recreate it with npm install or npm ci.</li></ul><div class="explanation-list"><p>node_modules contains installed packages and their dependency trees.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="npm install
+
+node_modules/
+package.json
+package-lock.json">Copy</button></header><pre><code>npm install
+
+node_modules/
+package.json
+package-lock.json</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not commit node_modules merely because it exists on your computer.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>19. package-lock.json</h2></div></div><ul class="content-points"><li>It records resolved package versions.</li><li>It can record transitive dependencies.</li><li>It helps make installations reproducible.</li><li>It should normally be committed for applications.</li></ul><div class="explanation-list"><p>package-lock.json records the resolved dependency tree so installations can reproduce a specific dependency state more consistently.</p></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>package.json expresses dependency requirements; the lock file records a concrete resolution.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>20. npm install</h2></div></div><ul class="content-points"><li>Install project dependencies.</li><li>Add a package to dependencies.</li><li>Add development tooling to devDependencies.</li><li>Resolve a dependency tree.</li></ul><div class="explanation-list"><p>npm install installs project dependencies and can also update package metadata when packages are added or dependency requirements change.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="npm install
+
+npm install express
+
+npm install --save-dev eslint">Copy</button></header><pre><code>npm install
+
+npm install express
+
+npm install --save-dev eslint</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">21</div><div><p class="section-label">CONCEPT 21</p><h2>21. npm ci</h2></div></div><ul class="content-points"><li>It expects a compatible lock file.</li><li>It performs a clean installation.</li><li>It is useful in CI environments.</li><li>It avoids interactively changing dependency requirements.</li></ul><div class="explanation-list"><p>npm ci is designed for clean, reproducible installations based on the existing lock file. It is especially useful in automated environments.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="npm ci">Copy</button></header><pre><code>npm ci</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A simple distinction: npm install is commonly used while developing or changing dependencies; npm ci is commonly used when reproducing an already-defined dependency state.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">22</div><div><p class="section-label">CONCEPT 22</p><h2>22. npm Scripts</h2></div></div><ul class="content-points"><li>Scripts make commands easy to remember.</li><li>Teams can use the same commands.</li><li>CI systems can run the same scripts.</li><li>Scripts reduce machine-specific instructions.</li></ul><div class="explanation-list"><p>npm scripts create named commands that standardize common project operations.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="{
+    &quot;scripts&quot;: {
+        &quot;dev&quot;: &quot;node server.js&quot;,
+        &quot;test&quot;: &quot;node test.js&quot;,
+        &quot;lint&quot;: &quot;eslint .&quot;
+    }
+}">Copy</button></header><pre><code>{
+    &quot;scripts&quot;: {
+        &quot;dev&quot;: &quot;node server.js&quot;,
+        &quot;test&quot;: &quot;node test.js&quot;,
+        &quot;lint&quot;: &quot;eslint .&quot;
+    }
+}</code></pre></div><div class="code-box premium-code-box"><header><span>SECOND WORKED EXAMPLE</span><button type="button" data-copy="npm run dev
+npm test
+npm run lint">Copy</button></header><pre><code>npm run dev
+npm test
+npm run lint</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">23</div><div><p class="section-label">CONCEPT 23</p><h2>23. Semantic Versioning</h2></div></div><ul class="content-points"><li>PATCH generally represents backward-compatible bug fixes.</li><li>MINOR generally represents backward-compatible features.</li><li>MAJOR generally represents breaking changes.</li><li>Package ranges can control which updates are accepted.</li></ul><div class="explanation-list"><p>Semantic Versioning commonly represents versions as MAJOR.MINOR.PATCH.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="1.4.2
+│ │ │
+│ │ └── PATCH
+│ └──── MINOR
+└────── MAJOR">Copy</button></header><pre><code>1.4.2
+│ │ │
+│ │ └── PATCH
+│ └──── MINOR
+└────── MAJOR</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The exact compatibility guarantee depends on whether a package follows Semantic Versioning correctly.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">24</div><div><p class="section-label">CONCEPT 24</p><h2>24. Reproducible Project Setup</h2></div></div><ul class="content-points"><li>Commit package.json.</li><li>Commit the appropriate lock file.</li><li>Do not commit node_modules.</li><li>Document required runtime versions when appropriate.</li><li>Use npm scripts for common commands.</li><li>Keep configuration predictable.</li></ul><div class="explanation-list"><p>A professional project should allow another developer or a CI system to recreate the expected environment without relying on your personal computer.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="git clone &lt;repository&gt;
+
+cd project
+
+npm ci
+
+npm test
+
+npm run dev">Copy</button></header><pre><code>git clone &lt;repository&gt;
+
+cd project
+
+npm ci
+
+npm test
+
+npm run dev</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A project is easier to maintain when setup instructions are short, repeatable and tested.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">25</div><div><p class="section-label">CONCEPT 25</p><h2>25. Environment Configuration</h2></div></div><ul class="content-points"><li>Environment variables can hold configuration.</li><li>Different environments may use different values.</li><li>Secrets should not be committed to public repositories.</li><li>Use .gitignore for local environment files when appropriate.</li><li>Production secrets should be managed by the deployment environment.</li></ul><div class="explanation-list"><p>Applications often need configuration that changes between development, testing and production. Environment variables are a common mechanism for supplying such configuration.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="PORT=3000
+API_BASE_URL=https://api.example.com">Copy</button></header><pre><code>PORT=3000
+API_BASE_URL=https://api.example.com</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Never publish real passwords, private keys, API secrets or tokens in source control.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">26</div><div><p class="section-label">CONCEPT 26</p><h2>26. Professional Git Workflow</h2></div></div><ul class="content-points"><li>Create a focused feature branch.</li><li>Make small meaningful commits.</li><li>Push the branch.</li><li>Open a pull request.</li><li>Review and test changes.</li><li>Merge after approval.</li></ul><div class="explanation-list"><p>A simple team workflow can combine branches, focused commits, review and controlled integration.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="main
+ │
+ ├── feature/search
+ │       │
+ │       ├── commit
+ │       ├── commit
+ │       │
+ │       └── pull request
+ │
+ └── merge → main">Copy</button></header><pre><code>main
+ │
+ ├── feature/search
+ │       │
+ │       ├── commit
+ │       ├── commit
+ │       │
+ │       └── pull request
+ │
+ └── merge → main</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Teams may use different branching strategies. The underlying ideas of isolated work, review and tested integration remain important.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">27</div><div><p class="section-label">CONCEPT 27</p><h2>27. Common Git Mistakes</h2></div></div><ul class="content-points"><li>Committing node_modules.</li><li>Committing secrets.</li><li>Using meaningless commit messages.</li><li>Working directly on the main branch without understanding the team workflow.</li><li>Ignoring merge conflicts.</li><li>Pushing without checking the current branch.</li><li>Rewriting shared history carelessly.</li><li>Deleting changes without confirming what will be lost.</li></ul><div class="explanation-list"><p>Most Git problems become easier when developers understand what they are about to change.</p></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>When unsure, stop and inspect git status, git diff and git log before performing a risky command.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">28</div><div><p class="section-label">CONCEPT 28</p><h2>28. Git + npm Together</h2></div></div><ul class="content-points"><li>Git tracks source and configuration.</li><li>npm manages JavaScript dependencies.</li><li>package.json describes the project.</li><li>package-lock.json records resolved dependencies.</li><li>node_modules is generated locally.</li></ul><div class="explanation-list"><p>Git and npm solve different but complementary problems. npm describes and installs project packages; Git records the project&#39;s source and configuration history.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="student-dashboard/
+│
+├── src/
+├── tests/
+├── package.json
+├── package-lock.json
+├── .gitignore
+└── README.md">Copy</button></header><pre><code>student-dashboard/
+│
+├── src/
+├── tests/
+├── package.json
+├── package-lock.json
+├── .gitignore
+└── README.md</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>This combination becomes the foundation for React, Node.js, Express and MERN projects.</p></div></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Git</strong><p>A distributed version-control system used to track source-code history and collaborate on projects.</p></div></article><article><b>02</b><div><strong>Repository</strong><p>A Git-managed project containing files and version-control history.</p></div></article><article><b>03</b><div><strong>Working Tree</strong><p>The files currently present in the local project directory and being edited.</p></div></article><article><b>04</b><div><strong>Staging Area</strong><p>The set of changes selected for inclusion in the next commit.</p></div></article><article><b>05</b><div><strong>Commit</strong><p>A recorded snapshot of staged changes in Git history.</p></div></article><article><b>06</b><div><strong>Branch</strong><p>An independent line of development within a Git repository.</p></div></article><article><b>07</b><div><strong>Merge</strong><p>An operation that combines changes from one branch into another.</p></div></article><article><b>08</b><div><strong>Merge Conflict</strong><p>A situation where Git cannot automatically determine which competing changes should remain.</p></div></article><article><b>09</b><div><strong>Remote Repository</strong><p>A repository hosted separately from the local copy and used for sharing or collaboration.</p></div></article><article><b>10</b><div><strong>git clone</strong><p>Creates a local copy of a remote Git repository.</p></div></article><article><b>11</b><div><strong>git pull</strong><p>Retrieves remote changes and integrates them into the current local branch.</p></div></article><article><b>12</b><div><strong>git push</strong><p>Sends local commits to a remote repository.</p></div></article><article><b>13</b><div><strong>.gitignore</strong><p>A file containing patterns for files and directories Git should normally ignore.</p></div></article><article><b>14</b><div><strong>npm</strong><p>A package manager and ecosystem commonly used for JavaScript and Node.js projects.</p></div></article><article><b>15</b><div><strong>package.json</strong><p>A project manifest containing metadata, dependencies, scripts and other configuration.</p></div></article><article><b>16</b><div><strong>Dependency</strong><p>A package required by an application or project.</p></div></article><article><b>17</b><div><strong>devDependency</strong><p>A package primarily needed for development, testing, linting, formatting or build tooling.</p></div></article><article><b>18</b><div><strong>node_modules</strong><p>The directory containing locally installed npm packages and their dependencies.</p></div></article><article><b>19</b><div><strong>package-lock.json</strong><p>A lock file recording resolved dependency information for more reproducible installations.</p></div></article><article><b>20</b><div><strong>npm install</strong><p>An npm command used to install project dependencies and add or update packages.</p></div></article><article><b>21</b><div><strong>npm ci</strong><p>A clean npm installation command designed for reproducible dependency installation using a lock file.</p></div></article><article><b>22</b><div><strong>Semantic Versioning</strong><p>A versioning convention commonly expressed as MAJOR.MINOR.PATCH.</p></div></article><article><b>23</b><div><strong>npm Script</strong><p>A named command defined in package.json for repeatable project operations.</p></div></article><article><b>24</b><div><strong>Reproducible Setup</strong><p>A project setup that can be recreated consistently on another machine or automated environment.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is Git?</summary><div class="interview-answer"><p>Git is a distributed version-control system used to track changes, maintain project history, create branches and collaborate on software projects.</p></div></details><details class="interview-item"><summary><span>02</span>What is the difference between Git and GitHub?</summary><div class="interview-answer"><p>Git is the version-control system itself. GitHub is a platform that can host Git repositories and provide collaboration, review and project-management features.</p></div></details><details class="interview-item"><summary><span>03</span>What is the staging area?</summary><div class="interview-answer"><p>The staging area contains changes selected for the next commit. It allows developers to control exactly which changes are recorded together.</p></div></details><details class="interview-item"><summary><span>04</span>What does git status do?</summary><div class="interview-answer"><p>It reports the current state of the working tree and staging area, including untracked, modified and staged files.</p></div></details><details class="interview-item"><summary><span>05</span>Why are meaningful commit messages important?</summary><div class="interview-answer"><p>They make project history understandable and help developers determine what each change was intended to accomplish.</p></div></details><details class="interview-item"><summary><span>06</span>Why are branches useful?</summary><div class="interview-answer"><p>Branches isolate feature, bug-fix or experimental work so developers can make changes without directly disturbing another development line.</p></div></details><details class="interview-item"><summary><span>07</span>What is a merge conflict?</summary><div class="interview-answer"><p>It occurs when Git cannot automatically reconcile competing changes, requiring a developer to decide what the final content should be.</p></div></details><details class="interview-item"><summary><span>08</span>What is .gitignore used for?</summary><div class="interview-answer"><p>It specifies files and directories that Git should normally not track, such as node_modules, local environment files and generated build output.</p></div></details><details class="interview-item"><summary><span>09</span>Why should node_modules normally not be committed?</summary><div class="interview-answer"><p>It can be very large and is generated from project dependency metadata. Other developers can recreate it using npm.</p></div></details><details class="interview-item"><summary><span>10</span>What is npm?</summary><div class="interview-answer"><p>npm is a package manager and ecosystem commonly used to install and manage JavaScript packages and run project scripts.</p></div></details><details class="interview-item"><summary><span>11</span>What is package.json?</summary><div class="interview-answer"><p>package.json is a project manifest containing information such as project metadata, dependencies, devDependencies and npm scripts.</p></div></details><details class="interview-item"><summary><span>12</span>What is the difference between dependencies and devDependencies?</summary><div class="interview-answer"><p>Dependencies are generally required by the application at runtime, while devDependencies generally support development activities such as testing, linting and building.</p></div></details><details class="interview-item"><summary><span>13</span>Why is package-lock.json important?</summary><div class="interview-answer"><p>It records resolved dependency information and helps different environments reproduce a more consistent dependency tree.</p></div></details><details class="interview-item"><summary><span>14</span>What is the difference between npm install and npm ci?</summary><div class="interview-answer"><p>npm install is commonly used during development to install or change dependencies. npm ci is designed for clean, reproducible installation from an existing lock file and is commonly used in CI environments.</p></div></details><details class="interview-item"><summary><span>15</span>What is Semantic Versioning?</summary><div class="interview-answer"><p>Semantic Versioning commonly uses MAJOR.MINOR.PATCH, where major changes can indicate breaking changes, minor changes generally add backward-compatible functionality and patch changes generally fix bugs.</p></div></details><details class="interview-item"><summary><span>16</span>Why should secrets not be committed to Git?</summary><div class="interview-answer"><p>Committed secrets can become part of repository history and may be exposed to unauthorized users. Secrets should instead be managed through appropriate environment or secret-management systems.</p></div></details><details class="interview-item"><summary><span>17</span>What is a reproducible project?</summary><div class="interview-answer"><p>A reproducible project is one whose dependencies, scripts and configuration can be recreated reliably on another machine or automated environment.</p></div></details><details class="interview-item"><summary><span>18</span>What is a typical feature-branch workflow?</summary><div class="interview-answer"><p>Create a feature branch, make focused commits, push the branch, open a review request, run tests, receive review and merge the approved changes.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Easy</b></header><h3>Practice 01 — Initialize a Repository</h3><p>Create a new student-dashboard project, initialize Git and use git status to inspect the repository before making any commits.</p><details><summary>Need a hint?</summary><ul><li>Create and enter a project directory.</li><li>Run git init.</li><li>Run git status immediately afterward.</li><li>Observe the difference before and after creating a file.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Easy</b></header><h3>Practice 02 — Stage and Commit</h3><p>Create index.html and style.css. Stage only index.html, inspect the status and create a meaningful commit.</p><details><summary>Need a hint?</summary><ul><li>Create both files first.</li><li>Use git status to see both files.</li><li>Use git add index.html.</li><li>Commit with a message describing the actual change.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Easy</b></header><h3>Practice 03 — Read Git History</h3><p>Create at least three meaningful commits and use git log and git log --oneline to inspect the resulting history.</p><details><summary>Need a hint?</summary><ul><li>Keep each commit focused on one logical change.</li><li>Use different useful commit messages.</li><li>Run git log after the third commit.</li><li>Compare the detailed and compact history formats.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Medium</b></header><h3>Practice 04 — Feature Branch</h3><p>Create a feature branch for a course-search feature, make a change and merge the branch into main.</p><details><summary>Need a hint?</summary><ul><li>Create the branch with git switch -c.</li><li>Make a small meaningful change.</li><li>Commit the change on the feature branch.</li><li>Switch to main and merge the feature branch.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Hard</b></header><h3>Practice 05 — Resolve a Merge Conflict</h3><p>Create a deliberate conflict by changing the same line differently on two branches. Merge the branches and resolve the conflict correctly.</p><details><summary>Need a hint?</summary><ul><li>Create a file containing a heading.</li><li>Change that heading differently on two branches.</li><li>Merge one branch into the other.</li><li>Remove all conflict markers and keep the intended final content.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Easy</b></header><h3>Practice 06 — Build a .gitignore</h3><p>Create a JavaScript project and write a .gitignore file that excludes node_modules, local environment files, build output and operating-system metadata.</p><details><summary>Need a hint?</summary><ul><li>Add node_modules/.</li><li>Add .env and other local environment files when appropriate.</li><li>Add generated build directories such as dist/ if they are not meant to be tracked.</li><li>Use git status to verify ignored files are not shown as untracked.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Medium</b></header><h3>Practice 07 — Initialize npm</h3><p>Create a new JavaScript project with package.json and add at least one runtime dependency and one development dependency.</p><details><summary>Need a hint?</summary><ul><li>Run npm init or npm init -y.</li><li>Use npm install for a runtime package.</li><li>Use npm install --save-dev for a development tool.</li><li>Open package.json and compare dependencies with devDependencies.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Medium</b></header><h3>Practice 08 — npm Scripts</h3><p>Create dev, test and lint scripts in package.json and make sure each script can be executed through npm.</p><details><summary>Need a hint?</summary><ul><li>Add commands under the scripts property.</li><li>Run npm run dev for the custom dev script.</li><li>Use npm test for the test script.</li><li>Use npm run lint for the lint script.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Medium</b></header><h3>Practice 09 — Install vs CI</h3><p>Create package-lock.json, remove node_modules and compare a normal npm install workflow with a clean npm ci workflow.</p><details><summary>Need a hint?</summary><ul><li>Install at least one package first.</li><li>Confirm package-lock.json exists.</li><li>Remove node_modules.</li><li>Run npm ci and observe that the dependencies are recreated.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Hard</b></header><h3>Practice 10 — Reproducible Project</h3><p>Create a project that another developer can clone and start using only the repository files and documented npm commands.</p><details><summary>Need a hint?</summary><ul><li>Commit package.json and package-lock.json.</li><li>Do not commit node_modules.</li><li>Add a README with setup instructions.</li><li>Test the instructions from a clean copy of the project.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Hard</b></header><h3>Practice 11 — Professional Git Workflow</h3><p>Simulate a team workflow: create a feature branch, make two focused commits, push the branch to a remote repository and prepare it for review.</p><details><summary>Need a hint?</summary><ul><li>Start from an up-to-date main branch.</li><li>Create a clearly named feature branch.</li><li>Keep the two commits logically separate.</li><li>Push the feature branch rather than directly changing the main branch.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span><b>Hard</b></header><h3>Practice 12 — CodeBhavya Project Workflow Challenge</h3><p>Create a small CodeBhavya course project using Git and npm. The project must contain source files, package.json, package-lock.json, .gitignore, npm scripts and a clean commit history. Simulate a feature branch and merge it into main.</p><details><summary>Need a hint?</summary><ul><li>Start with npm initialization and a sensible project structure.</li><li>Create a .gitignore before installing many dependencies.</li><li>Use focused commits rather than one giant commit.</li><li>Create a feature branch, implement one feature, commit it and merge it into main after testing.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is Git primarily used for?</h3><div class="quiz-options"><button type="button" data-option="0">A. Database management</button><button type="button" data-option="1">B. Version control</button><button type="button" data-option="2">C. CSS styling</button><button type="button" data-option="3">D. Image editing</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>What does git add do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Deletes a file</button><button type="button" data-option="1">B. Stages changes</button><button type="button" data-option="2">C. Creates a remote repository</button><button type="button" data-option="3">D. Installs npm packages</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>What does git commit do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Records staged changes in Git history</button><button type="button" data-option="1">B. Downloads a package</button><button type="button" data-option="2">C. Deletes all branches</button><button type="button" data-option="3">D. Opens DevTools</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Why are branches useful?</h3><div class="quiz-options"><button type="button" data-option="0">A. They make CSS faster</button><button type="button" data-option="1">B. They isolate lines of development</button><button type="button" data-option="2">C. They replace npm</button><button type="button" data-option="3">D. They remove all project history</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What is a merge conflict?</h3><div class="quiz-options"><button type="button" data-option="0">A. A package installation</button><button type="button" data-option="1">B. A situation Git cannot automatically reconcile</button><button type="button" data-option="2">C. A CSS selector</button><button type="button" data-option="3">D. A successful HTTP request</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>What is .gitignore used for?</h3><div class="quiz-options"><button type="button" data-option="0">A. Define HTML structure</button><button type="button" data-option="1">B. Tell Git which files should normally be ignored</button><button type="button" data-option="2">C. Install dependencies</button><button type="button" data-option="3">D. Create JavaScript functions</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>What is npm?</h3><div class="quiz-options"><button type="button" data-option="0">A. A CSS framework</button><button type="button" data-option="1">B. A JavaScript package manager and ecosystem</button><button type="button" data-option="2">C. A database</button><button type="button" data-option="3">D. A browser</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>Where are npm dependencies commonly declared?</h3><div class="quiz-options"><button type="button" data-option="0">A. package.json</button><button type="button" data-option="1">B. index.html only</button><button type="button" data-option="2">C. .gitignore</button><button type="button" data-option="3">D. README only</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Why is node_modules normally not committed?</h3><div class="quiz-options"><button type="button" data-option="0">A. It contains HTML</button><button type="button" data-option="1">B. It is generated and can be recreated from dependency metadata</button><button type="button" data-option="2">C. Git cannot read folders</button><button type="button" data-option="3">D. npm requires it to be ignored</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What is package-lock.json used for?</h3><div class="quiz-options"><button type="button" data-option="0">A. CSS styling</button><button type="button" data-option="1">B. Recording resolved dependency information</button><button type="button" data-option="2">C. Storing passwords</button><button type="button" data-option="3">D. Creating Git branches</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Which command is designed for a clean installation using the lock file?</h3><div class="quiz-options"><button type="button" data-option="0">A. npm ci</button><button type="button" data-option="1">B. npm start-now</button><button type="button" data-option="2">C. git ci</button><button type="button" data-option="3">D. npm clean-all</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>What does npm install express generally do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Deletes Express</button><button type="button" data-option="1">B. Adds Express as a project dependency</button><button type="button" data-option="2">C. Creates a Git branch</button><button type="button" data-option="3">D. Opens the browser</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>What is the common structure of Semantic Versioning?</h3><div class="quiz-options"><button type="button" data-option="0">A. YEAR.MONTH.DAY</button><button type="button" data-option="1">B. MAJOR.MINOR.PATCH</button><button type="button" data-option="2">C. HTML.CSS.JS</button><button type="button" data-option="3">D. A.B.C.D.E</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>Why should secrets not be committed?</h3><div class="quiz-options"><button type="button" data-option="0">A. They make CSS invalid</button><button type="button" data-option="1">B. They can become exposed through repository history</button><button type="button" data-option="2">C. Git cannot store strings</button><button type="button" data-option="3">D. npm removes them</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>What is a reproducible project setup?</h3><div class="quiz-options"><button type="button" data-option="0">A. A setup that depends on one developer&#39;s computer</button><button type="button" data-option="1">B. A setup that can reliably be recreated elsewhere</button><button type="button" data-option="2">C. A project without package.json</button><button type="button" data-option="3">D. A project containing node_modules in Git</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Git</strong><p></p></article><article><strong>Repository</strong><p></p></article><article><strong>Working Tree</strong><p></p></article><article><strong>Staging Area</strong><p></p></article><article><strong>Commit</strong><p></p></article><article><strong>Branch</strong><p></p></article><article><strong>Merge</strong><p></p></article><article><strong>Merge Conflict</strong><p></p></article><article><strong>Remote</strong><p></p></article><article><strong>.gitignore</strong><p></p></article><article><strong>npm</strong><p></p></article><article><strong>package.json</strong><p></p></article><article><strong>Dependency</strong><p></p></article><article><strong>devDependency</strong><p></p></article><article><strong>node_modules</strong><p></p></article><article><strong>package-lock.json</strong><p></p></article><article><strong>npm install</strong><p></p></article><article><strong>npm ci</strong><p></p></article><article><strong>npm Script</strong><p></p></article><article><strong>Semantic Versioning</strong><p></p></article><article><strong>Reproducibility</strong><p></p></article><article><strong>Environment Variable</strong><p></p></article></div></section><nav class="lesson-nav"><a href="lesson.html?level=6">← Previous level</a><a href="lesson.html?level=8">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 23: Express Production APIs, Testing &amp; Deployment | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=23"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=23">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class="active " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">23</div><div><p class="eyebrow">PART 4 • NODE &amp; EXPRESS • LEVEL 23</p><h1>Express Production APIs, Testing &amp; Deployment</h1><p>Turn an Express application into a production-ready backend by learning professional project structure, environment configuration, centralized errors, validation, logging, health checks, graceful shutdown, automated API testing, documentation, deployment preparation, monitoring and production practices.</p><div class="lesson-meta"><span>⏱ 4–5 Hours</span><span>◈ Advanced Beginner</span><span>▣ 16 concepts</span><span>✓ 10 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand what makes an Express API production-ready.</p></article><article><b>02</b><p>Organize a Node and Express project using maintainable layers.</p></article><article><b>03</b><p>Separate configuration for development, testing and production.</p></article><article><b>04</b><p>Create consistent API validation and error responses.</p></article><article><b>05</b><p>Implement application and request logging.</p></article><article><b>06</b><p>Build health-check and readiness endpoints.</p></article><article><b>07</b><p>Understand graceful server shutdown.</p></article><article><b>08</b><p>Write automated tests for Express APIs.</p></article><article><b>09</b><p>Understand unit, integration and end-to-end API testing.</p></article><article><b>10</b><p>Prepare an Express application for deployment.</p></article><article><b>11</b><p>Understand process management and horizontal scaling.</p></article><article><b>12</b><p>Create useful API documentation.</p></article><article><b>13</b><p>Understand monitoring, observability and production alerts.</p></article><article><b>14</b><p>Apply a complete Express production checklist.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Production API Mindset</h2></div></div><p class="concept-intro">An API that works on a developer laptop is not automatically ready for real users. Production engineering adds reliability, security, observability, testing and operational discipline.</p><ul class="content-points"><li>Development focuses on building features quickly.</li><li>Production focuses on reliability as well as features.</li><li>Errors must be predictable and safe.</li><li>Configuration must not be hard-coded.</li><li>Logs must help developers diagnose failures.</li><li>Health checks help infrastructure understand service state.</li><li>Automated tests reduce regression risk.</li><li>Graceful shutdown prevents incomplete requests and corrupted work.</li><li>Monitoring helps detect problems after deployment.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Production readiness means designing the API to remain understandable, observable and reliable when something goes wrong.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+app.get(&quot;/health&quot;, (req, res) =&gt; {
+  res.json({
+    status: &quot;ok&quot;,
+    service: &quot;codebhavya-api&quot;
+  });
+});
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;API started&quot;);
+});">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+app.get(&quot;/health&quot;, (req, res) =&gt; {
+  res.json({
+    status: &quot;ok&quot;,
+    service: &quot;codebhavya-api&quot;
+  });
+});
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;API started&quot;);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Environment-Based Configuration</h2></div></div><p class="concept-intro">Applications normally run in different environments such as development, testing and production. Configuration should change without changing application source code.</p><ul class="content-points"><li>Development may use local databases.</li><li>Testing may use a separate test database.</li><li>Production uses production services.</li><li>Environment variables allow configuration outside source code.</li><li>Secrets should never be committed to Git.</li><li>A configuration module can centralize environment values.</li><li>Defaults can be useful for safe local development.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The same application code should be able to run in different environments through configuration rather than source-code changes.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const PORT = process.env.PORT || 3000;
+
+const NODE_ENV = process.env.NODE_ENV || &quot;development&quot;;
+
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL &amp;&amp; NODE_ENV === &quot;production&quot;) {
+  throw new Error(&quot;DATABASE_URL is required in production&quot;);
+}
+
+module.exports = {
+  PORT,
+  NODE_ENV,
+  DATABASE_URL
+};">Copy</button></header><pre><code>const PORT = process.env.PORT || 3000;
+
+const NODE_ENV = process.env.NODE_ENV || &quot;development&quot;;
+
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL &amp;&amp; NODE_ENV === &quot;production&quot;) {
+  throw new Error(&quot;DATABASE_URL is required in production&quot;);
+}
+
+module.exports = {
+  PORT,
+  NODE_ENV,
+  DATABASE_URL
+};</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Professional Project Structure</h2></div></div><p class="concept-intro">As an Express application grows, placing everything inside one file becomes difficult to maintain. A layered structure separates responsibilities.</p><ul class="content-points"><li>Routes define API endpoints.</li><li>Controllers coordinate HTTP requests and responses.</li><li>Services contain business logic.</li><li>Models represent database structures.</li><li>Middleware handles reusable request processing.</li><li>Configuration contains environment-related settings.</li><li>Utilities contain reusable helper functions.</li><li>Tests should be organized separately.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Separate responsibilities so that each part of the application has a clear purpose.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="project/
+│
+├── src/
+│   ├── app.js
+│   ├── server.js
+│   │
+│   ├── config/
+│   │   └── env.js
+│   │
+│   ├── routes/
+│   │   └── user.routes.js
+│   │
+│   ├── controllers/
+│   │   └── user.controller.js
+│   │
+│   ├── services/
+│   │   └── user.service.js
+│   │
+│   ├── middleware/
+│   │   └── error.middleware.js
+│   │
+│   ├── models/
+│   │   └── user.model.js
+│   │
+│   └── utils/
+│       └── logger.js
+│
+├── tests/
+│   └── user.test.js
+│
+├── package.json
+└── .env">Copy</button></header><pre><code>project/
+│
+├── src/
+│   ├── app.js
+│   ├── server.js
+│   │
+│   ├── config/
+│   │   └── env.js
+│   │
+│   ├── routes/
+│   │   └── user.routes.js
+│   │
+│   ├── controllers/
+│   │   └── user.controller.js
+│   │
+│   ├── services/
+│   │   └── user.service.js
+│   │
+│   ├── middleware/
+│   │   └── error.middleware.js
+│   │
+│   ├── models/
+│   │   └── user.model.js
+│   │
+│   └── utils/
+│       └── logger.js
+│
+├── tests/
+│   └── user.test.js
+│
+├── package.json
+└── .env</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Centralized API Error Handling</h2></div></div><p class="concept-intro">Errors should be handled consistently instead of writing different response formats throughout the application.</p><ul class="content-points"><li>Express error middleware normally receives four parameters.</li><li>Error handling should be centralized.</li><li>Clients should receive predictable error structures.</li><li>Internal stack traces should not be exposed in production.</li><li>Expected application errors can have explicit status codes.</li><li>Unexpected errors should be logged for investigation.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Centralized error handling gives every API endpoint a predictable failure format.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function errorHandler(err, req, res, next) {
+  console.error(err);
+
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    success: false,
+    error: {
+      message:
+        statusCode === 500
+          ? &quot;Internal server error&quot;
+          : err.message
+    }
+  });
+}
+
+app.use(errorHandler);">Copy</button></header><pre><code>function errorHandler(err, req, res, next) {
+  console.error(err);
+
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    success: false,
+    error: {
+      message:
+        statusCode === 500
+          ? &quot;Internal server error&quot;
+          : err.message
+    }
+  });
+}
+
+app.use(errorHandler);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Request Validation &amp; Consistent Responses</h2></div></div><p class="concept-intro">Validation prevents malformed data from reaching business logic or the database.</p><ul class="content-points"><li>Validate required fields.</li><li>Validate data types.</li><li>Validate string lengths.</li><li>Validate allowed values.</li><li>Validate IDs and identifiers.</li><li>Reject invalid requests with HTTP 400.</li><li>Use consistent success and error response formats.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Validate data at the API boundary before it enters application logic.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function validateUser(req, res, next) {
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        message: &quot;Name and email are required&quot;
+      }
+    });
+  }
+
+  if (!email.includes(&quot;@&quot;)) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        message: &quot;Invalid email&quot;
+      }
+    });
+  }
+
+  next();
+}
+
+app.post(&quot;/users&quot;, validateUser, (req, res) =&gt; {
+  res.status(201).json({
+    success: true,
+    data: req.body
+  });
+});">Copy</button></header><pre><code>function validateUser(req, res, next) {
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        message: &quot;Name and email are required&quot;
+      }
+    });
+  }
+
+  if (!email.includes(&quot;@&quot;)) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        message: &quot;Invalid email&quot;
+      }
+    });
+  }
+
+  next();
+}
+
+app.post(&quot;/users&quot;, validateUser, (req, res) =&gt; {
+  res.status(201).json({
+    success: true,
+    data: req.body
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Logging and Debugging</h2></div></div><p class="concept-intro">Production applications need useful logs. A developer should be able to understand what happened without reproducing every issue locally.</p><ul class="content-points"><li>Log important application events.</li><li>Log request method and path.</li><li>Log response status where appropriate.</li><li>Log important errors.</li><li>Avoid logging passwords and secrets.</li><li>Use structured logging for larger systems.</li><li>Production logging should support searching and filtering.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good logs answer three questions: what happened, where did it happen, and when did it happen?</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function requestLogger(req, res, next) {
+  const start = Date.now();
+
+  res.on(&quot;finish&quot;, () =&gt; {
+    const duration = Date.now() - start;
+
+    console.log({
+      method: req.method,
+      path: req.originalUrl,
+      status: res.statusCode,
+      duration: duration + &quot;ms&quot;
+    });
+  });
+
+  next();
+}
+
+app.use(requestLogger);">Copy</button></header><pre><code>function requestLogger(req, res, next) {
+  const start = Date.now();
+
+  res.on(&quot;finish&quot;, () =&gt; {
+    const duration = Date.now() - start;
+
+    console.log({
+      method: req.method,
+      path: req.originalUrl,
+      status: res.statusCode,
+      duration: duration + &quot;ms&quot;
+    });
+  });
+
+  next();
+}
+
+app.use(requestLogger);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Health Checks and Readiness</h2></div></div><p class="concept-intro">A health endpoint allows infrastructure or monitoring systems to determine whether a service is responding.</p><ul class="content-points"><li>A liveness check asks whether the process is running.</li><li>A readiness check asks whether the service can handle traffic.</li><li>Health endpoints should be lightweight.</li><li>Database connectivity may be checked for readiness.</li><li>Health responses should be machine-readable.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Liveness answers &#39;Is the process alive?&#39; while readiness answers &#39;Can this service accept traffic safely?&#39;</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.get(&quot;/health&quot;, (req, res) =&gt; {
+  res.status(200).json({
+    status: &quot;ok&quot;
+  });
+});
+
+app.get(&quot;/ready&quot;, async (req, res) =&gt; {
+  const databaseReady = true;
+
+  if (!databaseReady) {
+    return res.status(503).json({
+      status: &quot;not-ready&quot;
+    });
+  }
+
+  res.json({
+    status: &quot;ready&quot;
+  });
+});">Copy</button></header><pre><code>app.get(&quot;/health&quot;, (req, res) =&gt; {
+  res.status(200).json({
+    status: &quot;ok&quot;
+  });
+});
+
+app.get(&quot;/ready&quot;, async (req, res) =&gt; {
+  const databaseReady = true;
+
+  if (!databaseReady) {
+    return res.status(503).json({
+      status: &quot;not-ready&quot;
+    });
+  }
+
+  res.json({
+    status: &quot;ready&quot;
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Graceful Shutdown</h2></div></div><p class="concept-intro">When a server is stopped or restarted, it should finish important in-progress work instead of abruptly terminating.</p><ul class="content-points"><li>Servers receive operating-system signals during shutdown.</li><li>The application should stop accepting new requests.</li><li>Existing connections should be allowed to finish when possible.</li><li>Database connections should be closed.</li><li>Resources should be cleaned up.</li><li>The process should eventually exit.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Graceful shutdown allows an application to stop safely instead of cutting off active work.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const server = app.listen(3000, () =&gt; {
+  console.log(&quot;Server running&quot;);
+});
+
+async function shutdown(signal) {
+  console.log(signal + &quot; received&quot;);
+
+  server.close(() =&gt; {
+    console.log(&quot;HTTP server closed&quot;);
+
+    // Close database connections here.
+
+    process.exit(0);
+  });
+}
+
+process.on(&quot;SIGTERM&quot;, () =&gt; {
+  shutdown(&quot;SIGTERM&quot;);
+});
+
+process.on(&quot;SIGINT&quot;, () =&gt; {
+  shutdown(&quot;SIGINT&quot;);
+});">Copy</button></header><pre><code>const server = app.listen(3000, () =&gt; {
+  console.log(&quot;Server running&quot;);
+});
+
+async function shutdown(signal) {
+  console.log(signal + &quot; received&quot;);
+
+  server.close(() =&gt; {
+    console.log(&quot;HTTP server closed&quot;);
+
+    // Close database connections here.
+
+    process.exit(0);
+  });
+}
+
+process.on(&quot;SIGTERM&quot;, () =&gt; {
+  shutdown(&quot;SIGTERM&quot;);
+});
+
+process.on(&quot;SIGINT&quot;, () =&gt; {
+  shutdown(&quot;SIGINT&quot;);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>API Testing Fundamentals</h2></div></div><p class="concept-intro">Automated tests verify that an API continues to behave as expected after changes.</p><ul class="content-points"><li>Unit tests test small pieces of logic.</li><li>Integration tests test multiple components together.</li><li>API tests send HTTP requests and inspect responses.</li><li>Tests should check both success and failure cases.</li><li>Important business rules should have automated coverage.</li><li>Tests should be repeatable.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Automated tests turn expected behavior into executable documentation.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const test = require(&quot;node:test&quot;);
+const assert = require(&quot;node:assert&quot;);
+
+test(&quot;addition works&quot;, () =&gt; {
+  const result = 2 + 3;
+
+  assert.strictEqual(result, 5);
+});">Copy</button></header><pre><code>const test = require(&quot;node:test&quot;);
+const assert = require(&quot;node:assert&quot;);
+
+test(&quot;addition works&quot;, () =&gt; {
+  const result = 2 + 3;
+
+  assert.strictEqual(result, 5);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>Testing Express Routes</h2></div></div><p class="concept-intro">Express routes can be tested by starting the application in a test environment and sending HTTP requests to it.</p><ul class="content-points"><li>Keep application creation separate from server startup.</li><li>This makes the app easier to import during tests.</li><li>Tests can call endpoints without permanently starting the production server.</li><li>Check HTTP status codes.</li><li>Check response bodies.</li><li>Check validation and authentication failures.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Separating app creation from server startup makes Express applications much easier to test.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="// app.js
+
+const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+app.get(&quot;/api/users&quot;, (req, res) =&gt; {
+  res.json({
+    success: true,
+    data: []
+  });
+});
+
+module.exports = app;">Copy</button></header><pre><code>// app.js
+
+const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.use(express.json());
+
+app.get(&quot;/api/users&quot;, (req, res) =&gt; {
+  res.json({
+    success: true,
+    data: []
+  });
+});
+
+module.exports = app;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Integration Tests and Test Databases</h2></div></div><p class="concept-intro">Real applications often need tests that involve the database, authentication and several application layers together.</p><ul class="content-points"><li>Integration tests verify interactions between components.</li><li>A test database should be isolated from production data.</li><li>Tests should prepare their required data.</li><li>Tests should clean up after themselves.</li><li>External services may be mocked when appropriate.</li><li>Tests should not depend on another developer&#39;s local data.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Integration tests should use isolated test resources so they never damage real production data.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="async function createTestUser(database) {
+  return database.users.insert({
+    name: &quot;Test User&quot;,
+    email: &quot;test@example.com&quot;
+  });
+}
+
+async function cleanupTestDatabase(database) {
+  await database.users.deleteMany({});
+}
+
+async function runTest(database) {
+  await cleanupTestDatabase(database);
+
+  const user = await createTestUser(database);
+
+  if (!user) {
+    throw new Error(&quot;Test user was not created&quot;);
+  }
+
+  await cleanupTestDatabase(database);
+}">Copy</button></header><pre><code>async function createTestUser(database) {
+  return database.users.insert({
+    name: &quot;Test User&quot;,
+    email: &quot;test@example.com&quot;
+  });
+}
+
+async function cleanupTestDatabase(database) {
+  await database.users.deleteMany({});
+}
+
+async function runTest(database) {
+  await cleanupTestDatabase(database);
+
+  const user = await createTestUser(database);
+
+  if (!user) {
+    throw new Error(&quot;Test user was not created&quot;);
+  }
+
+  await cleanupTestDatabase(database);
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>API Documentation</h2></div></div><p class="concept-intro">An API is much easier to use when developers can clearly understand endpoints, parameters, request bodies and responses.</p><ul class="content-points"><li>Document HTTP methods.</li><li>Document endpoint paths.</li><li>Document required authentication.</li><li>Document request body fields.</li><li>Document response structures.</li><li>Document common error responses.</li><li>Document example requests and responses.</li><li>OpenAPI is a common standard for describing APIs.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good API documentation reduces the time required for another developer to understand and integrate with your backend.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="GET /api/users
+
+Response:
+
+{
+  &quot;success&quot;: true,
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;101&quot;,
+      &quot;name&quot;: &quot;Bhavya&quot;
+    }
+  ]
+}">Copy</button></header><pre><code>GET /api/users
+
+Response:
+
+{
+  &quot;success&quot;: true,
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;101&quot;,
+      &quot;name&quot;: &quot;Bhavya&quot;
+    }
+  ]
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Deployment Preparation</h2></div></div><p class="concept-intro">Deployment means moving the application from development into an environment where users or other systems can access it.</p><ul class="content-points"><li>Set production environment variables.</li><li>Never deploy development secrets.</li><li>Install production dependencies correctly.</li><li>Use the platform-provided port when required.</li><li>Configure the production database.</li><li>Run automated tests before deployment.</li><li>Verify health endpoints.</li><li>Use HTTPS through the deployment infrastructure.</li><li>Review CORS configuration.</li><li>Review authentication and authorization.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Deployment is not just uploading code; configuration, security, testing and operational readiness must also be considered.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const port = process.env.PORT || 3000;
+
+app.get(&quot;/health&quot;, (req, res) =&gt; {
+  res.json({
+    status: &quot;ok&quot;,
+    environment: process.env.NODE_ENV || &quot;development&quot;
+  });
+});
+
+app.listen(port, () =&gt; {
+  console.log(&quot;Production-ready API listening on &quot; + port);
+});">Copy</button></header><pre><code>const port = process.env.PORT || 3000;
+
+app.get(&quot;/health&quot;, (req, res) =&gt; {
+  res.json({
+    status: &quot;ok&quot;,
+    environment: process.env.NODE_ENV || &quot;development&quot;
+  });
+});
+
+app.listen(port, () =&gt; {
+  console.log(&quot;Production-ready API listening on &quot; + port);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Process Management and Scaling</h2></div></div><p class="concept-intro">A production backend may need to run continuously, restart after failures and handle more traffic.</p><ul class="content-points"><li>A Node process can terminate because of an error or infrastructure event.</li><li>Production environments commonly provide process supervision.</li><li>Multiple application instances can increase capacity.</li><li>A load balancer can distribute requests.</li><li>Stateless APIs are easier to scale horizontally.</li><li>Shared session state requires an appropriate external store when multiple instances are used.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Horizontal scaling means running multiple application instances and distributing traffic between them.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.get(&quot;/api/status&quot;, (req, res) =&gt; {
+  res.json({
+    instance: process.pid,
+    status: &quot;running&quot;
+  });
+});
+
+app.listen(process.env.PORT || 3000);">Copy</button></header><pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.get(&quot;/api/status&quot;, (req, res) =&gt; {
+  res.json({
+    instance: process.pid,
+    status: &quot;running&quot;
+  });
+});
+
+app.listen(process.env.PORT || 3000);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Monitoring and Observability</h2></div></div><p class="concept-intro">Monitoring tells you whether the application is healthy. Observability helps you understand why a problem occurred.</p><ul class="content-points"><li>Track request errors.</li><li>Track response latency.</li><li>Track service availability.</li><li>Monitor CPU and memory where appropriate.</li><li>Monitor database failures.</li><li>Use logs for event details.</li><li>Use metrics for numerical trends.</li><li>Use traces when following requests across multiple services.</li><li>Create alerts for important failures.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Monitoring tells you that something is wrong; observability provides information that helps explain why.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function recordRequestMetric(req, res, duration) {
+  return {
+    method: req.method,
+    path: req.originalUrl,
+    status: res.statusCode,
+    durationMs: duration
+  };
+}
+
+const metric = recordRequestMetric(
+  { method: &quot;GET&quot;, originalUrl: &quot;/api/users&quot; },
+  { statusCode: 200 },
+  42
+);
+
+console.log(metric);">Copy</button></header><pre><code>function recordRequestMetric(req, res, duration) {
+  return {
+    method: req.method,
+    path: req.originalUrl,
+    status: res.statusCode,
+    durationMs: duration
+  };
+}
+
+const metric = recordRequestMetric(
+  { method: &quot;GET&quot;, originalUrl: &quot;/api/users&quot; },
+  { statusCode: 200 },
+  42
+);
+
+console.log(metric);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>Complete Express Production Checklist</h2></div></div><p class="concept-intro">Before considering an Express backend production-ready, review the application systematically.</p><ul class="content-points"><li>Project structure is maintainable.</li><li>Environment variables are configured.</li><li>Secrets are outside source control.</li><li>Input validation is implemented.</li><li>Authentication is protected.</li><li>Authorization rules are enforced.</li><li>CORS is configured intentionally.</li><li>Security headers are enabled where appropriate.</li><li>Rate limiting is considered for sensitive endpoints.</li><li>Errors are handled centrally.</li><li>Logs are useful and do not expose secrets.</li><li>Health endpoints are available.</li><li>Graceful shutdown is implemented.</li><li>Automated tests are available.</li><li>API documentation exists.</li><li>Production configuration is reviewed.</li><li>Database connections are managed correctly.</li><li>Monitoring and alerts are considered.</li><li>Deployment process is repeatable.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Production readiness is a collection of engineering practices rather than one single feature.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const productionChecklist = {
+  configuration: true,
+  validation: true,
+  authentication: true,
+  authorization: true,
+  security: true,
+  errorHandling: true,
+  logging: true,
+  healthChecks: true,
+  gracefulShutdown: true,
+  testing: true,
+  documentation: true,
+  monitoring: true
+};
+
+const ready = Object.values(productionChecklist)
+  .every(Boolean);
+
+console.log(
+  ready
+    ? &quot;Production checklist passed&quot;
+    : &quot;Production checklist needs attention&quot;
+);">Copy</button></header><pre><code>const productionChecklist = {
+  configuration: true,
+  validation: true,
+  authentication: true,
+  authorization: true,
+  security: true,
+  errorHandling: true,
+  logging: true,
+  healthChecks: true,
+  gracefulShutdown: true,
+  testing: true,
+  documentation: true,
+  monitoring: true
+};
+
+const ready = Object.values(productionChecklist)
+  .every(Boolean);
+
+console.log(
+  ready
+    ? &quot;Production checklist passed&quot;
+    : &quot;Production checklist needs attention&quot;
+);</code></pre></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Production API</strong><p>An API designed for reliability, security, testing and operational use.</p></div></article><article><b>02</b><div><strong>Environment Variable</strong><p>Configuration supplied outside application source code.</p></div></article><article><b>03</b><div><strong>Project Structure</strong><p>Organization of files according to their responsibilities.</p></div></article><article><b>04</b><div><strong>Controller</strong><p>Coordinates HTTP requests and responses.</p></div></article><article><b>05</b><div><strong>Service</strong><p>Contains reusable business logic.</p></div></article><article><b>06</b><div><strong>Centralized Error Handler</strong><p>Middleware responsible for consistent API error responses.</p></div></article><article><b>07</b><div><strong>Validation</strong><p>Checking whether incoming data satisfies application requirements.</p></div></article><article><b>08</b><div><strong>Health Check</strong><p>Endpoint used to determine whether a service is operating.</p></div></article><article><b>09</b><div><strong>Readiness</strong><p>Whether a service is prepared to receive traffic.</p></div></article><article><b>10</b><div><strong>Graceful Shutdown</strong><p>Controlled termination that allows cleanup and active work to finish.</p></div></article><article><b>11</b><div><strong>Unit Test</strong><p>Test of a small isolated piece of application logic.</p></div></article><article><b>12</b><div><strong>Integration Test</strong><p>Test of multiple components working together.</p></div></article><article><b>13</b><div><strong>API Test</strong><p>Automated test that verifies HTTP endpoint behavior.</p></div></article><article><b>14</b><div><strong>Documentation</strong><p>Information explaining how an API should be used.</p></div></article><article><b>15</b><div><strong>Monitoring</strong><p>Observing system health and operational behavior.</p></div></article><article><b>16</b><div><strong>Observability</strong><p>Ability to understand internal system behavior using outputs such as logs, metrics and traces.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>Why should configuration be stored in environment variables?</summary><div class="interview-answer"><p>Environment variables allow the same source code to run with different configuration in development, testing and production. They also help keep secrets outside the source code.</p></div></details><details class="interview-item"><summary><span>02</span>Why separate app.js and server.js?</summary><div class="interview-answer"><p>app.js can create and configure the Express application while server.js starts the HTTP server. This separation makes automated testing easier.</p></div></details><details class="interview-item"><summary><span>03</span>What is centralized error handling?</summary><div class="interview-answer"><p>It is the practice of handling application errors in one dedicated middleware instead of implementing different error-response logic throughout the application.</p></div></details><details class="interview-item"><summary><span>04</span>What is graceful shutdown?</summary><div class="interview-answer"><p>Graceful shutdown is the controlled process of stopping a server, allowing important active work to finish and closing resources such as database connections.</p></div></details><details class="interview-item"><summary><span>05</span>What is the difference between liveness and readiness?</summary><div class="interview-answer"><p>Liveness indicates whether the process is running. Readiness indicates whether the service is prepared to handle traffic.</p></div></details><details class="interview-item"><summary><span>06</span>What is the difference between unit and integration testing?</summary><div class="interview-answer"><p>Unit testing focuses on isolated logic, while integration testing checks how multiple application components work together.</p></div></details><details class="interview-item"><summary><span>07</span>Why should an API have consistent response formats?</summary><div class="interview-answer"><p>Consistent responses make client-side development easier because consumers know how to interpret success and failure responses.</p></div></details><details class="interview-item"><summary><span>08</span>Why should production logs avoid sensitive information?</summary><div class="interview-answer"><p>Logs can be stored, copied or viewed by operators. Passwords, tokens and other secrets should therefore never be unnecessarily exposed through logs.</p></div></details><details class="interview-item"><summary><span>09</span>What is horizontal scaling?</summary><div class="interview-answer"><p>Horizontal scaling means running multiple instances of an application and distributing incoming traffic among them.</p></div></details><details class="interview-item"><summary><span>10</span>What are logs, metrics and traces?</summary><div class="interview-answer"><p>Logs record events, metrics provide numerical measurements and traces show the path and timing of a request across application components.</p></div></details><details class="interview-item"><summary><span>11</span>Why are health-check endpoints useful?</summary><div class="interview-answer"><p>They provide a simple way for infrastructure and monitoring systems to determine whether a service is alive and ready.</p></div></details><details class="interview-item"><summary><span>12</span>What makes an Express application production-ready?</summary><div class="interview-answer"><p>Production readiness involves configuration management, validation, security, error handling, logging, testing, health checks, graceful shutdown, deployment preparation and monitoring.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span></header><h3>Build a Health Endpoint</h3><p>Create a GET /health endpoint that returns a JSON object containing status: ok.</p></article><article class="practice-card"><header><span>CHALLENGE 02</span></header><h3>Create Error Middleware</h3><p>Create Express error middleware that returns HTTP 500 and a safe error message.</p></article><article class="practice-card"><header><span>CHALLENGE 03</span></header><h3>Validate a Product</h3><p>Reject a POST /products request when the product name is missing.</p></article><article class="practice-card"><header><span>CHALLENGE 04</span></header><h3>Add Request Logging</h3><p>Create middleware that logs the HTTP method and requested path.</p></article><article class="practice-card"><header><span>CHALLENGE 05</span></header><h3>Environment Configuration</h3><p>Read the application port from process.env.PORT and use 3000 as a fallback.</p></article><article class="practice-card"><header><span>CHALLENGE 06</span></header><h3>Write an Assertion</h3><p>Write a Node test assertion verifying that 10 + 5 equals 15.</p></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>Which mechanism is commonly used to store environment-specific configuration?</h3><div class="quiz-options"><button type="button" data-option="0">A. HTML comments</button><button type="button" data-option="1">B. Environment variables</button><button type="button" data-option="2">C. CSS variables</button><button type="button" data-option="3">D. URL fragments</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which Express middleware signature identifies error-handling middleware?</h3><div class="quiz-options"><button type="button" data-option="0">A. (req, res)</button><button type="button" data-option="1">B. (req, next)</button><button type="button" data-option="2">C. (err, req, res, next)</button><button type="button" data-option="3">D. (error)</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>What does a health endpoint usually provide?</h3><div class="quiz-options"><button type="button" data-option="0">A. A CSS stylesheet</button><button type="button" data-option="1">B. Service health information</button><button type="button" data-option="2">C. A database password</button><button type="button" data-option="3">D. A JavaScript bundle</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>What is graceful shutdown?</h3><div class="quiz-options"><button type="button" data-option="0">A. Deleting the application</button><button type="button" data-option="1">B. Stopping without cleanup</button><button type="button" data-option="2">C. Controlled server termination</button><button type="button" data-option="3">D. Changing the API URL</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Which test focuses on an isolated function?</h3><div class="quiz-options"><button type="button" data-option="0">A. Unit test</button><button type="button" data-option="1">B. Integration test</button><button type="button" data-option="2">C. Deployment test</button><button type="button" data-option="3">D. Load balancer test</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>What does horizontal scaling mean?</h3><div class="quiz-options"><button type="button" data-option="0">A. Making code shorter</button><button type="button" data-option="1">B. Running multiple application instances</button><button type="button" data-option="2">C. Increasing font size</button><button type="button" data-option="3">D. Adding more database columns</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which signal records discrete application events?</h3><div class="quiz-options"><button type="button" data-option="0">A. Logs</button><button type="button" data-option="1">B. CSS</button><button type="button" data-option="2">C. HTML</button><button type="button" data-option="3">D. DNS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>Why should app creation be separated from server startup?</h3><div class="quiz-options"><button type="button" data-option="0">A. To make CSS faster</button><button type="button" data-option="1">B. To make testing easier</button><button type="button" data-option="2">C. To remove HTTP</button><button type="button" data-option="3">D. To avoid JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>What is readiness?</h3><div class="quiz-options"><button type="button" data-option="0">A. Whether a service can safely accept traffic</button><button type="button" data-option="1">B. Whether CSS loaded</button><button type="button" data-option="2">C. Whether a password is long</button><button type="button" data-option="3">D. Whether JavaScript is minified</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Which three signals are commonly associated with observability?</h3><div class="quiz-options"><button type="button" data-option="0">A. HTML, CSS, DNS</button><button type="button" data-option="1">B. Logs, metrics, traces</button><button type="button" data-option="2">C. Git, npm, HTML</button><button type="button" data-option="3">D. Cookies, forms, CSS</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Production</strong><p></p></article><article><strong>Environment Variable</strong><p></p></article><article><strong>Controller</strong><p></p></article><article><strong>Service Layer</strong><p></p></article><article><strong>Middleware</strong><p></p></article><article><strong>Validation</strong><p></p></article><article><strong>Health Check</strong><p></p></article><article><strong>Readiness</strong><p></p></article><article><strong>Graceful Shutdown</strong><p></p></article><article><strong>Unit Test</strong><p></p></article><article><strong>Integration Test</strong><p></p></article><article><strong>API Test</strong><p></p></article><article><strong>Deployment</strong><p></p></article><article><strong>Scaling</strong><p></p></article><article><strong>Monitoring</strong><p></p></article><article><strong>Observability</strong><p></p></article><article><strong>Liveness</strong><p></p></article><article><strong>API Documentation</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Node &amp; Express Complete!</h2><p>You have completed the Node &amp; Express section of the CodeBhavya Full Stack / MERN course. You now understand server-side JavaScript, Express APIs, middleware, validation, authentication, security and production backend engineering.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 23 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=22">← Previous level</a><a href="lesson.html?level=24">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn CSS rules, selectors, colors, backgrounds, fonts, units, cascade and inheritance with a step visualizer, interactive lab and MCQs.">
+
+    
+
+    <title>
+        Level 11 — CSS Fundamentals | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/css-fundamentals.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt11-skip-link" href="#wt11Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt11Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 11</div><div class="level-badge">LEVEL 11 · CSS</div><h1>CSS Fundamentals</h1><p class="wt-hero-description">Style meaningful HTML with clear rules, readable text and an understanding of why declarations win.</p><div class="wt-hero-meta"><span>🎨 CSS</span><span>⚖️ Cascade</span><span>🎯 Beginner</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 10 gave the document a useful structure and <strong class="wt-content-key">keyboard</strong> path. </li><li><strong class="wt-content-key">CSS</strong> now controls how that structure looks. </li><li>You will write rules, match elements with selectors, choose readable colors and text, and explain why one declaration wins when rules compete.</li></ul><ul class="wt-content-points"><li>By the end, create a small external stylesheet for a workshop page and use <strong class="wt-content-key">browser</strong> tools to diagnose a style that appears to be ignored. </li><li>Keep the <strong class="wt-content-key">HTML</strong> meaning and <strong class="wt-content-key">keyboard</strong> behavior intact while changing presentation.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Rules</h3><p>Read selectors, properties and values, then write valid declarations.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎨</span><h3>Presentation</h3><p>Style text, colors and backgrounds without changing document meaning.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚖️</span><h3>Conflicts</h3><p>Reason about importance, <strong class="wt-content-key">specificity</strong>, source order and inheritance.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Practice</h3><p>Compare controlled examples in the lab and explain the expected result.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🎨</span>What CSS Does — Presentation for Structured Content</h2><ul class="wt-content-points"><li><strong class="wt-content-key">CSS</strong> means Cascading Style Sheets. </li><li>A stylesheet contains rules that describe how selected elements should be presented. </li><li>The same <strong class="wt-content-key">semantic</strong> <strong class="wt-content-key">HTML</strong> can use different fonts, colors and spacing without changing which element is a heading or button.</li></ul><ul class="wt-content-points"><li>A workshop heading stays an h1 when its color changes. </li><li>A link remains a link when it has a rounded background. </li><li>Styling a div to look like a button still does not provide native button behavior. </li><li>Keep the structural choices from Level 10 and treat <strong class="wt-content-key">CSS</strong> as the presentation layer.</li></ul><ul class="wt-content-points"><li>Browsers also supply default styles. </li><li>Headings, paragraphs and links have an appearance even before you add a stylesheet. </li><li>Your rules participate in a system that includes <strong class="wt-content-key">browser</strong> defaults, author styles and, sometimes, user styles. </li><li>This is why styling is more than applying the last file you opened.</li></ul><figure class="wt-diagram"><figcaption>HTML and CSS work together</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>HTML · purpose</strong><p>h1 identifies the page topic; p holds an explanation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎨</span><strong>CSS · presentation</strong><p>Choose readable text, a background and visible focus.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👀</span><strong>Browser · result</strong><p>Render the structured document using the applicable styles.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>CSS Rule Anatomy — Selector, Property and Value</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">selector</strong> identifies which elements a rule can match. </li><li>Inside braces, each declaration has a property, a colon and a value. </li><li>A semicolon separates declarations. </li><li>The property asks what should change; the value describes the requested setting.</li></ul><div class="code-block"><pre><code>h1 {
+  color: #173451;
+  font-size: 2rem;
+  line-height: 1.2;
+}</code></pre></div><ul class="wt-content-points"><li><strong>Read this rule:</strong> for each matching h1, <strong class="wt-content-key">request</strong> the stated color, font size and line height. </li><li>These declarations compete with other applicable declarations for the same properties. </li><li>They do not erase every other style on the element.</li></ul><ul class="wt-content-points"><li>Use a final semicolon even though the last declaration can often omit it. </li><li>That habit avoids mistakes when you append another property. </li><li>Comments use <code>/* ... */</code>. </li><li><strong class="wt-content-key">CSS</strong> does not use <strong class="wt-content-key">JavaScript</strong>’s line-comment syntax as an ordinary stylesheet comment.</li></ul><div class="code-block"><pre><code>/* A readable paragraph */
+p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}</code></pre></div></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">📂</span>Inline, Internal and External Styles</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Inline</h3><ul class="wt-content-points"><li>A style attribute supplies declarations directly on an element. </li><li>Useful for a small illustration, but repeated inline styling is difficult to maintain.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Internal</h3><p>A style element in the document head contains rules for that document. It suits a self-contained exercise or demonstration.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>External</h3><p>A linked <strong class="wt-content-key">CSS</strong> file supplies reusable rules. It supports consistent styling across related pages.</p></article></div><div class="code-block"><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;workshop.css&quot;&gt;
+
+&lt;style&gt;
+  .notice { color: #075a83; }
+&lt;/style&gt;
+
+&lt;p style=&quot;color: #173451;&quot;&gt;Workshop information&lt;/p&gt;</code></pre></div><ul class="wt-content-points"><li>The external path is resolved relative to the <strong class="wt-content-key">HTML</strong> document unless a base <strong class="wt-content-key">URL</strong> changes that behavior. </li><li>Check the actual filename and folder when the file does not load. </li><li>A link points to a file; it does not create that file for you.</li></ul><ul class="wt-content-points"><li>Do not memorize “external beats internal” or the reverse. </li><li>Rules in linked sheets and style elements participate in the cascade. </li><li>For comparable normal author declarations, a style attribute has precedence over stylesheet declarations; importance and other cascade stages still matter.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Basic Selectors — Match the Right Elements</h2><ul class="wt-content-points"><li>A type <strong class="wt-content-key">selector</strong> matches an element type: <code>p</code> matches paragraphs. </li><li>A class <strong class="wt-content-key">selector</strong> begins with a dot: <code>.notice</code> matches an element whose class list contains notice. </li><li>An ID <strong class="wt-content-key">selector</strong> begins with a hash: <code>#registration</code> matches the element with that ID.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">selector</strong> list uses commas to apply a rule to several matching groups. </li><li>The universal <strong class="wt-content-key">selector</strong> <code>*</code> matches elements broadly. </li><li>Broad rules can be useful for a common foundation, but keep component rules focused so they do not change unrelated parts of a page.</li></ul><div class="code-block"><pre><code>p { line-height: 1.7; }
+.notice { background: #eef7fc; }
+#registration { border: 1px solid #bdd5e6; }
+h1, h2 { color: #173451; }</code></pre></div><ul class="wt-content-points"><li><strong>Predict the matches:</strong> a paragraph with class notice can match both p and .notice. </li><li>Their declarations can combine when they affect different properties. </li><li>A competing declaration for the same property must be resolved by the cascade.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Classes and IDs — Reuse Versus Identity</h2><ul class="wt-content-points"><li>An element can have several classes separated by spaces. </li><li>Each class can describe a reusable role, such as notice, warning or compact. </li><li>An ID identifies one element in the document and should be unique. </li><li>Prefer reusable classes for ordinary component styling; reserve IDs for genuine document identity and related uses.</li></ul><ul class="wt-content-points"><li>In <strong class="wt-content-key">HTML</strong> you write <code>class="notice featured"</code>. </li><li>In <strong class="wt-content-key">CSS</strong> you write <code>.notice</code> or <code>.featured</code>, without adding the dot to the <strong class="wt-content-key">HTML</strong> class value. </li><li>Do not use class=".notice" and expect .notice to match it as the class notice.</li></ul><div class="code-block"><pre><code>&lt;p id=&quot;workshop-note&quot; class=&quot;notice featured&quot;&gt;Bring your HTML notes.&lt;/p&gt;
+
+.notice { padding: 1rem; }
+.featured { font-weight: 700; }</code></pre></div><ul class="wt-content-points"><li>The paragraph receives both reusable styles. </li><li>The id can also be a fragment-link destination. </li><li>An ID <strong class="wt-content-key">selector</strong> has higher <strong class="wt-content-key">specificity</strong> than a class selector, but adding IDs everywhere to win conflicts makes future changes harder.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🌳</span>Relationships and Attribute Selectors</h2><ul class="wt-content-points"><li>A space in a <strong class="wt-content-key">selector</strong> expresses a descendant relationship. <code>.card p</code> can match paragraphs anywhere inside .card. </li><li>A greater-than sign expresses an immediate child: <code>.card &gt; p</code> excludes paragraphs nested inside another child element.</li></ul><ul class="wt-content-points"><li>An attribute <strong class="wt-content-key">selector</strong> can match an attribute’s presence or value. </li><li>For example, <code>input[type="email"]</code> matches email inputs. </li><li>The attribute <strong class="wt-content-key">selector</strong> is useful when that attribute is a meaningful part of the component’s behavior.</li></ul><div class="code-block"><pre><code>.card p { color: #254864; }
+.card &gt; p { margin-top: 0; }
+input[type=&quot;email&quot;] { border-color: #126d96; }</code></pre></div><ul class="wt-content-points"><li>A comma is not a descendant relationship: <code>.card, p</code> selects cards and paragraphs separately. </li><li>A missing space can change meaning too: <code>.card.featured</code> requires the same element to have both classes, whereas <code>.card .featured</code> requires a featured descendant of a card.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🖱️</span>States — hover and focus-visible</h2><p>A pseudo-class can match an element in a particular state. <code>:hover</code> commonly matches a pointer hovering over an element. <code>:focus-visible</code> matches when the <strong class="wt-content-key">browser</strong> considers a visible focus indicator appropriate, including ordinary <strong class="wt-content-key">keyboard</strong> use.</p><ul class="wt-content-points"><li>Provide a clear <strong class="wt-content-key">keyboard</strong> focus style as well as pointer feedback. </li><li>A touch device may not have a persistent hover interaction. </li><li>Do not place essential instructions behind hover alone or remove focus outlines without supplying a visible alternative.</li></ul><div class="code-block"><pre><code>a:hover { text-decoration-thickness: 3px; }
+button:focus-visible, a:focus-visible {
+  outline: 3px solid #126d96;
+  outline-offset: 3px;
+}</code></pre></div><ul class="wt-content-points"><li>Pseudo-elements describe a part of an element or generated content. </li><li>For example, <code>::first-letter</code> targets an initial letter. </li><li>Keep essential text in the <strong class="wt-content-key">HTML</strong> rather than relying only on generated content, especially when it conveys an action or instruction.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🎨</span>Colors — Readable Foreground and Background</h2><ul class="wt-content-points"><li>The color property sets text color. </li><li>Background-color sets a background color. </li><li>Colors can use named values, hexadecimal notation, rgb() or hsl(). </li><li>These are different ways to specify a color, not different kinds of <strong class="wt-content-key">semantic</strong> content.</li></ul><div class="code-block"><pre><code>.notice {
+  color: #173451;
+  background-color: #eef7fc;
+}
+.warning {
+  color: rgb(102, 58, 5);
+  background-color: hsl(45, 100%, 94%);
+}</code></pre></div><ul class="wt-content-points"><li>Always evaluate the foreground against the background it will actually appear on. </li><li>A light cyan label on a pale panel may look attractive yet be hard to read. </li><li>A transparent background can reveal a parent’s background, so inspecting only the local rule may be insufficient.</li></ul><ul class="wt-content-points"><li>Do not convey correctness or an error solely through color. </li><li>Add words, symbols with a meaningful label or another perceivable difference. </li><li>Use a contrast checker when reviewing the final design; these examples are not a complete <strong class="wt-content-key">accessibility</strong> audit.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🖼️</span>Backgrounds — Images, Gradients and Transparency</h2><ul class="wt-content-points"><li>A background can be a solid color, an image or a gradient. </li><li>Supply an appropriate color behind an image and ensure text remains readable if the image changes or fails to load. </li><li>Background images are presentation; essential information belongs in the document with an appropriate alternative.</li></ul><ul class="wt-content-points"><li>Gradients can create a visually distinct heading panel without requiring another image file. </li><li>Keep the transition gentle enough that the text is readable across the entire panel, rather than only at one edge.</li></ul><div class="code-block"><pre><code>.hero {
+  color: #ffffff;
+  background: linear-gradient(120deg, #10263f, #19445f);
+}</code></pre></div><ul class="wt-content-points"><li>Opacity applies to the whole element, including its descendants. </li><li>Setting opacity: 0.5 on a card makes its text translucent as well as its background. </li><li>If only the background should be translucent, choose a color with an alpha channel rather than fading the entire component.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>Fonts and Text — Readability First</h2><ul class="wt-content-points"><li>Use a font stack so another suitable font is available if the first choice is missing. </li><li>Set a readable size and line height, then check long paragraphs and small screens. </li><li>A unitless line-height is useful because descendants can use the multiplier with their own font size.</li></ul><div class="code-block"><pre><code>body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+h1 { font-weight: 700; line-height: 1.2; }
+code { font-family: Consolas, monospace; }</code></pre></div><ul class="wt-content-points"><li>Font weight changes emphasis, but visual boldness does not turn ordinary text into a heading. </li><li>Text-align controls text alignment; it is not a general tool for laying out every kind of component. </li><li>Preserve useful wrapping and avoid fixing paragraph height so tightly that increased text size clips content.</li></ul><ul class="wt-content-points"><li>A shorthand such as font can reset associated properties you did not explicitly preserve. </li><li>For beginner exercises, separate declarations are easier to inspect. </li><li>When you use a shorthand, learn which properties it resets.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">📏</span>Units — px, rem, em and Percentages</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📐</span><h3>px</h3><p>A <strong class="wt-content-key">CSS</strong> pixel is a reference unit used for lengths. It does not always correspond to one physical device pixel.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>rem</h3><p>Relative to the root element’s font size. A useful basis for consistent text and spacing.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>em</h3><p>Relative units whose basis depends on the property. For font-size, em is relative to the parent font size.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📊</span><h3>%</h3><p>A relative value with a property-specific basis. Do not assume every percentage is relative to the viewport.</p></article></div><ul class="wt-content-points"><li>If the root font size is 16 <strong class="wt-content-key">CSS</strong> pixels, 1.125rem corresponds to 18 CSS pixels. </li><li>That arithmetic is an example with a stated assumption; a user or stylesheet can change the root size. </li><li>A child at font-size: 1.25em under a 20px parent requests 25px.</li></ul><ul class="wt-content-points"><li>Avoid arbitrary text sizes that make reading difficult. </li><li>Let users zoom, test the page when text grows, and use flexible containers. </li><li>Level 12 will develop sizing and layout more fully.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">⚖️</span>The Cascade — Why One Declaration Wins</h2><ul class="wt-content-points"><li>For each property on an element, the <strong class="wt-content-key">browser</strong> considers applicable declarations and resolves conflicts. </li><li>Matching is only the first question. </li><li>Origin and importance, cascade layers where used, <strong class="wt-content-key">specificity</strong> and later tie-breakers can affect the winner. </li><li>Source order is not the first universal rule.</li></ul><ul class="wt-content-points"><li>For the beginner examples in this lesson, assume normal author rules in the same layer, with no animations, transitions or scoped-rule complications. </li><li>Under those assumptions, <strong class="wt-content-key">specificity</strong> breaks a conflict, and later source order breaks a remaining tie. </li><li>The visualizer states these boundaries instead of claiming to simulate every part of <strong class="wt-content-key">CSS</strong>.</li></ul><ul class="wt-content-points"><li>An external file and an internal style block are both places to put author rules. </li><li>Their location does not create a fixed priority category that always beats the other. </li><li>First verify that the file loaded and the <strong class="wt-content-key">selector</strong> matches, then inspect the applicable declarations.</li></ul><div class="code-block"><pre><code>.note { color: #075a83; }
+.note { color: #663399; }</code></pre></div><p><strong>Expected result under the stated assumptions:</strong> the later .note rule supplies purple text because both selectors have equal <strong class="wt-content-key">specificity</strong> and both declarations are normal author declarations in the same layer.</p></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🔢</span>Specificity and !important — Different Decisions</h2><ul class="wt-content-points"><li>Compare <strong class="wt-content-key">specificity</strong> as components, not a single decimal score. </li><li>ID selectors form one component; class, attribute and pseudo-class selectors form another; type selectors and pseudo-elements form another. </li><li>A basic #note <strong class="wt-content-key">selector</strong> is more specific than .note, which is more specific than p.</li></ul><ul class="wt-content-points"><li>This comparison applies after the relevant earlier cascade decisions. </li><li>An important declaration can beat a normal declaration in the same author context even when the normal <strong class="wt-content-key">selector</strong> is more specific. !important is a declaration flag, not an extra selector or a normal increase to the <strong class="wt-content-key">specificity</strong> count.</li></ul><ul class="wt-content-points"><li>Use focused rules and inspect conflicts before reaching for !important. </li><li>Overusing it can make component changes difficult. </li><li>Inline normal styles can also be overridden by an applicable important author declaration. </li><li>Important user styles may be used to preserve user needs.</li></ul><div class="code-block"><pre><code>#lesson-note { color: #663399; }
+.note { color: #075a83; }
+
+/* Separate example: importance changes the comparison. */
+.note { color: #755000 !important; }
+#lesson-note { color: #663399; }</code></pre></div><ul class="wt-content-points"><li>In the first pair, the matching ID rule wins over the later class rule. </li><li>In the separate second pair, the important class declaration wins over the normal ID declaration. </li><li>The lab lets you compare these cases without combining their assumptions.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🌳</span>Inheritance — A Child Can Receive a Parent Value</h2><ul class="wt-content-points"><li>Some properties, including color and common font properties, are inherited when the child does not have its own winning value for that property. </li><li>Many box-related properties, such as margin and border, are not inherited by default.</li></ul><ul class="wt-content-points"><li>Inheritance is not another highly specific rule on the child. </li><li>An explicit declaration on a child can replace an inherited value even when the parent <strong class="wt-content-key">selector</strong> looks more specific. </li><li>Ask whether the child has a declaration of its own before comparing the parent’s <strong class="wt-content-key">selector</strong> as if it matched the child.</li></ul><div class="code-block"><pre><code>.workshop { color: #176343; }
+.workshop p { margin: 0; }
+
+/* The paragraph can inherit the workshop color. */</code></pre></div><ul class="wt-content-points"><li><code>inherit</code> explicitly requests the parent’s computed value for a property. <code>initial</code> requests the property’s initial value; it does not mean “whatever the parent used.” <code>unset</code> follows inheritance for inherited properties and uses the initial value for others. </li><li>Advanced reverting and layer controls can be studied after the basics.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — CSS Rule Selection</h2><p>Trace matching, cascade context, specificity, source order and the result. This is a guided explanation of the fixed examples shown here. Use the timeline or playback controls; no claim is made that the visualizer evaluates arbitrary CSS.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="css">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>CSS RULE SELECTION TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🎯</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Match rules to the element</h3><p data-trace-description>The paragraph has id=&quot;lesson-note&quot; and class=&quot;note&quot;, so both the ID and class rules match.</p></div><pre class="trace-code"><code data-trace-code>&lt;p id=&quot;lesson-note&quot; class=&quot;note&quot;&gt;Workshop notice&lt;/p&gt;</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Match" aria-pressed="true"><span>01</span><strong>Match</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Context" aria-pressed="false"><span>02</span><strong>Context</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Specificity" aria-pressed="false"><span>03</span><strong>Specificity</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Order" aria-pressed="false"><span>04</span><strong>Order</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Result" aria-pressed="false"><span>05</span><strong>Result</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Before comparing priorities, check the selector and confirm that the stylesheet loaded. A non-matching rule cannot style this paragraph.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — CSS Conflict Lab</h2><ul class="wt-content-points"><li>The preview is a separate local document with controlled rules. </li><li>Select a case, change the text size and inspect the actual rendered paragraph. </li><li>Each case explains its expected winner under the stated simple author-style assumptions. </li><li>The lesson styles outside the preview cannot overwrite its rules.</li></ul><ul class="wt-content-points"><li>Compare source-order, ID <strong class="wt-content-key">specificity</strong>, inherited color and an important declaration. </li><li>Read the rules in the same order they are supplied to the preview. </li><li>The label reports an expected result for the known example; it is not a live browser-computed-style inspector.</li></ul><div class="wt9-demo"><label for="wt11Case">Choose a CSS example</label><select id="wt11Case"><option value="order">Equal specificity: later rule</option><option value="specificity">ID versus class</option><option value="inherit">Inherited color</option><option value="important">Important versus normal</option></select><label for="wt11Size">Preview text size</label><select id="wt11Size"><option value="18">18px</option><option value="22">22px</option><option value="26">26px</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt11Inspect">Apply example</button><button type="button" class="secondary-button" id="wt11Reset">Reset lab</button></div><p id="wt11Status" role="status">Select a case and inspect its rules.</p><iframe id="wt11Preview" title="CSS conflict example preview" sandbox="" loading="lazy"></iframe><h3>CSS supplied to the preview</h3><pre class="trace-code"><code id="wt11Rules"></code></pre><p id="wt11Expected"></p></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Debugging — Inspect Instead of Guessing</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📂</span><h3>File and path</h3><p>Confirm that the linked stylesheet exists, loads successfully and has the expected content.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎯</span><h3>Matching</h3><p>Check spelling, classes, IDs, combinators and the actual element structure.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚖️</span><h3>Conflict</h3><p>Inspect crossed-out declarations, importance, <strong class="wt-content-key">specificity</strong> and order in <strong class="wt-content-key">browser</strong> tools.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧱</span><h3>Value and context</h3><p>Check syntax, supported values, inheritance and the background or parent that affects the result.</p></article></div><ul class="wt-content-points"><li>An invalid or unsupported declaration is generally ignored rather than converted into the value you intended. </li><li>A missing colon or a malformed block can affect parsing beyond one obvious line. </li><li>Keep braces balanced and inspect the <strong class="wt-content-key">browser</strong>’s parsed rules.</li></ul><ul class="wt-content-points"><li>If a change seems absent after <strong class="wt-content-key">deployment</strong>, first verify that the deployed file contains it. </li><li>A local edit that has not been deployed cannot change the public page. </li><li>A cached resource can also show earlier content; inspect the actual loaded resource before changing unrelated selectors.</li></ul><ul class="wt-content-points"><li>Try a small, reversible rule in <strong class="wt-content-key">browser</strong> tools to confirm the hypothesis. </li><li>Then make the permanent change in the correct source file. </li><li>Do not keep appending broad overrides that affect the header, footer and other lessons by accident.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does the last CSS declaration always win?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does the last CSS declaration always win?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It must match, be valid and survive earlier cascade comparisons. Later order resolves an otherwise equal conflict, not every conflict.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Do external styles always outrank internal styles?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Do external styles always outrank internal styles?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Both can contain author rules. Their cascade context, specificity and order decide applicable conflicts.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between class and ID selectors?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between class and ID selectors?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Classes identify reusable groups and can be combined. An ID identifies one element and should be unique; an ID selector has a higher specificity component.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How does inheritance differ from matching a selector?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How does inheritance differ from matching a selector?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Inheritance supplies certain parent values when the child has no overriding value. It does not mean the parent selector also matches the child.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does !important increase selector specificity?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does !important increase selector specificity?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It flags a declaration as important. Importance is considered at a different cascade stage from selector specificity.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why keep a unitless line-height?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why keep a unitless line-height?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The number acts as a multiplier with the element’s font size, which can make inherited text spacing easier to manage.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can CSS make a div into a native button?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can CSS make a div into a native button?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Appearance does not provide the semantics and keyboard behavior of a native control.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why test a background and foreground together?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why test a background and foreground together?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Readability depends on the actual combination, including transparency, parent backgrounds and images behind the text.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain the Winner</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="A declaration uses a property, colon and value, with a semicolon between declarations."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which declaration has the correct CSS syntax?</h3><div class="wt8-options"><button type="button" class="wt8-option">color = blue;</button><button type="button" class="wt8-option">color: blue;</button><button type="button" class="wt8-option">color blue;</button><button type="button" class="wt8-option">color -&gt; blue;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A class selector begins with a dot; the HTML class value itself does not include that dot."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Which selector matches class=&quot;notice&quot;?</h3><div class="wt8-options"><button type="button" class="wt8-option">#notice</button><button type="button" class="wt8-option">notice</button><button type="button" class="wt8-option">.notice</button><button type="button" class="wt8-option">@notice</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The child combinator requires an immediate parent-child relationship."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What does .card &gt; p match?</h3><div class="wt8-options"><button type="button" class="wt8-option">Immediate paragraph children of a card</button><button type="button" class="wt8-option">All paragraphs in the document</button><button type="button" class="wt8-option">Only the card itself</button><button type="button" class="wt8-option">Paragraphs before the card</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="With the earlier cascade stages and specificity equal, source order resolves this tie."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Normal author .note rules in one layer have equal specificity. Which wins for the same property?</h3><div class="wt8-options"><button type="button" class="wt8-option">First rule always</button><button type="button" class="wt8-option">Shortest value</button><button type="button" class="wt8-option">Alphabetically first property</button><button type="button" class="wt8-option">Later applicable rule</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The ID component outranks the class and type components in this comparison."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which is more specific in the stated simple normal author context?</h3><div class="wt8-options"><button type="button" class="wt8-option">p</button><button type="button" class="wt8-option">#note</button><button type="button" class="wt8-option">.note</button><button type="button" class="wt8-option">*</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Importance is a declaration flag considered separately from selector specificity."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What does !important do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Turns a class into an ID</button><button type="button" class="wt8-option">Creates a CSS comment</button><button type="button" class="wt8-option">Marks a declaration as important</button><button type="button" class="wt8-option">Automatically applies a rule to every element</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Color is inherited by default; the listed box properties generally are not."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. Which property is commonly inherited?</h3><div class="wt8-options"><button type="button" class="wt8-option">border</button><button type="button" class="wt8-option">margin</button><button type="button" class="wt8-option">padding</button><button type="button" class="wt8-option">color</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Under the stated root-size assumption, 16 multiplied by 1.125 is 18."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. With a root font size of 16px, what is 1.125rem?</h3><div class="wt8-options"><button type="button" class="wt8-option">18px</button><button type="button" class="wt8-option">16px</button><button type="button" class="wt8-option">20px</button><button type="button" class="wt8-option">1.125px</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Ordinary CSS comments use the slash-star syntax."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which supplies a CSS comment?</h3><div class="wt8-options"><button type="button" class="wt8-option">// comment</button><button type="button" class="wt8-option">/* comment */</button><button type="button" class="wt8-option">&lt;!-- comment --&gt;</button><button type="button" class="wt8-option">## comment</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Opacity affects the composited element, including its text; an alpha background is a different choice."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Why can opacity: .5 harm a card’s text readability?</h3><div class="wt8-options"><button type="button" class="wt8-option">It changes HTML headings</button><button type="button" class="wt8-option">It removes the background</button><button type="button" class="wt8-option">It fades the element and its descendants</button><button type="button" class="wt8-option">It always increases contrast</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A clear focus indicator helps keyboard users identify the active element."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Which supports visible keyboard focus?</h3><div class="wt8-options"><button type="button" class="wt8-option">outline: none everywhere</button><button type="button" class="wt8-option">Hover-only instructions</button><button type="button" class="wt8-option">A smaller click area</button><button type="button" class="wt8-option">:focus-visible with a clear outline</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Loading and matching are prerequisites before priority comparisons can explain a conflict."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. A rule does not style the expected paragraph. What should you inspect first?</h3><div class="wt8-options"><button type="button" class="wt8-option">Whether the file loaded and selector matches</button><button type="button" class="wt8-option">Whether the property name is fashionable</button><button type="button" class="wt8-option">How many !important flags can be added</button><button type="button" class="wt8-option">Whether the paragraph should become a div</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt11QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict and Verify</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧱</span><h3>Rule repair</h3><p>Repair color = blue to a valid declaration. Expected: color: blue; is parsed as the requested color.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Class matching</h3><p>Use class="notice featured" with .notice and .featured rules. Expected: the same element can receive declarations from both.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌳</span><h3>Child comparison</h3><ul class="wt-content-points"><li>Put one paragraph directly inside a card and another inside a nested section. </li><li>Expected: .card p matches both; .card > p matches only the direct child.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Equal-rule order</h3><ul class="wt-content-points"><li>Write two .note color rules, then reverse their order. </li><li>Expected: the later rule wins in the stated equal normal author context.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>ID comparison</h3><p>Put the class rule after a matching ID rule. Expected: the normal ID declaration still wins in the same context.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌿</span><h3>Inheritance boundary</h3><ul class="wt-content-points"><li>Give a parent a color and border. </li><li>Expected: the paragraph can inherit the color, while the border does not automatically become the paragraph’s border.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Unit calculation</h3><p>Assume a 20px parent and set the child font-size to 1.25em. Expected requested font size: 25px under that assumption.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Focus and text growth</h3><ul class="wt-content-points"><li>Keep a visible focus style and increase preview text size. </li><li>Expected: the active control stays identifiable and text is not clipped.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧱</span><strong>Syntax:</strong> selector { property: value; }</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📂</span><strong>Files:</strong> A linked stylesheet must exist and load at the given path.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Selectors:</strong> Use classes for reuse and IDs for unique identity.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌳</span><strong>Relationships:</strong> A space means descendant; > means immediate child.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⌨️</span><strong>States:</strong> Keep keyboard focus visible as well as hover feedback.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎨</span><strong>Readability:</strong> Check the actual foreground and background together.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📏</span><strong>Units:</strong> Relative values have a stated, property-specific basis.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚖️</span><strong>Cascade:</strong> Consider context and importance before specificity and ties.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔢</span><strong>Order:</strong> Later order decides an otherwise equal conflict.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌿</span><strong>Inheritance:</strong> Some parent values pass to children; many box properties do not.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Stylesheet"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Stylesheet</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Stylesheet</h4><p>A collection of CSS rules defining presentation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Selector"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Selector</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Selector</h4><p>A pattern used to match elements for a rule.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Declaration"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Declaration</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Declaration</h4><p>A property/value pair with an optional importance flag.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Property"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Property</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Property</h4><p>The aspect of presentation being specified, such as color.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Cascade"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Cascade</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Cascade</h4><p>The process that resolves competing applicable declarations.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Specificity"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Specificity</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Specificity</h4><p>Selector components used in the cascade after relevant earlier decisions.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Source order"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Source order</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Source order</h4><p>The order used to resolve a remaining equal-priority conflict.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Inheritance"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Inheritance</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Inheritance</h4><p>The transfer of certain parent values when a child lacks an overriding value.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Pseudo-class"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Pseudo-class</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Pseudo-class</h4><p>A selector feature describing a state or other condition.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Computed value"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Computed value</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Computed value</h4><p>A property value after the relevant computation stage, before some later layout-dependent resolution.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Style the Semantic Workshop</h2><ul class="wt-content-points"><li>Take the standalone workshop page from Level 10 and create workshop.<strong class="wt-content-key">css</strong> next to it. </li><li>Link the stylesheet in the head. </li><li>Use classes for the hero, notice and practice panels; style the headings, body text and native disclosure while keeping all existing <strong class="wt-content-key">semantic</strong> tags and <strong class="wt-content-key">keyboard</strong> controls.</li></ul><ul class="wt-content-points"><li>Use a readable font stack, a flexible text size and a unitless line-height. </li><li>Choose contrasting text and background colors. </li><li>Provide a clear focus-visible style and avoid a fixed panel height that clips enlarged text. </li><li>Keep decorative backgrounds separate from essential content.</li></ul><ul class="wt-content-points"><li>Add two deliberately competing normal class color rules to a practice notice and predict their winner. </li><li>Then compare a matching ID rule in a separate example. </li><li>Record the assumptions that make your predictions valid and inspect the winning declaration in <strong class="wt-content-key">browser</strong> tools.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> the external file loads, the selectors match only the intended content, the page remains operable by <strong class="wt-content-key">keyboard</strong>, and you can explain the conflicting color result. </li><li>Level 12 will build on this foundation with the <strong class="wt-content-key">box model</strong> and layout.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 11 Complete?</h2><p>Before marking complete, write and link a valid stylesheet, demonstrate class matching, explain an equal-rule conflict and an inherited value, and preserve a visible keyboard focus indicator. Completion is a local study milestone, not a score or design certification.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="semantic-html-accessibility.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Semantic HTML and Accessibility</span><span class="nav-action">Review Level 10</span></a></div><div class="topic-nav-side next"><a href="css-box-model-layout.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">CSS Box Model and Layout</span><span class="nav-action">Open Level 12</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="css-fundamentals.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=6" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=3" defer></script>
+</body></html>

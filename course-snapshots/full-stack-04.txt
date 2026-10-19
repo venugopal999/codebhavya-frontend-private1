@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 4: CSS Foundations | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=4"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=4">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class="active " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">04</div><div><p class="eyebrow">WEB FOUNDATIONS</p><h1>CSS Foundations</h1><p>Understand how CSS transforms semantic HTML into structured, readable and responsive interfaces by mastering selectors, cascade, specificity, inheritance, units, typography and the complete box model.</p><div class="lesson-meta"><span>⏱ Estimated learning time: 4–5 hours</span><span>◈ Beginner → Intermediate</span><span>▣ 20 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand how CSS rules are written and applied.</p></article><article><b>02</b><p>Use element, class, ID, attribute and combinator selectors correctly.</p></article><article><b>03</b><p>Understand the cascade, inheritance, specificity and source order.</p></article><article><b>04</b><p>Choose appropriate CSS units for different design situations.</p></article><article><b>05</b><p>Build readable typography systems with CSS.</p></article><article><b>06</b><p>Understand the complete CSS box model.</p></article><article><b>07</b><p>Use padding, border, margin, width and height correctly.</p></article><article><b>08</b><p>Understand why box-sizing: border-box is important.</p></article><article><b>09</b><p>Control element rendering with display and overflow.</p></article><article><b>10</b><p>Debug CSS using browser DevTools and computed styles.</p></article><article><b>11</b><p>Understand how CSS decisions affect later responsive and React development.</p></article><article><b>12</b><p>Build a clean CSS component without relying on accidental styling.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>1. Why CSS Exists</h2></div></div><ul class="content-points"><li>HTML answers: What is this?</li><li>CSS answers: How should this look?</li><li>JavaScript answers: What should this do?</li><li>CSS can control color, spacing, typography, layout, borders and visual states.</li><li>Good CSS should be predictable, maintainable and reusable.</li></ul><div class="explanation-list"><p>HTML gives a page structure and meaning. CSS controls how that structure looks and behaves visually. A professional web application separates content from presentation so that the same HTML can be presented in different ways.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;h1&gt;Student Dashboard&lt;/h1&gt;
+&lt;p class=&quot;message&quot;&gt;Welcome back!&lt;/p&gt;
+
+/* CSS */
+
+h1 {
+    color: #2563eb;
+}
+
+.message {
+    color: #475569;
+    font-size: 1rem;
+}">Copy</button></header><pre><code>&lt;h1&gt;Student Dashboard&lt;/h1&gt;
+&lt;p class=&quot;message&quot;&gt;Welcome back!&lt;/p&gt;
+
+/* CSS */
+
+h1 {
+    color: #2563eb;
+}
+
+.message {
+    color: #475569;
+    font-size: 1rem;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Keeping HTML structure and CSS presentation separate becomes especially important when building React and large MERN applications.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>2. CSS Syntax</h2></div></div><ul class="content-points"><li>Selector chooses the element.</li><li>Property identifies what you want to change.</li><li>Value specifies how it should be changed.</li><li>Declarations are normally separated by semicolons.</li><li>The declaration block is surrounded by curly braces.</li></ul><div class="explanation-list"><p>A CSS rule contains a selector followed by one or more declarations. Each declaration has a property and a value.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>Here p is the selector. color, font-size and line-height are properties. Their assigned values determine the final appearance.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="p {
+    color: blue;
+    font-size: 18px;
+    line-height: 1.6;
+}">Copy</button></header><pre><code>p {
+    color: blue;
+    font-size: 18px;
+    line-height: 1.6;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>3. Element, Class and ID Selectors</h2></div></div><ul class="content-points"><li>Element selector: targets all matching elements.</li><li>Class selector: begins with a dot.</li><li>ID selector: begins with #.</li><li>Classes are generally preferred for reusable styling.</li><li>IDs are more specific and should not normally be used as the main styling mechanism.</li></ul><div class="explanation-list"><p>Selectors determine which HTML elements receive a CSS rule. Classes are the most reusable selector for application styling.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="/* Element selector */
+p {
+    line-height: 1.6;
+}
+
+/* Class selector */
+.card {
+    padding: 20px;
+}
+
+/* ID selector */
+#main-title {
+    font-size: 32px;
+}">Copy</button></header><pre><code>/* Element selector */
+p {
+    line-height: 1.6;
+}
+
+/* Class selector */
+.card {
+    padding: 20px;
+}
+
+/* ID selector */
+#main-title {
+    font-size: 32px;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>In component-based systems such as React, reusable classes or component-scoped styling are usually easier to maintain than styling large sections through IDs.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>4. Attribute Selectors</h2></div></div><ul class="content-points"><li>input[type=&quot;email&quot;] targets email inputs.</li><li>[disabled] targets elements containing the disabled attribute.</li><li>[required] targets required controls.</li><li>[data-state=&quot;open&quot;] targets a specific custom data value.</li></ul><div class="explanation-list"><p>Attribute selectors allow CSS to target elements according to their HTML attributes. They are particularly useful for forms and semantic interfaces.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>Attribute selectors are useful when styling different kinds of form controls without adding a separate class to every element.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="input[type=&quot;email&quot;] {
+    border-color: #2563eb;
+}
+
+input[required] {
+    background: #f8fafc;
+}
+
+button[disabled] {
+    opacity: 0.5;
+}">Copy</button></header><pre><code>input[type=&quot;email&quot;] {
+    border-color: #2563eb;
+}
+
+input[required] {
+    background: #f8fafc;
+}
+
+button[disabled] {
+    opacity: 0.5;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>5. Combinators and Relationships</h2></div></div><ul class="content-points"><li>Descendant: .card p</li><li>Child: .card &gt; p</li><li>Adjacent sibling: h2 + p</li><li>General sibling: h2 ~ p</li></ul><div class="explanation-list"><p>CSS can select elements based on their relationship with other elements.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".card p {
+    color: #475569;
+}
+
+.card &gt; p {
+    margin-top: 10px;
+}
+
+h2 + p {
+    margin-top: 4px;
+}
+
+h2 ~ p {
+    color: #64748b;
+}">Copy</button></header><pre><code>.card p {
+    color: #475569;
+}
+
+.card &gt; p {
+    margin-top: 10px;
+}
+
+h2 + p {
+    margin-top: 4px;
+}
+
+h2 ~ p {
+    color: #64748b;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Prefer selectors that describe meaningful structure without becoming unnecessarily deep or fragile.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>6. The Cascade</h2></div></div><ul class="content-points"><li>CSS rules can come from different stylesheets.</li><li>Multiple selectors can match the same element.</li><li>Later rules can override earlier rules when their priority is otherwise equal.</li><li>Specificity influences which selector wins.</li><li>Importance and origin can also affect the final result.</li></ul><div class="explanation-list"><p>The word CSS contains the idea of cascading. Multiple rules can target the same element, so the browser needs a system for deciding which declaration wins.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="p {
+    color: black;
+}
+
+p {
+    color: blue;
+}
+
+/* Final color: blue */">Copy</button></header><pre><code>p {
+    color: black;
+}
+
+p {
+    color: blue;
+}
+
+/* Final color: blue */</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>The cascade is not random. The browser evaluates competing declarations according to defined priority rules.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>7. Specificity</h2></div></div><ul class="content-points"><li>Inline styles have very high priority.</li><li>ID selectors are more specific than classes.</li><li>Classes, attributes and pseudo-classes are more specific than elements.</li><li>Element selectors have lower specificity.</li><li>If specificity is equal, later source order can decide the winner.</li></ul><div class="explanation-list"><p>Specificity is the selector priority used when competing CSS declarations target the same property.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>If the same paragraph has class=&quot;notice&quot; and id=&quot;warning&quot;, the ID rule wins over the class and element rules.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="p {
+    color: black;
+}
+
+.notice {
+    color: blue;
+}
+
+#warning {
+    color: red;
+}">Copy</button></header><pre><code>p {
+    color: black;
+}
+
+.notice {
+    color: blue;
+}
+
+#warning {
+    color: red;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>8. Specificity Is Not a Competition to Win</h2></div></div><ul class="content-points"><li>Avoid unnecessary IDs for styling.</li><li>Avoid extremely deep selectors.</li><li>Avoid using !important as a normal solution.</li><li>Use component classes with clear responsibilities.</li><li>Fix the underlying cascade problem instead of fighting it.</li></ul><div class="explanation-list"><p>A common beginner mistake is continuously increasing selector specificity until the stylesheet becomes difficult to control. Professional CSS aims for simple, predictable selectors.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="/* Fragile */
+main section div.card article p span {
+    color: red;
+}
+
+/* Better */
+.card-title {
+    color: red;
+}">Copy</button></header><pre><code>/* Fragile */
+main section div.card article p span {
+    color: red;
+}
+
+/* Better */
+.card-title {
+    color: red;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Low-specificity CSS is easier to override and maintain.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>9. Inheritance</h2></div></div><ul class="content-points"><li>color commonly inherits.</li><li>font-family commonly inherits.</li><li>font-size can inherit through relative sizing.</li><li>margin and padding do not normally inherit.</li><li>Inheritance can reduce repeated declarations.</li></ul><div class="explanation-list"><p>Some CSS properties naturally inherit from a parent element to its descendants.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="body {
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+}
+
+article {
+    /* Text inside inherits these values */
+}">Copy</button></header><pre><code>body {
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+}
+
+article {
+    /* Text inside inherits these values */
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Inheritance is one reason global typography rules can be powerful, but global rules should still be chosen carefully.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>10. Source Order</h2></div></div><ul class="content-points"><li>Earlier rule → overridden.</li><li>Later rule → wins when priority and specificity are otherwise equal.</li><li>Source order is part of the cascade.</li><li>Do not depend on source order when a clearer selector structure would be better.</li></ul><div class="explanation-list"><p>When competing declarations have the same relevant priority and specificity, the declaration appearing later can win.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".button {
+    background: gray;
+}
+
+.button {
+    background: blue;
+}
+
+/* Final background: blue */">Copy</button></header><pre><code>.button {
+    background: gray;
+}
+
+.button {
+    background: blue;
+}
+
+/* Final background: blue */</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>11. Inline, Internal and External CSS</h2></div></div><ul class="content-points"><li>Inline CSS is attached directly to an element.</li><li>Internal CSS lives inside a style element.</li><li>External CSS lives in a separate .css file.</li><li>External CSS is generally preferred for maintainable websites.</li></ul><div class="explanation-list"><p>CSS can be written directly on an element, inside a style element, or in a separate stylesheet.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="&lt;!-- Inline --&gt;
+&lt;p style=&quot;color: blue;&quot;&gt;Hello&lt;/p&gt;
+
+&lt;!-- Internal --&gt;
+&lt;style&gt;
+    p {
+        color: blue;
+    }
+&lt;/style&gt;
+
+&lt;!-- External --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;">Copy</button></header><pre><code>&lt;!-- Inline --&gt;
+&lt;p style=&quot;color: blue;&quot;&gt;Hello&lt;/p&gt;
+
+&lt;!-- Internal --&gt;
+&lt;style&gt;
+    p {
+        color: blue;
+    }
+&lt;/style&gt;
+
+&lt;!-- External --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>CodeBhavya course pages use separate CSS files because separation makes large educational websites easier to maintain.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>12. CSS Units</h2></div></div><ul class="content-points"><li>px: fixed CSS pixel measurement.</li><li>%: relative to a containing value.</li><li>em: relative to the current element&#39;s font size.</li><li>rem: relative to the root element&#39;s font size.</li><li>vw: relative to viewport width.</li><li>vh: relative to viewport height.</li></ul><div class="explanation-list"><p>CSS supports several units. Choosing the right unit helps interfaces remain readable and adaptable.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".container {
+    width: 80%;
+    max-width: 1100px;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.hero {
+    min-height: 60vh;
+}">Copy</button></header><pre><code>.container {
+    width: 80%;
+    max-width: 1100px;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.hero {
+    min-height: 60vh;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>For scalable typography and spacing systems, rem is often easier to reason about than repeatedly hard-coding pixel values.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>13. Colors</h2></div></div><ul class="content-points"><li>Named colors are simple but limited.</li><li>Hexadecimal notation is common in design systems.</li><li>rgb() describes red, green and blue channels.</li><li>hsl() separates hue, saturation and lightness.</li><li>Alpha values can create transparency.</li></ul><div class="explanation-list"><p>CSS supports named colors, hexadecimal values, RGB, HSL and modern color functions.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>A design system normally defines a controlled palette instead of using unrelated colors throughout a project.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".primary {
+    color: #2563eb;
+}
+
+.soft {
+    background: rgb(241 245 249);
+}
+
+.badge {
+    background: hsl(220 90% 56%);
+}">Copy</button></header><pre><code>.primary {
+    color: #2563eb;
+}
+
+.soft {
+    background: rgb(241 245 249);
+}
+
+.badge {
+    background: hsl(220 90% 56%);
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>14. Typography Foundations</h2></div></div><ul class="content-points"><li>font-family chooses the typeface.</li><li>font-size controls text size.</li><li>font-weight controls visual thickness.</li><li>line-height controls vertical rhythm.</li><li>letter-spacing changes character spacing.</li><li>text-align controls horizontal alignment.</li></ul><div class="explanation-list"><p>Typography strongly influences readability and visual hierarchy.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="body {
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 2.25rem;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+p {
+    max-width: 70ch;
+}">Copy</button></header><pre><code>body {
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 2.25rem;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+p {
+    max-width: 70ch;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Readable typography is not only about making text large. Line length, line height, hierarchy and contrast all matter.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>15. The CSS Box Model</h2></div></div><ul class="content-points"><li>Content is the actual text, image or child content.</li><li>Padding creates space inside the border.</li><li>Border surrounds padding and content.</li><li>Margin creates space outside the border.</li></ul><div class="explanation-list"><p>Every normal HTML element can be understood as a rectangular box made from content, padding, border and margin.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".card {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #cbd5e1;
+    margin: 24px;
+}">Copy</button></header><pre><code>.card {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #cbd5e1;
+    margin: 24px;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Understanding the box model is one of the most important foundations for debugging CSS layout.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>16. Width, Height, Padding, Border and Margin</h2></div></div><ul class="content-points"><li>width → content width under the default box model.</li><li>height → content height under the default box model.</li><li>padding → internal spacing.</li><li>border → visible boundary.</li><li>margin → external spacing.</li></ul><div class="explanation-list"><p>These properties control different parts of an element&#39;s box. Confusing them is a major source of layout bugs.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><p>If you want text farther away from the card edge, use padding. If you want two cards farther apart, use margin or a layout gap.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".profile {
+    width: 320px;
+    height: 180px;
+
+    padding: 20px;
+    border: 2px solid #334155;
+    margin: 16px;
+}">Copy</button></header><pre><code>.profile {
+    width: 320px;
+    height: 180px;
+
+    padding: 20px;
+    border: 2px solid #334155;
+    margin: 16px;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>17. box-sizing: border-box</h2></div></div><ul class="content-points"><li>content-box: width applies to content only.</li><li>border-box: width includes content, padding and border.</li><li>border-box makes component sizing easier to predict.</li><li>Many modern CSS projects use a global border-box reset.</li></ul><div class="explanation-list"><p>The default content-box model can make width calculations surprising because padding and border are added outside the declared width. border-box makes the declared width include padding and border.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #334155;
+}">Copy</button></header><pre><code>*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #334155;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>18. Display and Overflow</h2></div></div><ul class="content-points"><li>block normally occupies its own line.</li><li>inline participates in text flow.</li><li>inline-block combines useful characteristics of both.</li><li>none removes the element from layout.</li><li>overflow: hidden clips overflowing content.</li><li>overflow: auto allows scrolling when needed.</li></ul><div class="explanation-list"><p>The display property controls how an element participates in layout. Overflow controls what happens when content exceeds its box.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy=".panel {
+    display: block;
+    overflow: auto;
+    max-height: 300px;
+}
+
+.hidden {
+    display: none;
+}">Copy</button></header><pre><code>.panel {
+    display: block;
+    overflow: auto;
+    max-height: 300px;
+}
+
+.hidden {
+    display: none;
+}</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Flexbox and Grid will become the main layout systems in the next level, but understanding display is essential before learning them.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>19. Debugging CSS with DevTools</h2></div></div><ul class="content-points"><li>Inspect the element.</li><li>Check matched CSS rules.</li><li>Look for crossed-out declarations.</li><li>Inspect computed values.</li><li>Check the box model diagram.</li><li>Temporarily toggle declarations.</li><li>Test dimensions and overflow.</li><li>Use the browser&#39;s responsive viewport tools.</li></ul><div class="explanation-list"><p>Professional CSS development involves debugging, not guessing. Browser DevTools shows which rules matched, which rules lost and what the final computed values are.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="/* If this rule appears crossed out:
+
+.card {
+    width: 300px;
+}
+
+check whether another rule has:
+.card {
+    width: 100%;
+}
+
+or a more specific selector is winning. */">Copy</button></header><pre><code>/* If this rule appears crossed out:
+
+.card {
+    width: 300px;
+}
+
+check whether another rule has:
+.card {
+    width: 100%;
+}
+
+or a more specific selector is winning. */</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A crossed-out CSS declaration is often the browser telling you that another declaration won the cascade.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>20. From CSS Foundations to Full Stack</h2></div></div><ul class="content-points"><li>HTML provides semantic structure.</li><li>CSS controls presentation and layout.</li><li>JavaScript controls browser behaviour.</li><li>React organizes UI into components.</li><li>Node.js and Express provide backend services.</li><li>MongoDB stores application data.</li><li>The frontend and backend meet through APIs.</li></ul><div class="explanation-list"><p>CSS foundations are not isolated frontend knowledge. They become the visual layer of every application you build later.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="HTML
+  ↓
+CSS
+  ↓
+JavaScript
+  ↓
+React
+  ↓
+HTTP / API
+  ↓
+Node.js + Express
+  ↓
+MongoDB">Copy</button></header><pre><code>HTML
+  ↓
+CSS
+  ↓
+JavaScript
+  ↓
+React
+  ↓
+HTTP / API
+  ↓
+Node.js + Express
+  ↓
+MongoDB</code></pre></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A strong Full Stack developer should understand how each layer contributes to the complete application.</p></div></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>CSS</strong><p>Cascading Style Sheets controls the visual presentation of HTML, including colors, typography, spacing, borders and layout.</p></div></article><article><b>02</b><div><strong>Selector</strong><p>A selector identifies the HTML elements that a CSS rule should target.</p></div></article><article><b>03</b><div><strong>Class Selector</strong><p>A reusable selector beginning with a dot, such as .card.</p></div></article><article><b>04</b><div><strong>Cascade</strong><p>The browser&#39;s system for resolving competing CSS declarations.</p></div></article><article><b>05</b><div><strong>Specificity</strong><p>The relative priority of selectors when multiple rules compete for the same property.</p></div></article><article><b>06</b><div><strong>Inheritance</strong><p>The mechanism through which certain CSS properties pass from a parent element to its descendants.</p></div></article><article><b>07</b><div><strong>Source Order</strong><p>When competing declarations have otherwise equal priority and specificity, the later declaration can win.</p></div></article><article><b>08</b><div><strong>rem</strong><p>A relative CSS unit based on the root element&#39;s font size.</p></div></article><article><b>09</b><div><strong>Box Model</strong><p>Every normal element can be understood as content surrounded by padding, border and margin.</p></div></article><article><b>10</b><div><strong>Padding</strong><p>Space between an element&#39;s content and its border.</p></div></article><article><b>11</b><div><strong>Margin</strong><p>Space outside an element&#39;s border.</p></div></article><article><b>12</b><div><strong>box-sizing: border-box</strong><p>Makes the declared width and height include the element&#39;s padding and border.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>Explain the CSS cascade.</summary><div class="interview-answer"><p>The cascade resolves competing declarations by considering origin, importance, specificity and source order. The winning declaration becomes the computed style for that property.</p></div></details><details class="interview-item"><summary><span>02</span>What is CSS specificity?</summary><div class="interview-answer"><p>Specificity is the priority of a selector in the cascade. IDs are more specific than classes, while classes are more specific than element selectors.</p></div></details><details class="interview-item"><summary><span>03</span>Why should excessive specificity be avoided?</summary><div class="interview-answer"><p>Highly specific selectors are difficult to override and maintain. Simple, predictable selectors make large stylesheets easier to manage.</p></div></details><details class="interview-item"><summary><span>04</span>Explain the difference between padding and margin.</summary><div class="interview-answer"><p>Padding creates internal space between content and border. Margin creates external space outside the border.</p></div></details><details class="interview-item"><summary><span>05</span>Explain content-box versus border-box.</summary><div class="interview-answer"><p>With content-box, declared width normally applies to the content area. With border-box, the declared width includes content, padding and border.</p></div></details><details class="interview-item"><summary><span>06</span>What is CSS inheritance?</summary><div class="interview-answer"><p>Inheritance allows selected properties, such as color and font-family, to flow from parent elements to descendants unless overridden.</p></div></details><details class="interview-item"><summary><span>07</span>What is the difference between em and rem?</summary><div class="interview-answer"><p>em is relative to the relevant element&#39;s font size, while rem is relative to the root element&#39;s font size.</p></div></details><details class="interview-item"><summary><span>08</span>When would you use an attribute selector?</summary><div class="interview-answer"><p>Attribute selectors are useful when styling elements according to meaningful HTML attributes, such as input types or required controls.</p></div></details><details class="interview-item"><summary><span>09</span>Why is !important usually discouraged?</summary><div class="interview-answer"><p>It bypasses normal cascade reasoning and can create specificity conflicts that become difficult to maintain.</p></div></details><details class="interview-item"><summary><span>10</span>How do you find why a CSS rule is not working?</summary><div class="interview-answer"><p>Inspect the element in DevTools, check whether the rule matched, look for crossed-out declarations, inspect specificity and source order, and examine computed styles.</p></div></details><details class="interview-item"><summary><span>11</span>What is the box model?</summary><div class="interview-answer"><p>It describes an element as content surrounded by padding, border and margin.</p></div></details><details class="interview-item"><summary><span>12</span>Why is CSS knowledge important for React developers?</summary><div class="interview-answer"><p>React organizes UI structure and behaviour, but CSS still determines the visual presentation, spacing, responsive behaviour and usability of the interface.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Easy</b></header><h3>Practice 01 — Selector Laboratory</h3><p>Create a page containing headings, paragraphs, cards and buttons. Style them using element, class, ID and attribute selectors. Identify which selector wins when multiple rules target the same element.</p><details><summary>Need a hint?</summary><ul><li>Start with an element selector such as p or h2.</li><li>Create a reusable class such as .card and apply it to multiple elements.</li><li>Add an ID and compare its specificity with the class selector.</li><li>Use input[type=&quot;email&quot;] to practice attribute selection.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Easy</b></header><h3>Practice 02 — Cascade Challenge</h3><p>Create three competing rules for the same button. Change selector specificity and source order and predict which background color the browser will display before testing it.</p><details><summary>Need a hint?</summary><ul><li>Start with button { } and then create a class selector.</li><li>Add an ID selector and compare the three rules.</li><li>After that, create two selectors with equal specificity.</li><li>Move the later rule below the earlier rule and observe what changes.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Easy</b></header><h3>Practice 03 — Typography Card</h3><p>Build a course card with a heading, description, metadata and button. Create a consistent typography hierarchy using font-family, font-size, font-weight and line-height.</p><details><summary>Need a hint?</summary><ul><li>Give the entire card a readable font-family first.</li><li>Make the course title larger and heavier than the description.</li><li>Use line-height to improve paragraph readability.</li><li>Keep the typography hierarchy consistent rather than styling every element differently.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Medium</b></header><h3>Practice 04 — Box Model Calculator</h3><p>Create an element with width, padding and border. Calculate its final rendered width using content-box and then repeat using border-box. Verify both results in DevTools.</p><details><summary>Need a hint?</summary><ul><li>With content-box, start with the declared content width.</li><li>Add left and right padding to the content width.</li><li>Then add the left and right border widths.</li><li>With border-box, the declared width already contains padding and border.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Medium</b></header><h3>Practice 05 — Spacing System</h3><p>Build three cards using a consistent spacing scale. Use padding inside cards and margin or gap between cards. Explain why each type of spacing was selected.</p><details><summary>Need a hint?</summary><ul><li>Use padding when the space should appear between the card content and its border.</li><li>Use margin or gap when the space should separate different cards.</li><li>Choose a small set of spacing values instead of unrelated numbers everywhere.</li><li>Inspect the result using the DevTools box model panel.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Medium</b></header><h3>Practice 06 — Overflow Debugger</h3><p>Create a fixed-height content panel containing more text than the panel can display. Experiment with visible, hidden, scroll and auto overflow.</p><details><summary>Need a hint?</summary><ul><li>Give the panel a fixed or maximum height.</li><li>Add enough content to exceed that height.</li><li>Test overflow: hidden and observe what disappears.</li><li>Then try overflow: auto and overflow: scroll.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Medium</b></header><h3>Practice 07 — Form Styling</h3><p>Style a registration form using attribute selectors for email, password and required inputs. Provide clear focus and disabled states.</p><details><summary>Need a hint?</summary><ul><li>Use input[type=&quot;email&quot;] and input[type=&quot;password&quot;] for different controls.</li><li>Use input[required] to identify required fields.</li><li>Use :focus to create a visible keyboard-focus style.</li><li>Use :disabled to style disabled controls.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Medium</b></header><h3>Practice 08 — DevTools Investigation</h3><p>Create an intentionally broken card layout. Use DevTools to identify the overridden rule, inspect computed styles and correct the issue without using !important.</p><details><summary>Need a hint?</summary><ul><li>Open DevTools and inspect the affected element.</li><li>Look for CSS declarations that appear crossed out.</li><li>Check whether another selector has greater specificity.</li><li>If specificity is equal, inspect the source order.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Medium</b></header><h3>Practice 09 — Course Component</h3><p>Build a reusable course card containing title, level, description and action button. Keep the selectors simple enough to reuse the component multiple times.</p><details><summary>Need a hint?</summary><ul><li>Create one reusable class such as .course-card.</li><li>Use child classes such as .course-title and .course-action.</li><li>Avoid using an ID for the reusable card.</li><li>Create multiple cards and confirm that the same CSS works for all of them.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Hard</b></header><h3>Practice 10 — CSS Cleanup</h3><p>Take a stylesheet containing deeply nested selectors and repeated declarations. Refactor it into simple reusable classes while keeping the same visual output.</p><details><summary>Need a hint?</summary><ul><li>Identify selectors that are unnecessarily long.</li><li>Extract repeated visual responsibilities into reusable classes.</li><li>Reduce dependence on IDs and deeply nested selectors.</li><li>Do not solve the problem by adding !important.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Hard</b></header><h3>Practice 11 — CSS Inspection Challenge</h3><p>Create an element whose width is unexpectedly larger than expected. Use DevTools to determine whether padding, border, box-sizing or another rule caused the issue.</p><details><summary>Need a hint?</summary><ul><li>Inspect the element and open the box model diagram.</li><li>Check the declared width first.</li><li>Look separately at padding and border values.</li><li>Compare content-box and border-box behavior.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span><b>Hard</b></header><h3>Practice 12 — Foundation Component</h3><p>Create a polished CodeBhavya-style learning card using only the CSS concepts learned in this level. Document the selector, typography, spacing and box-model decisions.</p><details><summary>Need a hint?</summary><ul><li>Start with semantic HTML and one reusable card class.</li><li>Build typography before adding decorative details.</li><li>Use padding for internal spacing and gap or margin for external separation.</li><li>Inspect the final component in DevTools and explain why each major CSS rule exists.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>Which symbol starts a CSS class selector?</h3><div class="quiz-options"><button type="button" data-option="0">A. .</button><button type="button" data-option="1">B. #</button><button type="button" data-option="2">C. @</button><button type="button" data-option="3">D. :</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which selector has higher specificity?</h3><div class="quiz-options"><button type="button" data-option="0">A. p</button><button type="button" data-option="1">B. .card</button><button type="button" data-option="2">C. #main</button><button type="button" data-option="3">D. *</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which property creates space inside the border?</h3><div class="quiz-options"><button type="button" data-option="0">A. margin</button><button type="button" data-option="1">B. padding</button><button type="button" data-option="2">C. gap</button><button type="button" data-option="3">D. outline</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which property creates space outside the border?</h3><div class="quiz-options"><button type="button" data-option="0">A. padding</button><button type="button" data-option="1">B. margin</button><button type="button" data-option="2">C. border-spacing</button><button type="button" data-option="3">D. line-height</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What does rem depend on?</h3><div class="quiz-options"><button type="button" data-option="0">A. The viewport width</button><button type="button" data-option="1">B. The parent width</button><button type="button" data-option="2">C. The root element&#39;s font size</button><button type="button" data-option="3">D. The border size</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which declaration makes width calculations easier to predict?</h3><div class="quiz-options"><button type="button" data-option="0">A. display: block</button><button type="button" data-option="1">B. overflow: hidden</button><button type="button" data-option="2">C. box-sizing: border-box</button><button type="button" data-option="3">D. position: relative</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which CSS rule usually wins when specificity is equal?</h3><div class="quiz-options"><button type="button" data-option="0">A. The first rule</button><button type="button" data-option="1">B. The later rule</button><button type="button" data-option="2">C. The shorter rule</button><button type="button" data-option="3">D. The rule with more spaces</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>Which property normally inherits?</h3><div class="quiz-options"><button type="button" data-option="0">A. margin</button><button type="button" data-option="1">B. padding</button><button type="button" data-option="2">C. color</button><button type="button" data-option="3">D. border</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Which selector targets an email input?</h3><div class="quiz-options"><button type="button" data-option="0">A. input.email</button><button type="button" data-option="1">B. input[type=&quot;email&quot;]</button><button type="button" data-option="2">C. email.input</button><button type="button" data-option="3">D. #input-email</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Which DevTools feature shows the final calculated CSS values?</h3><div class="quiz-options"><button type="button" data-option="0">A. Computed styles</button><button type="button" data-option="1">B. Bookmarks</button><button type="button" data-option="2">C. Console history</button><button type="button" data-option="3">D. Page source only</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Which box-model layer surrounds the content?</h3><div class="quiz-options"><button type="button" data-option="0">A. Margin</button><button type="button" data-option="1">B. Padding</button><button type="button" data-option="2">C. Viewport</button><button type="button" data-option="3">D. Grid</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Which declaration hides an element from layout?</h3><div class="quiz-options"><button type="button" data-option="0">A. visibility: visible</button><button type="button" data-option="1">B. display: none</button><button type="button" data-option="2">C. overflow: auto</button><button type="button" data-option="3">D. opacity: 1</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>Which unit is relative to viewport width?</h3><div class="quiz-options"><button type="button" data-option="0">A. rem</button><button type="button" data-option="1">B. em</button><button type="button" data-option="2">C. vw</button><button type="button" data-option="3">D. px</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>What should normally be preferred over increasing specificity repeatedly?</h3><div class="quiz-options"><button type="button" data-option="0">A. More !important</button><button type="button" data-option="1">B. Clearer selector structure</button><button type="button" data-option="2">C. More IDs</button><button type="button" data-option="3">D. Inline styles everywhere</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>Which four parts form the basic box model?</h3><div class="quiz-options"><button type="button" data-option="0">A. Content, padding, border, margin</button><button type="button" data-option="1">B. Width, height, grid, flex</button><button type="button" data-option="2">C. Header, body, footer, nav</button><button type="button" data-option="3">D. Color, font, shadow, radius</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>CSS</strong><p></p></article><article><strong>Selector</strong><p></p></article><article><strong>Declaration</strong><p></p></article><article><strong>Cascade</strong><p></p></article><article><strong>Specificity</strong><p></p></article><article><strong>Inheritance</strong><p></p></article><article><strong>Source Order</strong><p></p></article><article><strong>Box Model</strong><p></p></article><article><strong>Padding</strong><p></p></article><article><strong>Margin</strong><p></p></article><article><strong>Border</strong><p></p></article><article><strong>rem</strong><p></p></article><article><strong>Viewport</strong><p></p></article><article><strong>Computed Style</strong><p></p></article><article><strong>Specificity Conflict</strong><p></p></article></div></section><nav class="lesson-nav"><a href="lesson.html?level=3">← Previous level</a><a href="lesson.html?level=5">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

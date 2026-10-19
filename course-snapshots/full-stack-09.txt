@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 9: Control Flow &amp; Functions | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=9"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=9">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class="active " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">09</div><div><p class="eyebrow">JAVASCRIPT ENGINEERING</p><h1>Control Flow &amp; Functions</h1><p>Learn how JavaScript makes decisions, repeats work and organises logic into reusable functions. Build a clear mental model of conditions, loops, branching, function calls, parameters, return values and modern arrow functions before moving deeper into JavaScript engineering.</p><div class="lesson-meta"><span>⏱ Estimated learning time: 3–4 hours</span><span>◈ Beginner → Intermediate</span><span>▣ 19 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Explain how JavaScript executes statements from top to bottom unless control flow changes the order.</p></article><article><b>02</b><p>Use if, if...else and else if for decision making.</p></article><article><b>03</b><p>Choose between if statements, switch and the ternary operator appropriately.</p></article><article><b>04</b><p>Understand truthy and falsy values without memorising isolated rules.</p></article><article><b>05</b><p>Use &amp;&amp;, || and ! to combine conditions and understand short-circuit evaluation.</p></article><article><b>06</b><p>Write while, do...while and for loops correctly.</p></article><article><b>07</b><p>Use break and continue deliberately inside loops.</p></article><article><b>08</b><p>Understand nested loops and their execution cost.</p></article><article><b>09</b><p>Define reusable JavaScript functions.</p></article><article><b>10</b><p>Distinguish parameters from arguments.</p></article><article><b>11</b><p>Return values from functions and use those values in later expressions.</p></article><article><b>12</b><p>Understand function declarations, function expressions and arrow functions.</p></article><article><b>13</b><p>Choose an appropriate control structure for a real programming problem.</p></article><article><b>14</b><p>Trace JavaScript execution step by step.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Control Flow — How JavaScript Decides What Happens Next</h2></div></div><p class="concept-intro">A JavaScript program is not always a simple list of statements executed without interruption. Control-flow statements allow the program to choose paths, repeat operations or transfer execution into functions.</p><ul class="content-points"><li>Normal execution moves from one statement to the next.</li><li>A condition can choose whether a block executes.</li><li>A loop can execute a block multiple times.</li><li>A function call temporarily transfers control to reusable logic.</li><li>return transfers control back to the caller with a value when one is provided.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Control flow determines not only what JavaScript does, but also the order in which the program does it.</p></div></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Statement</strong><span>JavaScript reaches the next executable statement.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Decision</strong><span>A condition may select one path.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Loop</strong><span>A block may execute repeatedly.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Function</strong><span>Execution can enter reusable logic.</span></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Return</strong><span>Control comes back to the caller.</span></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>if — The Basic Decision</h2></div></div><p class="concept-intro">Use an if statement when a block of code should execute only when a condition is true.</p><ul class="content-points"><li>The expression inside parentheses is evaluated.</li><li>If the result is truthy, the block executes.</li><li>If the result is falsy, JavaScript skips the block.</li><li>Braces are strongly recommended even when the block contains one statement.</li></ul><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Confusing assignment with comparison. Use = to assign a value and comparison operators such as === when testing equality.</p></div></div><div class="real-example"><strong>🌍 Placement Eligibility</strong><p>A placement portal can check whether a student&#39;s CGPA reaches a minimum requirement before displaying an eligible status.</p><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="const cgpa = 7.8;
+
+if (cgpa &gt;= 7.0) {
+    console.log(&quot;Eligible&quot;);
+}">Copy</button></header><pre><code>const cgpa = 7.8;
+
+if (cgpa &gt;= 7.0) {
+    console.log(&quot;Eligible&quot;);
+}</code></pre></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const score = 82;
+
+if (score &gt;= 60) {
+    console.log(&quot;Pass&quot;);
+}">Copy</button></header><pre><code>const score = 82;
+
+if (score &gt;= 60) {
+    console.log(&quot;Pass&quot;);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Pass</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>if...else — Choose Between Two Paths</h2></div></div><p class="concept-intro">if...else is useful when exactly one of two main paths should execute.</p><ul class="content-points"><li>JavaScript evaluates the condition first.</li><li>A truthy condition selects the if block.</li><li>A falsy condition selects the else block.</li><li>Only one of the two branches executes for that evaluation.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>if...else expresses a two-way decision clearly.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = 54;
+
+if (marks &gt;= 40) {
+    console.log(&quot;Pass&quot;);
+} else {
+    console.log(&quot;Fail&quot;);
+}">Copy</button></header><pre><code>const marks = 54;
+
+if (marks &gt;= 40) {
+    console.log(&quot;Pass&quot;);
+} else {
+    console.log(&quot;Fail&quot;);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Pass</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>else if — Multiple Conditions</h2></div></div><p class="concept-intro">Use an else-if chain when several mutually exclusive conditions need to be tested in order.</p><ul class="content-points"><li>Conditions are checked from top to bottom.</li><li>The first truthy condition selects its block.</li><li>Remaining branches are skipped after a matching branch is selected.</li><li>Order matters when conditions overlap.</li></ul><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Always consider the order of overlapping conditions. Testing score &gt;= 60 before score &gt;= 75 would make the 75+ branch unreachable for those values.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const score = 76;
+
+if (score &gt;= 90) {
+    console.log(&quot;A&quot;);
+} else if (score &gt;= 75) {
+    console.log(&quot;B&quot;);
+} else if (score &gt;= 60) {
+    console.log(&quot;C&quot;);
+} else {
+    console.log(&quot;D&quot;);
+}">Copy</button></header><pre><code>const score = 76;
+
+if (score &gt;= 90) {
+    console.log(&quot;A&quot;);
+} else if (score &gt;= 75) {
+    console.log(&quot;B&quot;);
+} else if (score &gt;= 60) {
+    console.log(&quot;C&quot;);
+} else {
+    console.log(&quot;D&quot;);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>B</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Ternary Operator — A Compact Decision</h2></div></div><p class="concept-intro">The ternary operator is an expression that chooses between two values.</p><ul class="content-points"><li>The condition comes first.</li><li>The expression after ? is selected when the condition is truthy.</li><li>The expression after : is selected when the condition is falsy.</li><li>Ternary is useful for short value-selection logic.</li><li>Large nested ternaries reduce readability and should normally be avoided.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const age = 20;
+
+const status =
+    age &gt;= 18
+        ? &quot;Adult&quot;
+        : &quot;Minor&quot;;
+
+console.log(status);">Copy</button></header><pre><code>const age = 20;
+
+const status =
+    age &gt;= 18
+        ? &quot;Adult&quot;
+        : &quot;Minor&quot;;
+
+console.log(status);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Adult</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>switch — Fixed Cases</h2></div></div><p class="concept-intro">switch is useful when one expression needs to be compared against several discrete case values.</p><ul class="content-points"><li>The switch expression is evaluated.</li><li>JavaScript searches for a matching case.</li><li>break prevents execution from continuing into later cases.</li><li>default handles the situation where no case matches.</li></ul><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Forgetting break can cause fall-through into later cases. Fall-through can be intentional, but accidental fall-through is a common bug.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const role = &quot;student&quot;;
+
+switch (role) {
+    case &quot;student&quot;:
+        console.log(&quot;Learning dashboard&quot;);
+        break;
+
+    case &quot;faculty&quot;:
+        console.log(&quot;Faculty dashboard&quot;);
+        break;
+
+    default:
+        console.log(&quot;Guest dashboard&quot;);
+}">Copy</button></header><pre><code>const role = &quot;student&quot;;
+
+switch (role) {
+    case &quot;student&quot;:
+        console.log(&quot;Learning dashboard&quot;);
+        break;
+
+    case &quot;faculty&quot;:
+        console.log(&quot;Faculty dashboard&quot;);
+        break;
+
+    default:
+        console.log(&quot;Guest dashboard&quot;);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Learning dashboard</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Truthy and Falsy Values</h2></div></div><p class="concept-intro">JavaScript conditions do not require the condition itself to be literally true or false. Values are converted to a Boolean context.</p><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>An empty array [] and an empty object {} are truthy in JavaScript. They are not equivalent to false.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const name = &quot;&quot;;
+
+if (name) {
+    console.log(&quot;Name exists&quot;);
+} else {
+    console.log(&quot;Name is empty&quot;);
+}">Copy</button></header><pre><code>const name = &quot;&quot;;
+
+if (name) {
+    console.log(&quot;Name exists&quot;);
+} else {
+    console.log(&quot;Name is empty&quot;);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Name is empty</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Logical Operators and Short-Circuiting</h2></div></div><p class="concept-intro">Logical operators combine conditions, but they also control whether the right-hand expression needs to be evaluated.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Short-circuiting is both a control-flow mechanism and a common JavaScript programming pattern.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const username = &quot;&quot;;
+
+const displayName =
+    username || &quot;Guest&quot;;
+
+console.log(displayName);">Copy</button></header><pre><code>const username = &quot;&quot;;
+
+const displayName =
+    username || &quot;Guest&quot;;
+
+console.log(displayName);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Guest</pre></div><div class="method-grid"><article class="method-card"><b>&amp;&amp;</b><p>Evaluates the right side only when the left side is truthy.</p><code>isLoggedIn &amp;&amp; showDashboard()</code></article><article class="method-card"><b>||</b><p>Uses the right side when the left side is falsy.</p><code>name || &quot;Guest&quot;</code></article><article class="method-card"><b>!</b><p>Converts a value to Boolean and reverses its truth value.</p><code>!isLoggedIn</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>while — Repeat While a Condition Holds</h2></div></div><p class="concept-intro">A while loop checks its condition before every iteration.</p><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Forgetting to update the loop state can create an infinite loop.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="let count = 1;
+
+while (count &lt;= 3) {
+    console.log(count);
+    count++;
+}">Copy</button></header><pre><code>let count = 1;
+
+while (count &lt;= 3) {
+    console.log(count);
+    count++;
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>1
+2
+3</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Check condition</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Execute body</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Update state</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Check condition again</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Stop when condition becomes falsy</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>do...while — Execute at Least Once</h2></div></div><p class="concept-intro">A do...while loop executes its body first and checks the condition afterward.</p><ul class="content-points"><li>The body executes before the condition is tested.</li><li>Therefore the body executes at least once.</li><li>This is useful for menu-style interactions where one attempt must happen before deciding whether to repeat.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="let choice = &quot;menu&quot;;
+
+do {
+    console.log(&quot;Showing menu&quot;);
+} while (choice === &quot;again&quot;);">Copy</button></header><pre><code>let choice = &quot;menu&quot;;
+
+do {
+    console.log(&quot;Showing menu&quot;);
+} while (choice === &quot;again&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Showing menu</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>for — Controlled Repetition</h2></div></div><p class="concept-intro">The for loop is ideal when initialization, a continuation condition and an update can be expressed together.</p><ul class="content-points"><li>Initialization runs once.</li><li>The condition is checked before each iteration.</li><li>The body runs when the condition is truthy.</li><li>The update expression runs after the body.</li><li>The cycle continues until the condition becomes falsy.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="for (let i = 1; i &lt;= 5; i++) {
+    console.log(i);
+}">Copy</button></header><pre><code>for (let i = 1; i &lt;= 5; i++) {
+    console.log(i);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>1
+2
+3
+4
+5</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Initialize i</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Check i &lt;= 5</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Run loop body</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Increment i</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Repeat condition check</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>break and continue</h2></div></div><p class="concept-intro">break stops the current loop completely, while continue skips the remaining body of the current iteration and moves toward the next iteration.</p><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Using break when the requirement is only to skip one value.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="for (let i = 1; i &lt;= 6; i++) {
+
+    if (i === 3) {
+        continue;
+    }
+
+    if (i === 5) {
+        break;
+    }
+
+    console.log(i);
+}">Copy</button></header><pre><code>for (let i = 1; i &lt;= 6; i++) {
+
+    if (i === 3) {
+        continue;
+    }
+
+    if (i === 5) {
+        break;
+    }
+
+    console.log(i);
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>1
+2
+4</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Nested Loops</h2></div></div><p class="concept-intro">A nested loop is a loop inside another loop. The inner loop can run multiple times for every outer-loop iteration.</p><ul class="content-points"><li>The outer loop controls the larger repetition.</li><li>For each outer iteration, the inner loop starts again.</li><li>Nested loops are common for tables, grids and matrix-style problems.</li><li>Two loops over n values can lead to O(n²) work.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Nested loops are powerful, but their combined execution count should always be considered.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="for (let row = 1; row &lt;= 3; row++) {
+
+    for (let col = 1; col &lt;= 2; col++) {
+        console.log(row, col);
+    }
+}">Copy</button></header><pre><code>for (let row = 1; row &lt;= 3; row++) {
+
+    for (let col = 1; col &lt;= 2; col++) {
+        console.log(row, col);
+    }
+}</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>1 1
+1 2
+2 1
+2 2
+3 1
+3 2</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Function Declarations</h2></div></div><p class="concept-intro">A function groups reusable logic under a name.</p><ul class="content-points"><li>function introduces a function declaration.</li><li>a and b are parameters.</li><li>10 and 20 are arguments supplied during the call.</li><li>return sends a value back to the caller.</li><li>The returned value can be stored, compared or passed into another function.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A function turns a piece of logic into a reusable unit.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function add(a, b) {
+    return a + b;
+}
+
+const total = add(10, 20);
+
+console.log(total);">Copy</button></header><pre><code>function add(a, b) {
+    return a + b;
+}
+
+const total = add(10, 20);
+
+console.log(total);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>30</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Call add(10, 20)</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Create function execution context</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Assign a = 10 and b = 20</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Evaluate a + b</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Return 30</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Resume caller</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Parameters vs Arguments</h2></div></div><p class="concept-intro">Parameters are names written in the function definition. Arguments are the actual values supplied when the function is called.</p><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function greet(name) {
+    return &quot;Hello &quot; + name;
+}
+
+greet(&quot;Anita&quot;);">Copy</button></header><pre><code>function greet(name) {
+    return &quot;Hello &quot; + name;
+}
+
+greet(&quot;Anita&quot;);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Hello Anita</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>return — Sending a Result Back</h2></div></div><p class="concept-intro">return ends the current function execution and optionally sends a value to the caller.</p><ul class="content-points"><li>return immediately leaves the current function.</li><li>Statements after a return in the same execution path do not run.</li><li>A function without an explicit return value produces undefined.</li><li>Returning values makes functions easier to compose and test.</li></ul><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Using console.log when the caller actually needs a value. Printing and returning are different operations.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function calculateGrade(score) {
+
+    if (score &gt;= 75) {
+        return &quot;A&quot;;
+    }
+
+    if (score &gt;= 60) {
+        return &quot;B&quot;;
+    }
+
+    return &quot;C&quot;;
+}
+
+console.log(calculateGrade(82));">Copy</button></header><pre><code>function calculateGrade(score) {
+
+    if (score &gt;= 75) {
+        return &quot;A&quot;;
+    }
+
+    if (score &gt;= 60) {
+        return &quot;B&quot;;
+    }
+
+    return &quot;C&quot;;
+}
+
+console.log(calculateGrade(82));</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>A</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>Function Expressions</h2></div></div><p class="concept-intro">A function can be stored in a variable. This is called a function expression.</p><ul class="content-points"><li>The function is created as part of an expression.</li><li>The resulting function value is assigned to multiply.</li><li>The variable can then be used to call the function.</li><li>Functions are values in JavaScript and can be stored, passed and returned.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JavaScript treats functions as first-class values.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const multiply = function (a, b) {
+    return a * b;
+};
+
+console.log(multiply(4, 5));">Copy</button></header><pre><code>const multiply = function (a, b) {
+    return a * b;
+};
+
+console.log(multiply(4, 5));</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>20</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Arrow Functions</h2></div></div><p class="concept-intro">Arrow functions provide a concise function syntax and are widely used in modern JavaScript.</p><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Arrow functions are not simply shorter syntax in every situation. They also have different this behaviour, which becomes important in later JavaScript engineering levels.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const square = number =&gt; number * number;
+
+console.log(square(6));">Copy</button></header><pre><code>const square = number =&gt; number * number;
+
+console.log(square(6));</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>36</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>Choosing the Right Structure</h2></div></div><p class="concept-intro">Good JavaScript is not only about knowing syntax. It is about selecting the simplest structure that clearly expresses the required behaviour.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Readable control flow makes the program easier to debug, test, explain and maintain.</p></div></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Program Tracing — Control Flow &amp; Functions</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>function add(a, b) {</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>    return a + b;</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>}</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code></code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>let total = 0;</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>for (let i = 1; i &lt;= 5; i++) {</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>    if (i % 2 === 0) {</code></div><div data-trace-line="7"><span class="trace-line-number">08</span><code>        continue;</code></div><div data-trace-line="8"><span class="trace-line-number">09</span><code>    }</code></div><div data-trace-line="9"><span class="trace-line-number">10</span><code>    total = add(total, i);</code></div><div data-trace-line="10"><span class="trace-line-number">11</span><code>    console.log(total);</code></div><div data-trace-line="11"><span class="trace-line-number">12</span><code>}</code></div><div data-trace-line="12"><span class="trace-line-number">13</span><code></code></div><div data-trace-line="13"><span class="trace-line-number">14</span><code>console.log(&quot;Done&quot;);</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>if</strong><p>Executes a block when a condition is truthy.</p></div></article><article><b>02</b><div><strong>if...else</strong><p>Chooses between two alternative paths.</p></div></article><article><b>03</b><div><strong>else if</strong><p>Tests multiple ordered conditions.</p></div></article><article><b>04</b><div><strong>ternary</strong><p>Compact expression for choosing between two values.</p></div></article><article><b>05</b><div><strong>switch</strong><p>Useful for fixed discrete cases.</p></div></article><article><b>06</b><div><strong>truthy</strong><p>A value that behaves as true in a Boolean context.</p></div></article><article><b>07</b><div><strong>falsy</strong><p>A value that behaves as false in a Boolean context.</p></div></article><article><b>08</b><div><strong>while</strong><p>Repeats while a condition remains truthy.</p></div></article><article><b>09</b><div><strong>do...while</strong><p>Runs the body at least once before checking the condition.</p></div></article><article><b>10</b><div><strong>for</strong><p>Combines initialization, condition and update for controlled repetition.</p></div></article><article><b>11</b><div><strong>break</strong><p>Immediately exits the current loop or switch.</p></div></article><article><b>12</b><div><strong>continue</strong><p>Skips the remaining body of the current loop iteration.</p></div></article><article><b>13</b><div><strong>parameter</strong><p>A named variable in a function definition.</p></div></article><article><b>14</b><div><strong>argument</strong><p>An actual value supplied to a function call.</p></div></article><article><b>15</b><div><strong>return</strong><p>Ends function execution and optionally sends a value back.</p></div></article><article><b>16</b><div><strong>arrow function</strong><p>Concise function syntax introduced by modern JavaScript.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is control flow in JavaScript?</summary><div class="interview-answer"><p>Control flow is the order in which JavaScript executes statements. Conditions, loops, function calls, return statements and other constructs can change the normal top-to-bottom execution path.</p></div></details><details class="interview-item"><summary><span>02</span>What is the difference between if and if...else?</summary><div class="interview-answer"><p>if executes a block only when its condition is truthy. if...else provides an alternative block when the condition is falsy.</p></div></details><details class="interview-item"><summary><span>03</span>When should you use switch instead of else if?</summary><div class="interview-answer"><p>switch is often clearer when one expression is compared against several fixed discrete values. else if is generally more flexible for ranges and different Boolean conditions.</p></div></details><details class="interview-item"><summary><span>04</span>What is a truthy value?</summary><div class="interview-answer"><p>A truthy value is any JavaScript value that behaves as true when evaluated in a Boolean context. Objects and arrays are truthy even when they are empty.</p></div></details><details class="interview-item"><summary><span>05</span>What is short-circuit evaluation?</summary><div class="interview-answer"><p>Short-circuit evaluation means JavaScript may stop evaluating a logical expression as soon as its final result is known. For example, with A &amp;&amp; B, B is not evaluated when A is falsy.</p></div></details><details class="interview-item"><summary><span>06</span>What is the difference between while and do...while?</summary><div class="interview-answer"><p>while checks the condition before the first iteration. do...while executes the body first and checks the condition afterward, so it always executes at least once.</p></div></details><details class="interview-item"><summary><span>07</span>What is the difference between break and continue?</summary><div class="interview-answer"><p>break terminates the loop completely. continue skips the remaining statements of the current iteration and proceeds toward the next iteration.</p></div></details><details class="interview-item"><summary><span>08</span>What is a function parameter?</summary><div class="interview-answer"><p>A parameter is a named variable listed in a function definition. It receives a value when the function is called.</p></div></details><details class="interview-item"><summary><span>09</span>What is the difference between a parameter and an argument?</summary><div class="interview-answer"><p>A parameter is part of the function definition, while an argument is the actual value supplied during the function call.</p></div></details><details class="interview-item"><summary><span>10</span>Why is return different from console.log?</summary><div class="interview-answer"><p>console.log displays a value. return sends a value back to the caller and ends the current function execution.</p></div></details><details class="interview-item"><summary><span>11</span>What is a function expression?</summary><div class="interview-answer"><p>A function expression creates a function as part of an expression and can store that function in a variable.</p></div></details><details class="interview-item"><summary><span>12</span>What is an arrow function?</summary><div class="interview-answer"><p>An arrow function is a concise function syntax using =&gt;. Arrow functions also have different this behaviour from normal functions, which becomes important in later JavaScript topics.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Easy</b></header><h3>Placement Eligibility</h3><p>Create a function that receives a student&#39;s CGPA. Print Eligible when CGPA is at least 7.0; otherwise print Not Eligible.</p><details><summary>Need a hint?</summary><ul><li>Use a function with one parameter.</li><li>Use if...else.</li><li>Return or print the required result.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Easy</b></header><h3>Grade Calculator</h3><p>Write a function that accepts marks and returns A, B, C, D or F using an ordered grading system.</p><details><summary>Need a hint?</summary><ul><li>Check the highest range first.</li><li>Use else if for the remaining ranges.</li><li>Return the grade.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Easy</b></header><h3>Day Selector</h3><p>Use switch to convert numbers 1–7 into weekday names.</p><details><summary>Need a hint?</summary><ul><li>Use one switch expression.</li><li>Each case should represent one day.</li><li>Remember break.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Easy</b></header><h3>Login Check</h3><p>Create a Boolean variable isLoggedIn and print Dashboard when it is true, otherwise print Login Required.</p><details><summary>Need a hint?</summary><ul><li>Use if...else.</li><li>The condition itself can be Boolean.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Easy</b></header><h3>Default Username</h3><p>Use the || operator to assign Guest when a username variable contains an empty string.</p><details><summary>Need a hint?</summary><ul><li>Empty string is falsy.</li><li>Use username || &quot;Guest&quot;.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Easy</b></header><h3>Count to N</h3><p>Write a function that prints numbers from 1 to n using a for loop.</p><details><summary>Need a hint?</summary><ul><li>Use a parameter n.</li><li>Initialize i to 1.</li><li>Continue while i &lt;= n.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Medium</b></header><h3>Skip Multiples</h3><p>Print numbers from 1 to 30 but skip every multiple of 5 using continue.</p><details><summary>Need a hint?</summary><ul><li>Use i % 5 === 0.</li><li>Use continue before console.log.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Medium</b></header><h3>First Match</h3><p>Search numbers from 1 to 100 and stop when the first number divisible by both 7 and 11 is found.</p><details><summary>Need a hint?</summary><ul><li>Use a for loop.</li><li>Use &amp;&amp; between the two divisibility conditions.</li><li>Use break after finding the first match.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Medium</b></header><h3>Factorial Function</h3><p>Create a function factorial(n) that calculates n! using a loop and returns the result.</p><details><summary>Need a hint?</summary><ul><li>Start result at 1.</li><li>Multiply result by every value from 1 to n.</li><li>Return result.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Medium</b></header><h3>Maximum of Three</h3><p>Write a function maxOfThree(a, b, c) that returns the largest of three numbers.</p><details><summary>Need a hint?</summary><ul><li>Use comparisons.</li><li>You can solve it using if...else if...else.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Hard</b></header><h3>Nested Grid</h3><p>Use nested loops to print a 4 × 4 coordinate grid where each position contains row and column numbers.</p><details><summary>Need a hint?</summary><ul><li>Use one loop for rows.</li><li>Use another loop inside it for columns.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span><b>Hard</b></header><h3>Mini Placement Utility</h3><p>Build a function that receives CGPA and backlogs and returns Eligible only when CGPA is at least 7.0 and backlogs are 0.</p><details><summary>Need a hint?</summary><ul><li>Use &amp;&amp;.</li><li>Keep the eligibility rule inside the function.</li><li>Return the final status.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>Which statement is used to execute a block only when a condition is truthy?</h3><div class="quiz-options"><button type="button" data-option="0">A. if</button><button type="button" data-option="1">B. for</button><button type="button" data-option="2">C. return</button><button type="button" data-option="3">D. switch</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which operator is commonly used for a compact two-value decision?</h3><div class="quiz-options"><button type="button" data-option="0">A. ++</button><button type="button" data-option="1">B. ?:</button><button type="button" data-option="2">C. =&gt;</button><button type="button" data-option="3">D. ...</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>What happens when break executes inside a loop?</h3><div class="quiz-options"><button type="button" data-option="0">A. The loop pauses for one iteration</button><button type="button" data-option="1">B. The current iteration repeats</button><button type="button" data-option="2">C. The loop terminates</button><button type="button" data-option="3">D. The program restarts</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which loop checks its condition after executing the body?</h3><div class="quiz-options"><button type="button" data-option="0">A. for</button><button type="button" data-option="1">B. while</button><button type="button" data-option="2">C. do...while</button><button type="button" data-option="3">D. switch</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What is a parameter?</h3><div class="quiz-options"><button type="button" data-option="0">A. A value printed by console.log</button><button type="button" data-option="1">B. A named variable in a function definition</button><button type="button" data-option="2">C. A loop keyword</button><button type="button" data-option="3">D. A Boolean operator</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>What does return do inside a function?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only prints a value</button><button type="button" data-option="1">B. Creates a loop</button><button type="button" data-option="2">C. Ends the function and can send a value back</button><button type="button" data-option="3">D. Changes a variable to Boolean</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which value is falsy?</h3><div class="quiz-options"><button type="button" data-option="0">A. []</button><button type="button" data-option="1">B. {}</button><button type="button" data-option="2">C. &quot;&quot;</button><button type="button" data-option="3">D. &quot;hello&quot;</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What does continue do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Terminates the entire program</button><button type="button" data-option="1">B. Exits the current loop</button><button type="button" data-option="2">C. Skips the current iteration&#39;s remaining body</button><button type="button" data-option="3">D. Calls a function</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Which construct is often suitable for several fixed discrete cases?</h3><div class="quiz-options"><button type="button" data-option="0">A. switch</button><button type="button" data-option="1">B. while</button><button type="button" data-option="2">C. return</button><button type="button" data-option="3">D. continue</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Which syntax represents an arrow function?</h3><div class="quiz-options"><button type="button" data-option="0">A. function =&gt; add()</button><button type="button" data-option="1">B. add -&gt; function()</button><button type="button" data-option="2">C. const add = (a, b) =&gt; a + b</button><button type="button" data-option="3">D. arrow add(a, b)</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>What is an argument?</h3><div class="quiz-options"><button type="button" data-option="0">A. A value supplied during a function call</button><button type="button" data-option="1">B. A function&#39;s return keyword</button><button type="button" data-option="2">C. A loop condition</button><button type="button" data-option="3">D. A switch case</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Which statement best describes short-circuiting?</h3><div class="quiz-options"><button type="button" data-option="0">A. JavaScript always evaluates every part of a logical expression</button><button type="button" data-option="1">B. JavaScript can stop evaluating when the result is already known</button><button type="button" data-option="2">C. Loops automatically stop after two iterations</button><button type="button" data-option="3">D. Functions always return immediately</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>What is the main purpose of a function?</h3><div class="quiz-options"><button type="button" data-option="0">A. To make every program longer</button><button type="button" data-option="1">B. To create reusable logic</button><button type="button" data-option="2">C. To replace all loops</button><button type="button" data-option="3">D. To disable conditions</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>Which loop is commonly preferred when initialization, condition and update naturally belong together?</h3><div class="quiz-options"><button type="button" data-option="0">A. for</button><button type="button" data-option="1">B. switch</button><button type="button" data-option="2">C. if</button><button type="button" data-option="3">D. return</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>What is the difference between console.log(value) and return value?</h3><div class="quiz-options"><button type="button" data-option="0">A. They are always identical</button><button type="button" data-option="1">B. console.log returns the value to the caller</button><button type="button" data-option="2">C. return only displays the value</button><button type="button" data-option="3">D. console.log displays while return sends a value back</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Control Flow</strong><p></p></article><article><strong>Condition</strong><p></p></article><article><strong>Branch</strong><p></p></article><article><strong>Loop</strong><p></p></article><article><strong>Iteration</strong><p></p></article><article><strong>Truthy</strong><p></p></article><article><strong>Falsy</strong><p></p></article><article><strong>Short-circuit</strong><p></p></article><article><strong>Function</strong><p></p></article><article><strong>Parameter</strong><p></p></article><article><strong>Argument</strong><p></p></article><article><strong>Return Value</strong><p></p></article><article><strong>Function Expression</strong><p></p></article><article><strong>Arrow Function</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>You now control JavaScript execution.</h2><p>You can now make JavaScript choose paths, repeat work and organise logic into reusable functions. These ideas form the execution foundation for the more advanced JavaScript engineering topics ahead.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 9 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=8">← Previous level</a><a href="lesson.html?level=10">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 15: Props, State &amp; Events | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=15"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=15">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class="active " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">15</div><div><p class="eyebrow">LEVEL 15 · REACT APPLICATIONS</p><h1>Props, State &amp; Events</h1><p>Learn the three foundations of interactive React applications: props for receiving data, state for managing changing data, and events for responding to user actions.</p><div class="lesson-meta"><span>◈ Intermediate</span><span>▣ 30 concepts</span><span>✓ 16 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand the difference between props and state.</p></article><article><b>02</b><p>Pass data from parent components to child components.</p></article><article><b>03</b><p>Work with props containing strings, numbers, arrays, objects and functions.</p></article><article><b>04</b><p>Understand why props are read-only.</p></article><article><b>05</b><p>Use the children prop for component composition.</p></article><article><b>06</b><p>Understand component state and why state changes trigger rendering.</p></article><article><b>07</b><p>Use useState() correctly for interactive components.</p></article><article><b>08</b><p>Update primitive, object and array state safely.</p></article><article><b>09</b><p>Understand React event handlers.</p></article><article><b>10</b><p>Pass functions through props.</p></article><article><b>11</b><p>Communicate from child components back to parents.</p></article><article><b>12</b><p>Lift shared state to the appropriate component.</p></article><article><b>13</b><p>Distinguish state from derived data.</p></article><article><b>14</b><p>Avoid unnecessary duplicated state.</p></article><article><b>15</b><p>Understand controlled interactive components.</p></article><article><b>16</b><p>Build predictable component boundaries.</p></article><article><b>17</b><p>Apply React state and event patterns to practical interfaces.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Why Props, State and Events Matter</h2></div></div><p class="concept-intro">A React component becomes useful when it can receive information, remember changing information and respond to user actions.</p><div class="explanation-list"><p>Props, state and events work together. Props allow a parent to provide data to a child. State represents information owned by a component that can change over time. Events allow the interface to respond to user interaction.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Interactive React applications are largely about moving data through components and changing state in response to events.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>What Are Props?</h2></div></div><p class="concept-intro">Props are values supplied to a React component by its parent.</p><div class="explanation-list"><p>The word props is short for properties. A parent component can provide values through JSX attributes, and the child receives those values through its props object.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Props are the primary mechanism for passing information into a component.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Welcome() {
+  return &lt;h2&gt;Welcome to CodeBhavya&lt;/h2&gt;;
+}
+
+function App() {
+  return &lt;Welcome /&gt;;
+}">Copy</button></header><pre><code>function Welcome() {
+  return &lt;h2&gt;Welcome to CodeBhavya&lt;/h2&gt;;
+}
+
+function App() {
+  return &lt;Welcome /&gt;;
+}</code></pre></div></div><div class="code-box premium-code-box"><header><span>EXAMPLE REQUEST</span><button type="button" data-copy="function Welcome(props) {
+  return &lt;h2&gt;Welcome, {props.name}&lt;/h2&gt;;
+}
+
+function App() {
+  return &lt;Welcome name=&quot;Bhavya&quot; /&gt;;
+}">Copy</button></header><pre><code>function Welcome(props) {
+  return &lt;h2&gt;Welcome, {props.name}&lt;/h2&gt;;
+}
+
+function App() {
+  return &lt;Welcome name=&quot;Bhavya&quot; /&gt;;
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Reading Props</h2></div></div><p class="concept-intro">A component can read the values supplied by its parent through its props parameter.</p><ul class="content-points"><li>Props are available inside the component.</li><li>Each JSX attribute becomes a prop.</li><li>String values can be written directly.</li><li>JavaScript values use curly braces.</li></ul><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function StudentCard(props) {
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;{props.name}&lt;/h2&gt;
+      &lt;p&gt;Branch: {props.branch}&lt;/p&gt;
+      &lt;p&gt;Year: {props.year}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;StudentCard
+      name=&quot;Ravi&quot;
+      branch=&quot;CSE&quot;
+      year={3}
+    /&gt;
+  );
+}">Copy</button></header><pre><code>function StudentCard(props) {
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;{props.name}&lt;/h2&gt;
+      &lt;p&gt;Branch: {props.branch}&lt;/p&gt;
+      &lt;p&gt;Year: {props.year}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;StudentCard
+      name=&quot;Ravi&quot;
+      branch=&quot;CSE&quot;
+      year={3}
+    /&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Props Can Contain Different Data Types</h2></div></div><p class="concept-intro">Props are not limited to strings. Components can receive almost any JavaScript value.</p><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Profile({ name, age, skills, active }) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;Age: {age}&lt;/p&gt;
+      &lt;p&gt;Active: {String(active)}&lt;/p&gt;
+      &lt;p&gt;{skills.join(&quot;, &quot;)}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+const skills = [&quot;JavaScript&quot;, &quot;React&quot;];
+
+function App() {
+  return (
+    &lt;Profile
+      name=&quot;Anu&quot;
+      age={21}
+      active={true}
+      skills={skills}
+    /&gt;
+  );
+}">Copy</button></header><pre><code>function Profile({ name, age, skills, active }) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;Age: {age}&lt;/p&gt;
+      &lt;p&gt;Active: {String(active)}&lt;/p&gt;
+      &lt;p&gt;{skills.join(&quot;, &quot;)}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+const skills = [&quot;JavaScript&quot;, &quot;React&quot;];
+
+function App() {
+  return (
+    &lt;Profile
+      name=&quot;Anu&quot;
+      age={21}
+      active={true}
+      skills={skills}
+    /&gt;
+  );
+}</code></pre></div></div><div class="method-grid"><article class="method-card"><b>String prop</b><p>Pass textual information.</p><code>&lt;User name=&quot;Ravi&quot; /&gt;</code></article><article class="method-card"><b>Number prop</b><p>Pass numeric information.</p><code>&lt;Score value={95} /&gt;</code></article><article class="method-card"><b>Boolean prop</b><p>Represent a true/false condition.</p><code>&lt;Button disabled={true} /&gt;</code></article><article class="method-card"><b>Array prop</b><p>Provide a collection of values.</p><code>&lt;Courses items={courses} /&gt;</code></article><article class="method-card"><b>Object prop</b><p>Provide structured information.</p><code>&lt;Student data={student} /&gt;</code></article><article class="method-card"><b>Function prop</b><p>Allow a child to request behaviour owned by its parent.</p><code>&lt;Button onSave={saveStudent} /&gt;</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Destructuring Props</h2></div></div><p class="concept-intro">JavaScript destructuring makes components easier to read when several props are used.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Destructuring is a JavaScript feature, not a special React feature.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function StudentCard(props) {
+  return (
+    &lt;h2&gt;{props.name}&lt;/h2&gt;
+  );
+}">Copy</button></header><pre><code>function StudentCard(props) {
+  return (
+    &lt;h2&gt;{props.name}&lt;/h2&gt;
+  );
+}</code></pre></div></div><div class="code-box premium-code-box"><header><span>EXAMPLE REQUEST</span><button type="button" data-copy="function StudentCard({ name, branch }) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;{branch}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}">Copy</button></header><pre><code>function StudentCard({ name, branch }) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;{branch}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Default Prop Values</h2></div></div><p class="concept-intro">A component can provide fallback values when a particular prop is not supplied.</p><ul class="content-points"><li>Default values prevent unnecessary undefined output.</li><li>They are useful for optional component properties.</li><li>The default is used when the prop is undefined.</li></ul><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Button({
+  label = &quot;Submit&quot;
+}) {
+  return &lt;button&gt;{label}&lt;/button&gt;;
+}
+
+function App() {
+  return &lt;Button /&gt;;
+}">Copy</button></header><pre><code>function Button({
+  label = &quot;Submit&quot;
+}) {
+  return &lt;button&gt;{label}&lt;/button&gt;;
+}
+
+function App() {
+  return &lt;Button /&gt;;
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>Props Are Read-Only</h2></div></div><p class="concept-intro">A child component should not directly modify the props it receives.</p><div class="explanation-list"><p>Props represent data provided by another component. Treating them as read-only keeps the data flow predictable.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>If a component needs to change information over time, that information normally belongs in state somewhere appropriate in the component hierarchy.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A child should not try to change its parent&#39;s data by directly modifying a prop.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Counter({ count }) {
+  // Wrong idea:
+  // count = count + 1;
+
+  return &lt;p&gt;{count}&lt;/p&gt;;
+}">Copy</button></header><pre><code>function Counter({ count }) {
+  // Wrong idea:
+  // count = count + 1;
+
+  return &lt;p&gt;{count}&lt;/p&gt;;
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Parent to Child Data Flow</h2></div></div><p class="concept-intro">React normally follows a one-way data flow from parent components toward child components.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The parent sends information downward through props.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Component Composition</h2></div></div><p class="concept-intro">Instead of making one huge component, React encourages building smaller components and combining them.</p><ul class="content-points"><li>Small components are easier to understand.</li><li>Components can be reused.</li><li>Each component can focus on one responsibility.</li><li>Composition creates flexible UI structures.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good React architecture is usually about composing focused components rather than building one giant component.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Page() {
+  return (
+    &lt;Dashboard&gt;
+      &lt;Header /&gt;
+      &lt;StudentList /&gt;
+      &lt;Footer /&gt;
+    &lt;/Dashboard&gt;
+  );
+}">Copy</button></header><pre><code>function Page() {
+  return (
+    &lt;Dashboard&gt;
+      &lt;Header /&gt;
+      &lt;StudentList /&gt;
+      &lt;Footer /&gt;
+    &lt;/Dashboard&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>The children Prop</h2></div></div><p class="concept-intro">Anything placed between a component&#39;s opening and closing JSX tags is available through the children prop.</p><div class="explanation-list"><p>The children prop makes wrapper components highly reusable because the wrapper does not need to know exactly what content it will contain.</p></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Card({ children }) {
+  return (
+    &lt;section className=&quot;card&quot;&gt;
+      {children}
+    &lt;/section&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;Card&gt;
+      &lt;h2&gt;Student Profile&lt;/h2&gt;
+      &lt;p&gt;Welcome to CodeBhavya.&lt;/p&gt;
+    &lt;/Card&gt;
+  );
+}">Copy</button></header><pre><code>function Card({ children }) {
+  return (
+    &lt;section className=&quot;card&quot;&gt;
+      {children}
+    &lt;/section&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;Card&gt;
+      &lt;h2&gt;Student Profile&lt;/h2&gt;
+      &lt;p&gt;Welcome to CodeBhavya.&lt;/p&gt;
+    &lt;/Card&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>What Is State?</h2></div></div><p class="concept-intro">State represents information that belongs to a component and can change during the component&#39;s lifetime.</p><div class="explanation-list"><p>Examples include a counter value, selected tab, open/closed menu, current search text, logged-in status or selected student.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>State is for information that changes and whose change should affect the rendered interface.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>useState()</h2></div></div><p class="concept-intro">The useState Hook lets a functional component store state.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The setter function is the proper mechanism for requesting a state update.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="import { useState } from &quot;react&quot;;
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+
+      &lt;button
+        onClick={() =&gt; setCount(count + 1)}
+      &gt;
+        Increase
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}">Copy</button></header><pre><code>import { useState } from &quot;react&quot;;
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+
+      &lt;button
+        onClick={() =&gt; setCount(count + 1)}
+      &gt;
+        Increase
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div></div><div class="url-breakdown"><article><code>count</code><p>The current state value.</p></article><article><code>setCount</code><p>The function used to request a state update.</p></article><article><code>useState(0)</code><p>Initializes the state with the value 0.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>State Updates Cause Re-rendering</h2></div></div><p class="concept-intro">When React processes a state update, the component can render again using the new state.</p><div class="explanation-list"><p>The important mental model is not &#39;React changes this HTML element directly because I called setCount&#39;. Instead, state changes lead React to render the component again and reconcile the resulting UI.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>State is the source of changing information that influences rendering.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;&gt;
+      &lt;h2&gt;{count}&lt;/h2&gt;
+
+      &lt;button
+        onClick={() =&gt; setCount(count + 1)}
+      &gt;
+        Increase
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}">Copy</button></header><pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;&gt;
+      &lt;h2&gt;{count}&lt;/h2&gt;
+
+      &lt;button
+        onClick={() =&gt; setCount(count + 1)}
+      &gt;
+        Increase
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Updating State from Previous State</h2></div></div><p class="concept-intro">When the next state depends on the previous state, use the functional updater form.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use setState(previous =&gt; nextValue) when the next state depends on the previous state.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>When the new value depends on the previous value, the updater function makes that dependency explicit and avoids relying on a stale captured value.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Counter() {
+  const [count, setCount] = useState(0);
+
+  function increaseTwice() {
+    setCount(previous =&gt; previous + 1);
+    setCount(previous =&gt; previous + 1);
+  }
+
+  return (
+    &lt;button onClick={increaseTwice}&gt;
+      Count: {count}
+    &lt;/button&gt;
+  );
+}">Copy</button></header><pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+
+  function increaseTwice() {
+    setCount(previous =&gt; previous + 1);
+    setCount(previous =&gt; previous + 1);
+  }
+
+  return (
+    &lt;button onClick={increaseTwice}&gt;
+      Count: {count}
+    &lt;/button&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>State with Strings and Booleans</h2></div></div><p class="concept-intro">State can represent simple UI values such as text, selections and visibility.</p><ul class="content-points"><li>Strings can store input or selection values.</li><li>Booleans are useful for open/closed or active/inactive states.</li><li>Use the setter rather than mutating the current state variable.</li></ul><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="const [name, setName] = useState(&quot;&quot;);
+
+setName(&quot;Bhavya&quot;);">Copy</button></header><pre><code>const [name, setName] = useState(&quot;&quot;);
+
+setName(&quot;Bhavya&quot;);</code></pre></div></div><div class="code-box premium-code-box"><header><span>EXAMPLE REQUEST</span><button type="button" data-copy="const [open, setOpen] = useState(false);
+
+function toggleMenu() {
+  setOpen(previous =&gt; !previous);
+}">Copy</button></header><pre><code>const [open, setOpen] = useState(false);
+
+function toggleMenu() {
+  setOpen(previous =&gt; !previous);
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>State with Objects</h2></div></div><p class="concept-intro">When state is an object, create a new object when changing a property.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Treat state objects as immutable values: create the next object rather than modifying the existing one.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not directly mutate the existing state object such as student.year = 4.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="const [student, setStudent] = useState({
+  name: &quot;Ravi&quot;,
+  branch: &quot;CSE&quot;,
+  year: 3
+});
+
+function changeYear() {
+  setStudent(previous =&gt; ({
+    ...previous,
+    year: 4
+  }));
+}">Copy</button></header><pre><code>const [student, setStudent] = useState({
+  name: &quot;Ravi&quot;,
+  branch: &quot;CSE&quot;,
+  year: 3
+});
+
+function changeYear() {
+  setStudent(previous =&gt; ({
+    ...previous,
+    year: 4
+  }));
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>State with Arrays</h2></div></div><p class="concept-intro">Arrays in state should also be updated by creating a new array.</p><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="const [skills, setSkills] = useState([
+  &quot;HTML&quot;,
+  &quot;CSS&quot;
+]);
+
+function addSkill() {
+  setSkills(previous =&gt; [
+    ...previous,
+    &quot;JavaScript&quot;
+  ]);
+}">Copy</button></header><pre><code>const [skills, setSkills] = useState([
+  &quot;HTML&quot;,
+  &quot;CSS&quot;
+]);
+
+function addSkill() {
+  setSkills(previous =&gt; [
+    ...previous,
+    &quot;JavaScript&quot;
+  ]);
+}</code></pre></div></div><div class="method-grid"><article class="method-card"><b>Add</b><p>Create a new array containing the existing items and the new item.</p><code>setItems(previous =&gt; [...previous, item]);</code></article><article class="method-card"><b>Remove</b><p>Create a filtered array.</p><code>setItems(previous =&gt; previous.filter(x =&gt; x.id !== id));</code></article><article class="method-card"><b>Update</b><p>Create a new array using map().</p><code>setItems(previous =&gt; previous.map(x =&gt; x.id === id ? updated : x));</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Why Immutability Matters</h2></div></div><p class="concept-intro">React applications become easier to reason about when state is updated without mutating existing objects and arrays.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Immutable updates create a clear next state and make React state transitions easier to reason about.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>React Events</h2></div></div><p class="concept-intro">React lets components respond to browser events using JSX event handler props.</p><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Do not call the handler while rendering: onClick={handleClick()} would execute it immediately. Pass the function instead.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function SaveButton() {
+  function handleClick() {
+    console.log(&quot;Saved&quot;);
+  }
+
+  return (
+    &lt;button onClick={handleClick}&gt;
+      Save
+    &lt;/button&gt;
+  );
+}">Copy</button></header><pre><code>function SaveButton() {
+  function handleClick() {
+    console.log(&quot;Saved&quot;);
+  }
+
+  return (
+    &lt;button onClick={handleClick}&gt;
+      Save
+    &lt;/button&gt;
+  );
+}</code></pre></div></div><div class="method-grid"><article class="method-card"><b>onClick</b><p>Respond to clicks.</p><code>&lt;button onClick={handleClick}&gt;Save&lt;/button&gt;</code></article><article class="method-card"><b>onChange</b><p>Respond to input value changes.</p><code>&lt;input onChange={handleChange} /&gt;</code></article><article class="method-card"><b>onSubmit</b><p>Respond to form submission.</p><code>&lt;form onSubmit={handleSubmit}&gt;</code></article><article class="method-card"><b>onKeyDown</b><p>Respond when a keyboard key is pressed.</p><code>&lt;input onKeyDown={handleKeyDown} /&gt;</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>The Event Object</h2></div></div><p class="concept-intro">React event handlers receive an event object containing information about the interaction.</p><ul class="content-points"><li>event.target is the element that initiated the event.</li><li>event.currentTarget refers to the element whose handler is currently executing.</li><li>Input events commonly use event.target.value.</li><li>Form events often use event.preventDefault().</li></ul><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function SearchBox() {
+  function handleChange(event) {
+    console.log(event.target.value);
+  }
+
+  return (
+    &lt;input onChange={handleChange} /&gt;
+  );
+}">Copy</button></header><pre><code>function SearchBox() {
+  function handleChange(event) {
+    console.log(event.target.value);
+  }
+
+  return (
+    &lt;input onChange={handleChange} /&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">21</div><div><p class="section-label">CONCEPT 21</p><h2>Passing Functions as Props</h2></div></div><p class="concept-intro">Functions can be passed from parents to children just like other JavaScript values.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A function prop lets a child trigger behaviour that is defined by the parent.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function DeleteButton({ onDelete }) {
+  return (
+    &lt;button onClick={onDelete}&gt;
+      Delete
+    &lt;/button&gt;
+  );
+}
+
+function App() {
+  function handleDelete() {
+    console.log(&quot;Deleting...&quot;);
+  }
+
+  return (
+    &lt;DeleteButton
+      onDelete={handleDelete}
+    /&gt;
+  );
+}">Copy</button></header><pre><code>function DeleteButton({ onDelete }) {
+  return (
+    &lt;button onClick={onDelete}&gt;
+      Delete
+    &lt;/button&gt;
+  );
+}
+
+function App() {
+  function handleDelete() {
+    console.log(&quot;Deleting...&quot;);
+  }
+
+  return (
+    &lt;DeleteButton
+      onDelete={handleDelete}
+    /&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">22</div><div><p class="section-label">CONCEPT 22</p><h2>Child to Parent Communication</h2></div></div><p class="concept-intro">React data normally flows downward, but a child can notify a parent by calling a function supplied through props.</p><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function Child({ onIncrease }) {
+  return (
+    &lt;button onClick={onIncrease}&gt;
+      Increase
+    &lt;/button&gt;
+  );
+}
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  function increase() {
+    setCount(previous =&gt; previous + 1);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;Child onIncrease={increase} /&gt;
+    &lt;/&gt;
+  );
+}">Copy</button></header><pre><code>function Child({ onIncrease }) {
+  return (
+    &lt;button onClick={onIncrease}&gt;
+      Increase
+    &lt;/button&gt;
+  );
+}
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  function increase() {
+    setCount(previous =&gt; previous + 1);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;Child onIncrease={increase} /&gt;
+    &lt;/&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">23</div><div><p class="section-label">CONCEPT 23</p><h2>Lifting State Up</h2></div></div><p class="concept-intro">When multiple sibling components need the same changing information, move the state to their nearest suitable common parent.</p><div class="explanation-list"><p>This pattern is called lifting state up. The parent owns the shared state and passes values and event handlers down to the children.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Shared state should have one appropriate owner rather than separate duplicated copies in sibling components.</p></div></div><div class="architecture-flow"><article><span>01</span><h3>Parent</h3><ul><li>Owns shared state.</li><li>Updates the state.</li><li>Passes current values down.</li></ul></article><article><span>02</span><h3>Child A</h3><ul><li>Receives the value.</li><li>Can trigger an update through a function prop.</li></ul></article><article><span>03</span><h3>Child B</h3><ul><li>Receives the same shared value.</li><li>Renders consistently with Child A.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">24</div><div><p class="section-label">CONCEPT 24</p><h2>Controlled Components</h2></div></div><p class="concept-intro">A controlled component is an input whose displayed value is driven by React state.</p><ul class="content-points"><li>React state stores the current value.</li><li>The value prop controls what the input displays.</li><li>onChange updates the state.</li><li>The state then becomes the source of truth for the input.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Controlled inputs create an explicit connection between user input, state and rendering.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function NameForm() {
+  const [name, setName] = useState(&quot;&quot;);
+
+  return (
+    &lt;input
+      value={name}
+      onChange={event =&gt;
+        setName(event.target.value)
+      }
+    /&gt;
+  );
+}">Copy</button></header><pre><code>function NameForm() {
+  const [name, setName] = useState(&quot;&quot;);
+
+  return (
+    &lt;input
+      value={name}
+      onChange={event =&gt;
+        setName(event.target.value)
+      }
+    /&gt;
+  );
+}</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">25</div><div><p class="section-label">CONCEPT 25</p><h2>State vs Props</h2></div></div><p class="concept-intro">Props and state can look similar because both contain data, but their responsibilities are different.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Props describe what a component receives; state describes changing information the component or its owner manages.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">26</div><div><p class="section-label">CONCEPT 26</p><h2>Derived Data</h2></div></div><p class="concept-intro">Not every value displayed by a component needs to be stored separately in state.</p><div class="explanation-list"><p>filteredStudents can be calculated from students and query. Storing a second state variable for filteredStudents can create synchronization problems.</p></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Avoid duplicated state when a value can be reliably calculated from existing props or state during rendering.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="const [students, setStudents] = useState([]);
+const [query, setQuery] = useState(&quot;&quot;);
+
+const filteredStudents = students.filter(
+  student =&gt;
+    student.name
+      .toLowerCase()
+      .includes(query.toLowerCase())
+);">Copy</button></header><pre><code>const [students, setStudents] = useState([]);
+const [query, setQuery] = useState(&quot;&quot;);
+
+const filteredStudents = students.filter(
+  student =&gt;
+    student.name
+      .toLowerCase()
+      .includes(query.toLowerCase())
+);</code></pre></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">27</div><div><p class="section-label">CONCEPT 27</p><h2>Avoiding Redundant State</h2></div></div><p class="concept-intro">Duplicating the same information in multiple state variables makes applications harder to maintain.</p><ul class="content-points"><li>Store the minimum necessary changing information.</li><li>Calculate derived values when practical.</li><li>Avoid multiple state variables that can disagree.</li><li>Simpler state models are easier to debug.</li></ul><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="const [firstName, setFirstName] = useState(&quot;Ravi&quot;);
+const [lastName, setLastName] = useState(&quot;Kumar&quot;);
+
+// Usually unnecessary:
+const [fullName, setFullName] =
+  useState(&quot;Ravi Kumar&quot;);">Copy</button></header><pre><code>const [firstName, setFirstName] = useState(&quot;Ravi&quot;);
+const [lastName, setLastName] = useState(&quot;Kumar&quot;);
+
+// Usually unnecessary:
+const [fullName, setFullName] =
+  useState(&quot;Ravi Kumar&quot;);</code></pre></div></div><div class="code-box premium-code-box"><header><span>EXAMPLE REQUEST</span><button type="button" data-copy="const fullName =
+  `${firstName} ${lastName}`;">Copy</button></header><pre><code>const fullName =
+  `${firstName} ${lastName}`;</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">28</div><div><p class="section-label">CONCEPT 28</p><h2>Event → State → Render</h2></div></div><p class="concept-intro">A useful mental model for interactive React applications is an event causing a state update, followed by rendering based on the new state.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Think in terms of Event → State Update → Render.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">29</div><div><p class="section-label">CONCEPT 29</p><h2>Building Interactive Component Architecture</h2></div></div><p class="concept-intro">A good React application gives each component a clear responsibility and places state at the right level.</p><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="function App() {
+  const [query, setQuery] = useState(&quot;&quot;);
+
+  const filteredStudents =
+    students.filter(student =&gt;
+      student.name
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+
+  return (
+    &lt;&gt;
+      &lt;SearchPanel
+        query={query}
+        onQueryChange={setQuery}
+      /&gt;
+
+      &lt;StudentList
+        students={filteredStudents}
+      /&gt;
+    &lt;/&gt;
+  );
+}">Copy</button></header><pre><code>function App() {
+  const [query, setQuery] = useState(&quot;&quot;);
+
+  const filteredStudents =
+    students.filter(student =&gt;
+      student.name
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+
+  return (
+    &lt;&gt;
+      &lt;SearchPanel
+        query={query}
+        onQueryChange={setQuery}
+      /&gt;
+
+      &lt;StudentList
+        students={filteredStudents}
+      /&gt;
+    &lt;/&gt;
+  );
+}</code></pre></div></div><div class="architecture-flow"><article><span>01</span><h3>App</h3><ul><li>Owns application-level data needed by multiple sections.</li><li>Coordinates major child components.</li></ul></article><article><span>02</span><h3>SearchPanel</h3><ul><li>Displays search controls.</li><li>Reports user changes through callbacks.</li></ul></article><article><span>03</span><h3>StudentList</h3><ul><li>Receives filtered student data.</li><li>Renders the collection.</li></ul></article><article><span>04</span><h3>StudentCard</h3><ul><li>Receives one student through props.</li><li>Displays student information.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">30</div><div><p class="section-label">CONCEPT 30</p><h2>Complete Interactive React Pattern</h2></div></div><p class="concept-intro">Props, state and events become powerful when combined into a complete interactive component.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>This pattern combines one-way data flow, props, state and events into a predictable interactive UI.</p></div></div><div class="real-example"><strong>🌍 REAL-WORLD EXAMPLE</strong><div class="code-box premium-code-box"><header><span>EXAMPLE CODE</span><button type="button" data-copy="import { useState } from &quot;react&quot;;
+
+function StudentCard({
+  student,
+  selected,
+  onSelect
+}) {
+  return (
+    &lt;article&gt;
+      &lt;h3&gt;{student.name}&lt;/h3&gt;
+
+      &lt;p&gt;{student.branch}&lt;/p&gt;
+
+      &lt;button onClick={() =&gt; onSelect(student.id)}&gt;
+        {selected ? &quot;Selected&quot; : &quot;Select&quot;}
+      &lt;/button&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  const [selectedId, setSelectedId] =
+    useState(null);
+
+  const students = [
+    { id: 1, name: &quot;Ravi&quot;, branch: &quot;CSE&quot; },
+    { id: 2, name: &quot;Anu&quot;, branch: &quot;AI-ML&quot; }
+  ];
+
+  return (
+    &lt;section&gt;
+      {students.map(student =&gt; (
+        &lt;StudentCard
+          key={student.id}
+          student={student}
+          selected={student.id === selectedId}
+          onSelect={setSelectedId}
+        /&gt;
+      ))}
+    &lt;/section&gt;
+  );
+}">Copy</button></header><pre><code>import { useState } from &quot;react&quot;;
+
+function StudentCard({
+  student,
+  selected,
+  onSelect
+}) {
+  return (
+    &lt;article&gt;
+      &lt;h3&gt;{student.name}&lt;/h3&gt;
+
+      &lt;p&gt;{student.branch}&lt;/p&gt;
+
+      &lt;button onClick={() =&gt; onSelect(student.id)}&gt;
+        {selected ? &quot;Selected&quot; : &quot;Select&quot;}
+      &lt;/button&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  const [selectedId, setSelectedId] =
+    useState(null);
+
+  const students = [
+    { id: 1, name: &quot;Ravi&quot;, branch: &quot;CSE&quot; },
+    { id: 2, name: &quot;Anu&quot;, branch: &quot;AI-ML&quot; }
+  ];
+
+  return (
+    &lt;section&gt;
+      {students.map(student =&gt; (
+        &lt;StudentCard
+          key={student.id}
+          student={student}
+          selected={student.id === selectedId}
+          onSelect={setSelectedId}
+        /&gt;
+      ))}
+    &lt;/section&gt;
+  );
+}</code></pre></div></div><div class="url-breakdown"><article><code>Data</code><p>The parent has the student collection.</p></article><article><code>State</code><p>The parent owns selectedId.</p></article><article><code>Props</code><p>Each StudentCard receives student, selected and onSelect.</p></article><article><code>Event</code><p>The child calls onSelect when the button is clicked.</p></article><article><code>Update</code><p>The parent&#39;s state changes.</p></article><article><code>Render</code><p>The children receive the updated selected value.</p></article></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Props, State and Events Tracer</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>const [selectedId, setSelectedId] = useState(null);</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>function StudentCard({ student, onSelect }) {</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>  return &lt;button onClick={() =&gt; onSelect(student.id)}&gt;</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>    Select</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>  &lt;/button&gt;;</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>}</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>&lt;StudentCard onSelect={setSelectedId} student={student} /&gt;</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Props</strong><p>Values passed from a parent component to a child component.</p></div></article><article><b>02</b><div><strong>State</strong><p>Changing information managed by a component or an appropriate state owner.</p></div></article><article><b>03</b><div><strong>Event</strong><p>A user or browser interaction that can trigger application behaviour.</p></div></article><article><b>04</b><div><strong>useState</strong><p>A React Hook used to add state to a functional component.</p></div></article><article><b>05</b><div><strong>State setter</strong><p>The function returned by useState that requests a state update.</p></div></article><article><b>06</b><div><strong>children</strong><p>The content placed between a component&#39;s opening and closing JSX tags.</p></div></article><article><b>07</b><div><strong>One-way data flow</strong><p>The common React pattern of passing data from parent to child.</p></div></article><article><b>08</b><div><strong>Function prop</strong><p>A function passed through props so a child can trigger parent-owned behaviour.</p></div></article><article><b>09</b><div><strong>Lifting state up</strong><p>Moving shared state to the nearest suitable common parent.</p></div></article><article><b>10</b><div><strong>Controlled component</strong><p>An input whose current value is controlled by React state.</p></div></article><article><b>11</b><div><strong>Derived data</strong><p>A value calculated from existing props or state instead of stored separately.</p></div></article><article><b>12</b><div><strong>Immutable update</strong><p>Creating a new state value instead of directly mutating the existing one.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What are props in React?</summary><div class="interview-answer"><p>Props are values passed from a parent component to a child component.</p></div></details><details class="interview-item"><summary><span>02</span>Are props mutable?</summary><div class="interview-answer"><p>A child should treat its props as read-only and should not directly modify them.</p></div></details><details class="interview-item"><summary><span>03</span>What is state?</summary><div class="interview-answer"><p>State is changing information managed by a component or an appropriate state owner that affects rendering.</p></div></details><details class="interview-item"><summary><span>04</span>What is useState()?</summary><div class="interview-answer"><p>useState is a React Hook that lets a functional component store state.</p></div></details><details class="interview-item"><summary><span>05</span>What does useState() return?</summary><div class="interview-answer"><p>It returns the current state value and a setter function.</p></div></details><details class="interview-item"><summary><span>06</span>Why does React need a state setter?</summary><div class="interview-answer"><p>The setter tells React that the component&#39;s state should be updated and the UI may need to render again.</p></div></details><details class="interview-item"><summary><span>07</span>What is one-way data flow?</summary><div class="interview-answer"><p>It is the pattern where data normally flows from parent components down to children through props.</p></div></details><details class="interview-item"><summary><span>08</span>How can a child communicate with a parent?</summary><div class="interview-answer"><p>The parent can pass a function as a prop, and the child can call that function.</p></div></details><details class="interview-item"><summary><span>09</span>What is lifting state up?</summary><div class="interview-answer"><p>Moving shared state to the nearest suitable common parent of the components that need it.</p></div></details><details class="interview-item"><summary><span>10</span>What is the children prop?</summary><div class="interview-answer"><p>It represents content passed between a component&#39;s opening and closing JSX tags.</p></div></details><details class="interview-item"><summary><span>11</span>Can props contain functions?</summary><div class="interview-answer"><p>Yes. Functions are ordinary JavaScript values and can be passed through props.</p></div></details><details class="interview-item"><summary><span>12</span>Can props contain objects?</summary><div class="interview-answer"><p>Yes. Objects can be passed through JSX expressions.</p></div></details><details class="interview-item"><summary><span>13</span>What is a controlled input?</summary><div class="interview-answer"><p>An input whose displayed value is driven by React state.</p></div></details><details class="interview-item"><summary><span>14</span>Why should state objects not be mutated directly?</summary><div class="interview-answer"><p>Immutable updates create a clear next state and avoid problems caused by modifying existing state references.</p></div></details><details class="interview-item"><summary><span>15</span>How do you add an item to an array in state?</summary><div class="interview-answer"><p>Create a new array, commonly using the spread operator.</p></div></details><details class="interview-item"><summary><span>16</span>How do you remove an item from an array in state?</summary><div class="interview-answer"><p>Create a filtered array using filter().</p></div></details><details class="interview-item"><summary><span>17</span>How do you update an item in an array in state?</summary><div class="interview-answer"><p>Create a new array using map() or another immutable transformation.</p></div></details><details class="interview-item"><summary><span>18</span>When should you use the functional state updater?</summary><div class="interview-answer"><p>When the next state depends on the previous state.</p></div></details><details class="interview-item"><summary><span>19</span>What is derived data?</summary><div class="interview-answer"><p>Data that can be calculated from existing props or state.</p></div></details><details class="interview-item"><summary><span>20</span>Why avoid redundant state?</summary><div class="interview-answer"><p>Multiple copies of related data can become inconsistent and create synchronization bugs.</p></div></details><details class="interview-item"><summary><span>21</span>What does onClick={handleClick} mean?</summary><div class="interview-answer"><p>It registers handleClick as the click handler.</p></div></details><details class="interview-item"><summary><span>22</span>What is wrong with onClick={handleClick()}?</summary><div class="interview-answer"><p>It calls the function during rendering instead of passing the function for the future click event.</p></div></details><details class="interview-item"><summary><span>23</span>What is event.target?</summary><div class="interview-answer"><p>It usually refers to the element that initiated the event.</p></div></details><details class="interview-item"><summary><span>24</span>What is event.currentTarget?</summary><div class="interview-answer"><p>It refers to the element whose event handler is currently handling the event.</p></div></details><details class="interview-item"><summary><span>25</span>What is the difference between props and state?</summary><div class="interview-answer"><p>Props are received from outside the component, while state is changing information managed by an appropriate state owner.</p></div></details><details class="interview-item"><summary><span>26</span>Why is state called a source of truth?</summary><div class="interview-answer"><p>Because the UI can be derived from the current state instead of maintaining separate conflicting copies.</p></div></details><details class="interview-item"><summary><span>27</span>What is component composition?</summary><div class="interview-answer"><p>Combining smaller focused components to create larger interfaces.</p></div></details><details class="interview-item"><summary><span>28</span>Why should state be placed carefully?</summary><div class="interview-answer"><p>The state owner should be able to provide the data and update behaviour to all components that need it without unnecessary duplication.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span></header><h3>Practice Challenge</h3><p>Create a UserCard component that accepts name, role and location through props.</p><details><summary>Need a hint?</summary><ul><li>Destructure the props.</li><li>Render all three values.</li><li>Pass the values from a parent component.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span></header><h3>Practice Challenge</h3><p>Create a reusable Button component that receives label and onClick as props.</p><details><summary>Need a hint?</summary><ul><li>Use a function prop.</li><li>Connect it to the button&#39;s onClick.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span></header><h3>Practice Challenge</h3><p>Build a Counter component using useState().</p><details><summary>Need a hint?</summary><ul><li>Start at 0.</li><li>Add Increase and Decrease buttons.</li><li>Use functional updates.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span></header><h3>Practice Challenge</h3><p>Create a toggle component that displays &#39;ON&#39; and &#39;OFF&#39;.</p><details><summary>Need a hint?</summary><ul><li>Use boolean state.</li><li>Toggle using previous =&gt; !previous.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span></header><h3>Practice Challenge</h3><p>Create a component that maintains a student object containing name, branch and year.</p><details><summary>Need a hint?</summary><ul><li>Use object state.</li><li>Use the spread operator when changing one property.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span></header><h3>Practice Challenge</h3><p>Build a Skills component that can add and remove skills from an array in state.</p><details><summary>Need a hint?</summary><ul><li>Use [...previous, newSkill] to add.</li><li>Use filter() to remove.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span></header><h3>Practice Challenge</h3><p>Build a controlled search input using React state.</p><details><summary>Need a hint?</summary><ul><li>Connect value to state.</li><li>Update state in onChange.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span></header><h3>Practice Challenge</h3><p>Create Parent and Child components where the child button updates a counter owned by the parent.</p><details><summary>Need a hint?</summary><ul><li>Parent owns useState().</li><li>Pass a function to Child.</li><li>Child calls the function.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span></header><h3>Practice Challenge</h3><p>Build two sibling components that display the same selected student using lifted state.</p><details><summary>Need a hint?</summary><ul><li>Move state into the common parent.</li><li>Pass the selected student to both children.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span></header><h3>Practice Challenge</h3><p>Build a student list with Select buttons where only the selected student displays &#39;Selected&#39;.</p><details><summary>Need a hint?</summary><ul><li>Store selectedId.</li><li>Pass selected and onSelect as props.</li><li>Compare student.id with selectedId.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span></header><h3>Practice Challenge</h3><p>Create a reusable Card component using the children prop.</p><details><summary>Need a hint?</summary><ul><li>Destructure children.</li><li>Render children inside a styled container.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 12</span></header><h3>Practice Challenge</h3><p>Create a student search interface where the filtered list is derived from students and query rather than stored as separate state.</p><details><summary>Need a hint?</summary><ul><li>Store students and query.</li><li>Use filter() during rendering.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is the primary purpose of props?</h3><div class="quiz-options"><button type="button" data-option="0">A. Store browser cookies</button><button type="button" data-option="1">B. Pass data into components</button><button type="button" data-option="2">C. Create CSS</button><button type="button" data-option="3">D. Replace JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Who normally provides props to a child?</h3><div class="quiz-options"><button type="button" data-option="0">A. The browser</button><button type="button" data-option="1">B. The parent component</button><button type="button" data-option="2">C. The CSS engine</button><button type="button" data-option="3">D. The database</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Should a child directly modify its props?</h3><div class="quiz-options"><button type="button" data-option="0">A. Yes</button><button type="button" data-option="1">B. Only strings</button><button type="button" data-option="2">C. No</button><button type="button" data-option="3">D. Only arrays</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which Hook is used for component state?</h3><div class="quiz-options"><button type="button" data-option="0">A. useData</button><button type="button" data-option="1">B. useState</button><button type="button" data-option="2">C. useValue</button><button type="button" data-option="3">D. useComponent</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What does useState() return?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only the state value</button><button type="button" data-option="1">B. A value and a setter function</button><button type="button" data-option="2">C. Only a setter</button><button type="button" data-option="3">D. An HTML element</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which approach is preferred for updating an object in state?</h3><div class="quiz-options"><button type="button" data-option="0">A. Direct mutation</button><button type="button" data-option="1">B. Create a new object</button><button type="button" data-option="2">C. Delete the state</button><button type="button" data-option="3">D. Modify the DOM</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which method is commonly used to remove items immutably from an array?</h3><div class="quiz-options"><button type="button" data-option="0">A. filter()</button><button type="button" data-option="1">B. push()</button><button type="button" data-option="2">C. splice()</button><button type="button" data-option="3">D. sort()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What does onClick={handleClick} do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Calls handleClick during every render</button><button type="button" data-option="1">B. Registers handleClick as the click handler</button><button type="button" data-option="2">C. Creates a Promise</button><button type="button" data-option="3">D. Changes CSS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>How can a child notify its parent?</h3><div class="quiz-options"><button type="button" data-option="0">A. Modify the parent&#39;s props</button><button type="button" data-option="1">B. Use a function passed through props</button><button type="button" data-option="2">C. Directly modify the parent&#39;s DOM</button><button type="button" data-option="3">D. Use CSS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What is lifting state up?</h3><div class="quiz-options"><button type="button" data-option="0">A. Moving CSS upward</button><button type="button" data-option="1">B. Moving shared state to a suitable common parent</button><button type="button" data-option="2">C. Deleting state</button><button type="button" data-option="3">D. Moving state into HTML</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>What is a controlled input?</h3><div class="quiz-options"><button type="button" data-option="0">A. An input controlled by CSS</button><button type="button" data-option="1">B. An input whose value is driven by React state</button><button type="button" data-option="2">C. An input without events</button><button type="button" data-option="3">D. An input controlled by the database</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>What does children represent?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only strings</button><button type="button" data-option="1">B. Content passed between component tags</button><button type="button" data-option="2">C. Only event handlers</button><button type="button" data-option="3">D. Component state</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>When should you use a functional state updater?</h3><div class="quiz-options"><button type="button" data-option="0">A. When next state depends on previous state</button><button type="button" data-option="1">B. Only for strings</button><button type="button" data-option="2">C. Only for props</button><button type="button" data-option="3">D. Never</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>Which is usually better for derived filtered data?</h3><div class="quiz-options"><button type="button" data-option="0">A. Duplicate it in state</button><button type="button" data-option="1">B. Calculate it from existing state</button><button type="button" data-option="2">C. Store it in cookies</button><button type="button" data-option="3">D. Modify the DOM manually</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>What is one-way data flow?</h3><div class="quiz-options"><button type="button" data-option="0">A. Data normally moving from child to parent automatically</button><button type="button" data-option="1">B. Data normally moving from parent to child through props</button><button type="button" data-option="2">C. Data moving only through CSS</button><button type="button" data-option="3">D. Data moving only through the database</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="15"><span class="quiz-number">QUESTION 16</span><h3>Which is an immutable array update?</h3><div class="quiz-options"><button type="button" data-option="0">A. items.push(item)</button><button type="button" data-option="1">B. items.splice(0, 1)</button><button type="button" data-option="2">C. [...items, item]</button><button type="button" data-option="3">D. items[0] = item</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Props</strong><p></p></article><article><strong>State</strong><p></p></article><article><strong>useState</strong><p></p></article><article><strong>State setter</strong><p></p></article><article><strong>children</strong><p></p></article><article><strong>Function prop</strong><p></p></article><article><strong>Lifting state up</strong><p></p></article><article><strong>Controlled component</strong><p></p></article><article><strong>Derived data</strong><p></p></article><article><strong>Immutable update</strong><p></p></article><article><strong>Event handler</strong><p></p></article><article><strong>Component composition</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Interactive Student Dashboard Challenge</h2><p>Build a React Student Dashboard containing a student list, search box, selected-student panel and reusable StudentCard components. Use props for data flow, state for changing information and event handlers for user interaction.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 15 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=14">← Previous level</a><a href="lesson.html?level=16">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

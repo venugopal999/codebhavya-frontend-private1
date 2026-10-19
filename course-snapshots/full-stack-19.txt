@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 19: Node.js Runtime &amp; Server-Side JavaScript | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=19"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=19">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class="active " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">19</div><div><p class="eyebrow">PART 4 • NODE &amp; EXPRESS • LEVEL 19</p><h1>Node.js Runtime &amp; Server-Side JavaScript</h1><p>Understand how Node.js runs JavaScript outside the browser, how the runtime works, how modules and npm packages are used, how asynchronous server-side code works, and how to build your first Node.js server.</p><div class="lesson-meta"><span>⏱ Estimated learning time: 3–4 hours</span><span>◈ Intermediate</span><span>▣ 15 concepts</span><span>✓ 10 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Explain what Node.js is and why it is different from browser JavaScript.</p></article><article><b>02</b><p>Understand the Node.js runtime and V8 JavaScript engine.</p></article><article><b>03</b><p>Explain the role of the Node.js event loop.</p></article><article><b>04</b><p>Understand synchronous and asynchronous server-side operations.</p></article><article><b>05</b><p>Use the Node.js command line to execute JavaScript.</p></article><article><b>06</b><p>Understand CommonJS and ES module concepts.</p></article><article><b>07</b><p>Use built-in Node.js modules.</p></article><article><b>08</b><p>Read environment information through process.</p></article><article><b>09</b><p>Understand package.json and npm dependencies.</p></article><article><b>10</b><p>Create a simple HTTP server using the Node.js http module.</p></article><article><b>11</b><p>Understand request and response objects.</p></article><article><b>12</b><p>Serve different responses based on the request URL.</p></article><article><b>13</b><p>Understand why blocking operations can hurt server performance.</p></article><article><b>14</b><p>Handle asynchronous work using callbacks, Promises and async/await.</p></article><article><b>15</b><p>Prepare for the Express.js layer in the next level.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>What Is Node.js?</h2></div></div><p class="concept-intro">Node.js allows JavaScript to run outside the browser. Instead of using JavaScript only to control a webpage, developers can use it to build servers, APIs, command-line tools and backend applications.</p><ul class="content-points"><li><strong>Node.js is a JavaScript runtime environment.</strong></li><li>It allows JavaScript code to execute on a computer or server without requiring a browser.</li><li>Node.js uses the V8 JavaScript engine to execute JavaScript.</li><li>Node.js provides APIs for tasks such as files, networking, processes and streams.</li><li>Node.js is widely used for backend APIs and web servers.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Node.js does not make JavaScript a different language. It provides a different runtime environment and APIs for executing JavaScript.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Node.js Runtime vs Browser Runtime</h2></div></div><p class="concept-intro">JavaScript syntax is shared, but the environment around the JavaScript engine is different.</p><ul class="content-points"><li>The browser provides objects such as window, document and location.</li><li>Node.js provides objects and modules for server-side operations.</li><li>A Node.js program normally does not have access to document.</li><li>A browser application normally cannot directly read arbitrary files from the server&#39;s filesystem.</li><li>The same JavaScript language can therefore be used in two very different environments.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The language is JavaScript, but the available runtime APIs depend on where that JavaScript executes.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(typeof window);
+console.log(typeof document);
+
+console.log(process.version);">Copy</button></header><pre><code>console.log(typeof window);
+console.log(typeof document);
+
+console.log(process.version);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>V8 and the Node.js Runtime</h2></div></div><p class="concept-intro">Node.js uses Google&#39;s V8 JavaScript engine, the same major JavaScript engine family used by Chromium-based browsers.</p><ul class="content-points"><li>V8 parses and executes JavaScript.</li><li>V8 uses techniques such as JIT compilation to efficiently execute JavaScript.</li><li>Node.js adds runtime capabilities around the JavaScript engine.</li><li>Node.js also provides native APIs that allow JavaScript to interact with the operating system and network.</li><li>Understanding this separation helps explain why Node.js can access files and networking while browser JavaScript normally cannot.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>V8 executes JavaScript; Node.js supplies the runtime APIs and infrastructure needed for server-side development.</p></div></div><div class="architecture-flow"><article><span>01</span><h3>Your JavaScript</h3><ul><li>Variables</li><li>Functions</li><li>Objects</li><li>Promises</li></ul></article><article><span>02</span><h3>V8</h3><ul><li>Parses JavaScript</li><li>Executes JavaScript</li><li>Optimizes JavaScript</li></ul></article><article><span>03</span><h3>Node.js Runtime</h3><ul><li>Filesystem APIs</li><li>HTTP APIs</li><li>Process APIs</li><li>Streams and networking</li></ul></article><article><span>04</span><h3>Operating System</h3><ul><li>Files</li><li>Network</li><li>Processes</li><li>Hardware resources</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Running JavaScript with Node.js</h2></div></div><p class="concept-intro">Before creating a web server, you should know how to execute a simple JavaScript file using Node.js.</p><ul class="content-points"><li>Install Node.js on the development machine.</li><li>Create a JavaScript file such as app.js.</li><li>Open a terminal in the project directory.</li><li>Run the file with the node command.</li><li>Node executes the JavaScript without opening a browser.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The node command is the basic entry point for executing a JavaScript program through Node.js.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="// app.js
+
+const name = &quot;CodeBhavya&quot;;
+
+console.log(&quot;Hello from &quot; + name);">Copy</button></header><pre><code>// app.js
+
+const name = &quot;CodeBhavya&quot;;
+
+console.log(&quot;Hello from &quot; + name);</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Create app.js</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Open terminal</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Run node app.js</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Node loads the file</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>V8 executes JavaScript</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Console output appears</strong></div></div></div></div><div class="code-box premium-code-box"><header><span>TERMINAL</span><button type="button" data-copy="node app.js">Copy</button></header><pre><code>node app.js</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>The process Object</h2></div></div><p class="concept-intro">Node.js provides a global process object that exposes information and controls related to the currently running Node.js process.</p><ul class="content-points"><li>process.version provides the Node.js version.</li><li>process.platform identifies the operating system platform.</li><li>process.argv contains command-line arguments.</li><li>process.env provides environment variables.</li><li>process.exit() can terminate the current process.</li></ul><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Environment variables often contain configuration or secrets. Never expose sensitive environment values to the browser or commit secret values into source control.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;Node:&quot;, process.version);
+
+console.log(&quot;Platform:&quot;, process.platform);
+
+console.log(&quot;Arguments:&quot;, process.argv);
+
+console.log(
+    &quot;Environment:&quot;,
+    process.env.NODE_ENV
+);">Copy</button></header><pre><code>console.log(&quot;Node:&quot;, process.version);
+
+console.log(&quot;Platform:&quot;, process.platform);
+
+console.log(&quot;Arguments:&quot;, process.argv);
+
+console.log(
+    &quot;Environment:&quot;,
+    process.env.NODE_ENV
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>Modules in Node.js</h2></div></div><p class="concept-intro">Large applications are divided into modules so that code can be organized and reused.</p><ul class="content-points"><li>A module is a reusable unit of code.</li><li>Node.js supports built-in modules such as fs, path, http and os.</li><li>Applications can also create their own modules.</li><li>External packages can be installed through npm.</li><li>Node.js projects commonly use either CommonJS or ES module syntax.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Modules allow a large backend application to be separated into manageable pieces.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="// CommonJS
+
+const path = require(&quot;path&quot;);
+
+console.log(
+    path.basename(&quot;/app/index.js&quot;)
+);">Copy</button></header><pre><code>// CommonJS
+
+const path = require(&quot;path&quot;);
+
+console.log(
+    path.basename(&quot;/app/index.js&quot;)
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>CommonJS and ES Modules</h2></div></div><p class="concept-intro">Node.js applications can use two major module styles. Modern projects frequently use ES module syntax, while many existing Node.js projects still use CommonJS.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Both module systems solve the same broad problem—organizing and sharing code—but use different syntax and configuration.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="// CommonJS
+
+const math = require(&quot;./math&quot;);
+
+console.log(
+    math.add(2, 3)
+);">Copy</button></header><pre><code>// CommonJS
+
+const math = require(&quot;./math&quot;);
+
+console.log(
+    math.add(2, 3)
+);</code></pre></div><div class="code-box premium-code-box"><header><span>SECOND WORKED EXAMPLE</span><button type="button" data-copy="// ES Modules
+
+import { add } from &quot;./math.js&quot;;
+
+console.log(
+    add(2, 3)
+);">Copy</button></header><pre><code>// ES Modules
+
+import { add } from &quot;./math.js&quot;;
+
+console.log(
+    add(2, 3)
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Built-in Modules: path, os and fs</h2></div></div><p class="concept-intro">Node.js includes many built-in modules that provide useful server-side capabilities.</p><ul class="content-points"><li>path helps work with filesystem paths safely.</li><li>os provides operating-system information.</li><li>fs provides filesystem operations.</li><li>Built-in modules do not need to be downloaded from npm.</li><li>Filesystem operations should usually use asynchronous APIs in server applications.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const path = require(&quot;path&quot;);
+const os = require(&quot;os&quot;);
+
+console.log(
+    path.join(
+        &quot;users&quot;,
+        &quot;codebhavya&quot;,
+        &quot;data.txt&quot;
+    )
+);
+
+console.log(
+    os.platform()
+);
+
+console.log(
+    os.cpus().length
+);">Copy</button></header><pre><code>const path = require(&quot;path&quot;);
+const os = require(&quot;os&quot;);
+
+console.log(
+    path.join(
+        &quot;users&quot;,
+        &quot;codebhavya&quot;,
+        &quot;data.txt&quot;
+    )
+);
+
+console.log(
+    os.platform()
+);
+
+console.log(
+    os.cpus().length
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Synchronous vs Asynchronous Operations</h2></div></div><p class="concept-intro">Backend applications frequently perform operations that take time, such as reading files, making network requests or querying databases.</p><ul class="content-points"><li>A synchronous operation blocks the current JavaScript execution until it finishes.</li><li>An asynchronous operation allows other work to continue while the operation is waiting.</li><li>Blocking operations can reduce the ability of a server to handle multiple requests efficiently.</li><li>Node.js is designed around asynchronous, non-blocking I/O.</li><li>Not every operation must be asynchronous, but server-side I/O should be considered carefully.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The important distinction is not simply &#39;fast versus slow&#39;. It is whether the current JavaScript execution is blocked while waiting for I/O.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const fs = require(&quot;fs&quot;);
+
+console.log(&quot;Start&quot;);
+
+const data = fs.readFileSync(
+    &quot;message.txt&quot;,
+    &quot;utf8&quot;
+);
+
+console.log(data);
+
+console.log(&quot;End&quot;);">Copy</button></header><pre><code>const fs = require(&quot;fs&quot;);
+
+console.log(&quot;Start&quot;);
+
+const data = fs.readFileSync(
+    &quot;message.txt&quot;,
+    &quot;utf8&quot;
+);
+
+console.log(data);
+
+console.log(&quot;End&quot;);</code></pre></div><div class="code-box premium-code-box"><header><span>SECOND WORKED EXAMPLE</span><button type="button" data-copy="const fs = require(&quot;fs&quot;);
+
+console.log(&quot;Start&quot;);
+
+fs.readFile(
+    &quot;message.txt&quot;,
+    &quot;utf8&quot;,
+    (error, data) =&gt; {
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        console.log(data);
+    }
+);
+
+console.log(&quot;End&quot;);">Copy</button></header><pre><code>const fs = require(&quot;fs&quot;);
+
+console.log(&quot;Start&quot;);
+
+fs.readFile(
+    &quot;message.txt&quot;,
+    &quot;utf8&quot;,
+    (error, data) =&gt; {
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        console.log(data);
+    }
+);
+
+console.log(&quot;End&quot;);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>The Node.js Event Loop</h2></div></div><p class="concept-intro">Node.js can handle many I/O operations efficiently because asynchronous work can be coordinated through the event loop.</p><ul class="content-points"><li>JavaScript execution in Node.js uses a main event-loop-driven model.</li><li>When asynchronous I/O is started, Node.js can continue processing other work.</li><li>When the asynchronous operation completes, its callback or continuation can be scheduled for execution.</li><li>Promises and timers also participate in the broader event-loop scheduling model.</li><li>CPU-heavy JavaScript can still block the event loop.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A timer of 0 milliseconds does not mean &#39;execute immediately&#39;. It means the callback becomes eligible after the relevant scheduling conditions are met.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="console.log(&quot;A&quot;);
+
+setTimeout(() =&gt; {
+    console.log(&quot;B&quot;);
+}, 0);
+
+console.log(&quot;C&quot;);">Copy</button></header><pre><code>console.log(&quot;A&quot;);
+
+setTimeout(() =&gt; {
+    console.log(&quot;B&quot;);
+}, 0);
+
+console.log(&quot;C&quot;);</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Execute synchronous code</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Schedule timer</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Continue synchronous code</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Synchronous stack becomes clear</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Timer callback becomes eligible</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Callback executes</strong></div></div></div></div><div class="output-box"><strong>Expected result</strong><pre>A
+C
+B</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Callbacks, Promises and async/await</h2></div></div><p class="concept-intro">Node.js applications commonly deal with asynchronous operations. JavaScript provides several ways to represent those operations.</p><ul class="content-points"><li>Callbacks receive a function to execute after an operation completes.</li><li>Promises represent a future result or failure.</li><li>async functions provide a convenient way to work with Promises.</li><li>await pauses that async function until the Promise settles; it does not block the entire Node.js process.</li><li>try/catch can be used with await to handle rejected Promises.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function getUser() {
+    return Promise.resolve({
+        id: 101,
+        name: &quot;Anita&quot;
+    });
+}
+
+async function showUser() {
+
+    try {
+
+        const user = await getUser();
+
+        console.log(user.name);
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+showUser();">Copy</button></header><pre><code>function getUser() {
+    return Promise.resolve({
+        id: 101,
+        name: &quot;Anita&quot;
+    });
+}
+
+async function showUser() {
+
+    try {
+
+        const user = await getUser();
+
+        console.log(user.name);
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+showUser();</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>package.json and npm</h2></div></div><p class="concept-intro">A Node.js project normally needs a package manifest that describes the project, scripts and dependencies.</p><ul class="content-points"><li>package.json describes a Node.js project.</li><li>The dependencies section lists packages required by the application.</li><li>The devDependencies section commonly contains development-only tools.</li><li>The scripts section can define reusable commands.</li><li>npm is the package manager commonly used with Node.js projects.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>package.json becomes the central project manifest for dependencies, scripts and basic project metadata.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="{
+    &quot;name&quot;: &quot;codebhavya-api&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;CodeBhavya backend&quot;,
+    &quot;main&quot;: &quot;server.js&quot;,
+    &quot;scripts&quot;: {
+        &quot;start&quot;: &quot;node server.js&quot;,
+        &quot;dev&quot;: &quot;node --watch server.js&quot;
+    }
+}">Copy</button></header><pre><code>{
+    &quot;name&quot;: &quot;codebhavya-api&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;CodeBhavya backend&quot;,
+    &quot;main&quot;: &quot;server.js&quot;,
+    &quot;scripts&quot;: {
+        &quot;start&quot;: &quot;node server.js&quot;,
+        &quot;dev&quot;: &quot;node --watch server.js&quot;
+    }
+}</code></pre></div><div class="code-box premium-code-box"><header><span>TERMINAL</span><button type="button" data-copy="npm init -y
+
+npm install express
+
+npm run start">Copy</button></header><pre><code>npm init -y
+
+npm install express
+
+npm run start</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Creating Your First HTTP Server</h2></div></div><p class="concept-intro">Node.js includes the built-in http module, which can be used to create a basic HTTP server without Express.</p><ul class="content-points"><li>The http module provides server functionality.</li><li>http.createServer() creates a server.</li><li>The request object describes the incoming HTTP request.</li><li>The response object is used to send a response.</li><li>server.listen() starts listening for incoming connections.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>The HTTP server callback is the bridge between an incoming network request and the response produced by your backend code.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const http = require(&quot;http&quot;);
+
+const server = http.createServer(
+    (req, res) =&gt; {
+
+        res.writeHead(200, {
+            &quot;Content-Type&quot;: &quot;text/plain&quot;
+        });
+
+        res.end(
+            &quot;Hello from CodeBhavya!&quot;
+        );
+    }
+);
+
+server.listen(3000, () =&gt; {
+
+    console.log(
+        &quot;Server running on port 3000&quot;
+    );
+
+});">Copy</button></header><pre><code>const http = require(&quot;http&quot;);
+
+const server = http.createServer(
+    (req, res) =&gt; {
+
+        res.writeHead(200, {
+            &quot;Content-Type&quot;: &quot;text/plain&quot;
+        });
+
+        res.end(
+            &quot;Hello from CodeBhavya!&quot;
+        );
+    }
+);
+
+server.listen(3000, () =&gt; {
+
+    console.log(
+        &quot;Server running on port 3000&quot;
+    );
+
+});</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Client sends HTTP request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Node.js HTTP server receives request</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Request callback executes</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Application prepares response</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Response headers are sent</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Response body is sent</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>Client receives response</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Request and Response Objects</h2></div></div><p class="concept-intro">The request and response objects provide the basic tools required to understand an HTTP interaction.</p><ul class="content-points"><li>req.method identifies the HTTP method.</li><li>req.url identifies the requested URL path and query string.</li><li>req.headers contains request headers.</li><li>res.writeHead() can define response status and headers.</li><li>res.end() finishes the response.</li><li>The response should be completed exactly once for a normal request.</li></ul><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const http = require(&quot;http&quot;);
+
+const server = http.createServer(
+    (req, res) =&gt; {
+
+        console.log(
+            &quot;Method:&quot;,
+            req.method
+        );
+
+        console.log(
+            &quot;URL:&quot;,
+            req.url
+        );
+
+        res.writeHead(200, {
+            &quot;Content-Type&quot;: &quot;text/plain&quot;
+        });
+
+        res.end(
+            &quot;Request received&quot;
+        );
+    }
+);
+
+server.listen(3000);">Copy</button></header><pre><code>const http = require(&quot;http&quot;);
+
+const server = http.createServer(
+    (req, res) =&gt; {
+
+        console.log(
+            &quot;Method:&quot;,
+            req.method
+        );
+
+        console.log(
+            &quot;URL:&quot;,
+            req.url
+        );
+
+        res.writeHead(200, {
+            &quot;Content-Type&quot;: &quot;text/plain&quot;
+        });
+
+        res.end(
+            &quot;Request received&quot;
+        );
+    }
+);
+
+server.listen(3000);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Routing with the Built-in HTTP Module</h2></div></div><p class="concept-intro">Even without Express, a Node.js server can respond differently depending on the HTTP method and URL.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Routing means deciding which server-side code should handle a particular HTTP request.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const http = require(&quot;http&quot;);
+
+const server = http.createServer(
+    (req, res) =&gt; {
+
+        res.setHeader(
+            &quot;Content-Type&quot;,
+            &quot;text/plain&quot;
+        );
+
+        if (
+            req.method === &quot;GET&quot; &amp;&amp;
+            req.url === &quot;/&quot;
+        ) {
+
+            res.statusCode = 200;
+
+            res.end(
+                &quot;Home Page&quot;
+            );
+
+            return;
+        }
+
+        if (
+            req.method === &quot;GET&quot; &amp;&amp;
+            req.url === &quot;/about&quot;
+        ) {
+
+            res.statusCode = 200;
+
+            res.end(
+                &quot;About CodeBhavya&quot;
+            );
+
+            return;
+        }
+
+        res.statusCode = 404;
+
+        res.end(
+            &quot;Page Not Found&quot;
+        );
+    }
+);
+
+server.listen(3000);">Copy</button></header><pre><code>const http = require(&quot;http&quot;);
+
+const server = http.createServer(
+    (req, res) =&gt; {
+
+        res.setHeader(
+            &quot;Content-Type&quot;,
+            &quot;text/plain&quot;
+        );
+
+        if (
+            req.method === &quot;GET&quot; &amp;&amp;
+            req.url === &quot;/&quot;
+        ) {
+
+            res.statusCode = 200;
+
+            res.end(
+                &quot;Home Page&quot;
+            );
+
+            return;
+        }
+
+        if (
+            req.method === &quot;GET&quot; &amp;&amp;
+            req.url === &quot;/about&quot;
+        ) {
+
+            res.statusCode = 200;
+
+            res.end(
+                &quot;About CodeBhavya&quot;
+            );
+
+            return;
+        }
+
+        res.statusCode = 404;
+
+        res.end(
+            &quot;Page Not Found&quot;
+        );
+    }
+);
+
+server.listen(3000);</code></pre></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Trace a Node.js HTTP Server</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>const http = require(&quot;http&quot;);</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>const server = http.createServer(</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>    (req, res) =&gt; {</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>        if (req.url === &quot;/&quot;) {</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>            res.statusCode = 200;</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>            res.end(&quot;Home Page&quot;);</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>            return;</code></div><div data-trace-line="7"><span class="trace-line-number">08</span><code>        }</code></div><div data-trace-line="8"><span class="trace-line-number">09</span><code>        res.statusCode = 404;</code></div><div data-trace-line="9"><span class="trace-line-number">10</span><code>        res.end(&quot;Not Found&quot;);</code></div><div data-trace-line="10"><span class="trace-line-number">11</span><code>    }</code></div><div data-trace-line="11"><span class="trace-line-number">12</span><code>);</code></div><div data-trace-line="12"><span class="trace-line-number">13</span><code>server.listen(3000);</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Node.js</strong><p>A JavaScript runtime used to execute JavaScript outside the browser.</p></div></article><article><b>02</b><div><strong>V8</strong><p>The JavaScript engine used by Node.js to execute JavaScript.</p></div></article><article><b>03</b><div><strong>Runtime</strong><p>The environment that provides the APIs and infrastructure surrounding JavaScript execution.</p></div></article><article><b>04</b><div><strong>process</strong><p>A Node.js global object containing information about the running process.</p></div></article><article><b>05</b><div><strong>Module</strong><p>A reusable unit of application code.</p></div></article><article><b>06</b><div><strong>CommonJS</strong><p>A Node.js module system using require() and module.exports.</p></div></article><article><b>07</b><div><strong>ES Modules</strong><p>JavaScript&#39;s standard import/export module syntax.</p></div></article><article><b>08</b><div><strong>npm</strong><p>A package manager and ecosystem commonly used with Node.js.</p></div></article><article><b>09</b><div><strong>package.json</strong><p>The project manifest containing metadata, scripts and dependencies.</p></div></article><article><b>10</b><div><strong>Event Loop</strong><p>The mechanism that coordinates asynchronous callbacks and other scheduled work.</p></div></article><article><b>11</b><div><strong>HTTP Server</strong><p>A program that receives HTTP requests and sends HTTP responses.</p></div></article><article><b>12</b><div><strong>Request</strong><p>The information sent by a client to a server.</p></div></article><article><b>13</b><div><strong>Response</strong><p>The information returned by a server to a client.</p></div></article><article><b>14</b><div><strong>Non-blocking I/O</strong><p>An approach where JavaScript can continue processing while asynchronous I/O is waiting.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is Node.js?</summary><div class="interview-answer"><p>Node.js is a JavaScript runtime environment that allows JavaScript to execute outside the browser and provides APIs for server-side operations.</p></div></details><details class="interview-item"><summary><span>02</span>Is Node.js a programming language?</summary><div class="interview-answer"><p>No. Node.js is a runtime environment for executing JavaScript.</p></div></details><details class="interview-item"><summary><span>03</span>What JavaScript engine does Node.js use?</summary><div class="interview-answer"><p>Node.js uses the V8 JavaScript engine.</p></div></details><details class="interview-item"><summary><span>04</span>What is the difference between Node.js and browser JavaScript?</summary><div class="interview-answer"><p>They execute JavaScript in different runtime environments. Browsers provide DOM and browser APIs, while Node.js provides server-side APIs such as filesystem, process and HTTP functionality.</p></div></details><details class="interview-item"><summary><span>05</span>What is the event loop?</summary><div class="interview-answer"><p>The event loop coordinates JavaScript execution with asynchronous callbacks and other scheduled work so Node.js can efficiently handle I/O.</p></div></details><details class="interview-item"><summary><span>06</span>Why is blocking code dangerous in a Node.js server?</summary><div class="interview-answer"><p>Long-running synchronous JavaScript can block the event loop and prevent the process from handling other work during that period.</p></div></details><details class="interview-item"><summary><span>07</span>What is package.json?</summary><div class="interview-answer"><p>It is the main project manifest containing information such as project metadata, scripts and dependencies.</p></div></details><details class="interview-item"><summary><span>08</span>What is npm?</summary><div class="interview-answer"><p>npm is a package manager and package ecosystem commonly used to install and manage Node.js dependencies.</p></div></details><details class="interview-item"><summary><span>09</span>What does http.createServer() do?</summary><div class="interview-answer"><p>It creates an HTTP server and accepts a callback that handles incoming requests.</p></div></details><details class="interview-item"><summary><span>10</span>What are req and res?</summary><div class="interview-answer"><p>req represents the incoming HTTP request and res represents the response that the server sends back.</p></div></details><details class="interview-item"><summary><span>11</span>What is the difference between require and import?</summary><div class="interview-answer"><p>require() belongs to the CommonJS module style, while import/export belongs to the ES module syntax.</p></div></details><details class="interview-item"><summary><span>12</span>Does await block the entire Node.js server?</summary><div class="interview-answer"><p>No. await pauses the current async function until its Promise settles; it does not mean that the entire Node.js event loop is synchronously blocked.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span></header><h3>First Node Program</h3><p>Create app.js that prints the CodeBhavya name, your Node.js version and the current operating-system platform.</p></article><article class="practice-card"><header><span>CHALLENGE 02</span></header><h3>Command-Line Arguments</h3><p>Run a Node.js program using a name supplied from the terminal and print a greeting using process.argv.</p></article><article class="practice-card"><header><span>CHALLENGE 03</span></header><h3>Module Practice</h3><p>Create a math module containing add() and multiply() functions and import them into another Node.js file.</p></article><article class="practice-card"><header><span>CHALLENGE 04</span></header><h3>HTTP Server</h3><p>Create a Node.js HTTP server on port 3000 that returns &#39;Welcome to CodeBhavya&#39; for GET /.</p></article><article class="practice-card"><header><span>CHALLENGE 05</span></header><h3>Simple Routing</h3><p>Add GET /about and GET /contact routes. Return a 404 response for unknown routes.</p></article><article class="practice-card"><header><span>CHALLENGE 06</span></header><h3>Async Investigation</h3><p>Write a program containing normal console output and a setTimeout callback. Predict the output order before running it.</p></article><article class="practice-card"><header><span>CHALLENGE 07</span></header><h3>package.json Practice</h3><p>Initialize a Node.js project and create a start script that executes server.js.</p></article><article class="practice-card"><header><span>CHALLENGE 08</span></header><h3>Performance Decision</h3><p>A server reads a very large file synchronously for every request. Explain why this may become a scalability problem.</p></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is Node.js?</h3><div class="quiz-options"><button type="button" data-option="0">A. A database</button><button type="button" data-option="1">B. A JavaScript runtime</button><button type="button" data-option="2">C. A CSS framework</button><button type="button" data-option="3">D. A browser</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which JavaScript engine does Node.js use?</h3><div class="quiz-options"><button type="button" data-option="0">A. V8</button><button type="button" data-option="1">B. Gecko</button><button type="button" data-option="2">C. WebKit</button><button type="button" data-option="3">D. SpiderMonkey only</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which object provides information about the current Node.js process?</h3><div class="quiz-options"><button type="button" data-option="0">A. window</button><button type="button" data-option="1">B. document</button><button type="button" data-option="2">C. process</button><button type="button" data-option="3">D. browser</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which module is used to create a basic HTTP server?</h3><div class="quiz-options"><button type="button" data-option="0">A. http</button><button type="button" data-option="1">B. html</button><button type="button" data-option="2">C. browser</button><button type="button" data-option="3">D. dom</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What does package.json normally contain?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only HTML</button><button type="button" data-option="1">B. Only CSS</button><button type="button" data-option="2">C. Project metadata, scripts and dependencies</button><button type="button" data-option="3">D. Browser cookies</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which syntax belongs to CommonJS?</h3><div class="quiz-options"><button type="button" data-option="0">A. require()</button><button type="button" data-option="1">B. document.querySelector()</button><button type="button" data-option="2">C. className</button><button type="button" data-option="3">D. window.alert()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>What is a major risk of long synchronous operations in a Node.js server?</h3><div class="quiz-options"><button type="button" data-option="0">A. They automatically improve concurrency</button><button type="button" data-option="1">B. They can block the event loop</button><button type="button" data-option="2">C. They remove all HTTP headers</button><button type="button" data-option="3">D. They disable JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What does req.url generally provide?</h3><div class="quiz-options"><button type="button" data-option="0">A. The requested URL</button><button type="button" data-option="1">B. The database password</button><button type="button" data-option="2">C. The server CPU temperature</button><button type="button" data-option="3">D. The Node.js version</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>What does res.end() do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Starts npm</button><button type="button" data-option="1">B. Finishes the HTTP response</button><button type="button" data-option="2">C. Installs Node.js</button><button type="button" data-option="3">D. Creates a database</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Which statement about await is correct?</h3><div class="quiz-options"><button type="button" data-option="0">A. It blocks the entire Node.js process</button><button type="button" data-option="1">B. It pauses the current async function until the Promise settles</button><button type="button" data-option="2">C. It removes the event loop</button><button type="button" data-option="3">D. It only works in CSS</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Node.js</strong><p></p></article><article><strong>Runtime</strong><p></p></article><article><strong>V8</strong><p></p></article><article><strong>process</strong><p></p></article><article><strong>Module</strong><p></p></article><article><strong>CommonJS</strong><p></p></article><article><strong>ES Module</strong><p></p></article><article><strong>npm</strong><p></p></article><article><strong>package.json</strong><p></p></article><article><strong>Event Loop</strong><p></p></article><article><strong>Non-blocking I/O</strong><p></p></article><article><strong>HTTP Server</strong><p></p></article><article><strong>Request</strong><p></p></article><article><strong>Response</strong><p></p></article><article><strong>Routing</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Node.js Runtime &amp; Server-Side JavaScript Completed</h2><p>You now understand how JavaScript moves from the browser into the backend world. You can explain the Node.js runtime, modules, npm, asynchronous execution, the event loop and basic HTTP servers.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 19 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=18">← Previous level</a><a href="lesson.html?level=20">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn CSS box sizing, padding, borders, margins, flow, overflow and positioning with worked calculations, a visualizer, interactive lab and MCQs.">
+
+    
+
+    <title>
+        Level 12 — CSS Box Model and Layout | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/css-box-model-layout.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt12-skip-link" href="#wt12Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt12Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 12</div><div class="level-badge">LEVEL 12 · CSS</div><h1>CSS Box Model and Layout</h1><p class="wt-hero-description">Calculate component sizes, follow the page flow and keep every explanation readable.</p><div class="wt-hero-meta"><span>📦 Box model</span><span>📏 Sizing</span><span>🎯 Beginner → Intermediate</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 11 explained which <strong class="wt-content-key">CSS</strong> declarations apply. </li><li>This lesson explains how their sizes and layout choices affect the space a component needs. </li><li>You will separate content, padding, border and margin; compare box-sizing modes; follow normal flow; and recognize when overflow or positioning is causing a problem.</li></ul><ul class="wt-content-points"><li>Build a workshop card with predictable dimensions and enough room for readable content. </li><li>Use a controlled box lab to compare declared width with the actual border-box width, then explain a layout issue without hiding the content.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Box parts</h3><p>Identify each layer and its purpose.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Sizing</h3><p>Calculate a simple horizontal box and use size constraints.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌊</span><h3>Flow</h3><p>Understand how ordinary blocks and inline content are arranged.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Diagnosis</h3><p>Check overflow, positioning and containing space before adding overrides.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>The Box Model — Four Different Areas</h2><ul class="wt-content-points"><li>For the block-box examples here, think of four nested areas. </li><li>Content is the space for text or other children. </li><li>Padding is the space between that content and the border. </li><li>The border surrounds the padded area. </li><li>Margin is space outside the border.</li></ul><ul class="wt-content-points"><li>These areas answer different questions. </li><li>Increase padding when text is too close to the card edge. </li><li>Increase a margin or a layout gap when separate cards are too close to each other. </li><li>Changing one can affect the required size, but it does not make the other areas interchangeable.</li></ul><ul class="wt-content-points"><li>A background ordinarily paints behind content and padding and extends under the border by default; margin itself is outside that background. </li><li>The visible color behind a margin often comes from another element. </li><li>A margin is not an extra colored wall attached to the card.</li></ul><figure class="wt-diagram"><figcaption>Read from inside to outside</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📝</span><strong>Content</strong><p>The actual text or child content area.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛋️</span><strong>Padding + border</strong><p>Breathing room around content, then a visible or invisible boundary.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">↔️</span><strong>Margin</strong><p>Outside spacing relative to neighboring content.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">📝</span>Content Dimensions — State What width Means</h2><ul class="wt-content-points"><li>In the ordinary content-box mode, width specifies the content width. </li><li>The <strong class="wt-content-key">browser</strong> then adds horizontal padding and borders to produce the border-box width. </li><li>A 200px content width does not automatically mean a 200px card from outside border to outside border.</li></ul><ul class="wt-content-points"><li>The example calculations use a block box, symmetric pixel values, a definite width and no min/max constraints or layout-driven shrinking. </li><li>Those assumptions keep the arithmetic clear. </li><li>A real layout can impose further constraints that change the used size.</li></ul><div class="code-block"><pre><code>.card {
+  box-sizing: content-box;
+  width: 200px;
+  padding: 20px;
+  border: 4px solid #173451;
+}</code></pre></div><ul class="wt-content-points"><li><strong>Predict:</strong> 200px content plus 40px horizontal padding plus 8px horizontal border produces a 248px border box. </li><li>Margin, if any, is considered outside that border box.</li></ul><ul class="wt-content-points"><li>Height also depends on content, line wrapping and sizing rules. </li><li>Do not infer a fixed height merely from a stated width; a narrower text area can wrap into more lines.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🛋️</span>Padding — Space Inside the Boundary</h2><ul class="wt-content-points"><li>Padding separates content from the border. </li><li>It is useful for readable panels, buttons and input controls. </li><li>A four-value padding shorthand follows top, right, bottom and left. </li><li>Two values mean vertical then horizontal padding; one value applies to all four sides.</li></ul><div class="code-block"><pre><code>.notice { padding: 12px 20px; }
+.card { padding: 10px 16px 20px 24px; }</code></pre></div><ul class="wt-content-points"><li>Padding contributes to the box dimensions. </li><li>In content-box mode, adding it enlarges the border box beyond a stated content width. </li><li>In border-box mode, it consumes space within the stated border-box width and can reduce the space left for the content.</li></ul><ul class="wt-content-points"><li>Padding cannot be negative. </li><li>When padding needs to depend on writing direction, logical properties such as padding-inline and padding-block express inline and block axes rather than fixed left/right assumptions. </li><li>Use physical directions for the arithmetic in this lesson and logical properties where the component needs to adapt.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>Borders and Outlines — Different Purposes</h2><ul class="wt-content-points"><li>A border surrounds the content and padding. </li><li>Its width contributes to the box dimensions; its style and color define its appearance. </li><li>A border declaration normally needs a visible style, such as solid, to paint a visible boundary.</li></ul><div class="code-block"><pre><code>.card { border: 2px solid #bdd5e6; border-radius: 12px; }
+button:focus-visible { outline: 3px solid #126d96; outline-offset: 3px; }</code></pre></div><ul class="wt-content-points"><li>An outline does not occupy space in the <strong class="wt-content-key">box model</strong> in the same way a border does. </li><li>It is useful for focus indicators because showing focus need not push neighboring content. </li><li>Check that an outline remains visible rather than being clipped by a surrounding overflow rule.</li></ul><ul class="wt-content-points"><li>Border-radius rounds corners; it does not change an element’s <strong class="wt-content-key">semantic</strong> meaning. </li><li>A rounded div remains a div. </li><li>Increasing border width can change a content-box card’s outer size, so inspect it when two components unexpectedly stop fitting side by side.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">↔️</span>Margins, Gaps and Collapsing</h2><ul class="wt-content-points"><li>Margins separate a box from other content. </li><li>A layout gap separates items or tracks in a supported layout such as <strong class="wt-content-key">Flexbox</strong> or <strong class="wt-content-key">Grid</strong>. </li><li>Decide whether spacing belongs to an individual component or to the container arranging the components.</li></ul><ul class="wt-content-points"><li>In normal block flow, some vertical margins can collapse rather than add. </li><li>Two adjacent positive vertical margins of 20px and 30px can produce a 30px collapsed margin under the relevant conditions. </li><li>Horizontal margins do not collapse in that way, and margins of flex or <strong class="wt-content-key">grid</strong> items do not collapse with each other.</li></ul><ul class="wt-content-points"><li>Margin collapsing also has parent/child and empty-block cases. </li><li>Do not memorize “all margins collapse.” Borders, padding and formatting contexts can change the situation. </li><li>If a parent appears to move when its first child gains a top margin, inspect those conditions.</li></ul><div class="code-block"><pre><code>.stack { display: flex; flex-direction: column; gap: 16px; }
+.stack &gt; .card { margin: 0; }</code></pre></div><ul class="wt-content-points"><li>This example assigns spacing to the container. </li><li>It avoids relying on adjacent child vertical margins for the stack. </li><li>A later lesson will explore <strong class="wt-content-key">Flexbox</strong> alignment in detail.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>Worked Calculation — A Content-Box Card</h2><ul class="wt-content-points"><li>Use the same values consistently: width 200px, padding 20px on each side, border 4px on each side and margin 10px on each side. </li><li>There is no layout-driven shrinking or min/max constraint in this example.</li></ul><div class="code-block"><pre><code>Content width = 200px
+Horizontal padding = 20px + 20px = 40px
+Horizontal border = 4px + 4px = 8px
+Border-box width = 200px + 40px + 8px = 248px
+Border box plus horizontal margins = 248px + 10px + 10px = 268px</code></pre></div><ul class="wt-content-points"><li>The last line measures the horizontal space for this simple box plus its two margins. </li><li>It is not a universal formula for collapsed vertical spacing or every layout algorithm.</li></ul><ul class="wt-content-points"><li>If you set width: 100% on a content-box child and add padding and borders, the required border box can exceed the intended containing width. </li><li>This is a common reason a panel appears wider than its parent. </li><li>Check the box-sizing mode rather than simply hiding the overflow.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">📐</span>border-box — Include Padding and Border in the Width</h2><ul class="wt-content-points"><li>With box-sizing: border-box, the declared width describes the border box. </li><li>Padding and border fit inside that declared size. </li><li>Margin remains outside it. </li><li>Using the previous values, a 200px border box leaves 152px for content after subtracting 40px padding and 8px border.</li></ul><div class="code-block"><pre><code>.card {
+  box-sizing: border-box;
+  width: 200px;
+  padding: 20px;
+  border: 4px solid #173451;
+  margin: 10px;
+}
+/* Content width: 200 - 40 - 8 = 152px
+   Border box + horizontal margins: 200 + 20 = 220px */</code></pre></div><ul class="wt-content-points"><li>Border-box does not include margin and does not make oversized padding disappear. </li><li>The content size cannot become negative; extremely large padding and border can still force a larger minimum border box. </li><li>The lab uses values well within the declared width so the simple subtraction is valid.</li></ul><ul class="wt-content-points"><li>A common project foundation is box-sizing: border-box for elements and pseudo-elements. </li><li>That is a chosen styling convention, not a claim that every <strong class="wt-content-key">browser</strong> element starts in exactly the same mode.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">📏</span>Width Constraints — Flexible Does Not Mean Unbounded</h2><ul class="wt-content-points"><li>Width, min-width and max-width describe related constraints. </li><li>A component may grow to the available size but stop at a sensible maximum. </li><li>Width: 100% with border-box helps a simple card include its padding and border within the intended width.</li></ul><div class="code-block"><pre><code>.card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  padding: 1.25rem;
+}</code></pre></div><ul class="wt-content-points"><li>Auto inline margins can center this constrained block when there is available inline space in this ordinary case. </li><li>They are not a universal “center anything” switch across all layouts.</li></ul><ul class="wt-content-points"><li>Min-width can prevent shrinking. </li><li>A long unbroken token can also influence a flex or <strong class="wt-content-key">grid</strong> item’s automatic minimum size. </li><li>When a column refuses to shrink, inspect the minimum and the content. </li><li>A targeted min-width: 0 on the relevant item can help it shrink; text wrapping or a local scroller may still be needed.</li></ul><h3>Height, Wrapping and Content Growth</h3><ul class="wt-content-points"><li>Let ordinary text panels grow with their content. </li><li>A fixed height that looks correct for one sentence can clip a longer explanation, a translated label or enlarged text. </li><li>Use min-height when a <strong class="wt-content-key">baseline</strong> size is useful while still allowing growth.</li></ul><div class="code-block"><pre><code>.explanation { min-height: 8rem; height: auto; }
+.long-token { overflow-wrap: anywhere; }</code></pre></div><ul class="wt-content-points"><li>A height percentage needs a relevant definite basis under the applicable layout rules. </li><li>Height: 100% is not always “fill the screen.” Viewport units describe viewport-related sizes, while parent-based percentages follow their own resolution rules.</li></ul><ul class="wt-content-points"><li>Wrapping affects height because the same text can occupy more lines in a narrower box. </li><li>Verify both the width and the readable content flow before trying to force a panel into a matching fixed height. </li><li>For examples with large code lines or tables, a local horizontal scroller may be more suitable than forcing every token to wrap.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🌊</span>Normal Flow — Start with the Document Order</h2><ul class="wt-content-points"><li>Normal flow is the ordinary arrangement of content before you introduce other layout or positioning behavior. </li><li>Block boxes in typical horizontal writing appear one after another in the block direction. </li><li>Inline content flows along lines and wraps when the line needs more room.</li></ul><ul class="wt-content-points"><li>A paragraph can become taller when its text wraps, and following content naturally moves down. </li><li>This behavior is useful for learning pages because explanations vary in length. </li><li>Absolute positioning every paragraph removes that cooperation and makes overlap likely.</li></ul><ul class="wt-content-points"><li>Keep a logical source order for reading and <strong class="wt-content-key">keyboard</strong> use. </li><li>Visual rearrangement alone does not necessarily change the order encountered by assistive technology or focus. </li><li>A good layout starts with meaningful <strong class="wt-content-key">HTML</strong> in a sensible sequence.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>Block, Inline and Inline-Block</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Block</h3><p>A typical block participates as a block in normal flow. Width and height can apply under the relevant box rules.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔠</span><h3>Inline</h3><ul class="wt-content-points"><li>Text-level content participates in line layout. </li><li>Ordinary non-replaced inline boxes do not treat width/height like a block box.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Inline-block</h3><p>A box participates in the inline flow while providing a box that can accept dimensions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Context</h3><p>The element type and display value are related but different. A <strong class="wt-content-key">semantic</strong> element can have a changed display value.</p></article></div><div class="code-block"><pre><code>.badge { display: inline-block; padding: 4px 10px; }</code></pre></div><ul class="wt-content-points"><li>Images and some other replaced elements have additional sizing behavior. </li><li>Avoid turning the shorthand “inline ignores size” into a rule for every possible element. </li><li>For text spans, use an appropriate box type when a real sized box is needed.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>display — Outer Flow and Inner Layout</h2><ul class="wt-content-points"><li>Display affects how a box participates in its surrounding layout and how its children are arranged. </li><li>A flex or <strong class="wt-content-key">grid</strong> container introduces a layout for its direct items, while the container still has a role in its parent’s layout.</li></ul><ul class="wt-content-points"><li>Display: none removes the element’s boxes from layout. </li><li>Visibility: hidden normally preserves its layout space while hiding it. </li><li>Opacity: 0 makes it transparent but does not by itself remove its layout, focusability or interaction. </li><li>These differences matter for hidden panels and <strong class="wt-content-key">keyboard</strong> controls.</li></ul><div class="code-block"><pre><code>.actions { display: flex; gap: 12px; }
+.cards { display: grid; gap: 16px; }</code></pre></div><ul class="wt-content-points"><li>A visually hidden control must not remain an unexplained <strong class="wt-content-key">keyboard</strong> stop. </li><li>Choose the appropriate hidden-state behavior for the component and keep its accessible state synchronized. </li><li><strong class="wt-content-key">CSS</strong> appearance alone is not an <strong class="wt-content-key">accessibility</strong> strategy.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">📜</span>Overflow — Preserve Access to the Content</h2><ul class="wt-content-points"><li>Overflow occurs when content extends beyond an applicable box. </li><li>Overflow: visible permits it to extend; hidden clips it; auto can provide scrolling when needed. </li><li>Clip also clips, with different scrolling behavior from hidden. </li><li>Choose based on how the learner should reach the content.</li></ul><ul class="wt-content-points"><li>A table or long code sample can use a local horizontal scrolling wrapper. </li><li>That avoids making the whole page wider while preserving the information. </li><li>Make the scroller usable by <strong class="wt-content-key">keyboard</strong> where needed and keep a visible focus indicator.</li></ul><div class="code-block"><pre><code>.code-scroller { max-width: 100%; overflow-x: auto; }
+.code-scroller:focus-visible { outline: 3px solid #126d96; }
+
+&lt;!-- HTML --&gt;
+&lt;div class=&quot;code-scroller&quot; tabindex=&quot;0&quot; aria-label=&quot;Scrollable code example&quot;&gt;
+  &lt;pre&gt;Long code example goes here.&lt;/pre&gt;
+&lt;/div&gt;</code></pre></div><ul class="wt-content-points"><li>Do not use overflow: hidden as a general repair for unreadable or oversized teaching content. </li><li>First find the incorrect size, automatic minimum or unbroken token. </li><li>Clipping may remove the exact information the learner needs to read.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">📍</span>Positioning — Flow, Containing Blocks and Scrolling</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>static / relative</h3><p>Static uses normal positioning. Relative offsets a box while its original place in flow remains reserved.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📌</span><h3>absolute</h3><ul class="wt-content-points"><li>Takes the box out of normal flow and positions it using its containing block. </li><li>Other content does not automatically reserve its place.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧷</span><h3>fixed</h3><p>Usually uses the viewport as its reference, but some ancestors can establish a different containing block.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↕️</span><h3>sticky</h3><p>Participates in flow, then is constrained by its scrolling context and containing area when an applicable inset is set.</p></article></div><div class="code-block"><pre><code>.card { position: relative; }
+.card .badge { position: absolute; top: 12px; right: 12px; }
+.section-label { position: sticky; top: 1rem; }</code></pre></div><ul class="wt-content-points"><li>The relative card establishes the expected reference for the badge in this simple example. </li><li>Leave enough room so the badge does not cover the title. </li><li>For sticky behavior, inspect the scroll container, available travel space and inset. </li><li>An ancestor’s overflow can change which scrolling context matters.</li></ul><ul class="wt-content-points"><li>Z-index orders boxes within stacking rules; a huge number does not automatically escape a lower ancestor stacking context. </li><li>For a lesson header, measure the header and reserve room for content instead of piling larger z-index values onto overlapping panels.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🗂️</span>Choosing a Layout — Flow First, Flexbox or Grid When Needed</h2><ul class="wt-content-points"><li>Use ordinary flow for a reading sequence. </li><li>Use <strong class="wt-content-key">Flexbox</strong> when arranging items along a main axis is central, such as a row of actions or a vertical stack. </li><li>Use <strong class="wt-content-key">Grid</strong> when you want an explicit track arrangement across rows and columns. </li><li>Both can wrap or create additional structure, so “one-dimensional” and “two-dimensional” describe their design focus rather than an absolute limit on where boxes can appear.</li></ul><ul class="wt-content-points"><li>For a row of buttons, the parent can supply display: flex, gap and wrapping. </li><li>For a card collection, a <strong class="wt-content-key">grid</strong> can supply column tracks and gaps. </li><li>Do not use absolute positioning to imitate a whole ordinary card layout unless the task genuinely needs that arrangement.</li></ul><div class="code-block"><pre><code>.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }</code></pre></div><ul class="wt-content-points"><li>This is an introduction to choosing the tool. </li><li>Level 13 will develop <strong class="wt-content-key">Flexbox</strong>, <strong class="wt-content-key">Grid</strong> and responsive design in detail, including alignment and how the track layout changes on smaller screens.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Build the Box</h2><p>Follow the content-box arithmetic, then compare the same declared width in border-box mode. Select a stage or use playback. Each stage states the meaning of the measured width so content size and outside space are not confused.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="box">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>CSS BOX MODEL TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📝</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Start with the content width</h3><p data-trace-description>This content-box example begins with a definite 200px content width.</p></div><pre class="trace-code"><code data-trace-code>Content width = 200px</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Content" aria-pressed="true"><span>01</span><strong>Content</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Padding" aria-pressed="false"><span>02</span><strong>Padding</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Border" aria-pressed="false"><span>03</span><strong>Border</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Margin" aria-pressed="false"><span>04</span><strong>Margin</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Compare" aria-pressed="false"><span>05</span><strong>Compare</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>The demonstration uses symmetric pixel values with no layout shrinking or min/max constraints.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Box Size Lab</h2><ul class="wt-content-points"><li>Change the sizing mode and symmetric horizontal values. </li><li>The preview draws a local block box; the calculated result describes the stated model. </li><li>It is not a measurement of every possible real <strong class="wt-content-key">CSS</strong> layout. </li><li>This lab deliberately avoids shrinking, min/max constraints and negative content widths.</li></ul><ul class="wt-content-points"><li>The pale outer wrapper helps you see the margin space. </li><li>The cyan area is padding, the dark line is the border and the blue inner area is content. </li><li>If the preview is narrower than the example, scroll inside the preview to see it; the fixed sizes are teaching values, not a suggested mobile page layout.</li></ul><div class="wt9-demo"><label for="wt12Mode">Sizing mode</label><select id="wt12Mode"><option value="content-box">content-box</option><option value="border-box">border-box</option></select><label for="wt12Width">Declared width</label><select id="wt12Width"><option value="160">160px</option><option value="200" selected>200px</option><option value="240">240px</option></select><label for="wt12Padding">Padding on each side</label><select id="wt12Padding"><option value="0">0px</option><option value="10">10px</option><option value="20" selected>20px</option></select><label for="wt12Border">Border on each side</label><select id="wt12Border"><option value="0">0px</option><option value="2">2px</option><option value="4" selected>4px</option></select><label for="wt12Margin">Margin on each side</label><select id="wt12Margin"><option value="0">0px</option><option value="10" selected>10px</option><option value="20">20px</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt12Apply">Build box</button><button type="button" class="secondary-button" id="wt12Reset">Reset lab</button></div><p id="wt12Status" role="status">Default content-box example: 200px content, 248px border box and 268px including horizontal margins.</p><iframe id="wt12Preview" title="CSS box model example preview" sandbox="" loading="lazy"></iframe><h3>Calculated widths for this example</h3><pre class="trace-code"><code id="wt12Metrics"></code></pre><h3>CSS supplied to the preview</h3><pre class="trace-code"><code id="wt12Rules"></code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Debugging Layout — Find the Constraint</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Measure the right area</h3><p>Inspect content, padding, border and margin separately in the <strong class="wt-content-key">browser</strong> box-model tools.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Check constraints</h3><p>Look at width, min/max sizes, box-sizing and automatic minimums.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌊</span><h3>Follow the flow</h3><p>Find out whether the box is in normal flow, a flex/<strong class="wt-content-key">grid</strong> item or absolutely positioned.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📜</span><h3>Preserve information</h3><p>Locate the overflow cause before clipping or hiding the content.</p></article></div><ul class="wt-content-points"><li>For a card wider than its parent, check whether width: 100% describes content-box width plus extra padding and border. </li><li>For a column that will not shrink, check an automatic minimum and long unbroken content. </li><li>For a footer covered by another panel, check whether a positioned element has left normal flow.</li></ul><ul class="wt-content-points"><li>For a sticky label that does not stick as expected, inspect the relevant ancestor scrolling context and whether there is room to move. </li><li>For clipped text after a font increase, inspect a fixed height or overflow rule.</li></ul><ul class="wt-content-points"><li>Change one condition at a time and verify the user-visible result. </li><li>Avoid making an entire course header or footer part of a broad component override. </li><li>A successful fix keeps the learning content readable and the page navigable.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does border-box include margin?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does border-box include margin?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. The declared border-box width includes content, padding and border. Margin remains outside it.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why can width: 100% overflow in content-box mode?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why can width: 100% overflow in content-box mode?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The declared width describes content. Horizontal padding and borders can add to that width and exceed the intended container space.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is padding the same as margin?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is padding the same as margin?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Padding is inside the border around content; margin is outside the border relative to surrounding boxes.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Do two adjacent vertical margins always add?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Do two adjacent vertical margins always add?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Some vertical margins collapse in normal block flow. The conditions matter; horizontal margins and flex/grid item margins do not follow that same collapsing rule.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does absolute positioning reserve space for its box?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does absolute positioning reserve space for its box?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It removes the box from normal flow, so other flow content does not automatically reserve its space.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why might a flex item refuse to shrink?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why might a flex item refuse to shrink?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Its automatic minimum or long unbroken content may constrain it. Inspect the relevant item; a targeted min-width: 0 and suitable wrapping or scrolling may help.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why is overflow: hidden a poor general fix for a lesson panel?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why is overflow: hidden a poor general fix for a lesson panel?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It may clip the explanation. Find the incorrect sizing or content constraint and preserve a way to read all information.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does a sticky element need?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does a sticky element need?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A relevant non-auto inset, an appropriate scrolling context and room within its containing constraints. Ancestor overflow can affect the behavior.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Calculate and Explain</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Content is surrounded by padding and border, with margin outside the border."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which sequence goes from inside to outside?</h3><div class="wt8-options"><button type="button" class="wt8-option">Margin, border, padding, content</button><button type="button" class="wt8-option">Content, padding, border, margin</button><button type="button" class="wt8-option">Content, margin, padding, border</button><button type="button" class="wt8-option">Border, content, margin, padding</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Add 200 + 40 horizontal padding + 8 horizontal border = 248px; margins are separate."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. A content-box width is 200px, padding is 20px per side and border is 4px per side. What is the border-box width?</h3><div class="wt8-options"><button type="button" class="wt8-option">200px</button><button type="button" class="wt8-option">240px</button><button type="button" class="wt8-option">248px</button><button type="button" class="wt8-option">268px</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The 248px border box plus 20px horizontal margins is 268px."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. The same box has 10px margins per side. What is its simple horizontal border-plus-margin space?</h3><div class="wt8-options"><button type="button" class="wt8-option">268px</button><button type="button" class="wt8-option">248px</button><button type="button" class="wt8-option">220px</button><button type="button" class="wt8-option">200px</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Under the stated simple assumptions, 200 - 40 - 8 = 152px."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. In border-box mode with width 200px, padding 20px per side and border 4px per side, what is the content width here?</h3><div class="wt8-options"><button type="button" class="wt8-option">200px</button><button type="button" class="wt8-option">248px</button><button type="button" class="wt8-option">160px</button><button type="button" class="wt8-option">152px</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Border-box includes padding and border, while margin remains outside."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which remains outside a border-box width?</h3><div class="wt8-options"><button type="button" class="wt8-option">Padding</button><button type="button" class="wt8-option">Margin</button><button type="button" class="wt8-option">Border</button><button type="button" class="wt8-option">Content</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The two-value shorthand sets vertical sides first and horizontal sides second."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What does padding: 12px 20px mean?</h3><div class="wt8-options"><button type="button" class="wt8-option">12px left, 20px right</button><button type="button" class="wt8-option">12px on all sides</button><button type="button" class="wt8-option">12px vertical and 20px horizontal</button><button type="button" class="wt8-option">20px top only</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Collapsing has specific conditions; it is not a universal rule for all margin directions or layout modes."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. Which statement about margin collapsing is correct?</h3><div class="wt8-options"><button type="button" class="wt8-option">All margins always collapse</button><button type="button" class="wt8-option">Horizontal margins always collapse</button><button type="button" class="wt8-option">Flex item margins always collapse</button><button type="button" class="wt8-option">Some vertical margins collapse in normal block flow</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Other flow content does not automatically reserve the absolutely positioned box’s space."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What happens to an absolutely positioned box’s normal-flow reservation?</h3><div class="wt8-options"><button type="button" class="wt8-option">It is removed from normal flow</button><button type="button" class="wt8-option">It automatically doubles</button><button type="button" class="wt8-option">It becomes margin</button><button type="button" class="wt8-option">It is always preserved</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="A local scroller can preserve content without widening the whole page; check keyboard usability."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which approach preserves an oversized code example?</h3><div class="wt8-options"><button type="button" class="wt8-option">Clip every panel globally</button><button type="button" class="wt8-option">Use an appropriate local scrolling wrapper</button><button type="button" class="wt8-option">Delete the longest line</button><button type="button" class="wt8-option">Make all text 8px</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Visibility hidden normally keeps the box space while hiding it, unlike display none."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Which hidden state normally preserves layout space?</h3><div class="wt8-options"><button type="button" class="wt8-option">display: none</button><button type="button" class="wt8-option">Removing the element</button><button type="button" class="wt8-option">visibility: hidden</button><button type="button" class="wt8-option">Deleting its content</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Wrapping and text growth can exceed a fixed height, especially with clipping overflow."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Why can a fixed-height explanation become unreadable?</h3><div class="wt8-options"><button type="button" class="wt8-option">All text has a constant height</button><button type="button" class="wt8-option">Padding never matters</button><button type="button" class="wt8-option">Borders create headings</button><button type="button" class="wt8-option">More text or enlarged text can be clipped</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Minimum-size constraints and content can limit shrinking; inspect them before applying a targeted fix."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Which is a suitable next step when a column refuses to shrink?</h3><div class="wt8-options"><button type="button" class="wt8-option">Inspect its minimum size and unbroken content</button><button type="button" class="wt8-option">Add z-index: 999999</button><button type="button" class="wt8-option">Hide the whole page</button><button type="button" class="wt8-option">Convert every element to absolute positioning</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt12QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Specific Dimensions and Behaviors</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧮</span><h3>Content-box calculation</h3><p>Use width 160px, padding 10px and border 2px per side. Expected border box: 184px; with 10px margins per side: 204px.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📐</span><h3>Border-box comparison</h3><p>Keep those values but set border-box. Expected content width: 136px; border box: 160px; with horizontal margins: 180px.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛋️</span><h3>Padding boundary</h3><p>Set padding to 0px, then 20px with content-box width 200px and border 4px. Expected border widths: 208px then 248px.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↔️</span><h3>Margin separation</h3><ul class="wt-content-points"><li>Change only margin from 0px to 20px per side. </li><li>Expected: content and border widths are unchanged; horizontal outside spacing increases by 40px.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📜</span><h3>Long code</h3><ul class="wt-content-points"><li>Put a long code line in a local overflow-x auto wrapper. </li><li>Expected: information remains available inside the wrapper without making the whole lesson wider.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧷</span><h3>Position comparison</h3><ul class="wt-content-points"><li>Offset a relative badge, then compare an absolute badge inside a relative card. </li><li>Expected: relative retains its flow place; absolute needs deliberate space planning.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Text growth</h3><p>Double an explanation’s text length and increase font size. Expected: an auto-height panel grows rather than clips.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌊</span><h3>Reading order</h3><ul class="wt-content-points"><li>Build a title, explanation, lab and summary in source order. </li><li>Expected: layout styling preserves a useful reading and <strong class="wt-content-key">keyboard</strong> sequence.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Layers:</strong> Content → padding → border → margin.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📏</span><strong>Content-box:</strong> Add horizontal padding and border to a declared content width.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📐</span><strong>Border-box:</strong> Padding and border fit within the declared border-box width.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">↔️</span><strong>Margin:</strong> Outside spacing is not included in border-box width.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛋️</span><strong>Padding:</strong> Internal breathing room also affects dimensions.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌊</span><strong>Flow:</strong> Ordinary content can grow and move following content naturally.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧵</span><strong>Growth:</strong> Prefer flexible text panels to arbitrary fixed heights.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📜</span><strong>Overflow:</strong> Keep a usable route to all content.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📍</span><strong>Position:</strong> Absolute and fixed positioning do not reserve ordinary flow space.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Diagnosis:</strong> Inspect constraints, context and actual box dimensions.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Content box"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Content box</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Content box</h4><p>The area allocated to the element’s content.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Padding"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Padding</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Padding</h4><p>Space between the content and the border.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Border box"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Border box</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Border box</h4><p>The area including content, padding and border.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Margin"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Margin</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Margin</h4><p>Spacing outside the border relative to surrounding layout.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term box-sizing"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>box-sizing</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>box-sizing</h4><p>The property that changes what a declared width or height includes.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Normal flow"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Normal flow</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Normal flow</h4><p>The ordinary arrangement of content under the applicable formatting rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Containing block"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Containing block</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Containing block</h4><p>The reference area used for certain sizes and positioning calculations.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Overflow"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Overflow</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Overflow</h4><p>Content extending beyond the relevant box area.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Margin collapsing"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Margin collapsing</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Margin collapsing</h4><p>The combining of certain vertical margins under specific normal-flow conditions.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Stacking context"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Stacking context</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Stacking context</h4><p>A grouping within which stacking order is resolved as part of the page’s stacking rules.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Readable Workshop Card</h2><ul class="wt-content-points"><li>Create a workshop card with a heading, explanation, prerequisites and a native disclosure. </li><li>Use border-box, readable padding, a visible border and a flexible maximum width. </li><li>Let the text determine the required height. </li><li>Put any genuinely long code sample inside a local scrolling wrapper.</li></ul><ul class="wt-content-points"><li>Write down a fixed-size test case before switching to a flexible layout: choose width 200px, padding 20px and border 4px. </li><li>Explain both the content-box and border-box calculations, then verify the <strong class="wt-content-key">browser</strong>’s box-model display. </li><li>State the assumptions that make the numbers meaningful.</li></ul><ul class="wt-content-points"><li>Add a small absolute badge inside a relatively positioned card only if you can keep it clear of the title and enlarged text. </li><li>Use normal flow for the <strong class="wt-content-key">rest</strong> of the content. </li><li>Test a narrow viewport and <strong class="wt-content-key">keyboard</strong> focus, and ensure no footer or lesson content is covered.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain the four areas, predict the simple widths, preserve access to all text and identify the actual cause of a layout problem. </li><li>Level 13 will extend this work with <strong class="wt-content-key">Flexbox</strong>, <strong class="wt-content-key">Grid</strong> and responsive design.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 12 Complete?</h2><p>Before marking complete, compare both box-sizing modes, calculate the stated example, preserve a long code line without clipping, and explain a normal-flow versus positioned layout choice. Completion stores a local study milestone; it is not an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="css-fundamentals.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">CSS Fundamentals</span><span class="nav-action">Review Level 11</span></a></div><div class="topic-nav-side next"><a href="flexbox-grid-responsive-design.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Flexbox, Grid and Responsive Design</span><span class="nav-action">Open Level 13</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="css-box-model-layout.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=7" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=4" defer></script>
+</body></html>

@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 14: React Mental Model | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=14"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=14">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class="active " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">14</div><div><p class="eyebrow">React Applications · Level 14</p><h1>React Mental Model</h1><p>React changes how you think about building user interfaces. Instead of manually finding DOM elements and updating them after every interaction, you describe the interface for a given state and let React coordinate the rendering process. This level builds that mental model from the ground up: components, JSX, expressions, props, composition, rendering and the difference between imperative DOM manipulation and declarative UI.</p><div class="lesson-meta"><span>◈ Intermediate</span><span>▣ 22 concepts</span><span>✓ 15 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand why UI libraries such as React exist.</p></article><article><b>02</b><p>Understand the difference between imperative and declarative UI programming.</p></article><article><b>03</b><p>Understand React&#39;s component model.</p></article><article><b>04</b><p>Create functional components.</p></article><article><b>05</b><p>Understand JSX.</p></article><article><b>06</b><p>Use JavaScript expressions inside JSX.</p></article><article><b>07</b><p>Understand JSX attributes and className.</p></article><article><b>08</b><p>Render lists using map().</p></article><article><b>09</b><p>Understand why list keys are important.</p></article><article><b>10</b><p>Compose components.</p></article><article><b>11</b><p>Pass information using props.</p></article><article><b>12</b><p>Understand one-way data flow.</p></article><article><b>13</b><p>Understand children props.</p></article><article><b>14</b><p>Understand conditional rendering.</p></article><article><b>15</b><p>Understand event handlers in React.</p></article><article><b>16</b><p>Understand the basic React rendering model.</p></article><article><b>17</b><p>Understand re-rendering at a practical level.</p></article><article><b>18</b><p>Understand why React applications should avoid direct DOM manipulation.</p></article><article><b>19</b><p>Understand component boundaries.</p></article><article><b>20</b><p>Understand pure rendering.</p></article><article><b>21</b><p>Build a small component hierarchy.</p></article><article><b>22</b><p>Prepare for state, hooks and interactive React applications.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Why React?</h2></div></div><p class="concept-intro">Modern interfaces contain many pieces of changing UI.</p><div class="explanation-list"><p>A web application may contain navigation, forms, lists, notifications, modals, dashboards and interactive controls. As the number of independent UI states grows, manually coordinating DOM changes can become difficult. React provides a component-based approach for describing and updating interfaces.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>React is primarily a way of organizing UI around components and declarative rendering.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Imperative vs Declarative UI</h2></div></div><p class="concept-intro">This distinction is one of the most important ideas in React.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Declarative UI focuses on the desired result rather than manually describing every DOM mutation.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="// Declarative idea
+
+function SaveStatus({ saved }) {
+
+  return saved
+    ? &lt;span&gt;Saved&lt;/span&gt;
+    : &lt;span&gt;Not saved&lt;/span&gt;;
+
+}">Copy</button></header><pre><code>// Declarative idea
+
+function SaveStatus({ saved }) {
+
+  return saved
+    ? &lt;span&gt;Saved&lt;/span&gt;
+    : &lt;span&gt;Not saved&lt;/span&gt;;
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>The Component Model</h2></div></div><p class="concept-intro">React applications are built from components.</p><div class="explanation-list"><p>A component is a reusable piece of UI logic. Components can be small, such as a button or badge, or larger, such as a course dashboard or page.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Componentization allows complex interfaces to be constructed from smaller understandable pieces.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function CourseCard() {
+
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;JavaScript&lt;/h2&gt;
+      &lt;p&gt;Learn modern JavaScript.&lt;/p&gt;
+    &lt;/article&gt;
+  );
+
+}">Copy</button></header><pre><code>function CourseCard() {
+
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;JavaScript&lt;/h2&gt;
+      &lt;p&gt;Learn modern JavaScript.&lt;/p&gt;
+    &lt;/article&gt;
+  );
+
+}</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>Page</h3><ul><li>Represents a larger screen or application area.</li></ul></article><article><span>02</span><h3>Section</h3><ul><li>Groups related content and behaviour.</li></ul></article><article><span>03</span><h3>Component</h3><ul><li>Encapsulates reusable UI structure.</li></ul></article><article><span>04</span><h3>Element</h3><ul><li>Represents individual pieces of rendered interface.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Functional Components</h2></div></div><p class="concept-intro">Modern React applications commonly define components as JavaScript functions.</p><ul class="content-points"><li>Component names conventionally begin with an uppercase letter.</li><li>A component returns React elements.</li><li>A component can receive props.</li><li>A component can contain other components.</li><li>A component should normally remain focused on a clear responsibility.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A functional component is a JavaScript function that describes a piece of UI.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A lowercase JSX tag such as &lt;welcome&gt; is interpreted differently from a component such as &lt;Welcome&gt;. Component naming matters.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Welcome() {
+
+  return (
+    &lt;h1&gt;
+      Welcome to CodeBhavya
+    &lt;/h1&gt;
+  );
+
+}">Copy</button></header><pre><code>function Welcome() {
+
+  return (
+    &lt;h1&gt;
+      Welcome to CodeBhavya
+    &lt;/h1&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>JSX</h2></div></div><p class="concept-intro">JSX lets JavaScript code describe UI using an HTML-like syntax.</p><div class="explanation-list"><p>JSX is syntax that is transformed into JavaScript expressions understood by React. It looks similar to HTML, but it follows JavaScript and React rules.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JSX is a convenient syntax for describing React UI; it is not ordinary HTML embedded directly in JavaScript.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Course() {
+
+  const title =
+    &quot;React&quot;;
+
+  return (
+    &lt;article className=&quot;course&quot;&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;Build user interfaces.&lt;/p&gt;
+    &lt;/article&gt;
+  );
+
+}">Copy</button></header><pre><code>function Course() {
+
+  const title =
+    &quot;React&quot;;
+
+  return (
+    &lt;article className=&quot;course&quot;&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;Build user interfaces.&lt;/p&gt;
+    &lt;/article&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>JavaScript Expressions in JSX</h2></div></div><p class="concept-intro">Curly braces allow JavaScript expressions to be inserted into JSX.</p><ul class="content-points"><li>Variables can be displayed.</li><li>Expressions can be calculated.</li><li>Conditional expressions can be used.</li><li>Function calls can be used when appropriate.</li><li>Statements such as if blocks cannot simply be placed directly inside JSX braces.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JSX expressions connect application data to the rendered interface.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Student() {
+
+  const name = &quot;Bhavya&quot;;
+  const score = 92;
+
+  return (
+    &lt;section&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;Score: {score}&lt;/p&gt;
+      &lt;p&gt;
+        Result: {score &gt;= 40
+          ? &quot;Pass&quot;
+          : &quot;Fail&quot;}
+      &lt;/p&gt;
+    &lt;/section&gt;
+  );
+
+}">Copy</button></header><pre><code>function Student() {
+
+  const name = &quot;Bhavya&quot;;
+  const score = 92;
+
+  return (
+    &lt;section&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;Score: {score}&lt;/p&gt;
+      &lt;p&gt;
+        Result: {score &gt;= 40
+          ? &quot;Pass&quot;
+          : &quot;Fail&quot;}
+      &lt;/p&gt;
+    &lt;/section&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>JSX Attributes and className</h2></div></div><p class="concept-intro">JSX uses attributes to configure rendered elements and components.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JSX attributes are part of JavaScript syntax and follow React&#39;s property naming conventions.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Profile() {
+
+  const image =
+    &quot;/images/student.png&quot;;
+
+  return (
+    &lt;img
+      src={image}
+      alt=&quot;Student profile&quot;
+      className=&quot;profile-image&quot;
+    /&gt;
+  );
+
+}">Copy</button></header><pre><code>function Profile() {
+
+  const image =
+    &quot;/images/student.png&quot;;
+
+  return (
+    &lt;img
+      src={image}
+      alt=&quot;Student profile&quot;
+      className=&quot;profile-image&quot;
+    /&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Rendering Lists</h2></div></div><p class="concept-intro">JavaScript&#39;s map() method is commonly used to turn data into repeated JSX.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>List rendering is data transformation: application data becomes a collection of UI elements.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const courses = [
+  &quot;C&quot;,
+  &quot;Python&quot;,
+  &quot;JavaScript&quot;,
+  &quot;React&quot;
+];
+
+function CourseList() {
+
+  return (
+    &lt;ul&gt;
+      {courses.map(course =&gt; (
+        &lt;li key={course}&gt;
+          {course}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+
+}">Copy</button></header><pre><code>const courses = [
+  &quot;C&quot;,
+  &quot;Python&quot;,
+  &quot;JavaScript&quot;,
+  &quot;React&quot;
+];
+
+function CourseList() {
+
+  return (
+    &lt;ul&gt;
+      {courses.map(course =&gt; (
+        &lt;li key={course}&gt;
+          {course}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Start with application data</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Call map()</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Create JSX for each item</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Provide a stable key</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>React receives the resulting element collection</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>The list is rendered</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Why Keys Matter</h2></div></div><p class="concept-intro">React needs a stable identity for elements in repeated lists.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A key should identify the item, not simply describe its current position.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Avoid using an array index as a key when list items can be inserted, removed or reordered. A stable item identifier is usually a better choice.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const courses = [
+  { id: 101, name: &quot;C&quot; },
+  { id: 102, name: &quot;Python&quot; },
+  { id: 103, name: &quot;React&quot; }
+];
+
+function CourseList() {
+
+  return (
+    &lt;ul&gt;
+      {courses.map(course =&gt; (
+        &lt;li key={course.id}&gt;
+          {course.name}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+
+}">Copy</button></header><pre><code>const courses = [
+  { id: 101, name: &quot;C&quot; },
+  { id: 102, name: &quot;Python&quot; },
+  { id: 103, name: &quot;React&quot; }
+];
+
+function CourseList() {
+
+  return (
+    &lt;ul&gt;
+      {courses.map(course =&gt; (
+        &lt;li key={course.id}&gt;
+          {course.name}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>Component Composition</h2></div></div><p class="concept-intro">Components become powerful when smaller components are combined into larger interfaces.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Composition means building larger interfaces by combining smaller components.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Header() {
+
+  return &lt;header&gt;CodeBhavya&lt;/header&gt;;
+
+}
+
+function CourseList() {
+
+  return &lt;main&gt;Courses&lt;/main&gt;;
+
+}
+
+function App() {
+
+  return (
+    &lt;&gt;
+      &lt;Header /&gt;
+      &lt;CourseList /&gt;
+    &lt;/&gt;
+  );
+
+}">Copy</button></header><pre><code>function Header() {
+
+  return &lt;header&gt;CodeBhavya&lt;/header&gt;;
+
+}
+
+function CourseList() {
+
+  return &lt;main&gt;Courses&lt;/main&gt;;
+
+}
+
+function App() {
+
+  return (
+    &lt;&gt;
+      &lt;Header /&gt;
+      &lt;CourseList /&gt;
+    &lt;/&gt;
+  );
+
+}</code></pre></div><div class="architecture-flow"><article><span>01</span><h3>App</h3><ul><li>Top-level application composition.</li></ul></article><article><span>02</span><h3>Header</h3><ul><li>Owns navigation/header UI.</li></ul></article><article><span>03</span><h3>CourseList</h3><ul><li>Owns course-list presentation.</li></ul></article><article><span>04</span><h3>CourseCard</h3><ul><li>Can represent one reusable course item.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Props</h2></div></div><p class="concept-intro">Props allow a parent component to pass information to a child component.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Props are inputs supplied by a component&#39;s parent.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function CourseCard({ title, level }) {
+
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;Level {level}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+
+}
+
+function App() {
+
+  return (
+    &lt;CourseCard
+      title=&quot;React&quot;
+      level={14}
+    /&gt;
+  );
+
+}">Copy</button></header><pre><code>function CourseCard({ title, level }) {
+
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;Level {level}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+
+}
+
+function App() {
+
+  return (
+    &lt;CourseCard
+      title=&quot;React&quot;
+      level={14}
+    /&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>Props Are Read-Only</h2></div></div><p class="concept-intro">A child component should treat its props as inputs rather than directly changing them.</p><div class="explanation-list"><p>The parent owns the value it passes. If the child needs something to change, the application normally introduces state or communicates the desired action back to the parent through a callback prop.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>React encourages one-way data flow: parents provide data to children.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Do not mutate props. Treat them as read-only inputs.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Student({ name }) {
+
+  // Do not do:
+  // name = &quot;Another Name&quot;;
+
+  return (
+    &lt;h2&gt;{name}&lt;/h2&gt;
+  );
+
+}">Copy</button></header><pre><code>function Student({ name }) {
+
+  // Do not do:
+  // name = &quot;Another Name&quot;;
+
+  return (
+    &lt;h2&gt;{name}&lt;/h2&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>The children Prop</h2></div></div><p class="concept-intro">A component can accept nested JSX through the special children prop.</p><div class="explanation-list"><p>children makes wrapper components highly reusable because the component does not need to know exactly which JSX will be placed inside it.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>children enables flexible composition without forcing a component to know the exact contents it wraps.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Card({ children }) {
+
+  return (
+    &lt;article className=&quot;card&quot;&gt;
+      {children}
+    &lt;/article&gt;
+  );
+
+}
+
+function App() {
+
+  return (
+    &lt;Card&gt;
+      &lt;h2&gt;JavaScript&lt;/h2&gt;
+      &lt;p&gt;Learn the language.&lt;/p&gt;
+    &lt;/Card&gt;
+  );
+
+}">Copy</button></header><pre><code>function Card({ children }) {
+
+  return (
+    &lt;article className=&quot;card&quot;&gt;
+      {children}
+    &lt;/article&gt;
+  );
+
+}
+
+function App() {
+
+  return (
+    &lt;Card&gt;
+      &lt;h2&gt;JavaScript&lt;/h2&gt;
+      &lt;p&gt;Learn the language.&lt;/p&gt;
+    &lt;/Card&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Conditional Rendering</h2></div></div><p class="concept-intro">React can render different UI based on application data.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Conditional rendering means the component&#39;s output depends on its current inputs or state.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Status({ loading }) {
+
+  return (
+    &lt;section&gt;
+      {loading
+        ? &lt;p&gt;Loading...&lt;/p&gt;
+        : &lt;p&gt;Ready&lt;/p&gt;}
+    &lt;/section&gt;
+  );
+
+}">Copy</button></header><pre><code>function Status({ loading }) {
+
+  return (
+    &lt;section&gt;
+      {loading
+        ? &lt;p&gt;Loading...&lt;/p&gt;
+        : &lt;p&gt;Ready&lt;/p&gt;}
+    &lt;/section&gt;
+  );
+
+}</code></pre></div><div class="method-grid"><article class="method-card"><b>if / return</b><p>Useful when rendering branches with larger logic.</p><code>if (loading) return &lt;Loading /&gt;;</code></article><article class="method-card"><b>Ternary</b><p>Useful for two straightforward alternatives.</p><code>loading ? &lt;Loading /&gt; : &lt;Content /&gt;</code></article><article class="method-card"><b>Logical &amp;&amp;</b><p>Useful when something should render only when a condition is true.</p><code>error &amp;&amp; &lt;ErrorMessage /&gt;</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>React Event Handlers</h2></div></div><p class="concept-intro">React provides event props such as onClick and onChange.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>React event handlers connect user interactions to component behaviour.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Pass the function to onClick. Do not accidentally call it during rendering with onClick={handleClick()}.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function SaveButton() {
+
+  function handleClick() {
+    console.log(&quot;Saved&quot;);
+  }
+
+  return (
+    &lt;button onClick={handleClick}&gt;
+      Save
+    &lt;/button&gt;
+  );
+
+}">Copy</button></header><pre><code>function SaveButton() {
+
+  function handleClick() {
+    console.log(&quot;Saved&quot;);
+  }
+
+  return (
+    &lt;button onClick={handleClick}&gt;
+      Save
+    &lt;/button&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>The React Rendering Model</h2></div></div><p class="concept-intro">A React component describes what UI should exist for its current inputs.</p><div class="explanation-list"><p>The important mental model is not that React blindly rebuilds the browser DOM every time. React calculates what the rendered result should be and commits appropriate changes to the DOM.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Think of rendering as React determining the UI representation for the component&#39;s current inputs.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Greeting({ name }) {
+
+  return (
+    &lt;h1&gt;
+      Hello {name}
+    &lt;/h1&gt;
+  );
+
+}">Copy</button></header><pre><code>function Greeting({ name }) {
+
+  return (
+    &lt;h1&gt;
+      Hello {name}
+    &lt;/h1&gt;
+  );
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Component receives inputs</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Component function executes</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>JSX description is produced</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>React compares the new result with the previous rendered result</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>React applies the necessary DOM updates</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>Browser displays the updated interface</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>Re-rendering</h2></div></div><p class="concept-intro">A component can render again when its relevant inputs change.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A component function can run again as React calculates the UI for new data.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>A re-render does not automatically mean that every DOM node is recreated from scratch. React determines the appropriate updates.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Course({ title }) {
+
+  console.log(
+    &quot;Course rendered&quot;
+  );
+
+  return &lt;h2&gt;{title}&lt;/h2&gt;;
+
+}">Copy</button></header><pre><code>function Course({ title }) {
+
+  console.log(
+    &quot;Course rendered&quot;
+  );
+
+  return &lt;h2&gt;{title}&lt;/h2&gt;;
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>React renders the component</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Component produces UI</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>An input or state value changes</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>React schedules another render</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Component function runs again</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>React determines the resulting UI changes</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>DOM is updated as necessary</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Avoid Direct DOM Manipulation</h2></div></div><p class="concept-intro">React applications generally should not manually control the same DOM nodes that React owns.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>In React, application data should normally drive the UI instead of manually mutating React-managed DOM.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Direct DOM APIs still have legitimate uses in React, especially through refs and integration with external libraries. The problem is uncontrolled manual manipulation of DOM that React also manages.</p></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>Pure Rendering</h2></div></div><p class="concept-intro">Component rendering should ideally behave like a predictable calculation.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>A component should ideally calculate its UI from inputs rather than performing unrelated side effects during rendering.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Avoid side effects such as network requests, subscriptions or manual DOM mutations directly during ordinary rendering. Later levels will introduce hooks for synchronization and side effects.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function Price({ amount }) {
+
+  const formatted =
+    &quot;₹&quot; + amount.toFixed(2);
+
+  return (
+    &lt;strong&gt;{formatted}&lt;/strong&gt;
+  );
+
+}">Copy</button></header><pre><code>function Price({ amount }) {
+
+  const formatted =
+    &quot;₹&quot; + amount.toFixed(2);
+
+  return (
+    &lt;strong&gt;{formatted}&lt;/strong&gt;
+  );
+
+}</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>Component Boundaries</h2></div></div><p class="concept-intro">Choosing component boundaries is a design skill rather than a strict mathematical rule.</p><ul class="content-points"><li>Extract components when a piece of UI has a meaningful responsibility.</li><li>Reuse components when the same UI pattern appears multiple times.</li><li>Avoid creating dozens of tiny components without a useful boundary.</li><li>Keep components understandable.</li><li>Let data flow through explicit props.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Good component boundaries make an interface easier to understand, reuse and change.</p></div></div><div class="architecture-flow"><article><span>01</span><h3>CourseDashboard</h3><ul><li>Coordinates the dashboard.</li></ul></article><article><span>02</span><h3>CourseFilter</h3><ul><li>Owns the filter UI.</li></ul></article><article><span>03</span><h3>CourseList</h3><ul><li>Displays the collection.</li></ul></article><article><span>04</span><h3>CourseCard</h3><ul><li>Displays one course.</li></ul></article><article><span>05</span><h3>CourseBadge</h3><ul><li>Displays reusable course metadata.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">21</div><div><p class="section-label">CONCEPT 21</p><h2>One-Way Data Flow</h2></div></div><p class="concept-intro">React applications normally move data from parent components toward children.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>One-way data flow makes the origin of information easier to trace.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function App() {
+
+  const course =
+    &quot;React&quot;;
+
+  return (
+    &lt;CourseCard
+      title={course}
+    /&gt;
+  );
+
+}
+
+function CourseCard({ title }) {
+
+  return (
+    &lt;h2&gt;{title}&lt;/h2&gt;
+  );
+
+}">Copy</button></header><pre><code>function App() {
+
+  const course =
+    &quot;React&quot;;
+
+  return (
+    &lt;CourseCard
+      title={course}
+    /&gt;
+  );
+
+}
+
+function CourseCard({ title }) {
+
+  return (
+    &lt;h2&gt;{title}&lt;/h2&gt;
+  );
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>App owns course data</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>App passes title as a prop</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>CourseCard receives title</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>CourseCard renders title</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Child does not directly modify parent&#39;s data</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">22</div><div><p class="section-label">CONCEPT 22</p><h2>Putting the Mental Model Together</h2></div></div><p class="concept-intro">A React application can be understood as a tree of components driven by data.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Think of React as a component tree whose rendered UI is derived from current data.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="function App() {
+
+  const courses = [
+    { id: 1, name: &quot;C&quot; },
+    { id: 2, name: &quot;Python&quot; },
+    { id: 3, name: &quot;React&quot; }
+  ];
+
+  return (
+    &lt;CourseList
+      courses={courses}
+    /&gt;
+  );
+
+}
+
+function CourseList({ courses }) {
+
+  return (
+    &lt;section&gt;
+      {courses.map(course =&gt; (
+        &lt;CourseCard
+          key={course.id}
+          course={course}
+        /&gt;
+      ))}
+    &lt;/section&gt;
+  );
+
+}
+
+function CourseCard({ course }) {
+
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;{course.name}&lt;/h2&gt;
+    &lt;/article&gt;
+  );
+
+}">Copy</button></header><pre><code>function App() {
+
+  const courses = [
+    { id: 1, name: &quot;C&quot; },
+    { id: 2, name: &quot;Python&quot; },
+    { id: 3, name: &quot;React&quot; }
+  ];
+
+  return (
+    &lt;CourseList
+      courses={courses}
+    /&gt;
+  );
+
+}
+
+function CourseList({ courses }) {
+
+  return (
+    &lt;section&gt;
+      {courses.map(course =&gt; (
+        &lt;CourseCard
+          key={course.id}
+          course={course}
+        /&gt;
+      ))}
+    &lt;/section&gt;
+  );
+
+}
+
+function CourseCard({ course }) {
+
+  return (
+    &lt;article&gt;
+      &lt;h2&gt;{course.name}&lt;/h2&gt;
+    &lt;/article&gt;
+  );
+
+}</code></pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Application data</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>App component</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>CourseList props</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>map()</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>CourseCard props</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">06</div><div class="flow-content"><strong>JSX output</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">07</div><div class="flow-content"><strong>React rendering</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">08</div><div class="flow-content"><strong>Browser UI</strong></div></div></div></div><div class="architecture-flow"><article><span>01</span><h3>Data</h3><ul><li>App owns the course collection.</li></ul></article><article><span>02</span><h3>Parent</h3><ul><li>App passes courses to CourseList.</li></ul></article><article><span>03</span><h3>List</h3><ul><li>CourseList maps data into CourseCard components.</li></ul></article><article><span>04</span><h3>Child</h3><ul><li>CourseCard receives one course and renders it.</li></ul></article></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>React Component &amp; Props Tracer</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>function App() {</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>  const course = &quot;React&quot;;</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>  return &lt;CourseCard title={course} /&gt;;</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>}</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>function CourseCard({ title }) {</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>  return &lt;h2&gt;{title}&lt;/h2&gt;;</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>}</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>React</strong><p>A JavaScript library for building user interfaces using components and declarative rendering.</p></div></article><article><b>02</b><div><strong>Component</strong><p>A reusable piece of UI logic and structure.</p></div></article><article><b>03</b><div><strong>Functional component</strong><p>A JavaScript function that describes React UI.</p></div></article><article><b>04</b><div><strong>JSX</strong><p>Syntax that allows JavaScript code to describe React UI using an HTML-like form.</p></div></article><article><b>05</b><div><strong>Declarative UI</strong><p>Describing what the interface should look like for current data.</p></div></article><article><b>06</b><div><strong>Imperative UI</strong><p>Explicitly describing the steps needed to modify the interface.</p></div></article><article><b>07</b><div><strong>Props</strong><p>Inputs passed from a parent component to a child component.</p></div></article><article><b>08</b><div><strong>children</strong><p>The special prop containing JSX nested inside a component.</p></div></article><article><b>09</b><div><strong>Component composition</strong><p>Building larger interfaces by combining smaller components.</p></div></article><article><b>10</b><div><strong>One-way data flow</strong><p>The normal React pattern of passing data from parent to child.</p></div></article><article><b>11</b><div><strong>Key</strong><p>A stable identifier used for elements in a rendered list.</p></div></article><article><b>12</b><div><strong>Conditional rendering</strong><p>Rendering different UI depending on application data.</p></div></article><article><b>13</b><div><strong>Re-render</strong><p>Running component rendering logic again to calculate the UI for changed inputs.</p></div></article><article><b>14</b><div><strong>Pure rendering</strong><p>Rendering that primarily calculates UI from inputs without unrelated side effects.</p></div></article><article><b>15</b><div><strong>Component boundary</strong><p>A design boundary separating one meaningful UI responsibility from another.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is React?</summary><div class="interview-answer"><p>React is a JavaScript library for building user interfaces using components and declarative rendering.</p></div></details><details class="interview-item"><summary><span>02</span>Why is React useful?</summary><div class="interview-answer"><p>It provides a component model and rendering approach that helps developers build and maintain complex interactive interfaces.</p></div></details><details class="interview-item"><summary><span>03</span>What is a component?</summary><div class="interview-answer"><p>A component is a reusable piece of UI logic and structure.</p></div></details><details class="interview-item"><summary><span>04</span>What is a functional component?</summary><div class="interview-answer"><p>It is a JavaScript function that returns a React element description.</p></div></details><details class="interview-item"><summary><span>05</span>What is JSX?</summary><div class="interview-answer"><p>JSX is syntax that allows developers to describe React UI using an HTML-like form inside JavaScript.</p></div></details><details class="interview-item"><summary><span>06</span>Is JSX HTML?</summary><div class="interview-answer"><p>No. JSX looks similar to HTML but is JavaScript syntax transformed into React-compatible JavaScript.</p></div></details><details class="interview-item"><summary><span>07</span>What is declarative programming in React?</summary><div class="interview-answer"><p>It means describing the UI that should exist for the current data instead of manually specifying every DOM mutation.</p></div></details><details class="interview-item"><summary><span>08</span>What is the difference between imperative and declarative UI?</summary><div class="interview-answer"><p>Imperative UI describes the steps required to change the interface, while declarative UI describes the desired interface for the current data.</p></div></details><details class="interview-item"><summary><span>09</span>What are props?</summary><div class="interview-answer"><p>Props are inputs passed from a parent component to a child component.</p></div></details><details class="interview-item"><summary><span>10</span>Can a child directly modify its props?</summary><div class="interview-answer"><p>No. Props should be treated as read-only inputs.</p></div></details><details class="interview-item"><summary><span>11</span>What is one-way data flow?</summary><div class="interview-answer"><p>It is the pattern where data normally flows from parent components to child components through props.</p></div></details><details class="interview-item"><summary><span>12</span>What is children?</summary><div class="interview-answer"><p>children is a special prop containing the JSX nested inside a component.</p></div></details><details class="interview-item"><summary><span>13</span>Why are keys needed when rendering lists?</summary><div class="interview-answer"><p>Keys provide stable identity for repeated elements so React can correctly reason about changes to the list.</p></div></details><details class="interview-item"><summary><span>14</span>Why can array indexes be poor keys?</summary><div class="interview-answer"><p>When list items are inserted, removed or reordered, indexes can change and no longer represent stable item identity.</p></div></details><details class="interview-item"><summary><span>15</span>How do you render a list in React?</summary><div class="interview-answer"><p>A common approach is to use JavaScript&#39;s map() method to transform data into JSX elements and provide each element with a stable key.</p></div></details><details class="interview-item"><summary><span>16</span>What is conditional rendering?</summary><div class="interview-answer"><p>It is displaying different React UI depending on current data or state.</p></div></details><details class="interview-item"><summary><span>17</span>How are events handled in React?</summary><div class="interview-answer"><p>Event handlers are passed to JSX event props such as onClick and onChange.</p></div></details><details class="interview-item"><summary><span>18</span>Why should onClick={handleClick()} usually be avoided?</summary><div class="interview-answer"><p>It calls the function during rendering instead of passing the function for React to call when the event occurs.</p></div></details><details class="interview-item"><summary><span>19</span>What does re-rendering mean?</summary><div class="interview-answer"><p>It means React runs the relevant rendering logic again to calculate the UI for changed inputs.</p></div></details><details class="interview-item"><summary><span>20</span>Does every React re-render recreate the entire browser DOM?</summary><div class="interview-answer"><p>No. React determines the resulting UI changes and commits appropriate updates to the DOM.</p></div></details><details class="interview-item"><summary><span>21</span>Why avoid manual DOM manipulation in React?</summary><div class="interview-answer"><p>Mixing uncontrolled DOM mutations with React&#39;s rendering can create competing sources of truth and unpredictable behaviour.</p></div></details><details class="interview-item"><summary><span>22</span>Are direct DOM APIs completely forbidden in React?</summary><div class="interview-answer"><p>No. There are legitimate cases, especially through refs and integrations with external systems. The issue is manually controlling DOM that React also owns.</p></div></details><details class="interview-item"><summary><span>23</span>What is component composition?</summary><div class="interview-answer"><p>It is building larger interfaces by combining smaller components.</p></div></details><details class="interview-item"><summary><span>24</span>What makes a good component boundary?</summary><div class="interview-answer"><p>A good boundary usually represents a meaningful responsibility and makes the interface easier to reuse, understand or change.</p></div></details><details class="interview-item"><summary><span>25</span>What is pure rendering?</summary><div class="interview-answer"><p>It means rendering primarily calculates UI from current inputs without performing unrelated side effects.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Basic</b></header><h3>First React Component</h3><p>Create a Welcome component that renders &#39;Welcome to CodeBhavya&#39; inside an h1.</p><details><summary>Need a hint?</summary><ul><li>Create a function named Welcome.</li><li>Return JSX.</li><li>Use an h1 element.</li><li>Component names should begin with an uppercase letter.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Basic</b></header><h3>JSX Expression</h3><p>Create a Student component that displays a student&#39;s name and score using JavaScript variables inside JSX.</p><details><summary>Need a hint?</summary><ul><li>Create name and score variables.</li><li>Use curly braces inside JSX.</li><li>Render both values.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Basic</b></header><h3>Course List</h3><p>Create an array of five course names and render them as li elements using map().</p><details><summary>Need a hint?</summary><ul><li>Create a courses array.</li><li>Call courses.map().</li><li>Return an li for each course.</li><li>Give every li a key.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Intermediate</b></header><h3>Stable List Keys</h3><p>Create a list of course objects containing id and name. Render the name and use the id as the key.</p><details><summary>Need a hint?</summary><ul><li>Each object should have a stable id.</li><li>Use map().</li><li>Use key={course.id}.</li><li>Do not use the array index as the key.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Intermediate</b></header><h3>Reusable CourseCard</h3><p>Create a reusable CourseCard component that receives title, level and description through props.</p><details><summary>Need a hint?</summary><ul><li>Destructure props in the component parameter.</li><li>Render all three values.</li><li>Use the component multiple times with different data.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Intermediate</b></header><h3>Card Composition</h3><p>Create a Card component using children. Place a CourseCard inside it.</p><details><summary>Need a hint?</summary><ul><li>Accept children as a prop.</li><li>Render children inside the Card.</li><li>Use &lt;Card&gt;...&lt;/Card&gt; syntax.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Intermediate</b></header><h3>Conditional Course Status</h3><p>Create a CourseStatus component that displays &#39;Completed&#39; when completed is true and &#39;In Progress&#39; otherwise.</p><details><summary>Need a hint?</summary><ul><li>Receive completed through props.</li><li>Use an if statement or ternary.</li><li>Return different JSX for each condition.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Intermediate</b></header><h3>React Event Handler</h3><p>Create a button that runs handleClick when the user clicks it.</p><details><summary>Need a hint?</summary><ul><li>Create a handleClick function.</li><li>Use onClick.</li><li>Pass the function reference rather than calling it during rendering.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Advanced</b></header><h3>Course Dashboard</h3><p>Build a CourseDashboard component that contains course data, passes it to CourseList, and renders each course through CourseCard.</p><details><summary>Need a hint?</summary><ul><li>Keep course data in the parent.</li><li>Pass courses through props.</li><li>Use map() inside CourseList.</li><li>Pass one course to each CourseCard.</li><li>Use a stable id as the key.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Advanced</b></header><h3>Declarative vs Imperative Refactor</h3><p>Take a small interface that manually changes DOM text and classes using querySelector() and rewrite it as a React component whose output depends on a value such as saved.</p><details><summary>Need a hint?</summary><ul><li>Identify the data that determines the UI.</li><li>Represent the UI using JSX.</li><li>Use conditional rendering.</li><li>Avoid document.querySelector() for the React-managed interface.</li><li>Think about what the UI should look like rather than the DOM steps.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 11</span><b>Advanced</b></header><h3>CodeBhavya Learning Dashboard</h3><p>Build a small CodeBhavya dashboard using components for Header, CourseList, CourseCard, CourseBadge and EmptyState. Display at least six courses, use props and stable keys, conditionally show completed courses and compose everything from an App component.</p><details><summary>Need a hint?</summary><ul><li>Start with the component tree.</li><li>Keep course data in App.</li><li>Pass data through props.</li><li>Use map() for the course collection.</li><li>Use stable course ids as keys.</li><li>Use conditional rendering for completion status.</li><li>Keep each component focused on one responsibility.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is React primarily used for?</h3><div class="quiz-options"><button type="button" data-option="0">A. Database administration</button><button type="button" data-option="1">B. Building user interfaces</button><button type="button" data-option="2">C. Writing operating systems</button><button type="button" data-option="3">D. Managing DNS</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>What is a React component?</h3><div class="quiz-options"><button type="button" data-option="0">A. A CSS selector</button><button type="button" data-option="1">B. A reusable piece of UI logic and structure</button><button type="button" data-option="2">C. A database table</button><button type="button" data-option="3">D. An HTTP request</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>What syntax is commonly used to describe React UI?</h3><div class="quiz-options"><button type="button" data-option="0">A. SQL</button><button type="button" data-option="1">B. JSX</button><button type="button" data-option="2">C. XML only</button><button type="button" data-option="3">D. Markdown only</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which is the JSX equivalent commonly used for HTML class?</h3><div class="quiz-options"><button type="button" data-option="0">A. className</button><button type="button" data-option="1">B. cssClass</button><button type="button" data-option="2">C. classValue</button><button type="button" data-option="3">D. classnameValue</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>How can JavaScript values be inserted into JSX?</h3><div class="quiz-options"><button type="button" data-option="0">A. Using []</button><button type="button" data-option="1">B. Using {}</button><button type="button" data-option="2">C. Using ()</button><button type="button" data-option="3">D. Using &lt;&gt;</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which JavaScript method is commonly used to render lists?</h3><div class="quiz-options"><button type="button" data-option="0">A. filter()</button><button type="button" data-option="1">B. map()</button><button type="button" data-option="2">C. reduce() only</button><button type="button" data-option="3">D. sort()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Why are keys used in React lists?</h3><div class="quiz-options"><button type="button" data-option="0">A. To style elements</button><button type="button" data-option="1">B. To provide stable item identity</button><button type="button" data-option="2">C. To make API requests</button><button type="button" data-option="3">D. To create CSS classes</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What are props?</h3><div class="quiz-options"><button type="button" data-option="0">A. CSS properties</button><button type="button" data-option="1">B. Inputs passed to components</button><button type="button" data-option="2">C. Browser events only</button><button type="button" data-option="3">D. Database records</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Should a child mutate its props?</h3><div class="quiz-options"><button type="button" data-option="0">A. Yes</button><button type="button" data-option="1">B. No</button><button type="button" data-option="2">C. Only strings</button><button type="button" data-option="3">D. Only arrays</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>What does children represent?</h3><div class="quiz-options"><button type="button" data-option="0">A. Browser child windows</button><button type="button" data-option="1">B. Nested JSX passed into a component</button><button type="button" data-option="2">C. Only text nodes</button><button type="button" data-option="3">D. CSS descendants</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Which prop is commonly used for a click handler?</h3><div class="quiz-options"><button type="button" data-option="0">A. onclick</button><button type="button" data-option="1">B. click</button><button type="button" data-option="2">C. onClick</button><button type="button" data-option="3">D. handleClick</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>What is declarative UI?</h3><div class="quiz-options"><button type="button" data-option="0">A. Manually changing every DOM node</button><button type="button" data-option="1">B. Describing what the UI should look like</button><button type="button" data-option="2">C. Writing only CSS</button><button type="button" data-option="3">D. Avoiding JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>What normally causes React rendering logic to run again?</h3><div class="quiz-options"><button type="button" data-option="0">A. A relevant input or state change</button><button type="button" data-option="1">B. Every CSS change</button><button type="button" data-option="2">C. Every HTTP request automatically</button><button type="button" data-option="3">D. The browser address bar</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="13"><span class="quiz-number">QUESTION 14</span><h3>Should React-managed DOM normally be changed directly with querySelector()?</h3><div class="quiz-options"><button type="button" data-option="0">A. Yes, everywhere</button><button type="button" data-option="1">B. No, because it can conflict with React&#39;s rendering model</button><button type="button" data-option="2">C. Only for every click</button><button type="button" data-option="3">D. Always inside render</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="14"><span class="quiz-number">QUESTION 15</span><h3>What is component composition?</h3><div class="quiz-options"><button type="button" data-option="0">A. Deleting components</button><button type="button" data-option="1">B. Combining smaller components into larger interfaces</button><button type="button" data-option="2">C. Writing CSS only</button><button type="button" data-option="3">D. Replacing props with HTML</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>React</strong><p></p></article><article><strong>Component</strong><p></p></article><article><strong>JSX</strong><p></p></article><article><strong>Declarative UI</strong><p></p></article><article><strong>Imperative UI</strong><p></p></article><article><strong>Props</strong><p></p></article><article><strong>children</strong><p></p></article><article><strong>Key</strong><p></p></article><article><strong>Component composition</strong><p></p></article><article><strong>Conditional rendering</strong><p></p></article><article><strong>Re-render</strong><p></p></article><article><strong>One-way data flow</strong><p></p></article><article><strong>Pure rendering</strong><p></p></article><article><strong>Component boundary</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Level 14 Complete — Think in React</h2><p>You now understand the core React mental model: components describe UI, props carry data from parents to children, JSX expresses the interface, lists use stable keys, and React coordinates rendering from application data.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 14 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=13">← Previous level</a><a href="lesson.html?level=15">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

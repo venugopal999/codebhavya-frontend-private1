@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn localStorage, sessionStorage, cookies, JSON validation and browser APIs with diagrams, a visualizer, storage lab and MCQs.">
+
+    
+
+    <title>
+        Level 19 — Browser Storage and Web APIs | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/browser-storage-web-apis.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt19-skip-link" href="#wt19Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt19Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 19</div><div class="level-badge">LEVEL 19 · STORAGE</div><h1>Browser Storage and Web APIs</h1><p class="wt-hero-description">Save and restore small preferences with explicit lifetimes, validation and failure handling.</p><div class="wt-hero-meta"><span>💾 Storage</span><span>🔤 JSON records</span><span>🔑 One-key ownership</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>A workshop form can collect data and an <strong class="wt-content-key">API</strong> loader can receive it, but neither automatically remembers a learner’s choices after the page reloads. </li><li><strong class="wt-content-key">Browser</strong> storage adds a local record with its own lifetime, failure modes and <strong class="wt-content-key">validation</strong> requirements. </li><li>In this lesson, build a small study preference rather than treating the <strong class="wt-content-key">browser</strong> as a permanent <strong class="wt-content-key">database</strong>.</li></ul><ul class="wt-content-points"><li>Compare ordinary <strong class="wt-content-key">JavaScript</strong> memory, <strong class="wt-content-key">localStorage</strong>, sessionStorage and cookies. </li><li>Serialize a controlled record, load it defensively, remove only the record you own and describe when another document receives a storage <strong class="wt-content-key">event</strong>. </li><li>You will also identify where other <strong class="wt-content-key">browser</strong> APIs belong in a larger application.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧠</span><h3>Lifetime</h3><p>Choose memory, a page <strong class="wt-content-key">session</strong> or a longer-lived preference.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Data contract</h3><p>Store text; parse and validate before accepting it.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛠️</span><h3>Failures</h3><p>Handle denied access and failed writes honestly.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔑</span><h3>Ownership</h3><p>Use one named key and preserve other site data.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧠</span>Memory and Persistence Are Different Decisions</h2><ul class="wt-content-points"><li>A variable or Map belongs to the running <strong class="wt-content-key">JavaScript</strong> environment. </li><li>It is useful for a draft, a current selection or a temporary result. </li><li>Reloading the document creates a new environment, so a new Map does not contain the old draft. </li><li>Navigating away can also end that instance.</li></ul><ul class="wt-content-points"><li>Persistence means putting data somewhere that can outlive the current script instance. </li><li>It introduces another source of truth: the editor may contain unsaved changes while the stored record still contains an earlier value. </li><li>Label Save and Load separately so learners can observe that distinction.</li></ul><ul class="wt-content-points"><li>Our preference contains a topic, a study duration and a short note. </li><li>The default lab mode is memory. </li><li>Selecting <strong class="wt-content-key">localStorage</strong> or <strong class="wt-content-key">sessionStorage</strong> does not immediately read or write anything; the learner explicitly chooses an operation. </li><li>This makes the persistence boundary visible instead of hiding it inside every keystroke.</li></ul><div class="code-block"><pre><code>const draft = new Map();
+draft.set(&quot;study&quot;, &quot;HTML for 15 minutes&quot;);
+console.log(draft.get(&quot;study&quot;));
+// A freshly reloaded page creates a new Map.</code></pre></div><ul class="wt-content-points"><li>Resetting form controls is a third action. </li><li>A reset can restore editor defaults while leaving the saved value untouched. </li><li>Deleting a saved value should be a clearly named operation, not an unexpected side effect of resetting the screen.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🗂️</span>Compare the Four Storage Choices</h2><ul class="wt-content-points"><li>Choose a mechanism from the behavior your feature needs. </li><li>A temporary preview can use memory. </li><li>A theme preference can use <strong class="wt-content-key">localStorage</strong>. </li><li>A draft intended for one page <strong class="wt-content-key">session</strong> can use <strong class="wt-content-key">sessionStorage</strong>. </li><li>A server-managed <strong class="wt-content-key">session</strong> commonly uses a <strong class="wt-content-key">cookie</strong> carrying a session identifier. </li><li>These are different contracts, not a ranking from bad to good.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Web Storage</strong> values are not automatically attached to <strong class="wt-content-key">HTTP</strong> requests. </li><li><strong class="wt-content-key">Cookies</strong> can accompany matching requests subject to <strong class="wt-content-key">cookie</strong> rules and browser policy. </li><li>A value saved locally is also not automatically synchronized to an account, another device or the <strong class="wt-content-key">server</strong>.</li></ul><div class="wt9-table-wrap"><table><thead><tr><th>Choice</th><th>Typical lifetime</th><th>Useful example</th><th>Important limit</th></tr></thead><tbody><tr><td>JavaScript memory</td><td>Current script instance</td><td>Unsaved preview</td><td>A reload creates fresh state</td></tr><tr><td>localStorage</td><td>Can survive reloads and browser restarts</td><td>Small study preference</td><td>User settings, clearing and policy affect availability</td></tr><tr><td>sessionStorage</td><td>Page session, partitioned by origin and tab</td><td>Tab-specific draft</td><td>Not a server login session</td></tr><tr><td>Cookie</td><td>Session or configured expiry</td><td>Server session identifier</td><td>Request scope and security attributes matter</td></tr></tbody></table></div><ul class="wt-content-points"><li>None of these choices guarantees that a record is correct merely because it exists. </li><li>A preference written by an older application version may no longer match today’s fields. </li><li>Treat persistence as a boundary where data must be checked again.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🌐</span>Origins, Paths and Storage Scope</h2><ul class="wt-content-points"><li>An origin combines scheme, host and port. </li><li>For example, <strong class="wt-content-key">https</strong>://codebhavya.com and https://www.codebhavya.com have different hosts, so do not assume they share one <strong class="wt-content-key">localStorage</strong> area. </li><li><strong class="wt-content-key">HTTP</strong> and <strong class="wt-content-key">HTTPS</strong> are also different origins.</li></ul><ul class="wt-content-points"><li>A pathname does not create a separate <strong class="wt-content-key">Web Storage</strong> namespace. </li><li>Lessons under different folders on one origin may use the same <strong class="wt-content-key">localStorage</strong> area. </li><li>A generic key such as data can collide with another feature. </li><li>Use a descriptive application key and a record version.</li></ul><ul class="wt-content-points"><li>A namespaced key prevents accidental collisions; it does not create an access-control boundary between scripts running with the same origin’s privileges. </li><li>The lab therefore uses a fictional study note and never asks for credentials or confidential information.</li></ul><figure class="wt-diagram"><figcaption>Locate a stored preference</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>Origin</strong><p>Scheme + host + port selects the area.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Backend</strong><p>Local and <strong class="wt-content-key">session</strong> storage are separate areas.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Key</strong><p>One feature-specific key identifies the record.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Value</strong><p>A <strong class="wt-content-key">JSON</strong> string represents the controlled preference.</p></div></div></figure><div class="code-block"><pre><code>const key = &quot;codebhavya-wt19-storage-lab-v1&quot;;
+// Same-origin paths can share this localStorage key.
+// sessionStorage uses a different area for the same key text.</code></pre></div></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">💾</span>localStorage — Remember a Small Preference</h2><ul class="wt-content-points"><li>The <strong class="wt-content-key">localStorage</strong> property gives access to a synchronous key/value store. </li><li>Use setItem to write a string, getItem to read one and removeItem to delete a named entry. </li><li>A successful write is available to later reads from the same applicable storage area.</li></ul><ul class="wt-content-points"><li>Local data can survive reloads and restarts, but “local” does not mean guaranteed forever. </li><li>Users can clear site data, private browsing has its own lifetime and <strong class="wt-content-key">browser</strong> policies can prevent access. </li><li>A site must remain usable when a preference is missing.</li></ul><ul class="wt-content-points"><li>In the lab, Save in local mode is the only preference-writing action. </li><li>After a reload, select local mode again and press Load. </li><li>The editor starts with defaults and does not silently import the old note. </li><li>Delete this lab key when you finish the experiment.</li></ul><div class="code-block"><pre><code>try {
+  const store = window.localStorage;
+  store.setItem(&quot;study-topic&quot;, &quot;html&quot;);
+  const topic = store.getItem(&quot;study-topic&quot;);
+  store.removeItem(&quot;study-topic&quot;);
+} catch (error) {
+  console.error(&quot;Preference storage unavailable&quot;, error.name);
+}</code></pre></div><ul class="wt-content-points"><li>This teaching snippet uses a separate example key. </li><li>Do not run broad cleanup code on a shared site. </li><li>Catch property access as well as method calls, since failure can occur before you obtain the Storage <strong class="wt-content-key">object</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🪟</span>sessionStorage — A Page Session, Not a Login</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Session</strong> storage is partitioned by origin and top-level browsing context, usually a tab. </li><li>A reload within that page <strong class="wt-content-key">session</strong> can retain its values. </li><li>Ending the page <strong class="wt-content-key">session</strong> clears its session storage; <strong class="wt-content-key">browser</strong> restoration behavior should not be treated as an application backup guarantee.</li></ul><ul class="wt-content-points"><li>A newly opened page with an opener can start with a copy of the opener’s <strong class="wt-content-key">session</strong> storage. </li><li>The two copies then evolve independently. </li><li>A fresh independent tab and a duplicated or restored tab need not provide the same starting experiment.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">SessionStorage</strong> is not the <strong class="wt-content-key">server</strong>’s authenticated session. </li><li>Saving loggedIn = true cannot authenticate a user. </li><li>The next lesson will connect <strong class="wt-content-key">server</strong> requests, sessions and server-side checks. </li><li>Here, use <strong class="wt-content-key">session</strong> mode only to explore a local draft lifetime.</li></ul><div class="code-block"><pre><code>try {
+  window.sessionStorage.setItem(&quot;draft-topic&quot;, &quot;css&quot;);
+  console.log(window.sessionStorage.getItem(&quot;draft-topic&quot;));
+} catch (error) {
+  console.error(&quot;Draft storage unavailable&quot;, error.name);
+}</code></pre></div><ul class="wt-content-points"><li>For a controlled <strong class="wt-content-key">browser</strong> check, reload the same tab and Load the lab key. </li><li>Then compare with an independently opened tab. </li><li>Describe how you opened it before concluding that <strong class="wt-content-key">session</strong> data is shared.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>Strings, JSON and Missing Values</h2><ul class="wt-content-points"><li>Storage keys and values are strings. </li><li>Passing a plain <strong class="wt-content-key">object</strong> directly to setItem does not preserve its useful field structure. </li><li>Serialize a simple record with <strong class="wt-content-key">JSON</strong>.stringify, and parse retrieved text with JSON.parse.</li></ul><ul class="wt-content-points"><li>GetItem returns <strong class="wt-content-key">null</strong> when a key is absent. </li><li>The stored string "<strong class="wt-content-key">null</strong>" is a present value that parses into null; an empty string is another present value. </li><li>Check absence before parsing rather than using a truthiness check that mixes these cases.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">JSON</strong> cannot preserve every <strong class="wt-content-key">JavaScript</strong> value. </li><li>Functions, undefined fields, cyclic objects and special class instances need separate decisions. </li><li>A small record made only of strings and ordinary numbers is a good starting <strong class="wt-content-key">contract</strong>.</li></ul><div class="code-block"><pre><code>const preference = {
+  version: 1, topic: &quot;html&quot;, minutes: 15, note: &quot;Review forms&quot;
+};
+const text = JSON.stringify(preference);
+// After reading: distinguish null from stored text.
+if (text !== null) {
+  const parsed = JSON.parse(text);
+  console.log(parsed.topic);
+}</code></pre></div><ul class="wt-content-points"><li>The text variable above represents serialization, not an actual storage read. </li><li>In a real loader, obtain raw text from getItem inside the error-handling boundary. </li><li>Parsing can throw, and a successful parse still needs the next section’s <strong class="wt-content-key">validation</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Validate the Record and Its Version</h2><ul class="wt-content-points"><li>Our exact record <strong class="wt-content-key">contract</strong> is {version, topic, minutes, note}. </li><li>Version must be numeric 1. </li><li>Topic must be <strong class="wt-content-key">html</strong>, <strong class="wt-content-key">css</strong> or javascript. </li><li>Minutes must be numeric 15, 30 or 45. </li><li>Note must be a string whose trimmed length is at most 160 characters; an empty note is allowed. </li><li>Unexpected fields are rejected so the exercise has one explicit shape.</li></ul><ul class="wt-content-points"><li>The editor converts its known duration select value into a number before validating. </li><li>Loaded <strong class="wt-content-key">JSON</strong> does not receive that conversion: the string "30" is rejected. </li><li>This difference helps distinguish deliberate input normalization from blindly repairing stored data.</li></ul><ul class="wt-content-points"><li>The loader limits raw text to 4096 characters before parsing and checks the whole record before replacing any editor field. </li><li>Malformed <strong class="wt-content-key">JSON</strong>, an unknown version or a wrong shape leaves unsaved editor content intact. </li><li>The learner can inspect the raw text and deliberately delete the lab record if needed.</li></ul><div class="code-block"><pre><code>if (record.version !== 1) throw new Error(&quot;Unsupported version&quot;);
+if (![15, 30, 45].includes(record.minutes)) {
+  throw new Error(&quot;Invalid study duration&quot;);
+}
+// Also check object shape, topic and bounded note.
+// Only then update editor fields.</code></pre></div><ul class="wt-content-points"><li>A production migration should explicitly convert an old supported version into the new <strong class="wt-content-key">contract</strong> and validate the result. </li><li>Do not claim to migrate a record by ignoring its version. </li><li>The <strong class="wt-content-key">JSON</strong> checker below validates pasted examples without writing them to <strong class="wt-content-key">browser</strong> storage.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Denied Access, Quotas and Honest Feedback</h2><ul class="wt-content-points"><li>Storage can fail because access is denied or a write cannot be accommodated. </li><li>Existence of window.<strong class="wt-content-key">localStorage</strong> is not proof that a specific write will succeed. </li><li>Keep the read or write in try/catch and report the outcome of the operation actually attempted.</li></ul><ul class="wt-content-points"><li>The lab has two clearly labeled simulations. </li><li>Blocked access throws a SecurityError before using the selected <strong class="wt-content-key">backend</strong>. </li><li>Quota failure throws a QuotaExceededError only for Save; Load, Inspect and Delete can still operate. </li><li>These switches do not change <strong class="wt-content-key">browser</strong> settings or fill real storage.</li></ul><ul class="wt-content-points"><li>Native <strong class="wt-content-key">browser</strong> errors are also caught. </li><li>A failed Save must not announce success, erase the previous record or silently write into another <strong class="wt-content-key">backend</strong>. </li><li>The editor remains available, so the learner can choose memory explicitly if persistent storage is unavailable.</li></ul><div class="code-block"><pre><code>try {
+  store.setItem(key, JSON.stringify(validated));
+  showStatus(&quot;Saved in the selected storage area.&quot;);
+} catch (error) {
+  showStatus(&quot;Save failed: &quot; + error.name);
+}</code></pre></div><ul class="wt-content-points"><li>Avoid a misleading “saved” message before setItem returns. </li><li>Storage failure and <strong class="wt-content-key">validation</strong> failure need different descriptions: one concerns the <strong class="wt-content-key">backend</strong>, while the other concerns the attempted data.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🔑</span>Delete One Key and Keep Other Features Intact</h2><ul class="wt-content-points"><li>A website can store theme choices, completion markers and unrelated feature records in one origin’s area. </li><li>RemoveItem(key) deletes the named entry. </li><li>Storage.clear() removes every entry in that area and is inappropriate for a lesson’s cleanup button.</li></ul><ul class="wt-content-points"><li>The lab uses one key in each selected <strong class="wt-content-key">backend</strong>. </li><li>Delete in local mode does not delete the session-mode record, and resetting editor fields does not delete either. </li><li>The memory record is independent as well. </li><li>This gives three observable locations for the same named preference.</li></ul><ul class="wt-content-points"><li>Inspect shows bounded literal text with <strong class="wt-content-key">textContent</strong>. </li><li>It does not insert stored notes as <strong class="wt-content-key">HTML</strong>. </li><li>A note containing angle brackets should remain visible text rather than creating a new element.</li></ul><div class="code-block"><pre><code>store.removeItem(&quot;codebhavya-wt19-storage-lab-v1&quot;);
+// Preserve unrelated keys, including course completion.
+output.textContent = rawText;
+// Display saved text as text, rather than HTML.</code></pre></div><ul class="wt-content-points"><li>Deleting a missing key is harmless. </li><li>Still report the selected area so a learner understands why a record in another <strong class="wt-content-key">backend</strong> remains. </li><li>Do not imply that deleting this key clears all personal data on the site.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔔</span>Storage Events and Unsaved Work</h2><ul class="wt-content-points"><li>A storage <strong class="wt-content-key">event</strong> informs other documents that share the changed storage area. </li><li>The document performing a change does not receive its own <strong class="wt-content-key">event</strong>. </li><li>Local storage changes can notify other same-origin tabs; <strong class="wt-content-key">session</strong> storage notifications stay within the same top-level context, such as a same-origin iframe in that tab.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">event</strong> includes key, oldValue, newValue and storageArea. </li><li>A key of <strong class="wt-content-key">null</strong> can represent a clear operation. </li><li>Filter by the storage area and the key your feature owns. </li><li>Receiving an <strong class="wt-content-key">event</strong> about a different feature is not a reason to reload this preference.</li></ul><ul class="wt-content-points"><li>The lab listens only for relevant <strong class="wt-content-key">localStorage</strong> events while local mode and normal access are selected. </li><li>It announces that the saved record changed elsewhere and offers Load. </li><li>It does not automatically replace unsaved editor fields. </li><li>Concurrent updates still need an application conflict policy; this exercise uses explicit Save and Load.</li></ul><div class="code-block"><pre><code>window.addEventListener(&quot;storage&quot;, event =&gt; {
+  if (event.storageArea !== window.localStorage) return;
+  if (event.key !== key &amp;&amp; event.key !== null) return;
+  showStatus(&quot;Saved data changed elsewhere. Load to inspect.&quot;);
+});</code></pre></div><ul class="wt-content-points"><li>A single-tab test cannot demonstrate a native cross-tab notification. </li><li>Open the deployed lesson in two same-origin tabs, select local mode in both and save a changed record in one. </li><li>Check the other tab’s notice before deliberately loading it.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🍪</span>Cookies — Data Attached to Matching Requests</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Cookies</strong> serve a different purpose from a local preference store: they can accompany <strong class="wt-content-key">HTTP</strong> requests according to domain, path, expiry and browser policy. </li><li>A <strong class="wt-content-key">server</strong> can set them with the Set-Cookie <strong class="wt-content-key">response</strong> header. </li><li>A <strong class="wt-content-key">server</strong> <strong class="wt-content-key">session</strong> cookie often carries an opaque identifier while the server keeps session data.</li></ul><ul class="wt-content-points"><li>Secure restricts transmission to secure contexts such as <strong class="wt-content-key">HTTPS</strong>. </li><li><strong class="wt-content-key">HttpOnly</strong> prevents <strong class="wt-content-key">JavaScript</strong> from reading the cookie. </li><li><strong class="wt-content-key">SameSite</strong> governs cross-site sending behavior; SameSite=None requires Secure. </li><li>These settings address different concerns and do not replace <strong class="wt-content-key">server</strong> <strong class="wt-content-key">validation</strong>.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">JavaScript</strong> cannot set an <strong class="wt-content-key">HttpOnly</strong> cookie using document.cookie. </li><li>Avoid putting passwords or a trusted <strong class="wt-content-key">authentication</strong> decision in a study preference. </li><li>The lab does not create <strong class="wt-content-key">cookies</strong> or implement login; it compares their role with browser-side storage.</li></ul><div class="code-block"><pre><code>Set-Cookie: session_id=opaque-example; Path=/; Secure; HttpOnly; SameSite=Lax</code></pre></div><ul class="wt-content-points"><li>This line illustrates an <strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">response</strong> header, not JavaScript to paste into the lab. </li><li>A real <strong class="wt-content-key">server</strong> must create, validate and expire <strong class="wt-content-key">session</strong> identifiers correctly. </li><li><strong class="wt-content-key">Cookie</strong> attributes should match the application’s intended <strong class="wt-content-key">request</strong> flow.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🧰</span>Other Browser APIs — Choose by the Task</h2><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> offers many capabilities beyond string storage. </li><li>IndexedDB is suitable for larger structured collections and asynchronous <strong class="wt-content-key">database</strong> operations. </li><li>The <strong class="wt-content-key">Cache</strong> <strong class="wt-content-key">API</strong> handles stored request/response pairs. </li><li>Neither is simply another spelling of <strong class="wt-content-key">localStorage</strong>, and both require a deliberate lifecycle and error strategy.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">URL</strong> and URLSearchParams help construct and inspect URL data. </li><li>History APIs change navigation state, not permanent account data. </li><li>Clipboard and geolocation capabilities bring permission and context requirements that vary by <strong class="wt-content-key">API</strong> and <strong class="wt-content-key">browser</strong>. </li><li>Check a capability’s <strong class="wt-content-key">contract</strong> before using it.</li></ul><ul class="wt-content-points"><li>Match the feature to the data: a short display preference can remain in <strong class="wt-content-key">Web Storage</strong>, a substantial offline collection may need IndexedDB, and downloaded resources may belong in a <strong class="wt-content-key">caching</strong> strategy. </li><li>A <strong class="wt-content-key">server</strong> remains responsible for authoritative shared records.</li></ul><figure class="wt-diagram"><figcaption>Choose a capability</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>Small preference</strong><p><strong class="wt-content-key">Web Storage</strong> with a bounded record.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Structured collection</strong><p>An asynchronous <strong class="wt-content-key">database</strong> such as IndexedDB.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Response resources</strong><p>A deliberate <strong class="wt-content-key">Cache</strong> <strong class="wt-content-key">API</strong> strategy.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Navigation data</strong><p><strong class="wt-content-key">URL</strong> parsing and history state.</p></div></div></figure><ul class="wt-content-points"><li>This lesson introduces these alternatives; its interactive exercise deliberately stays with one tiny string record. </li><li>Implementing a complete offline <strong class="wt-content-key">database</strong> or service worker would require its own lesson and tests.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Privacy and Trust Boundaries</h2><ul class="wt-content-points"><li>Minimize the data a feature keeps. </li><li>A fictional study topic and duration are enough to learn the mechanics. </li><li>Do not ask learners to put passwords, payment information or confidential notes into a storage demonstration. </li><li>Explain how to remove the demonstration record.</li></ul><ul class="wt-content-points"><li>Same-origin script access means <strong class="wt-content-key">localStorage</strong> is not a secret vault. </li><li>A successful parse, a stored completion flag or a local boolean does not prove identity, permissions or <strong class="wt-content-key">ownership</strong> on the <strong class="wt-content-key">server</strong>. </li><li>Trusted decisions must be checked at the relevant authority.</li></ul><ul class="wt-content-points"><li>Render accepted notes as text. </li><li>Validate records loaded from storage just as you validate a <strong class="wt-content-key">response</strong> from an <strong class="wt-content-key">API</strong>: they can be old, manually modified or produced by another script. </li><li>Keep deletion narrow and expose failure clearly.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Minimize</h3><p>Keep only fields required by the learning task.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👁️</span><h3>Explain</h3><p>Show the selected <strong class="wt-content-key">backend</strong> and the exact key.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Remove</h3><p>Provide a button that deletes this feature’s record.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Recheck</h3><p>Validate whenever saved text enters the editor.</p></article></div><ul class="wt-content-points"><li>A real product may have consent and retention requirements based on its purpose and jurisdiction. </li><li>A storage <strong class="wt-content-key">API</strong> alone does not decide those requirements. </li><li>The exercise demonstrates explicit user actions without claiming that it establishes a complete privacy policy.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Design the Save and Load Lifecycle</h2><ul class="wt-content-points"><li>Separate editor state from saved state. </li><li>On Save, validate all fields, serialize the accepted record and write it to the selected <strong class="wt-content-key">backend</strong>. </li><li>Announce success only after the write returns. </li><li>On Load, check for absence, parse bounded text, validate the <strong class="wt-content-key">contract</strong> and then update the editor together.</li></ul><ul class="wt-content-points"><li>On failure, preserve the draft and identify the failed stage. </li><li>On Reset fields, restore the editor defaults and clear its display output while leaving the saved record intact. </li><li>On Delete, remove only the owned key from the selected <strong class="wt-content-key">backend</strong>.</li></ul><ul class="wt-content-points"><li>The visualizer follows a normal Save then Load journey. </li><li>The lab lets you introduce missing data, failed access, failed writes and bad <strong class="wt-content-key">JSON</strong> separately. </li><li>These paths are part of the feature, rather than exceptional details to add after the happy path is finished.</li></ul><figure class="wt-diagram"><figcaption>Preference lifecycle</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">✍️</span><strong>Edit</strong><p>The draft may differ from saved data.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Save</strong><p>Validate, serialize, then attempt one-key write.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📖</span><strong>Load</strong><p>Read, distinguish absence, parse and validate.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧹</span><strong>Delete / reset</strong><p>Delete saved key or reset editor, explicitly.</p></div></div></figure><ul class="wt-content-points"><li>Before marking complete, reproduce the failure paths and explain why they do not overwrite the editor or remove unrelated site records. </li><li>Then compare memory loss on reload with the selected <strong class="wt-content-key">browser</strong> storage lifetime.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Save and Restore a Preference</h2><p>Follow a normal preference through edit, validation, serialization, reading and restoration. The five-stage player keeps the same visual style and controls as the previous lessons. The lab below separately exercises missing data and failed operations.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="storage">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>BROWSER STORAGE TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">✍️</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Prepare a study preference</h3><p data-trace-description>The editor holds a draft; nothing has been saved yet.</p></div><pre class="trace-code"><code data-trace-code>{ version: 1, topic: &quot;html&quot;, minutes: 15, note: &quot;Review forms&quot; }</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Edit" aria-pressed="true"><span>01</span><strong>Edit</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Validate" aria-pressed="false"><span>02</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Save" aria-pressed="false"><span>03</span><strong>Save</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Read" aria-pressed="false"><span>04</span><strong>Read</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Restore" aria-pressed="false"><span>05</span><strong>Restore</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Changing fields does not write storage. Select the area and explicitly press Save.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Study Preference Storage Lab</h2><ul class="wt-content-points"><li>Memory mode is the default and lasts only for this page instance. </li><li>Local and <strong class="wt-content-key">session</strong> modes use the real <strong class="wt-content-key">browser</strong> storage areas when available. </li><li>Select a <strong class="wt-content-key">backend</strong>, edit a fictional preference and explicitly Save or Load. </li><li>No preference is automatically read or written when you switch modes.</li></ul><ul class="wt-content-points"><li>The single key is <code>codebhavya-wt19-storage-lab-v1</code>. </li><li>Delete removes only this key from the selected <strong class="wt-content-key">backend</strong>. </li><li>Reset fields restores editor defaults without deleting saved data. </li><li>Use a short fictional note, then delete the lab key from local and <strong class="wt-content-key">session</strong> modes when finished.</li></ul><ul class="wt-content-points"><li>Failure switches simulate blocked access or a quota failure without changing <strong class="wt-content-key">browser</strong> policy or filling storage. </li><li>Native errors are also caught. </li><li>The separate <strong class="wt-content-key">JSON</strong> checker validates pasted text without writing it into any storage area.</li></ul><div class="wt9-demo wt19-lab"><label for="wt19Mode">Storage backend</label><select id="wt19Mode"><option value="memory">Memory · current page instance</option><option value="local">localStorage · may persist after reload</option><option value="session">sessionStorage · current page session</option></select><label for="wt19Fault">Failure demonstration</label><select id="wt19Fault"><option value="normal">Normal · use selected backend</option><option value="blocked">Simulated blocked access · all operations fail</option><option value="quota">Simulated quota error · only Save fails</option></select><label for="wt19Topic">Study topic</label><select id="wt19Topic"><option value="html">HTML</option><option value="css">CSS</option><option value="javascript">JavaScript</option></select><label for="wt19Minutes">Study duration</label><select id="wt19Minutes"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option></select><label for="wt19Note">Fictional study note · at most 160 characters after trimming</label><textarea id="wt19Note" rows="3" maxlength="160" aria-describedby="wt19NoteHelp"></textarea><p id="wt19NoteHelp">Leave the note empty or use a short learning reminder. The saved record version is 1.</p><div class="wt9-actions"><button type="button" class="primary-button" id="wt19Save">Save preference</button><button type="button" class="secondary-button" id="wt19Load">Load preference</button><button type="button" class="secondary-button" id="wt19Inspect">Inspect stored text</button><button type="button" class="secondary-button" id="wt19Delete">Delete this lab key</button><button type="button" class="secondary-button" id="wt19Reset">Reset fields · keep saved data</button></div><p id="wt19Status" role="status">Memory mode. No preference has been read or saved.</p><h3>Last operation output</h3><pre class="wt19-result"><code id="wt19Output">No operation yet.</code></pre><h3>JSON contract checker · does not write storage</h3><label for="wt19JSON">Example record JSON · maximum 4096 characters</label><textarea id="wt19JSON" rows="5" maxlength="4096">{"version":1,"topic":"html","minutes":15,"note":"Review forms"}</textarea><button type="button" class="primary-button" id="wt19Validate">Validate pasted JSON</button><p id="wt19Validation" role="status">Try the sample, an unknown version, a string duration or malformed JSON.</p><pre class="wt19-result"><code id="wt19Validated">No JSON checked yet.</code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Find the Storage Boundary</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔍</span><h3>Wrong area</h3><p>Confirm origin, <strong class="wt-content-key">backend</strong> and exact key before assuming data disappeared.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Bad JSON</h3><p>Distinguish missing text, malformed <strong class="wt-content-key">JSON</strong> and an unacceptable record.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Failed write</h3><p>Check the caught error; do not report success or switch areas silently.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Too much cleanup</h3><p>Remove the one owned key, rather than clearing the whole origin.</p></article></div><ul class="wt-content-points"><li>If the editor returns to defaults after reload, select the original <strong class="wt-content-key">backend</strong> and Load. </li><li>Memory cannot recover an earlier script instance. </li><li>If a stored record is present but fails <strong class="wt-content-key">validation</strong>, inspect the raw value and the expected version instead of overwriting the current draft.</li></ul><ul class="wt-content-points"><li>If another tab does not show a notice, check that both pages have the same origin, local mode is selected and a value actually changed. </li><li><strong class="wt-content-key">Session</strong> storage is not a cross-tab message bus. </li><li>An <strong class="wt-content-key">event</strong> caused by another feature should not reload this editor.</li></ul><ul class="wt-content-points"><li>If Reset seems not to erase data, that is its intended <strong class="wt-content-key">contract</strong>: Reset fields keeps the saved record. </li><li>Use Delete this lab key in the selected <strong class="wt-content-key">backend</strong> and then Load to observe the missing outcome.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does localStorage automatically synchronize with a server?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does localStorage automatically synchronize with a server?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It stores strings in an applicable browser storage area. Server or account synchronization needs a separate implemented flow.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does getItem return for an absent key?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does getItem return for an absent key?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Null. A present string such as &quot;null&quot; or an empty string is a different case.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why validate after JSON.parse?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why validate after JSON.parse?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Parsing accepts many JSON values. The application still needs the supported version, fields, types and bounds.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can sessionStorage authenticate a user?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can sessionStorage authenticate a user?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A local boolean is not a server-authorized login or permission decision.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why catch access to window.localStorage itself?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why catch access to window.localStorage itself?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Obtaining the storage area can fail, before getItem or setItem is called.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why avoid storage.clear in a lesson?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why avoid storage.clear in a lesson?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It removes every key in that area, including other site features. Remove only the lab key.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does the writer receive its own storage event?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does the writer receive its own storage event?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Other documents sharing the changed area can receive the notification.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does HttpOnly do for a cookie?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does HttpOnly do for a cookie?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It prevents JavaScript access to that cookie. A server sets it through a response header; it does not replace server-side authorization.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Choose the Storage Behavior</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="2" data-explanation="Memory belongs to the script instance; persistence requires a separate mechanism."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. What happens to a new Map after a fresh page reload?</h3><div class="wt8-options"><button type="button" class="wt8-option">It automatically loads saved JSON</button><button type="button" class="wt8-option">It uses the old instance forever</button><button type="button" class="wt8-option">It begins as a new instance</button><button type="button" class="wt8-option">It authenticates the learner</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Null signals absence. Present text must be handled separately."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What does getItem return when the key is absent?</h3><div class="wt8-options"><button type="button" class="wt8-option">null</button><button type="button" class="wt8-option">An empty object</button><button type="button" class="wt8-option">false always</button><button type="button" class="wt8-option">The string &quot;null&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The stored contract accepts numeric 15, 30 or 45; it does not coerce a loaded string."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which is the lab’s accepted duration?</h3><div class="wt8-options"><button type="button" class="wt8-option">&quot;30&quot; as loaded JSON</button><button type="button" class="wt8-option">30 as a number</button><button type="button" class="wt8-option">-30</button><button type="button" class="wt8-option">300</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Unknown versions require a deliberate migration or rejection."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What should happen after loading version 2 in this version 1 lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">Trust all fields</button><button type="button" class="wt8-option">Overwrite the editor immediately</button><button type="button" class="wt8-option">Delete every origin key</button><button type="button" class="wt8-option">Reject it and preserve the draft</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Reset and deleting the selected lab record are distinct actions."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does Reset fields do here?</h3><div class="wt8-options"><button type="button" class="wt8-option">Deletes all localStorage</button><button type="button" class="wt8-option">Clears every cookie</button><button type="button" class="wt8-option">Restores editor defaults while keeping saved data</button><button type="button" class="wt8-option">Sends data to the server</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A feature should delete the record it owns."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. Which cleanup preserves other site features?</h3><div class="wt8-options"><button type="button" class="wt8-option">removeItem with this lab key</button><button type="button" class="wt8-option">clear on the whole area</button><button type="button" class="wt8-option">Deleting every key beginning with code</button><button type="button" class="wt8-option">Clearing browser history</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The quota exercise leaves Load, Inspect and Delete available."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What does the simulated quota mode block?</h3><div class="wt8-options"><button type="button" class="wt8-option">All reads</button><button type="button" class="wt8-option">Only the Save write</button><button type="button" class="wt8-option">Only mode selection</button><button type="button" class="wt8-option">Every storage event globally</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The writer does not receive its own event; applicable other same-origin contexts can."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Who receives a localStorage change event?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only the writer</button><button type="button" class="wt8-option">Every website on the internet</button><button type="button" class="wt8-option">No document ever</button><button type="button" class="wt8-option">Other documents sharing the changed area</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A notice should preserve unsaved work."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. How should an external change affect an unsaved editor here?</h3><div class="wt8-options"><button type="button" class="wt8-option">Immediately erase the draft</button><button type="button" class="wt8-option">Automatically log in</button><button type="button" class="wt8-option">Announce it and let the learner Load deliberately</button><button type="button" class="wt8-option">Delete the changed key</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="HttpOnly is set by the server and prevents script access to that cookie."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Which cookie attribute prevents JavaScript reading it?</h3><div class="wt8-options"><button type="button" class="wt8-option">HttpOnly</button><button type="button" class="wt8-option">Path</button><button type="button" class="wt8-option">Max-Age</button><button type="button" class="wt8-option">Domain</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Web Storage differs from cookies; sending it requires an explicit implemented operation."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Are Web Storage values automatically included in HTTP request headers?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always</button><button type="button" class="wt8-option">No</button><button type="button" class="wt8-option">Only notes</button><button type="button" class="wt8-option">Only numbers</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Only a completed write justifies a saved message."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. What should a failed Save report?</h3><div class="wt8-options"><button type="button" class="wt8-option">Guaranteed persistence</button><button type="button" class="wt8-option">Successful synchronization</button><button type="button" class="wt8-option">Silent fallback success</button><button type="button" class="wt8-option">The failed operation without claiming success</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt19QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Observe Specific Storage Outcomes</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧠</span><h3>Memory reload</h3><p>Save in memory, reload, then Load memory. Expected: no record in the new instance.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💾</span><h3>Local reload</h3><p>Save <strong class="wt-content-key">CSS</strong>/30 in local mode, reset fields, then Load. Expected: CSS/30 restored; verify after reload too.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪟</span><h3>Session reload</h3><p>Save <strong class="wt-content-key">JavaScript</strong>/45 in <strong class="wt-content-key">session</strong> mode and reload the same tab. Expected: Load restores it if the area remains available.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Quota</h3><p>Save a normal record, then change the note and simulate quota. Expected: Save fails; normal Load returns the earlier record.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚫</span><h3>Blocked</h3><p>Select blocked access and try Save/Load/Inspect/Delete. Expected: each fails and editor fields stay intact.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Wrong shape</h3><p>Check <strong class="wt-content-key">JSON</strong> with version 2, minutes "30", <strong class="wt-content-key">null</strong> and malformed text. Expected: each rejects without writing storage.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Narrow delete</h3><p>Delete in local mode, then Load local and <strong class="wt-content-key">session</strong>. Expected: local missing; an independently saved session record remains.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔔</span><h3>Another tab</h3><ul class="wt-content-points"><li>In two same-origin tabs use normal local mode. </li><li>Save a changed note in one. </li><li>Expected: other tab announces change while preserving its draft.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧠</span><strong>Memory:</strong> Fresh script instances begin with fresh memory.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">💾</span><strong>Local:</strong> Can retain small preferences; availability is not guaranteed.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Session:</strong> Partitioned by origin and top-level browsing context.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>Text:</strong> Serialize simple records with JSON.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Contract:</strong> Validate version, shape, types and bounds.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚠️</span><strong>Failure:</strong> Catch getter and method errors.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Key:</strong> Namespace one feature’s record.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧹</span><strong>Delete:</strong> Remove only the key you own.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔔</span><strong>Event:</strong> Other sharing documents receive change notices.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🍪</span><strong>Cookie:</strong> Request-sending rules differ from Web Storage.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Persistence"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Persistence</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Persistence</h4><p>Keeping data beyond a current script instance, subject to the chosen storage lifecycle.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Origin"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Origin</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Origin</h4><p>The combination of scheme, host and port used in browser access boundaries.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term localStorage"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>localStorage</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>localStorage</h4><p>A synchronous string key/value area that can retain data beyond reloads.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term sessionStorage"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>sessionStorage</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>sessionStorage</h4><p>A synchronous string key/value area partitioned by origin and top-level browsing context.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Serialization"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Serialization</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Serialization</h4><p>Converting a supported record into a text representation such as JSON.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Record version"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Record version</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Record version</h4><p>A field identifying the application data format expected by a loader.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Quota error"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Quota error</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Quota error</h4><p>A failed attempt to write when the selected area cannot accommodate the operation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Storage event"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Storage event</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Storage event</h4><p>A notification to other documents sharing an area that its data changed.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Cookie"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Cookie</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Cookie</h4><p>A browser-managed value that can accompany matching HTTP requests.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term HttpOnly"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>HttpOnly</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>HttpOnly</h4><p>A cookie attribute that prevents JavaScript access to that cookie.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Defensive Preference Store</h2><ul class="wt-content-points"><li>Build a study preference with an explicit <strong class="wt-content-key">backend</strong> <strong class="wt-content-key">selector</strong> and separate Save, Load, Delete and Reset fields actions. </li><li>Start in memory. </li><li>Use one namespaced key in each <strong class="wt-content-key">browser</strong> storage area and keep a numeric record version.</li></ul><ul class="wt-content-points"><li>Validate before writing and again after reading. </li><li>Distinguish absence from malformed text and a wrong <strong class="wt-content-key">contract</strong>. </li><li>Preserve the draft on failure and report real <strong class="wt-content-key">backend</strong> failures without silent fallback. </li><li>Show raw saved data as literal text.</li></ul><ul class="wt-content-points"><li>Demonstrate normal round trips, reload lifetimes, blocked access, quota failure and invalid <strong class="wt-content-key">JSON</strong>. </li><li>Keep unrelated site keys intact. </li><li>In a deployed <strong class="wt-content-key">browser</strong>, check a two-tab local change notice without replacing unsaved work. </li><li>Delete the demonstration key after the experiment.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain where data lives, when it can disappear and why saved text is still untrusted input. </li><li>Level 20 will introduce server-side execution and application flow.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 19 Complete?</h2><p>Before marking complete, compare the storage lifetimes, restore one valid preference, reject a bad record and explain narrow deletion plus honest failure feedback. Completion is a local study marker rather than a score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="asynchronous-javascript-apis.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Asynchronous JavaScript and APIs</span><span class="nav-action">Review Level 18</span></a></div><div class="topic-nav-side next"><a href="server-side-web-programming.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Server-Side Web Programming</span><span class="nav-action">Open Level 20</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="browser-storage-web-apis.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=14" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=11" defer></script>
+</body></html>

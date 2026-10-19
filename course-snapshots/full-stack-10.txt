@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 10: Arrays &amp; Objects | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=10"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=10">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class="active " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class=" " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">10</div><div><p class="eyebrow">JavaScript Engineering · Level 10</p><h1>Arrays &amp; Objects</h1><p>Arrays and objects are the everyday data structures of JavaScript applications. In this level, you will learn how to model real-world information, search and transform collections, work safely with nested data, and understand why immutable transformations matter in modern frontend development.</p><div class="lesson-meta"><span>◈ Intermediate</span><span>▣ 20 concepts</span><span>✓ 12 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand arrays and indexed collections.</p></article><article><b>02</b><p>Create, read, update and iterate over arrays.</p></article><article><b>03</b><p>Use common array methods effectively.</p></article><article><b>04</b><p>Understand map, filter and reduce.</p></article><article><b>05</b><p>Search and test array contents with find, some and every.</p></article><article><b>06</b><p>Understand objects as key-value data structures.</p></article><article><b>07</b><p>Create, read, update and remove object properties.</p></article><article><b>08</b><p>Work with nested objects and arrays.</p></article><article><b>09</b><p>Use destructuring and spread syntax.</p></article><article><b>10</b><p>Understand references and shallow copies.</p></article><article><b>11</b><p>Transform data without accidentally mutating the original collection.</p></article><article><b>12</b><p>Prepare for data handling patterns used heavily in React and APIs.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Why Arrays and Objects Matter</h2></div></div><p class="concept-intro">Most real applications work with collections of information. JavaScript arrays and objects provide the basic building blocks for representing that information.</p><div class="explanation-list"><p>A student record, shopping cart, product catalogue, API response or list of courses can all be represented using combinations of arrays and objects.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Arrays organize collections; objects organize named information about an entity.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const student = {
+  name: &quot;Ravi&quot;,
+  branch: &quot;CSE&quot;,
+  cgpa: 8.7
+};
+
+const courses = [
+  &quot;C&quot;,
+  &quot;DSA&quot;,
+  &quot;Python&quot;,
+  &quot;JavaScript&quot;
+];
+
+console.log(student.name);
+console.log(courses[2]);">Copy</button></header><pre><code>const student = {
+  name: &quot;Ravi&quot;,
+  branch: &quot;CSE&quot;,
+  cgpa: 8.7
+};
+
+const courses = [
+  &quot;C&quot;,
+  &quot;DSA&quot;,
+  &quot;Python&quot;,
+  &quot;JavaScript&quot;
+];
+
+console.log(student.name);
+console.log(courses[2]);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Ravi
+Python</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Creating and Accessing Arrays</h2></div></div><p class="concept-intro">An array stores multiple values in an ordered collection.</p><ul class="content-points"><li>Array indexes start at 0.</li><li>The first element is at index 0.</li><li>The second element is at index 1.</li><li>length gives the number of elements.</li><li>The last valid index is length - 1.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JavaScript arrays are zero-indexed ordered collections.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Accessing an index outside the array does not throw an error; it normally produces undefined.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = [82, 91, 76, 88];
+
+console.log(marks[0]);
+console.log(marks[2]);
+console.log(marks.length);">Copy</button></header><pre><code>const marks = [82, 91, 76, 88];
+
+console.log(marks[0]);
+console.log(marks[2]);
+console.log(marks.length);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>82
+76
+4</pre></div><div class="method-grid"><article class="method-card"><b>arr[index]</b><p>Reads or updates an element at a particular index.</p><code>marks[0]</code></article><article class="method-card"><b>length</b><p>Returns the number of elements in the array.</p><code>marks.length</code></article><article class="method-card"><b>at()</b><p>Reads an element using an index and can conveniently access from the end.</p><code>marks.at(-1)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Adding and Removing Array Elements</h2></div></div><p class="concept-intro">JavaScript provides methods for changing the contents of an array.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>push, pop, shift and unshift are convenient but directly change the original array.</p></div></div><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Assuming methods such as push and pop create a new array. They mutate the existing array.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const courses = [&quot;C&quot;, &quot;DSA&quot;];
+
+courses.push(&quot;Python&quot;);
+
+courses.unshift(&quot;Maths&quot;);
+
+console.log(courses);
+
+courses.pop();
+
+console.log(courses);">Copy</button></header><pre><code>const courses = [&quot;C&quot;, &quot;DSA&quot;];
+
+courses.push(&quot;Python&quot;);
+
+courses.unshift(&quot;Maths&quot;);
+
+console.log(courses);
+
+courses.pop();
+
+console.log(courses);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[&quot;Maths&quot;, &quot;C&quot;, &quot;DSA&quot;, &quot;Python&quot;]
+[&quot;Maths&quot;, &quot;C&quot;, &quot;DSA&quot;]</pre></div><div class="method-grid"><article class="method-card"><b>push()</b><p>Adds one or more elements to the end of an array.</p><code>courses.push(&#39;Python&#39;)</code></article><article class="method-card"><b>pop()</b><p>Removes and returns the last element.</p><code>courses.pop()</code></article><article class="method-card"><b>unshift()</b><p>Adds one or more elements to the beginning.</p><code>courses.unshift(&#39;Maths&#39;)</code></article><article class="method-card"><b>shift()</b><p>Removes and returns the first element.</p><code>courses.shift()</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Iterating Through Arrays</h2></div></div><p class="concept-intro">Iteration means processing each element in a collection.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Choose the iteration style based on whether you need indexes, early termination or simple processing.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = [80, 90, 75, 88];
+
+for (const mark of marks) {
+  console.log(mark);
+}
+
+marks.forEach(mark =&gt; {
+  console.log(mark);
+});">Copy</button></header><pre><code>const marks = [80, 90, 75, 88];
+
+for (const mark of marks) {
+  console.log(mark);
+}
+
+marks.forEach(mark =&gt; {
+  console.log(mark);
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>map(): Transform Every Element</h2></div></div><p class="concept-intro">map creates a new array by transforming every element of the original array.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use map when the result should contain one transformed value for each original value.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = [70, 80, 90];
+
+const bonusMarks = marks.map(mark =&gt; mark + 5);
+
+console.log(marks);
+console.log(bonusMarks);">Copy</button></header><pre><code>const marks = [70, 80, 90];
+
+const bonusMarks = marks.map(mark =&gt; mark + 5);
+
+console.log(marks);
+console.log(bonusMarks);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[70, 80, 90]
+[75, 85, 95]</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Read original element</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Run transformation function</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Produce new value</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Store new value in result array</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>filter(): Select Matching Elements</h2></div></div><p class="concept-intro">filter creates a new array containing only elements that satisfy a condition.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use filter when the output should contain a subset of the original collection.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = [45, 72, 91, 58, 84];
+
+const passed = marks.filter(mark =&gt; mark &gt;= 60);
+
+console.log(passed);">Copy</button></header><pre><code>const marks = [45, 72, 91, 58, 84];
+
+const passed = marks.filter(mark =&gt; mark &gt;= 60);
+
+console.log(passed);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[72, 91, 84]</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Read an element</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>Run condition</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Condition true → keep element</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>Condition false → discard element</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Return new array</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>reduce(): Combine Values</h2></div></div><p class="concept-intro">reduce processes a collection and combines its values into one accumulated result.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>reduce is useful when many values must be combined into one result such as a sum, count or grouped structure.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = [70, 80, 90];
+
+const total = marks.reduce(
+  (sum, mark) =&gt; sum + mark,
+  0
+);
+
+console.log(total);">Copy</button></header><pre><code>const marks = [70, 80, 90];
+
+const total = marks.reduce(
+  (sum, mark) =&gt; sum + mark,
+  0
+);
+
+console.log(total);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>240</pre></div><div class="url-breakdown"><article><code>Initial value</code><p>The accumulator starts at 0.</p></article><article><code>First step</code><p>0 + 70 becomes 70.</p></article><article><code>Second step</code><p>70 + 80 becomes 150.</p></article><article><code>Third step</code><p>150 + 90 becomes 240.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Searching Arrays</h2></div></div><p class="concept-intro">JavaScript provides several methods for asking questions about array contents.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Use find when you need a matching element, some/every when you need a boolean answer.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const students = [
+  { name: &quot;Ravi&quot;, cgpa: 8.7 },
+  { name: &quot;Anu&quot;, cgpa: 9.1 },
+  { name: &quot;Kiran&quot;, cgpa: 7.9 }
+];
+
+const topper = students.find(
+  student =&gt; student.cgpa &gt; 9
+);
+
+console.log(topper.name);">Copy</button></header><pre><code>const students = [
+  { name: &quot;Ravi&quot;, cgpa: 8.7 },
+  { name: &quot;Anu&quot;, cgpa: 9.1 },
+  { name: &quot;Kiran&quot;, cgpa: 7.9 }
+];
+
+const topper = students.find(
+  student =&gt; student.cgpa &gt; 9
+);
+
+console.log(topper.name);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Anu</pre></div><div class="method-grid"><article class="method-card"><b>find()</b><p>Returns the first element that satisfies a condition.</p><code>students.find(s =&gt; s.cgpa &gt; 9)</code></article><article class="method-card"><b>findIndex()</b><p>Returns the index of the first matching element.</p><code>students.findIndex(s =&gt; s.cgpa &gt; 9)</code></article><article class="method-card"><b>some()</b><p>Checks whether at least one element satisfies a condition.</p><code>students.some(s =&gt; s.cgpa &gt; 9)</code></article><article class="method-card"><b>every()</b><p>Checks whether all elements satisfy a condition.</p><code>students.every(s =&gt; s.cgpa &gt;= 7)</code></article><article class="method-card"><b>includes()</b><p>Checks whether an array contains a specific value.</p><code>courses.includes(&#39;DSA&#39;)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Objects: Named Data</h2></div></div><p class="concept-intro">Objects store related information using named properties.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Objects are ideal for describing an entity through named properties.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const student = {
+  name: &quot;Ravi&quot;,
+  age: 21,
+  branch: &quot;CSE&quot;,
+  cgpa: 8.7
+};
+
+console.log(student.name);
+console.log(student.cgpa);">Copy</button></header><pre><code>const student = {
+  name: &quot;Ravi&quot;,
+  age: 21,
+  branch: &quot;CSE&quot;,
+  cgpa: 8.7
+};
+
+console.log(student.name);
+console.log(student.cgpa);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Ravi
+8.7</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>Adding, Updating and Removing Properties</h2></div></div><p class="concept-intro">Objects are dynamic: properties can be added, changed or removed during program execution.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Object properties are named pieces of data and can be accessed dynamically.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Deleting properties repeatedly can make application data harder to reason about. Often it is clearer to create a new object with the required shape.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const student = {
+  name: &quot;Ravi&quot;,
+  cgpa: 8.2
+};
+
+student.cgpa = 8.7;
+
+student.branch = &quot;CSE&quot;;
+
+delete student.cgpa;
+
+console.log(student);">Copy</button></header><pre><code>const student = {
+  name: &quot;Ravi&quot;,
+  cgpa: 8.2
+};
+
+student.cgpa = 8.7;
+
+student.branch = &quot;CSE&quot;;
+
+delete student.cgpa;
+
+console.log(student);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>{
+  name: &quot;Ravi&quot;,
+  branch: &quot;CSE&quot;
+}</pre></div><div class="method-grid"><article class="method-card"><b>object.property</b><p>Reads or updates a known property.</p><code>student.cgpa = 8.7</code></article><article class="method-card"><b>object[key]</b><p>Reads or updates a property using a variable key.</p><code>student[key]</code></article><article class="method-card"><b>delete</b><p>Removes a property from an object.</p><code>delete student.cgpa</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Objects Inside Arrays</h2></div></div><p class="concept-intro">Real applications usually store collections of records as arrays of objects.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Arrays of objects are one of the most important data shapes in frontend and backend JavaScript.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const students = [
+  {
+    name: &quot;Ravi&quot;,
+    branch: &quot;CSE&quot;,
+    cgpa: 8.7
+  },
+  {
+    name: &quot;Anu&quot;,
+    branch: &quot;AIML&quot;,
+    cgpa: 9.1
+  },
+  {
+    name: &quot;Kiran&quot;,
+    branch: &quot;CSE&quot;,
+    cgpa: 7.9
+  }
+];
+
+const cseStudents =
+  students.filter(student =&gt; student.branch === &quot;CSE&quot;);
+
+console.log(cseStudents);">Copy</button></header><pre><code>const students = [
+  {
+    name: &quot;Ravi&quot;,
+    branch: &quot;CSE&quot;,
+    cgpa: 8.7
+  },
+  {
+    name: &quot;Anu&quot;,
+    branch: &quot;AIML&quot;,
+    cgpa: 9.1
+  },
+  {
+    name: &quot;Kiran&quot;,
+    branch: &quot;CSE&quot;,
+    cgpa: 7.9
+  }
+];
+
+const cseStudents =
+  students.filter(student =&gt; student.branch === &quot;CSE&quot;);
+
+console.log(cseStudents);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Ravi
+Kiran</pre></div><div class="architecture-flow"><article><span>01</span><h3>Collection</h3><ul><li>The outer array represents many students.</li><li>Array order can represent display order.</li></ul></article><article><span>02</span><h3>Record</h3><ul><li>Each object represents one student.</li><li>Each record has its own properties.</li></ul></article><article><span>03</span><h3>Properties</h3><ul><li>name identifies the student.</li><li>branch describes the department.</li><li>cgpa stores academic performance.</li></ul></article><article><span>04</span><h3>Transformation</h3><ul><li>filter can select matching students.</li><li>map can create display-ready data.</li></ul></article><article><span>05</span><h3>Application</h3><ul><li>The resulting data can be rendered into cards, tables or dashboards.</li></ul></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>Nested Objects and Arrays</h2></div></div><p class="concept-intro">Objects and arrays can be nested to represent more complex relationships.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Nested data allows related information to be grouped without losing structure.</p></div></div><div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>Forgetting that each level must be accessed in the correct order: student → contact → city.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const student = {
+  name: &quot;Ravi&quot;,
+  contact: {
+    city: &quot;Hyderabad&quot;,
+    pincode: 500001
+  },
+  skills: [&quot;C&quot;, &quot;DSA&quot;, &quot;JavaScript&quot;]
+};
+
+console.log(student.contact.city);
+console.log(student.skills[1]);">Copy</button></header><pre><code>const student = {
+  name: &quot;Ravi&quot;,
+  contact: {
+    city: &quot;Hyderabad&quot;,
+    pincode: 500001
+  },
+  skills: [&quot;C&quot;, &quot;DSA&quot;, &quot;JavaScript&quot;]
+};
+
+console.log(student.contact.city);
+console.log(student.skills[1]);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Hyderabad
+DSA</pre></div><div class="url-breakdown"><article><code>student</code><p>The outer object represents the complete student record.</p></article><article><code>contact</code><p>A nested object groups related contact information.</p></article><article><code>city</code><p>A property inside the contact object.</p></article><article><code>skills</code><p>An array stores multiple skills.</p></article><article><code>skills[1]</code><p>The second skill is accessed using an array index.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Object Destructuring</h2></div></div><p class="concept-intro">Destructuring extracts properties from objects into variables.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Destructuring makes it easier to work with selected properties from objects.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const student = {
+  name: &quot;Ravi&quot;,
+  cgpa: 8.7,
+  branch: &quot;CSE&quot;
+};
+
+const { name, cgpa } = student;
+
+console.log(name);
+console.log(cgpa);">Copy</button></header><pre><code>const student = {
+  name: &quot;Ravi&quot;,
+  cgpa: 8.7,
+  branch: &quot;CSE&quot;
+};
+
+const { name, cgpa } = student;
+
+console.log(name);
+console.log(cgpa);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Ravi
+8.7</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Array Destructuring</h2></div></div><p class="concept-intro">Array destructuring extracts values according to their positions.</p><ul class="content-points"><li>Object destructuring uses property names.</li><li>Array destructuring uses positions.</li><li>The first array value goes to the first variable.</li><li>Skipped values can be ignored using commas.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Object destructuring is name-based; array destructuring is position-based.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const values = [10, 20, 30];
+
+const [first, , third] = values;
+
+console.log(first);
+console.log(third);">Copy</button></header><pre><code>const values = [10, 20, 30];
+
+const [first, , third] = values;
+
+console.log(first);
+console.log(third);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>10
+30</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Spread Syntax</h2></div></div><p class="concept-intro">The spread syntax expands values from arrays or objects into a new collection.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Spread is one of the main tools for creating new collections without directly mutating the original.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const oldCourses = [&quot;C&quot;, &quot;DSA&quot;];
+
+const newCourses = [
+  ...oldCourses,
+  &quot;Python&quot;,
+  &quot;JavaScript&quot;
+];
+
+console.log(newCourses);">Copy</button></header><pre><code>const oldCourses = [&quot;C&quot;, &quot;DSA&quot;];
+
+const newCourses = [
+  ...oldCourses,
+  &quot;Python&quot;,
+  &quot;JavaScript&quot;
+];
+
+console.log(newCourses);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[&quot;C&quot;, &quot;DSA&quot;, &quot;Python&quot;, &quot;JavaScript&quot;]</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>References and Shallow Copies</h2></div></div><p class="concept-intro">Objects and arrays are reference values, so assigning them to another variable does not automatically create an independent copy.</p><div class="explanation-list"><p>Both variables refer to the same object. Changing the object through one reference is visible through the other reference.</p></div><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Understanding references is essential for avoiding accidental state changes.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Spread creates only a shallow copy. Nested objects or arrays can still be shared.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const original = {
+  name: &quot;Ravi&quot;
+};
+
+const alias = original;
+
+alias.name = &quot;Anu&quot;;
+
+console.log(original.name);">Copy</button></header><pre><code>const original = {
+  name: &quot;Ravi&quot;
+};
+
+const alias = original;
+
+alias.name = &quot;Anu&quot;;
+
+console.log(original.name);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>Anu</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">17</div><div><p class="section-label">CONCEPT 17</p><h2>Immutable Array Transformations</h2></div></div><p class="concept-intro">An immutable transformation creates a new collection instead of changing the original collection.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Prefer clear immutable transformations when application state should remain predictable.</p></div></div><div class="real-example"><strong>🌍 Real-World Connection</strong><p>Immutable data patterns are especially important in React because predictable state updates make rendering and debugging easier.</p></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const marks = [70, 80, 90];
+
+const updatedMarks =
+  marks.map(mark =&gt; mark + 5);
+
+console.log(marks);
+console.log(updatedMarks);">Copy</button></header><pre><code>const marks = [70, 80, 90];
+
+const updatedMarks =
+  marks.map(mark =&gt; mark + 5);
+
+console.log(marks);
+console.log(updatedMarks);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[70, 80, 90]
+[75, 85, 95]</pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">18</div><div><p class="section-label">CONCEPT 18</p><h2>Sorting and Copying Before Sorting</h2></div></div><p class="concept-intro">sort changes the original array, so developers often create a copy when the original order must remain unchanged.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Know which array methods mutate and which return new collections.</p></div></div><div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>Calling sort() directly changes the array. Also remember that the default sort behaviour compares values as strings, so numeric sorting normally needs a comparison function.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const scores = [80, 40, 95, 60];
+
+const sortedScores =
+  [...scores].sort((a, b) =&gt; b - a);
+
+console.log(scores);
+console.log(sortedScores);">Copy</button></header><pre><code>const scores = [80, 40, 95, 60];
+
+const sortedScores =
+  [...scores].sort((a, b) =&gt; b - a);
+
+console.log(scores);
+console.log(sortedScores);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[80, 40, 95, 60]
+[95, 80, 60, 40]</pre></div><div class="method-grid"><article class="method-card"><b>sort()</b><p>Sorts the array in place.</p><code>scores.sort((a, b) =&gt; a - b)</code></article><article class="method-card"><b>slice()</b><p>Creates a shallow copy of part or all of an array.</p><code>scores.slice()</code></article><article class="method-card"><b>toSorted()</b><p>Returns a sorted copy without changing the original array.</p><code>scores.toSorted((a, b) =&gt; a - b)</code></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">19</div><div><p class="section-label">CONCEPT 19</p><h2>Practical Data Pipeline</h2></div></div><p class="concept-intro">Real applications often combine multiple array methods to transform raw data into useful results.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Small, composable transformations are often easier to understand than one large loop.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const students = [
+  { name: &quot;Ravi&quot;, cgpa: 8.7 },
+  { name: &quot;Anu&quot;, cgpa: 9.2 },
+  { name: &quot;Kiran&quot;, cgpa: 7.8 },
+  { name: &quot;Meena&quot;, cgpa: 8.9 }
+];
+
+const toppers = students
+  .filter(student =&gt; student.cgpa &gt;= 8.5)
+  .map(student =&gt; student.name);
+
+console.log(toppers);">Copy</button></header><pre><code>const students = [
+  { name: &quot;Ravi&quot;, cgpa: 8.7 },
+  { name: &quot;Anu&quot;, cgpa: 9.2 },
+  { name: &quot;Kiran&quot;, cgpa: 7.8 },
+  { name: &quot;Meena&quot;, cgpa: 8.9 }
+];
+
+const toppers = students
+  .filter(student =&gt; student.cgpa &gt;= 8.5)
+  .map(student =&gt; student.name);
+
+console.log(toppers);</code></pre></div><div class="output-box"><strong>Expected Result</strong><pre>[&quot;Ravi&quot;, &quot;Anu&quot;, &quot;Meena&quot;]</pre></div><div class="learning-flow"><h3>Step-by-Step Flow</h3><div class="flow-track"><div class="flow-item"><div class="flow-number">01</div><div class="flow-content"><strong>Start with student records</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">02</div><div class="flow-content"><strong>filter students with CGPA &gt;= 8.5</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">03</div><div class="flow-content"><strong>Keep only matching records</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">04</div><div class="flow-content"><strong>map each record to its name</strong></div></div><div class="flow-arrow">↓</div><div class="flow-item"><div class="flow-number">05</div><div class="flow-content"><strong>Produce final names array</strong></div></div></div></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">20</div><div><p class="section-label">CONCEPT 20</p><h2>Arrays and Objects in Real Applications</h2></div></div><p class="concept-intro">The data structures learned here appear everywhere in full-stack development.</p><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Arrays and objects form the common language connecting frontend UI, APIs and backend data.</p></div></div><div class="architecture-flow"><article><span>01</span><h3>API Response</h3><ul><li>Servers commonly return JSON objects and arrays.</li><li>Frontend code receives this data as JavaScript values.</li></ul></article><article><span>02</span><h3>Application State</h3><ul><li>UI state can contain arrays of records.</li><li>Objects can represent the current selected item or form data.</li></ul></article><article><span>03</span><h3>Transformation</h3><ul><li>filter selects records.</li><li>map prepares display data.</li><li>reduce calculates totals or summaries.</li></ul></article><article><span>04</span><h3>Rendering</h3><ul><li>JavaScript converts data into visible UI.</li><li>React later provides a declarative version of this idea.</li></ul></article><article><span>05</span><h3>Backend Data</h3><ul><li>Node.js APIs also receive and return objects and arrays.</li><li>Database records are commonly represented as objects.</li></ul></article></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Array Transformation Tracer</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>const marks = [65, 80, 92, 55];</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>const passed = marks.filter(mark =&gt; mark &gt;= 60);</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>const bonus = passed.map(mark =&gt; mark + 5);</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>console.log(marks);</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>console.log(passed);</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>console.log(bonus);</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Array</strong><p>An ordered collection of values indexed from zero.</p></div></article><article><b>02</b><div><strong>Object</strong><p>A collection of named properties representing related information.</p></div></article><article><b>03</b><div><strong>Index</strong><p>The numeric position of an array element.</p></div></article><article><b>04</b><div><strong>map()</strong><p>Creates a new array by transforming every element.</p></div></article><article><b>05</b><div><strong>filter()</strong><p>Creates a new array containing elements that pass a condition.</p></div></article><article><b>06</b><div><strong>reduce()</strong><p>Combines array values into an accumulated result.</p></div></article><article><b>07</b><div><strong>find()</strong><p>Returns the first element that satisfies a condition.</p></div></article><article><b>08</b><div><strong>some()</strong><p>Checks whether at least one element satisfies a condition.</p></div></article><article><b>09</b><div><strong>every()</strong><p>Checks whether all elements satisfy a condition.</p></div></article><article><b>10</b><div><strong>Destructuring</strong><p>Extracts values from arrays or properties from objects.</p></div></article><article><b>11</b><div><strong>Spread</strong><p>Expands values into a new array or object.</p></div></article><article><b>12</b><div><strong>Mutation</strong><p>Changing an existing object or array directly.</p></div></article><article><b>13</b><div><strong>Immutable transformation</strong><p>Creating new data instead of changing the original collection.</p></div></article><article><b>14</b><div><strong>Reference</strong><p>A value that points to an object or array in memory.</p></div></article><article><b>15</b><div><strong>Shallow copy</strong><p>A new top-level collection whose nested references may still be shared.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is an array in JavaScript?</summary><div class="interview-answer"><p>An array is an ordered collection of values. Its elements are accessed using zero-based numeric indexes.</p></div></details><details class="interview-item"><summary><span>02</span>What is the difference between an array and an object?</summary><div class="interview-answer"><p>Arrays are primarily ordered collections accessed by indexes, while objects organize data using named properties.</p></div></details><details class="interview-item"><summary><span>03</span>What does map() return?</summary><div class="interview-answer"><p>map() returns a new array containing the value produced by the callback for every original element.</p></div></details><details class="interview-item"><summary><span>04</span>What is the difference between map() and filter()?</summary><div class="interview-answer"><p>map transforms every element, while filter keeps only elements whose condition returns true.</p></div></details><details class="interview-item"><summary><span>05</span>What is reduce() used for?</summary><div class="interview-answer"><p>reduce() combines collection values into an accumulated result such as a total, count or grouped object.</p></div></details><details class="interview-item"><summary><span>06</span>What does find() return when nothing matches?</summary><div class="interview-answer"><p>It returns undefined.</p></div></details><details class="interview-item"><summary><span>07</span>What is the difference between some() and every()?</summary><div class="interview-answer"><p>some() checks whether at least one element passes the condition, while every() checks whether all elements pass.</p></div></details><details class="interview-item"><summary><span>08</span>What is array destructuring?</summary><div class="interview-answer"><p>It extracts array elements into variables according to their positions.</p></div></details><details class="interview-item"><summary><span>09</span>What is object destructuring?</summary><div class="interview-answer"><p>It extracts object properties into variables using their property names.</p></div></details><details class="interview-item"><summary><span>10</span>What does the spread operator do?</summary><div class="interview-answer"><p>Spread expands values from an iterable or object into another array or object expression.</p></div></details><details class="interview-item"><summary><span>11</span>Does const make an object immutable?</summary><div class="interview-answer"><p>No. const prevents reassignment of the variable binding, but properties of the referenced object can still be changed.</p></div></details><details class="interview-item"><summary><span>12</span>What is a shallow copy?</summary><div class="interview-answer"><p>A shallow copy creates a new top-level array or object, but nested objects and arrays may still be shared.</p></div></details><details class="interview-item"><summary><span>13</span>Why can const a = b cause unexpected changes?</summary><div class="interview-answer"><p>If b is an object or array, both variables can refer to the same underlying object.</p></div></details><details class="interview-item"><summary><span>14</span>Why is immutable data useful in frontend development?</summary><div class="interview-answer"><p>It makes state changes easier to reason about, compare and debug, and supports predictable UI update patterns.</p></div></details><details class="interview-item"><summary><span>15</span>Does filter() modify the original array?</summary><div class="interview-answer"><p>No. filter() returns a new array and leaves the original array unchanged.</p></div></details><details class="interview-item"><summary><span>16</span>Does sort() modify the original array?</summary><div class="interview-answer"><p>Yes. sort() sorts the array in place. Use a copy or toSorted() when the original should remain unchanged.</p></div></details><details class="interview-item"><summary><span>17</span>How do you sort numbers correctly?</summary><div class="interview-answer"><p>Provide a numeric comparison function such as (a, b) =&gt; a - b for ascending order.</p></div></details><details class="interview-item"><summary><span>18</span>What is an array of objects?</summary><div class="interview-answer"><p>It is an array where each element is an object, commonly used to represent collections of records.</p></div></details><details class="interview-item"><summary><span>19</span>How can you find a student with a CGPA above 9?</summary><div class="interview-answer"><p>Use find(), for example: students.find(student =&gt; student.cgpa &gt; 9).</p></div></details><details class="interview-item"><summary><span>20</span>Why are arrays of objects important in MERN applications?</summary><div class="interview-answer"><p>API responses, database records and UI collections are frequently represented as arrays of objects.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span><b>Basic</b></header><h3>Marks Transformation</h3><p>Create an array of five marks. Use map() to add 5 bonus marks to every value without changing the original array.</p><details><summary>Need a hint?</summary><ul><li>map() creates a new array.</li><li>Return mark + 5 from the callback.</li><li>Print both arrays to confirm the original is unchanged.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 02</span><b>Basic</b></header><h3>Passed Students</h3><p>Create an array of student objects and use filter() to find students whose CGPA is at least 8.0.</p><details><summary>Need a hint?</summary><ul><li>Each student should be an object.</li><li>The condition can be student.cgpa &gt;= 8.</li><li>filter() returns a new array.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 03</span><b>Basic</b></header><h3>Student Names</h3><p>Given an array of student objects, use map() to create a new array containing only student names.</p><details><summary>Need a hint?</summary><ul><li>map() should return one value for each student.</li><li>Return student.name from the callback.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 04</span><b>Basic</b></header><h3>Find the Topper</h3><p>Use find() to locate the first student whose CGPA is greater than 9.0.</p><details><summary>Need a hint?</summary><ul><li>find() returns an object, not an array.</li><li>Check student.cgpa inside the callback.</li><li>If no student matches, the result will be undefined.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 05</span><b>Intermediate</b></header><h3>Total Marks</h3><p>Use reduce() to calculate the total of an array containing student marks.</p><details><summary>Need a hint?</summary><ul><li>Start the accumulator at 0.</li><li>Add the current mark to the accumulator.</li><li>The final reduce result should be one number.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 06</span><b>Basic</b></header><h3>Course Search</h3><p>Create a courses array and use includes() to check whether JavaScript is available.</p><details><summary>Need a hint?</summary><ul><li>includes() returns a boolean.</li><li>Use the exact value stored in the array.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 07</span><b>Intermediate</b></header><h3>Topper Names</h3><p>Use filter() followed by map() to create an array containing the names of all students with CGPA 8.5 or higher.</p><details><summary>Need a hint?</summary><ul><li>First filter the student objects.</li><li>Then map the remaining objects to student.name.</li><li>The final result should be an array of strings.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 08</span><b>Intermediate</b></header><h3>Immutable Course Update</h3><p>Create a courses array and produce a new array with JavaScript added to the end without changing the original array.</p><details><summary>Need a hint?</summary><ul><li>Use spread syntax.</li><li>Start with ...courses inside a new array.</li><li>Add the new course after the spread values.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 09</span><b>Intermediate</b></header><h3>Student Profile</h3><p>Create a nested student object containing contact information and skills. Access the city and second skill.</p><details><summary>Need a hint?</summary><ul><li>Use an object inside the student object.</li><li>Store skills in an array.</li><li>Remember that array indexes start at 0.</li></ul></details></article><article class="practice-card"><header><span>CHALLENGE 10</span><b>Advanced</b></header><h3>Placement Dashboard Data</h3><p>Create an array of student placement records. Filter students above a selected CGPA, map their names, and reduce their package values to calculate the total package amount.</p><details><summary>Need a hint?</summary><ul><li>Keep each student as an object.</li><li>Use filter() and map() as separate transformations.</li><li>Use reduce() when you need one final numeric total.</li><li>Keep the original records unchanged.</li></ul></details></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What is the first index of a JavaScript array?</h3><div class="quiz-options"><button type="button" data-option="0">A. 0</button><button type="button" data-option="1">B. 1</button><button type="button" data-option="2">C. -1</button><button type="button" data-option="3">D. undefined</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>Which method creates a new array by transforming every element?</h3><div class="quiz-options"><button type="button" data-option="0">A. filter()</button><button type="button" data-option="1">B. map()</button><button type="button" data-option="2">C. find()</button><button type="button" data-option="3">D. reduce()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>Which method selects only elements satisfying a condition?</h3><div class="quiz-options"><button type="button" data-option="0">A. map()</button><button type="button" data-option="1">B. filter()</button><button type="button" data-option="2">C. forEach()</button><button type="button" data-option="3">D. sort()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>Which method commonly combines many values into one result?</h3><div class="quiz-options"><button type="button" data-option="0">A. reduce()</button><button type="button" data-option="1">B. find()</button><button type="button" data-option="2">C. includes()</button><button type="button" data-option="3">D. slice()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>What does find() return?</h3><div class="quiz-options"><button type="button" data-option="0">A. All matching elements</button><button type="button" data-option="1">B. The first matching element</button><button type="button" data-option="2">C. A boolean only</button><button type="button" data-option="3">D. The array length</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which method checks whether at least one element passes a condition?</h3><div class="quiz-options"><button type="button" data-option="0">A. every()</button><button type="button" data-option="1">B. some()</button><button type="button" data-option="2">C. map()</button><button type="button" data-option="3">D. reduce()</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>Which syntax accesses the name property?</h3><div class="quiz-options"><button type="button" data-option="0">A. student-&gt;name</button><button type="button" data-option="1">B. student.name</button><button type="button" data-option="2">C. student::name</button><button type="button" data-option="3">D. student/name</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>What does object destructuring do?</h3><div class="quiz-options"><button type="button" data-option="0">A. Deletes object properties</button><button type="button" data-option="1">B. Extracts properties into variables</button><button type="button" data-option="2">C. Sorts an object</button><button type="button" data-option="3">D. Converts an object to JSON</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>What does [...items] generally create?</h3><div class="quiz-options"><button type="button" data-option="0">A. A reference to the same array</button><button type="button" data-option="1">B. A shallow copy of the array</button><button type="button" data-option="2">C. A deep copy of the array</button><button type="button" data-option="3">D. A string</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Does sort() mutate the original array?</h3><div class="quiz-options"><button type="button" data-option="0">A. Yes</button><button type="button" data-option="1">B. No</button><button type="button" data-option="2">C. Only with numbers</button><button type="button" data-option="3">D. Only with strings</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>What does const prevent?</h3><div class="quiz-options"><button type="button" data-option="0">A. All object changes</button><button type="button" data-option="1">B. Reassignment of the binding</button><button type="button" data-option="2">C. Reading the value</button><button type="button" data-option="3">D. Calling methods</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Which structure is commonly used for a collection of student records?</h3><div class="quiz-options"><button type="button" data-option="0">A. Array of objects</button><button type="button" data-option="1">B. Single string</button><button type="button" data-option="2">C. Single number</button><button type="button" data-option="3">D. Boolean only</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Array</strong><p></p></article><article><strong>Object</strong><p></p></article><article><strong>Index</strong><p></p></article><article><strong>map()</strong><p></p></article><article><strong>filter()</strong><p></p></article><article><strong>reduce()</strong><p></p></article><article><strong>find()</strong><p></p></article><article><strong>Destructuring</strong><p></p></article><article><strong>Spread syntax</strong><p></p></article><article><strong>Mutation</strong><p></p></article><article><strong>Immutable transformation</strong><p></p></article><article><strong>Reference</strong><p></p></article><article><strong>Shallow copy</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Level 10 Complete — Think in Data</h2><p>You can now model real-world information using arrays and objects, transform collections with map/filter/reduce, search structured data and create safer immutable updates.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 10 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=9">← Previous level</a><a href="lesson.html?level=11">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="description"
+  content="CodeBhavya Full Stack MERN detailed lesson with beginner-first theory, visual flows, tracing, practice and placement preparation."
+>
+
+<title>Level 22: Express Authentication, Security &amp; Production APIs | CodeBhavya</title>
+
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="fullstack.css?v=6">
+<link rel="stylesheet" href="../course-mobile-sidebar.css?v=4">
+<base href="/Full-Stack/lesson.html?level=22"><link rel="canonical" href="https://codebhavya.com/Full-Stack/lesson.html?level=22">
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme lesson-page" data-cb-theme-layout="course">
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img
+      src="../images/codebhavya-main-logo.png"
+      alt="CodeBhavya logo"
+    >
+    <span>
+      <b>Code</b><strong>Bhavya</strong>
+    </span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    id="navToggle"
+    type="button"
+    aria-expanded="false"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+  <nav id="siteNav">
+    <a href="../index.html">Home</a>
+    <a class="active" href="index.html">Full Stack</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../Placement/index.html">Placement</a>
+  </nav>
+</header>
+
+<div class="reading-progress">
+  <i id="readingBar"></i>
+</div>
+
+<button
+  class="lesson-menu"
+  id="lessonMenu"
+  type="button"
+>
+  ☰ Course levels
+</button>
+
+<div class="shade" id="shade" hidden></div>
+
+<div class="lesson-layout">
+
+  <aside id="sidebar">
+
+    <a class="course-home" href="index.html">
+      ← Course roadmap
+    </a>
+
+    <label>
+      <span>Find a level</span>
+      <input
+        id="levelSearch"
+        type="search"
+        placeholder="Search topics"
+      >
+    </label>
+
+    <nav id="levelNav"><a class=" " href="lesson.html?level=1" ><b>01</b><span>How the Web Works</span></a><a class=" " href="lesson.html?level=2" ><b>02</b><span>Semantic HTML</span></a><a class=" " href="lesson.html?level=3" ><b>03</b><span>Forms &amp; Accessibility</span></a><a class=" " href="lesson.html?level=4" ><b>04</b><span>CSS Foundations</span></a><a class=" " href="lesson.html?level=5" ><b>05</b><span>Responsive Layouts</span></a><a class=" " href="lesson.html?level=6" ><b>06</b><span>Browser DevTools</span></a><a class=" " href="lesson.html?level=7" ><b>07</b><span>Git, npm &amp; Project Workflow</span></a><a class=" " href="lesson.html?level=8" ><b>08</b><span>JavaScript Foundations</span></a><a class=" " href="lesson.html?level=9" ><b>09</b><span>Control Flow &amp; Functions</span></a><a class=" " href="lesson.html?level=10" ><b>10</b><span>Arrays &amp; Objects</span></a><a class=" " href="lesson.html?level=11" ><b>11</b><span>DOM &amp; Events</span></a><a class=" " href="lesson.html?level=12" ><b>12</b><span>Async JavaScript &amp; APIs</span></a><a class=" " href="lesson.html?level=13" ><b>13</b><span>Modules &amp; Error Design</span></a><a class=" " href="lesson.html?level=14" ><b>14</b><span>React Mental Model</span></a><a class=" " href="lesson.html?level=15" ><b>15</b><span>Props, State &amp; Events</span></a><a class=" " href="lesson.html?level=16" ><b>16</b><span>Hooks, Forms &amp; Effects</span></a><a class=" " href="lesson.html?level=17" ><b>17</b><span>Routing, Context &amp; Data</span></a><a class=" " href="lesson.html?level=18" ><b>18</b><span>React Performance &amp; Testing</span></a><a class=" " href="lesson.html?level=19" ><b>19</b><span>Node.js Runtime</span></a><a class=" " href="lesson.html?level=20" ><b>20</b><span>Express REST APIs</span></a><a class=" " href="lesson.html?level=21" ><b>21</b><span>Middleware &amp; Validation</span></a><a class="active " href="lesson.html?level=22" ><b>22</b><span>Authentication &amp; Security</span></a><a class=" " href="lesson.html?level=23" ><b>23</b><span>Files, Email &amp; Real Time</span></a><a class=" " href="lesson.html?level=24" ><b>24</b><span>MongoDB Data Modelling</span></a><a class=" " href="lesson.html?level=25" ><b>25</b><span>Queries, Aggregation &amp; Indexes</span></a><a class=" " href="lesson.html?level=26" ><b>26</b><span>Mongoose &amp; Transactions</span></a><a class=" " href="lesson.html?level=27" ><b>27</b><span>MERN Integration</span></a><a class=" " href="lesson.html?level=28" ><b>28</b><span>Testing, Quality &amp; CI</span></a><a class=" " href="lesson.html?level=29" ><b>29</b><span>Deployment &amp; Observability</span></a><a class=" " href="lesson.html?level=30" ><b>30</b><span>Placement Capstone Studio</span></a></nav>
+
+  </aside>
+
+  <main id="lessonMain"><section class="lesson-hero premium-hero"><div class="hero-level-number">22</div><div><p class="eyebrow">PART 4 • NODE &amp; EXPRESS • LEVEL 22</p><h1>Express Authentication, Security &amp; Production APIs</h1><p>Learn how real Express APIs protect users and application resources. Understand password hashing, authentication, authorization, JWT concepts, cookies, CORS, security headers, rate limiting, environment variables, secure API design, and production-ready security practices.</p><div class="lesson-meta"><span>⏱ 4–5 Hours</span><span>◈ Intermediate</span><span>▣ 16 concepts</span><span>✓ 13 checks</span></div></div></section><section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid"><article><b>01</b><p>Understand authentication and authorization in a real API.</p></article><article><b>02</b><p>Understand why passwords must never be stored as plain text.</p></article><article><b>03</b><p>Understand password hashing and verification.</p></article><article><b>04</b><p>Understand sessions and token-based authentication.</p></article><article><b>05</b><p>Understand JWT structure and lifecycle.</p></article><article><b>06</b><p>Build authentication middleware concepts.</p></article><article><b>07</b><p>Protect private Express routes.</p></article><article><b>08</b><p>Implement role-based authorization concepts.</p></article><article><b>09</b><p>Understand cookies and secure cookie settings.</p></article><article><b>10</b><p>Understand CORS and cross-origin requests.</p></article><article><b>11</b><p>Understand security headers.</p></article><article><b>12</b><p>Understand rate limiting and brute-force protection.</p></article><article><b>13</b><p>Use environment variables for secrets and configuration.</p></article><article><b>14</b><p>Design safer production API responses.</p></article><article><b>15</b><p>Understand common Express security risks.</p></article><article><b>16</b><p>Create a production security checklist.</p></article></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">01</div><div><p class="section-label">CONCEPT 01</p><h2>Authentication vs Authorization</h2></div></div><p class="concept-intro">Authentication and authorization are two different security responsibilities. Authentication verifies identity, while authorization determines what an authenticated user can access or modify.</p><ul class="content-points"><li>Authentication asks: Who are you?</li><li>Authorization asks: What are you allowed to do?</li><li>Authentication normally happens before authorization.</li><li>A user can be authenticated but still lack permission.</li><li>Protected APIs commonly use both.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Authentication establishes identity; authorization determines what that identity is allowed to access.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.get(
+  &quot;/admin/dashboard&quot;,
+  authenticate,
+  requireAdmin,
+  (req, res) =&gt; {
+    res.json({
+      message: &quot;Admin dashboard&quot;
+    });
+  }
+);">Copy</button></header><pre><code>app.get(
+  &quot;/admin/dashboard&quot;,
+  authenticate,
+  requireAdmin,
+  (req, res) =&gt; {
+    res.json({
+      message: &quot;Admin dashboard&quot;
+    });
+  }
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">02</div><div><p class="section-label">CONCEPT 02</p><h2>Why Passwords Must Be Hashed</h2></div></div><p class="concept-intro">Passwords are sensitive credentials. A secure application should never store users&#39; original passwords directly in a database.</p><ul class="content-points"><li>Plain-text passwords expose users if the database is compromised.</li><li>Passwords should be transformed using a password hashing algorithm.</li><li>A hash is designed to be difficult to reverse.</li><li>Password verification compares a supplied password against the stored hash.</li><li>Modern password hashing should use an established password-hashing algorithm.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Store password hashes rather than original passwords, and use a trusted password-hashing implementation.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const password = req.body.password;
+
+const passwordHash = await hashPassword(password);
+
+const user = {
+  email: req.body.email,
+  passwordHash: passwordHash
+};">Copy</button></header><pre><code>const password = req.body.password;
+
+const passwordHash = await hashPassword(password);
+
+const user = {
+  email: req.body.email,
+  passwordHash: passwordHash
+};</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">03</div><div><p class="section-label">CONCEPT 03</p><h2>Password Hashing and Verification</h2></div></div><p class="concept-intro">During registration, an application hashes the password before storing it. During login, the supplied password is checked against the stored hash.</p><ul class="content-points"><li>Registration creates a password hash.</li><li>The hash is stored in the database.</li><li>Login receives the user&#39;s password.</li><li>The password is compared with the stored hash.</li><li>A successful comparison allows authentication to continue.</li><li>The application should not store the original password.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Hashing happens before storage; verification happens during login.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const registerUser = async (password) =&gt; {
+  const passwordHash = await hashPassword(password);
+
+  return {
+    passwordHash: passwordHash
+  };
+};
+
+const loginUser = async (password, storedHash) =&gt; {
+  const valid = await verifyPassword(
+    password,
+    storedHash
+  );
+
+  return valid;
+};">Copy</button></header><pre><code>const registerUser = async (password) =&gt; {
+  const passwordHash = await hashPassword(password);
+
+  return {
+    passwordHash: passwordHash
+  };
+};
+
+const loginUser = async (password, storedHash) =&gt; {
+  const valid = await verifyPassword(
+    password,
+    storedHash
+  );
+
+  return valid;
+};</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">04</div><div><p class="section-label">CONCEPT 04</p><h2>Session-Based Authentication</h2></div></div><p class="concept-intro">In session-based authentication, the server keeps authentication state on the server side and gives the client a session identifier.</p><ul class="content-points"><li>The user logs in with credentials.</li><li>The server verifies the credentials.</li><li>The server creates a session.</li><li>The client receives a session identifier, commonly through a cookie.</li><li>Future requests use the session identifier.</li><li>The server looks up the session and identifies the user.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Session authentication keeps session state on the server and identifies the client using a session identifier.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.post(&quot;/login&quot;, async (req, res) =&gt; {
+  const user = await findUser(req.body.email);
+
+  if (!user) {
+    return res.status(401).json({
+      error: &quot;Invalid credentials&quot;
+    });
+  }
+
+  const valid = await verifyPassword(
+    req.body.password,
+    user.passwordHash
+  );
+
+  if (!valid) {
+    return res.status(401).json({
+      error: &quot;Invalid credentials&quot;
+    });
+  }
+
+  const sessionId = await createSession(user.id);
+
+  res.cookie(&quot;sessionId&quot;, sessionId, {
+    httpOnly: true,
+    secure: true,
+    sameSite: &quot;lax&quot;
+  });
+
+  res.json({
+    message: &quot;Login successful&quot;
+  });
+});">Copy</button></header><pre><code>app.post(&quot;/login&quot;, async (req, res) =&gt; {
+  const user = await findUser(req.body.email);
+
+  if (!user) {
+    return res.status(401).json({
+      error: &quot;Invalid credentials&quot;
+    });
+  }
+
+  const valid = await verifyPassword(
+    req.body.password,
+    user.passwordHash
+  );
+
+  if (!valid) {
+    return res.status(401).json({
+      error: &quot;Invalid credentials&quot;
+    });
+  }
+
+  const sessionId = await createSession(user.id);
+
+  res.cookie(&quot;sessionId&quot;, sessionId, {
+    httpOnly: true,
+    secure: true,
+    sameSite: &quot;lax&quot;
+  });
+
+  res.json({
+    message: &quot;Login successful&quot;
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">05</div><div><p class="section-label">CONCEPT 05</p><h2>Token-Based Authentication</h2></div></div><p class="concept-intro">In token-based authentication, the server issues a token after successful login. The client sends the token with later requests.</p><ul class="content-points"><li>The client submits login credentials.</li><li>The server verifies the credentials.</li><li>The server creates an authentication token.</li><li>The client sends the token on protected requests.</li><li>Middleware verifies the token.</li><li>The authenticated user becomes available to the request.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Both sessions and tokens can support authenticated APIs; the correct choice depends on application architecture and security requirements.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.post(&quot;/login&quot;, async (req, res) =&gt; {
+  const user = await authenticateUser(
+    req.body.email,
+    req.body.password
+  );
+
+  if (!user) {
+    return res.status(401).json({
+      error: &quot;Invalid credentials&quot;
+    });
+  }
+
+  const token = createAccessToken({
+    userId: user.id
+  });
+
+  res.json({
+    accessToken: token
+  });
+});">Copy</button></header><pre><code>app.post(&quot;/login&quot;, async (req, res) =&gt; {
+  const user = await authenticateUser(
+    req.body.email,
+    req.body.password
+  );
+
+  if (!user) {
+    return res.status(401).json({
+      error: &quot;Invalid credentials&quot;
+    });
+  }
+
+  const token = createAccessToken({
+    userId: user.id
+  });
+
+  res.json({
+    accessToken: token
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">06</div><div><p class="section-label">CONCEPT 06</p><h2>JWT Fundamentals</h2></div></div><p class="concept-intro">JSON Web Token, commonly called JWT, is a compact token format frequently used for authentication and authorization in APIs.</p><ul class="content-points"><li>A JWT contains encoded claims.</li><li>A JWT commonly has header, payload, and signature parts.</li><li>The signature helps detect unauthorized modification.</li><li>The payload should not contain sensitive secrets.</li><li>Token expiration should be considered.</li><li>The server must verify tokens before trusting their claims.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>JWTs are signed tokens containing claims. Encoding is not encryption, so sensitive information should not be placed in the payload.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const tokenPayload = {
+  sub: user.id,
+  role: user.role
+};
+
+const token = createSignedJwt(
+  tokenPayload,
+  process.env.JWT_SECRET
+);">Copy</button></header><pre><code>const tokenPayload = {
+  sub: user.id,
+  role: user.role
+};
+
+const token = createSignedJwt(
+  tokenPayload,
+  process.env.JWT_SECRET
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">07</div><div><p class="section-label">CONCEPT 07</p><h2>JWT Authentication Middleware</h2></div></div><p class="concept-intro">Protected routes can use middleware to extract and verify an access token before the controller executes.</p><ul class="content-points"><li>Read the Authorization header.</li><li>Check the expected Bearer token format.</li><li>Verify the token signature.</li><li>Check expiration and relevant claims.</li><li>Attach authenticated user information to req.</li><li>Call next() when verification succeeds.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Authentication middleware creates a security boundary before protected application logic executes.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const authenticate = (req, res, next) =&gt; {
+  const header = req.headers.authorization;
+
+  if (!header) {
+    return res.status(401).json({
+      error: &quot;Authentication required&quot;
+    });
+  }
+
+  const token = header.replace(
+    &quot;Bearer &quot;,
+    &quot;&quot;
+  );
+
+  try {
+    const payload = verifyAccessToken(token);
+
+    req.user = payload;
+
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      error: &quot;Invalid or expired token&quot;
+    });
+  }
+};
+
+app.get(&quot;/profile&quot;, authenticate, (req, res) =&gt; {
+  res.json({
+    user: req.user
+  });
+});">Copy</button></header><pre><code>const authenticate = (req, res, next) =&gt; {
+  const header = req.headers.authorization;
+
+  if (!header) {
+    return res.status(401).json({
+      error: &quot;Authentication required&quot;
+    });
+  }
+
+  const token = header.replace(
+    &quot;Bearer &quot;,
+    &quot;&quot;
+  );
+
+  try {
+    const payload = verifyAccessToken(token);
+
+    req.user = payload;
+
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      error: &quot;Invalid or expired token&quot;
+    });
+  }
+};
+
+app.get(&quot;/profile&quot;, authenticate, (req, res) =&gt; {
+  res.json({
+    user: req.user
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">08</div><div><p class="section-label">CONCEPT 08</p><h2>Role-Based Authorization</h2></div></div><p class="concept-intro">After authentication, an application can check a user&#39;s role or permissions before allowing a sensitive operation.</p><ul class="content-points"><li>The authentication layer identifies the user.</li><li>The authorization layer checks permissions.</li><li>Roles can represent broad access groups.</li><li>Fine-grained permissions can provide more precise control.</li><li>Authorization should be enforced on the server.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Never rely only on frontend controls for authorization. The server must enforce access rules.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const requireRole = (role) =&gt; {
+  return (req, res, next) =&gt; {
+    if (!req.user || req.user.role !== role) {
+      return res.status(403).json({
+        error: &quot;Access forbidden&quot;
+      });
+    }
+
+    next();
+  };
+};
+
+app.delete(
+  &quot;/users/:id&quot;,
+  authenticate,
+  requireRole(&quot;admin&quot;),
+  deleteUser
+);">Copy</button></header><pre><code>const requireRole = (role) =&gt; {
+  return (req, res, next) =&gt; {
+    if (!req.user || req.user.role !== role) {
+      return res.status(403).json({
+        error: &quot;Access forbidden&quot;
+      });
+    }
+
+    next();
+  };
+};
+
+app.delete(
+  &quot;/users/:id&quot;,
+  authenticate,
+  requireRole(&quot;admin&quot;),
+  deleteUser
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">09</div><div><p class="section-label">CONCEPT 09</p><h2>Cookies and Secure Cookie Settings</h2></div></div><p class="concept-intro">Cookies can store session identifiers or other client-side state. Security-related cookie options reduce common attack risks.</p><ul class="content-points"><li>HttpOnly prevents normal JavaScript access to the cookie.</li><li>Secure instructs browsers to send the cookie over HTTPS.</li><li>SameSite controls cross-site cookie behavior.</li><li>Cookie expiration should be appropriate for the use case.</li><li>Sensitive authentication cookies should be configured carefully.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Cookie security settings should match the application&#39;s authentication model and deployment environment.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="res.cookie(&quot;sessionId&quot;, sessionId, {
+  httpOnly: true,
+  secure: true,
+  sameSite: &quot;lax&quot;,
+  maxAge: 1000 * 60 * 60
+});">Copy</button></header><pre><code>res.cookie(&quot;sessionId&quot;, sessionId, {
+  httpOnly: true,
+  secure: true,
+  sameSite: &quot;lax&quot;,
+  maxAge: 1000 * 60 * 60
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">10</div><div><p class="section-label">CONCEPT 10</p><h2>CORS</h2></div></div><p class="concept-intro">Cross-Origin Resource Sharing, or CORS, controls whether browsers are allowed to make requests from one origin to another origin.</p><ul class="content-points"><li>An origin includes scheme, host, and port.</li><li>Browsers enforce same-origin security rules.</li><li>CORS allows a server to declare permitted cross-origin requests.</li><li>Do not allow every origin automatically in a sensitive production API.</li><li>Credentials require additional CORS configuration.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>CORS is primarily a browser security mechanism. Configure allowed origins deliberately rather than treating CORS as authentication.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const cors = require(&quot;cors&quot;);
+
+app.use(cors({
+  origin: &quot;https://codebhavya.com&quot;,
+  credentials: true
+}));">Copy</button></header><pre><code>const cors = require(&quot;cors&quot;);
+
+app.use(cors({
+  origin: &quot;https://codebhavya.com&quot;,
+  credentials: true
+}));</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">11</div><div><p class="section-label">CONCEPT 11</p><h2>Security Headers</h2></div></div><p class="concept-intro">HTTP security headers allow a server to communicate security-related policies to browsers. Express applications can use established middleware for commonly needed headers.</p><ul class="content-points"><li>Security headers can reduce certain browser-based attack risks.</li><li>Helmet is a commonly used Express middleware package.</li><li>Headers should be configured according to the application.</li><li>Security headers complement, rather than replace, input validation and authentication.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Security headers provide another layer of defense and should be combined with secure application design.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const helmet = require(&quot;helmet&quot;);
+
+app.use(helmet());">Copy</button></header><pre><code>const helmet = require(&quot;helmet&quot;);
+
+app.use(helmet());</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">12</div><div><p class="section-label">CONCEPT 12</p><h2>Rate Limiting and Brute-Force Protection</h2></div></div><p class="concept-intro">Public APIs can receive large numbers of requests. Rate limiting restricts repeated requests and can reduce abuse such as automated login attempts.</p><ul class="content-points"><li>Rate limiting can restrict requests per IP or other identifier.</li><li>Authentication endpoints often need stronger protections.</li><li>Rate limits should be chosen based on legitimate traffic.</li><li>Distributed deployments may require a shared store.</li><li>Rate limiting is one layer of abuse prevention.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Rate limiting reduces repeated automated requests but should be combined with other authentication and abuse-prevention controls.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const rateLimit = require(&quot;express-rate-limit&quot;);
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  message: {
+    error: &quot;Too many login attempts&quot;
+  }
+});
+
+app.use(&quot;/login&quot;, loginLimiter);">Copy</button></header><pre><code>const rateLimit = require(&quot;express-rate-limit&quot;);
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  message: {
+    error: &quot;Too many login attempts&quot;
+  }
+});
+
+app.use(&quot;/login&quot;, loginLimiter);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">13</div><div><p class="section-label">CONCEPT 13</p><h2>Environment Variables and Secrets</h2></div></div><p class="concept-intro">Secrets and environment-specific configuration should not be hard-coded directly into application source code.</p><ul class="content-points"><li>Database credentials should not be committed to Git.</li><li>JWT signing secrets should be stored securely.</li><li>API keys should not be exposed in source control.</li><li>Environment variables can hold configuration.</li><li>Production secret management systems can provide stronger controls.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Treat secrets as configuration, not source code.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="const PORT = process.env.PORT || 3000;
+
+const DATABASE_URL = process.env.DATABASE_URL;
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error(&quot;JWT_SECRET is not configured&quot;);
+}
+
+app.listen(PORT);">Copy</button></header><pre><code>const PORT = process.env.PORT || 3000;
+
+const DATABASE_URL = process.env.DATABASE_URL;
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error(&quot;JWT_SECRET is not configured&quot;);
+}
+
+app.listen(PORT);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">14</div><div><p class="section-label">CONCEPT 14</p><h2>Common Express Security Risks</h2></div></div><p class="concept-intro">Security is not one feature. A production API must defend multiple boundaries including input, authentication, authorization, dependencies, configuration, and error handling.</p><ul class="content-points"><li>Never trust client input.</li><li>Validate and sanitize data according to the application&#39;s needs.</li><li>Protect authentication endpoints.</li><li>Use HTTPS in production.</li><li>Keep dependencies updated.</li><li>Avoid exposing sensitive error information.</li><li>Do not commit secrets.</li><li>Enforce authorization on the server.</li><li>Use secure cookie configuration when cookies are used.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Security should be designed as multiple defensive layers rather than a single middleware function.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.post(
+  &quot;/users&quot;,
+  validateUser,
+  async (req, res, next) =&gt; {
+    try {
+      const user = await createUser(req.body);
+
+      res.status(201).json({
+        id: user.id,
+        message: &quot;User created&quot;
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);">Copy</button></header><pre><code>app.post(
+  &quot;/users&quot;,
+  validateUser,
+  async (req, res, next) =&gt; {
+    try {
+      const user = await createUser(req.body);
+
+      res.status(201).json({
+        id: user.id,
+        message: &quot;User created&quot;
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">15</div><div><p class="section-label">CONCEPT 15</p><h2>Secure API Error Responses</h2></div></div><p class="concept-intro">Error responses should help clients understand expected failures without revealing internal implementation details.</p><ul class="content-points"><li>Do not expose stack traces to normal production clients.</li><li>Avoid returning database credentials or internal configuration.</li><li>Use consistent error formats.</li><li>Log detailed errors on the server.</li><li>Return appropriate status codes.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Developers need detailed server-side logs, while clients generally need safe and predictable error responses.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="app.use((err, req, res, next) =&gt; {
+  console.error(err);
+
+  res.status(500).json({
+    success: false,
+    error: &quot;Internal server error&quot;
+  });
+});">Copy</button></header><pre><code>app.use((err, req, res, next) =&gt; {
+  console.error(err);
+
+  res.status(500).json({
+    success: false,
+    error: &quot;Internal server error&quot;
+  });
+});</code></pre></div></section><section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">16</div><div><p class="section-label">CONCEPT 16</p><h2>Production API Security Checklist</h2></div></div><p class="concept-intro">Before deploying an Express API, review authentication, authorization, transport security, configuration, dependencies, error handling, and abuse protection.</p><ul class="content-points"><li>Use HTTPS.</li><li>Hash passwords with an established password-hashing algorithm.</li><li>Protect private routes.</li><li>Enforce authorization on the server.</li><li>Validate incoming data.</li><li>Use secure cookie settings when cookies are used.</li><li>Configure CORS deliberately.</li><li>Use appropriate security headers.</li><li>Apply rate limits where appropriate.</li><li>Keep secrets outside source code.</li><li>Keep dependencies updated.</li><li>Avoid exposing sensitive error information.</li><li>Monitor important application events.</li></ul><div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>Production security is a combination of secure defaults, careful configuration, defensive programming, and continuous maintenance.</p></div></div><div class="code-box premium-code-box"><header><span>WORKED EXAMPLE</span><button type="button" data-copy="Production Security Checklist
+
+[ ] HTTPS enabled
+[ ] Passwords hashed
+[ ] Authentication implemented
+[ ] Authorization enforced
+[ ] Input validation enabled
+[ ] Secure cookies configured
+[ ] CORS configured
+[ ] Security headers enabled
+[ ] Rate limiting configured
+[ ] Secrets stored securely
+[ ] Dependencies reviewed
+[ ] Safe error responses
+[ ] Logging and monitoring enabled">Copy</button></header><pre><code>Production Security Checklist
+
+[ ] HTTPS enabled
+[ ] Passwords hashed
+[ ] Authentication implemented
+[ ] Authorization enforced
+[ ] Input validation enabled
+[ ] Secure cookies configured
+[ ] CORS configured
+[ ] Security headers enabled
+[ ] Rate limiting configured
+[ ] Secrets stored securely
+[ ] Dependencies reviewed
+[ ] Safe error responses
+[ ] Logging and monitoring enabled</code></pre></div></section><section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>Trace a Protected API Request</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode"><div data-trace-line="0"><span class="trace-line-number">01</span><code>app.get(&#39;/profile&#39;, authenticate, getProfile);</code></div><div data-trace-line="1"><span class="trace-line-number">02</span><code>const authenticate = (req, res, next) =&gt; {</code></div><div data-trace-line="2"><span class="trace-line-number">03</span><code>  const header = req.headers.authorization;</code></div><div data-trace-line="3"><span class="trace-line-number">04</span><code>  if (!header) {</code></div><div data-trace-line="4"><span class="trace-line-number">05</span><code>    return res.status(401).json({ error: &#39;Authentication required&#39; });</code></div><div data-trace-line="5"><span class="trace-line-number">06</span><code>  }</code></div><div data-trace-line="6"><span class="trace-line-number">07</span><code>  const token = header.replace(&#39;Bearer &#39;, &#39;&#39;);</code></div><div data-trace-line="7"><span class="trace-line-number">08</span><code>  const payload = verifyAccessToken(token);</code></div><div data-trace-line="8"><span class="trace-line-number">09</span><code>  req.user = payload;</code></div><div data-trace-line="9"><span class="trace-line-number">10</span><code>  next();</code></div><div data-trace-line="10"><span class="trace-line-number">11</span><code>};</code></div><div data-trace-line="11"><span class="trace-line-number">12</span><code>const getProfile = (req, res) =&gt; {</code></div><div data-trace-line="12"><span class="trace-line-number">13</span><code>  res.json({ user: req.user });</code></div><div data-trace-line="13"><span class="trace-line-number">14</span><code>};</code></div></div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section><section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid"><article><b>01</b><div><strong>Authentication</strong><p>Verifying the identity of a requester.</p></div></article><article><b>02</b><div><strong>Authorization</strong><p>Checking what an authenticated user is allowed to do.</p></div></article><article><b>03</b><div><strong>Password Hash</strong><p>A derived representation of a password used for secure verification.</p></div></article><article><b>04</b><div><strong>Session</strong><p>Server-side authentication state associated with a session identifier.</p></div></article><article><b>05</b><div><strong>Token Authentication</strong><p>An authentication approach where the client sends an access token with requests.</p></div></article><article><b>06</b><div><strong>JWT</strong><p>A signed token format commonly used to carry authentication claims.</p></div></article><article><b>07</b><div><strong>JWT Payload</strong><p>The claims section of a JWT; it is encoded, not automatically encrypted.</p></div></article><article><b>08</b><div><strong>Bearer Token</strong><p>A token presented in the Authorization header using the Bearer scheme.</p></div></article><article><b>09</b><div><strong>HttpOnly</strong><p>A cookie attribute that prevents normal client-side JavaScript access.</p></div></article><article><b>10</b><div><strong>Secure Cookie</strong><p>A cookie configured to be sent over secure HTTPS connections.</p></div></article><article><b>11</b><div><strong>SameSite</strong><p>A cookie attribute controlling cross-site cookie sending behavior.</p></div></article><article><b>12</b><div><strong>CORS</strong><p>A browser mechanism controlling permitted cross-origin requests.</p></div></article><article><b>13</b><div><strong>Rate Limiting</strong><p>Restricting repeated requests within a defined period.</p></div></article><article><b>14</b><div><strong>Environment Variable</strong><p>Configuration supplied outside application source code.</p></div></article><article><b>15</b><div><strong>Security Headers</strong><p>HTTP response headers that communicate browser security policies.</p></div></article><article><b>16</b><div><strong>HTTPS</strong><p>HTTP protected by TLS encryption.</p></div></article></div></section><section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list"><details class="interview-item"><summary><span>01</span>What is the difference between authentication and authorization?</summary><div class="interview-answer"><p>Authentication verifies identity, while authorization determines what an authenticated user is permitted to access or modify.</p></div></details><details class="interview-item"><summary><span>02</span>Why should passwords never be stored in plain text?</summary><div class="interview-answer"><p>Plain-text passwords expose the original credentials if the database or backup is compromised. Applications should store password hashes instead.</p></div></details><details class="interview-item"><summary><span>03</span>What is password hashing?</summary><div class="interview-answer"><p>Password hashing transforms a password into a derived value using a password-hashing algorithm so the original password does not need to be stored.</p></div></details><details class="interview-item"><summary><span>04</span>What is a JWT?</summary><div class="interview-answer"><p>JWT is a compact signed token format that can carry claims such as a user identifier and role.</p></div></details><details class="interview-item"><summary><span>05</span>Is JWT payload data encrypted?</summary><div class="interview-answer"><p>Not by default. JWT payloads are commonly encoded so they can be represented as token data, but encoding does not provide secrecy.</p></div></details><details class="interview-item"><summary><span>06</span>What is the purpose of authentication middleware?</summary><div class="interview-answer"><p>It verifies authentication information before allowing a request to reach protected application logic.</p></div></details><details class="interview-item"><summary><span>07</span>What does a 401 response normally indicate?</summary><div class="interview-answer"><p>It commonly indicates that authentication is required or that the supplied authentication credentials are invalid.</p></div></details><details class="interview-item"><summary><span>08</span>What does a 403 response normally indicate?</summary><div class="interview-answer"><p>It commonly indicates that the server understood the request but the authenticated requester is not permitted to perform the operation.</p></div></details><details class="interview-item"><summary><span>09</span>What is CORS?</summary><div class="interview-answer"><p>CORS is a browser security mechanism that allows servers to specify which cross-origin browser requests are permitted.</p></div></details><details class="interview-item"><summary><span>10</span>Why are HttpOnly cookies useful?</summary><div class="interview-answer"><p>HttpOnly prevents normal client-side JavaScript from reading the cookie, which can reduce exposure of cookie-based session identifiers to certain script-based attacks.</p></div></details><details class="interview-item"><summary><span>11</span>Why use rate limiting?</summary><div class="interview-answer"><p>Rate limiting restricts repeated requests and can reduce automated abuse such as excessive login attempts.</p></div></details><details class="interview-item"><summary><span>12</span>Why should secrets be stored in environment variables or a secret manager?</summary><div class="interview-answer"><p>This keeps sensitive configuration out of application source code and allows different environments to use different secret values.</p></div></details><details class="interview-item"><summary><span>13</span>Should authorization be implemented only in the frontend?</summary><div class="interview-answer"><p>No. Frontend controls improve user experience but cannot enforce security. The server must enforce authorization.</p></div></details><details class="interview-item"><summary><span>14</span>Why should production error responses avoid stack traces?</summary><div class="interview-answer"><p>Detailed internal errors can reveal implementation information that should remain available only to trusted server-side logs.</p></div></details></div></section><section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid"><article class="practice-card"><header><span>CHALLENGE 01</span></header><h3>Authentication Middleware</h3><p>Create middleware that checks for an Authorization header and returns 401 when it is missing.</p></article><article class="practice-card"><header><span>CHALLENGE 02</span></header><h3>Admin Authorization</h3><p>Create middleware that allows only users whose role is admin.</p></article><article class="practice-card"><header><span>CHALLENGE 03</span></header><h3>Secure Cookie</h3><p>Create a session cookie using HttpOnly, Secure, and SameSite settings.</p></article><article class="practice-card"><header><span>CHALLENGE 04</span></header><h3>Environment Configuration</h3><p>Read PORT and JWT_SECRET from environment variables.</p></article><article class="practice-card"><header><span>CHALLENGE 05</span></header><h3>CORS Configuration</h3><p>Configure CORS so that only a trusted frontend origin is allowed.</p></article><article class="practice-card"><header><span>CHALLENGE 06</span></header><h3>Protected Route</h3><p>Create a GET /profile route protected by authentication middleware.</p></article></div></section><section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2><article class="quiz-question" data-question="0"><span class="quiz-number">QUESTION 01</span><h3>What does authentication verify?</h3><div class="quiz-options"><button type="button" data-option="0">A. Database structure</button><button type="button" data-option="1">B. User identity</button><button type="button" data-option="2">C. CSS rules</button><button type="button" data-option="3">D. API performance</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="1"><span class="quiz-number">QUESTION 02</span><h3>What does authorization determine?</h3><div class="quiz-options"><button type="button" data-option="0">A. What the user is allowed to do</button><button type="button" data-option="1">B. The user&#39;s password</button><button type="button" data-option="2">C. The server port</button><button type="button" data-option="3">D. The database engine</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="2"><span class="quiz-number">QUESTION 03</span><h3>How should passwords normally be stored?</h3><div class="quiz-options"><button type="button" data-option="0">A. Plain text</button><button type="button" data-option="1">B. In the URL</button><button type="button" data-option="2">C. As password hashes</button><button type="button" data-option="3">D. Inside HTML</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="3"><span class="quiz-number">QUESTION 04</span><h3>What is JWT commonly used for?</h3><div class="quiz-options"><button type="button" data-option="0">A. Styling</button><button type="button" data-option="1">B. Authentication and authorization claims</button><button type="button" data-option="2">C. Database indexing</button><button type="button" data-option="3">D. Image compression</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="4"><span class="quiz-number">QUESTION 05</span><h3>Is a JWT payload automatically encrypted?</h3><div class="quiz-options"><button type="button" data-option="0">A. Yes</button><button type="button" data-option="1">B. No</button><button type="button" data-option="2">C. Only in development</button><button type="button" data-option="3">D. Only in Chrome</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="5"><span class="quiz-number">QUESTION 06</span><h3>Which cookie attribute prevents normal JavaScript access?</h3><div class="quiz-options"><button type="button" data-option="0">A. Secure</button><button type="button" data-option="1">B. HttpOnly</button><button type="button" data-option="2">C. SameSite</button><button type="button" data-option="3">D. ExpiresOnly</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="6"><span class="quiz-number">QUESTION 07</span><h3>What is CORS primarily related to?</h3><div class="quiz-options"><button type="button" data-option="0">A. Browser cross-origin requests</button><button type="button" data-option="1">B. Password hashing</button><button type="button" data-option="2">C. Database backups</button><button type="button" data-option="3">D. CPU scheduling</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="7"><span class="quiz-number">QUESTION 08</span><h3>Which status commonly means authentication is required or invalid?</h3><div class="quiz-options"><button type="button" data-option="0">A. 201</button><button type="button" data-option="1">B. 204</button><button type="button" data-option="2">C. 401</button><button type="button" data-option="3">D. 503</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="8"><span class="quiz-number">QUESTION 09</span><h3>Which status commonly represents forbidden access?</h3><div class="quiz-options"><button type="button" data-option="0">A. 200</button><button type="button" data-option="1">B. 301</button><button type="button" data-option="2">C. 403</button><button type="button" data-option="3">D. 404</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="9"><span class="quiz-number">QUESTION 10</span><h3>Why is rate limiting useful?</h3><div class="quiz-options"><button type="button" data-option="0">A. To style APIs</button><button type="button" data-option="1">B. To restrict repeated requests</button><button type="button" data-option="2">C. To create database tables</button><button type="button" data-option="3">D. To compile JavaScript</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="10"><span class="quiz-number">QUESTION 11</span><h3>Where should secrets such as JWT signing keys be stored?</h3><div class="quiz-options"><button type="button" data-option="0">A. Public HTML</button><button type="button" data-option="1">B. GitHub README</button><button type="button" data-option="2">C. Secure configuration or secret storage</button><button type="button" data-option="3">D. Browser URL</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="11"><span class="quiz-number">QUESTION 12</span><h3>Where must authorization be enforced?</h3><div class="quiz-options"><button type="button" data-option="0">A. Only in CSS</button><button type="button" data-option="1">B. Only in the browser</button><button type="button" data-option="2">C. On the server</button><button type="button" data-option="3">D. Only in documentation</button></div><div class="quiz-result" hidden></div></article><article class="quiz-question" data-question="12"><span class="quiz-number">QUESTION 13</span><h3>Which middleware is commonly used for security headers in Express?</h3><div class="quiz-options"><button type="button" data-option="0">A. helmet</button><button type="button" data-option="1">B. securityHeadersOnly</button><button type="button" data-option="2">C. secureExpressCSS</button><button type="button" data-option="3">D. headerParser</button></div><div class="quiz-result" hidden></div></article></section><section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid"><article><strong>Authentication</strong><p></p></article><article><strong>Authorization</strong><p></p></article><article><strong>Password Hash</strong><p></p></article><article><strong>Session</strong><p></p></article><article><strong>Access Token</strong><p></p></article><article><strong>JWT</strong><p></p></article><article><strong>Claim</strong><p></p></article><article><strong>Bearer Token</strong><p></p></article><article><strong>HttpOnly</strong><p></p></article><article><strong>Secure Cookie</strong><p></p></article><article><strong>SameSite</strong><p></p></article><article><strong>CORS</strong><p></p></article><article><strong>Rate Limiting</strong><p></p></article><article><strong>Security Header</strong><p></p></article><article><strong>Environment Variable</strong><p></p></article><article><strong>HTTPS</strong><p></p></article></div></section><section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>Level 22 Complete — Express Authentication, Security &amp; Production APIs</h2><p>You now understand the major security boundaries of an Express API: authentication, authorization, password hashing, sessions, tokens, JWT concepts, secure cookies, CORS, security headers, rate limiting, environment configuration, safe errors, and production security practices.</p><button class="complete-button" id="completeLevel" type="button">Mark Level 22 complete</button></section><nav class="lesson-nav"><a href="lesson.html?level=21">← Previous level</a><a href="lesson.html?level=23">Next level →</a></nav><noscript><p>Lesson reading is available without JavaScript. Enable JavaScript for interactive traces, quiz scoring and progress controls.</p></noscript></main>
+
+</div>
+
+<footer class="site-footer">
+
+  <div>
+    <strong>CodeBhavya</strong>
+    <p>From Learning to Limitless Possibilities.</p>
+  </div>
+
+  <nav>
+    <a href="index.html">Roadmap</a>
+    <a href="../Online-Compiler/">Compiler</a>
+    <a href="../index.html">Home</a>
+  </nav>
+
+  <p>
+    © <span id="year"></span> CodeBhavya
+  </p>
+
+</footer>
+
+<div
+  class="toast"
+  id="toast"
+  role="status"
+></div>
+
+
+<!-- =========================================================
+     COURSE DATA
+     ========================================================= -->
+
+<script src="course-outline.js?v=5"></script>
+
+<!--
+  Legacy lesson files intentionally disabled.
+  The detailed level files below provide the current content.
+-->
+
+<!--
+<script src="lessons-01-06.js?v=6"></script>
+<script src="lessons-04-06.js?v=5"></script>
+-->
+
+
+<!-- =========================================================
+     WEB FOUNDATIONS — LEVELS 01–07
+     ========================================================= -->
+
+<script src="level-01-v2.js?v=5"></script>
+<script src="level-02-v2.js?v=5"></script>
+<script src="level-03-forms-accessibility.js?v=1"></script>
+<script src="level-04-css-foundations.js?v=1"></script>
+<script src="level-05-responsive-layouts.js?v=1"></script>
+<script src="level-06-browser-devtools.js?v=6"></script>
+<script src="level-07-git-npm-workflow.js?v=1"></script>
+
+
+<!-- =========================================================
+     JAVASCRIPT — LEVELS 08–13
+     ========================================================= -->
+
+<script src="level-08-javascript-foundations.js?v=1"></script>
+<script src="level-09-control-flow-functions.js?v=1"></script>
+<script src="level-10-arrays-objects.js?v=1"></script>
+<script src="level-11-dom-events.js?v=1"></script>
+<script src="level-12-async-javascript-apis.js?v=1"></script>
+<script src="level-13-modules-error-design.js?v=1"></script>
+
+
+<!-- =========================================================
+     REACT — LEVELS 14–18
+     ========================================================= -->
+
+<script src="level-14-react-mental-model.js?v=1"></script>
+<script src="level-15-props-state-events.js?v=1"></script>
+<script src="level-16-hooks-forms-effects.js?v=1"></script>
+<script src="level-17-routing-context-data.js?v=1"></script>
+<script src="level-18-react-performance-testing.js?v=1"></script>
+
+
+<!-- =========================================================
+     NODE & EXPRESS — LEVELS 19–20
+     ========================================================= -->
+
+<script src="level-19-nodejs-runtime.js?v=2"></script>
+<script src="level-20-express-rest-apis.js?v=2"></script>
+  <script src="level-21-express-middleware-validation-api-architecture.js"></script>
+  <script src="level-22-express-authentication-security-production.js"></script>
+  <script src="level-23-express-production-testing-deployment.js"></script>
+  <script src="level-24-mongodb-fundamentals-data-modeling.js"></script>
+  <script src="level-25-mongodb-crud-aggregation-indexing.js"></script>
+  <script src="level-26-mongoose-relationships-transactions.js"></script>
+  <script src="level-27-mern-application-architecture-integration.js"></script>
+<script src="level-27-mern-integration.js"></script>
+  <script src="level-28-testing-quality-ci.js"></script>
+  <script src="level-29-deployment-observability.js"></script>
+  <script src="level-30-placement-capstone-studio.js"></script>
+
+<!-- =========================================================
+     MAIN LESSON ENGINE
+     
+     IMPORTANT:
+     lesson.js MUST LOAD AFTER ALL LEVEL DATA FILES.
+     ========================================================= -->
+
+<script src="lesson.js?v=7-content"></script>
+
+<script src="../course-mobile-sidebar.js?v=4" defer></script>
+
+<script src="../lesson-feedback.js?v=1" defer data-cb-feedback-loader="true"></script>
+</body>
+</html>
