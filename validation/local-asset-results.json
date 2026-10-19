@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checks": 5680,
+  "pages": 1349,
+  "maths_page_theme_and_navigation_styles_loaded_from_local_files": true,
+  "method": "URL resolution across file/HTTPS plus jsdom local stylesheet loading; no browser visual QA"
+}

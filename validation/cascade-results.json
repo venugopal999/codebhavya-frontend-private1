@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "checks": 135,
-  "representative_layouts": 15,
+  "checks": 144,
+  "representative_layouts": 16,
   "viewports_px": [
     390,
     900,
