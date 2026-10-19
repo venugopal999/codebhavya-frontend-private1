@@ -1,0 +1,34 @@
+<!doctype html><html><head>
+<meta name="robots" content="noindex,follow">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz Analytics | CodeBhavya</title>
+<link rel="stylesheet" href="../quiz.css?v=19.2">
+<script src="../../Placement/supabase-config.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../Placement/supabase-client.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head><body class="cb-theme" data-cb-theme-layout="quiz">
+<header class="topbar"><a class="brand" href="index.html">Code<span>Bhavya</span> Quiz Admin</a>
+<nav><a href="index.html">Dashboard</a><a id="resultsLink">Results</a><a href="bank.html">Question Bank</a></nav></header>
+<main class="shell">
+<section class="panel">
+ <div class="section-head"><div><h1 id="analyticsTitle">Quiz Analytics</h1><p class="muted">Class performance and question-wise understanding.</p></div>
+ <div class="actions"><button class="btn ghost" id="csvAnalytics">Export CSV</button><button class="btn teal" id="xlsxAnalytics">Export Excel</button></div></div>
+ <div class="analytics-grid" id="analyticsStats"></div>
+</section>
+<section class="panel" style="margin-top:18px">
+ <h2>Topic-wise Performance</h2>
+ <p class="muted">Aggregates student performance across questions tagged with the same topic.</p>
+ <div class="topic-performance-grid" id="topicStats"></div>
+</section>
+<section class="panel" style="margin-top:18px">
+ <h2>Question-wise Analysis</h2>
+ <div class="tablewrap"><table class="table analytics-table"><thead><tr><th>#</th><th>Question</th><th>Correct</th><th>Wrong</th><th>Unanswered</th><th>Accuracy</th><th>Avg Time</th><th>Option Distribution</th></tr></thead><tbody id="analyticsRows"></tbody></table></div>
+</section>
+</main>
+<script src="../quiz-common.js?v=9"></script><script src="analytics.js?v=24"></script>
+</body></html>

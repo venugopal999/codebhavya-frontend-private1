@@ -1,0 +1,1 @@
+(async()=>{try{const {data,error}=await CBQuiz.client.rpc("quiz_is_site_owner_v29");if(!error&&data===true)document.querySelectorAll("[data-owner-review]").forEach(link=>link.hidden=false);}catch{/* Dashboard hosting remains available if owner controls cannot load. */}})();

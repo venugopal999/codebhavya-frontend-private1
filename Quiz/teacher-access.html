@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>Teacher Quiz Access | CodeBhavya</title><link rel="icon" type="image/png" sizes="32x32" href="/images/codebhavya-icon-32.png"><link rel="stylesheet" href="quiz.css?v=17"><link rel="stylesheet" href="teacher-access.css?v=29">
+<script src="../Placement/supabase-config.js?v=1"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../Placement/supabase-client.js?v=5"></script>
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head><body class="cb-theme" data-cb-theme-layout="quiz">
+<header class="topbar"><a class="brand" href="/">Code<span>Bhavya</span></a><nav><a href="/Quiz/">Quiz Arena</a><a href="/Quiz/Admin/">Faculty Dashboard</a></nav></header>
+<main class="shell teacher-shell"><section class="hero"><span class="eyebrow">CODEBHAVYA CLASSROOM</span><h1>Bring your classroom to Quiz Arena</h1><p>Apply to host quizzes for your students. We review teaching details before enabling faculty access.</p></section>
+<div class="teacher-layout"><section class="panel"><div id="applicationStatus" role="status" aria-live="polite">Checking your account…</div>
+<div id="applicationContent" hidden><h2 id="formHeading">Teacher access application</h2><p class="muted">Use accurate professional details. Applications are visible only to you and the site owner. Details are used to review and manage teaching access. <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+<p class="account-line">Signed in as <strong id="accountEmail"></strong>. Approval is linked to this account.</p>
+<form id="teacherForm"><fieldset id="applicationFields"><div class="teacher-fields">
+<label>Full name<input class="input" name="full_name" autocomplete="name" required minlength="2" maxlength="100"></label>
+<label>Institution / college<input class="input" name="institution" autocomplete="organization" required minlength="2" maxlength="160"></label>
+<label>Department<input class="input" name="department" required minlength="2" maxlength="120"></label>
+<label>Designation<input class="input" name="designation" placeholder="e.g. Assistant Professor" required minlength="2" maxlength="100"></label>
+<label class="wide">Institutional email <span class="muted">(optional)</span><input class="input" name="work_email" type="email" maxlength="254" placeholder="Your work email, if available"><small>This is a verification contact, not a change to your sign-in email.</small></label>
+<label class="wide">Institution website<input class="input" name="institution_url" type="url" placeholder="https://www.yourcollege.edu" required maxlength="500" pattern="https://.*"></label>
+<label class="wide">Public staff / faculty profile <span class="muted">(optional)</span><input class="input" name="staff_url" type="url" placeholder="https://www.yourcollege.edu/faculty/your-profile" maxlength="500" pattern="https://.*"><small>A page on your institution’s website helps us verify your role.</small></label>
+<label class="wide">Other details to help verification <span class="muted">(optional)</span><textarea class="input" name="verification_notes" rows="4" maxlength="1000" placeholder="For example, where your name appears in the institution’s staff directory."></textarea></label></div>
+<label class="teacher-consent"><input id="teacherDeclaration" type="checkbox" required> I confirm these teaching details are accurate and understand that the site owner may verify them before granting access.</label>
+<p class="muted">Please do not include passwords, government ID numbers or student records.</p><div class="actions"><button class="btn gold" id="submitApplication" type="submit">Submit for review</button><button class="btn ghost" id="refreshApplication" type="button">Refresh status</button></div></fieldset></form></div><div id="applicationMessage" role="alert"></div></section>
+<aside class="panel teacher-aside"><h2>How approval works</h2><ol><li><strong>Apply</strong><p>Sign in and share your professional details.</p></li><li><strong>We verify</strong><p>The site owner reviews the institution and teaching role. Submission does not activate hosting access.</p></li><li><strong>Start teaching</strong><p>After approval, use the faculty dashboard to create your own quizzes and review your students’ results.</p></li></ol><p class="muted">Check this page for updates or a request for more details. Approval messages are shown here; no review time is guaranteed.</p><a href="/contact.html">Contact CodeBhavya</a></aside></div></main>
+<script src="quiz-common.js?v=29"></script><script src="teacher-access.js?v=29"></script></body></html>

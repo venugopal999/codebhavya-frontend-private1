@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head>
+<meta name="robots" content="noindex,follow">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz Arena | CodeBhavya</title>
+<link rel="stylesheet" href="quiz.css?v=17">
+<script src="../Placement/supabase-config.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../Placement/supabase-client.js?v=5"></script>
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head><body class="cb-theme" data-cb-theme-layout="quiz-home">
+<header class="topbar"><a class="brand" href="../">Code<span>Bhavya</span></a><nav><a href="../">Home</a><a href="../Placement/">Placement</a><a href="../PPTs/">PPTs</a><a href="#myQuizzes">My Quizzes</a><a href="change-password.html">Change Password</a></nav></header>
+<main class="shell">
+<section class="hero"><span class="eyebrow">CODEBHAVYA CLASSROOM</span><h1>Quiz Arena</h1><p>Join a live faculty quiz using the classroom code. Your timer, answers and submission are linked to your signed-in CodeBhavya account.</p></section>
+<div class="grid">
+<section class="panel col-8">
+<h2>Join Classroom Quiz</h2>
+<p class="muted">Enter the code displayed by your faculty.</p>
+<div class="joinbox"><input class="input" id="quizCode" maxlength="12" placeholder="CBH-4821"><button class="btn gold" id="joinBtn">Join Quiz</button></div>
+<div id="joinMessage"></div>
+</section>
+<aside class="panel col-4"><h3>Before you join</h3><ul><li>Sign in to CodeBhavya.</li><li>Use only one browser/device.</li><li>Wait until faculty starts the quiz.</li><li>Quiz auto-submits when time ends.</li></ul><div class="actions"><a class="btn ghost" href="Admin/">Faculty Dashboard</a><a class="btn teal" href="teacher-access.html">Apply for Teacher Access</a><a class="btn ghost" href="change-password.html">Change Password</a></div></aside>
+</div>
+<section class="panel history-panel" id="myQuizzes">
+<div class="section-head"><div><h2>My Quiz History</h2><p class="muted">Your joined and submitted quizzes. Scores appear according to the faculty's release setting.</p></div><button class="btn ghost" id="refreshHistory" type="button">Refresh</button></div>
+<div class="statrow" id="historyStats"></div><div id="historyMessage" role="status"></div>
+<div class="tablewrap"><table class="table"><thead><tr><th>Quiz</th><th>Joined / submitted</th><th>Status</th><th>My score</th><th>Action</th></tr></thead><tbody id="historyRows"><tr><td colspan="5">Loading your quizzes…</td></tr></tbody></table></div>
+</section>
+</main>
+<script src="quiz-common.js?v=29"></script><script src="student-home.js?v=17"></script>
+</body></html>

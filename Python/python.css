@@ -1,0 +1,4002 @@
+:root {
+    --python-navy: #0d1b2a;
+    --python-heading: #153b6f;
+    --python-blue: #2563eb;
+    --python-blue-dark: #1d4ed8;
+    --python-blue-soft: #eff6ff;
+    --python-gold: #d4af37;
+    --python-gold-light: #f5d76e;
+    --python-green: #16a34a;
+    --python-green-soft: #ecfdf5;
+    --python-orange: #d97706;
+    --python-purple: #7c3aed;
+    --python-text: #1e293b;
+    --python-muted: #64748b;
+    --python-border: #dbe4f0;
+    --python-background: #f5f7fb;
+    --python-surface: #ffffff;
+    --python-code: #07111f;
+}
+
+html,
+body.python-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body.python-page {
+    margin: 0;
+    background: var(--python-background);
+    color: var(--python-text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.65;
+}
+
+.python-page *,
+.python-page *::before,
+.python-page *::after {
+    box-sizing: border-box;
+}
+
+.python-page [hidden] {
+    display: none !important;
+}
+
+.python-page a {
+    text-underline-offset: 3px;
+}
+
+.python-page code,
+.python-page pre {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+/* Header */
+.python-page .top-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 72px;
+    padding: 0 34px;
+    border-bottom: 2px solid var(--python-gold);
+    background: var(--python-navy);
+    box-shadow: 0 4px 16px rgba(13, 27, 42, 0.18);
+}
+
+.python-page .top-header .logo {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-width: 0;
+    height: 72px;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 29px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.python-page .main-logo {
+    display: block;
+    width: 72px;
+    height: 72px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+.python-page .brand-name {
+    display: inline-flex;
+    align-items: center;
+}
+
+.python-page .logo-code {
+    color: #b8d8f0;
+    -webkit-text-fill-color: #b8d8f0;
+}
+
+.python-page .logo-bhavya {
+    color: var(--python-gold);
+    background: linear-gradient(90deg, #d4af37, #f5d76e, #d4af37);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.python-page .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.python-page .top-nav a {
+    position: relative;
+    padding: 9px 11px;
+    border-radius: 7px;
+    color: #e5e7eb;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.python-page .top-nav a::after {
+    content: "";
+    position: absolute;
+    right: 11px;
+    bottom: 3px;
+    left: 11px;
+    height: 2px;
+    background: var(--python-gold);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+}
+
+.python-page .top-nav a:hover,
+.python-page .top-nav a.active {
+    color: var(--python-gold-light);
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.python-page .top-nav a:hover::after,
+.python-page .top-nav a.active::after {
+    transform: scaleX(1);
+}
+
+/* Documentation layout and sidebar */
+.python-page .docs-layout {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 72px);
+    margin: 0;
+}
+
+.python-page .sidebar {
+    position: sticky;
+    top: 72px;
+    z-index: 30;
+    align-self: flex-start;
+    width: 290px;
+    height: calc(100vh - 72px);
+    flex: 0 0 290px;
+    padding: 18px 14px 26px;
+    overflow-y: auto;
+    border-right: 1px solid var(--python-border);
+    background: #ffffff;
+    scrollbar-color: #cbd5e1 transparent;
+    scrollbar-width: thin;
+}
+
+.python-page .sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.python-page .sidebar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #cbd5e1;
+}
+
+.python-page .sidebar > .sidebar-title:first-child {
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border-left: 4px solid var(--python-gold);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--python-navy);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.python-page .python-search-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+.python-page .search-box {
+    width: 100%;
+    margin: 0 0 14px;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #334155;
+    font: inherit;
+    font-size: 13px;
+}
+
+.python-page .search-box:focus {
+    border-color: var(--python-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.python-page .python-course-home,
+.python-page .python-topic-link {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    margin: 3px 0;
+    padding: 9px 12px;
+    border-left: 3px solid transparent;
+    border-radius: 8px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.45;
+    text-decoration: none;
+    transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.python-page .python-course-home:hover,
+.python-page .python-topic-link:hover {
+    border-left-color: var(--python-gold);
+    background: #eff6ff;
+    color: var(--python-blue-dark);
+}
+
+.python-page .python-course-home.active {
+    border-left-color: var(--python-blue);
+    background: linear-gradient(90deg, #dbeafe, #eff6ff);
+    color: #123b78;
+    font-weight: 800;
+}
+
+.python-page .python-topic-link.is-complete::after {
+    content: "✓";
+    display: grid;
+    width: 19px;
+    height: 19px;
+    margin-left: auto;
+    place-items: center;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.python-page .sidebar .python-sidebar-group {
+    margin: 20px 8px 7px;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    line-height: 1.45;
+    text-transform: uppercase;
+}
+
+.python-page .python-practice-link {
+    border: 1px solid #fde68a;
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.python-page .python-search-empty {
+    margin: 14px 5px;
+    padding: 11px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #991b1b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.python-page .python-sidebar-toggle {
+    display: none;
+}
+
+/* Main foundation */
+.python-page .main-content {
+    width: calc(100% - 290px);
+    min-width: 0;
+    max-width: none;
+    padding: 32px clamp(22px, 3vw, 48px) 54px;
+}
+
+.python-page .content-card,
+.python-page .content-section {
+    width: 100%;
+    margin: 0 0 28px;
+}
+
+.python-page .content-card {
+    padding: clamp(22px, 3vw, 34px);
+    border: 1px solid var(--python-border);
+    border-radius: 18px;
+    background: var(--python-surface);
+    box-shadow: 0 9px 26px rgba(15, 23, 42, 0.045);
+}
+
+.python-page .content-card h2,
+.python-page .section-heading h2 {
+    margin: 4px 0 8px;
+    color: var(--python-heading);
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.25;
+}
+
+.python-page .content-card p,
+.python-page .section-heading p {
+    margin: 6px 0 0;
+    color: var(--python-muted);
+}
+
+.python-page .section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.python-page .section-label,
+.python-page .subject-label {
+    color: #b98400;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+/* Hero */
+.python-page .python-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+    gap: clamp(28px, 4vw, 58px);
+    margin: 0 0 28px;
+    padding: clamp(30px, 4vw, 58px);
+    overflow: hidden;
+    border: 1px solid #dbeafe;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 8% 5%, rgba(37, 99, 235, 0.12), transparent 30%),
+        radial-gradient(circle at 93% 90%, rgba(212, 175, 55, 0.14), transparent 28%),
+        linear-gradient(135deg, #ffffff, #f8fbff);
+    box-shadow: 0 12px 34px rgba(15, 23, 42, 0.07);
+}
+
+.python-page .python-hero::after {
+    content: "</>";
+    position: absolute;
+    right: 4%;
+    bottom: -62px;
+    color: rgba(37, 99, 235, 0.04);
+    font: 900 190px/1 monospace;
+    pointer-events: none;
+}
+
+.python-page .python-hero-copy,
+.python-page .python-hero-code {
+    position: relative;
+    z-index: 1;
+}
+
+.python-page .python-hero .page-title {
+    max-width: 760px;
+    margin: 13px 0 14px;
+    color: var(--python-navy);
+    font-size: clamp(34px, 5vw, 55px);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+}
+
+.python-page .python-hero .page-description {
+    max-width: 760px;
+    margin: 0;
+    color: #475569;
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.python-page .python-hero .page-description code {
+    padding: 2px 6px;
+    border-radius: 5px;
+    background: #e0ecff;
+    color: #1d4ed8;
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.python-page .python-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px;
+    margin-top: 24px;
+}
+
+.python-page .python-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.3;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.python-page .python-button:hover {
+    transform: translateY(-2px);
+}
+
+.python-page .python-button-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 7px 18px rgba(37, 99, 235, 0.2);
+}
+
+.python-page .python-button-secondary {
+    border-color: #bfdbfe;
+    background: #ffffff;
+    color: #1d4ed8;
+}
+
+.python-page .python-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 28px;
+}
+
+.python-page .python-hero-stats div {
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid #dbeafe;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.82);
+}
+
+.python-page .python-hero-stats strong,
+.python-page .python-hero-stats span {
+    display: block;
+}
+
+.python-page .python-hero-stats strong {
+    color: var(--python-heading);
+    font-size: 17px;
+}
+
+.python-page .python-hero-stats span {
+    margin-top: 2px;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.python-page .python-hero-code {
+    align-self: center;
+    overflow: hidden;
+    border: 1px solid #1e3a5f;
+    border-radius: 17px;
+    background: var(--python-code);
+    box-shadow: 0 22px 44px rgba(15, 23, 42, 0.24);
+}
+
+.python-page .python-code-window-bar,
+.python-page .python-lab-toolbar,
+.python-page .python-output-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 45px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #24364e;
+    background: #101d31;
+    color: #cbd5e1;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.python-page .python-window-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.python-page .python-window-dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #fb7185;
+}
+
+.python-page .python-window-dots i:nth-child(2) {
+    background: #fbbf24;
+}
+
+.python-page .python-window-dots i:nth-child(3) {
+    background: #4ade80;
+}
+
+.python-page .python-version {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(59, 130, 246, 0.16);
+    color: #93c5fd;
+}
+
+.python-page .python-hero-code pre {
+    min-height: 280px;
+    margin: 0;
+    padding: 25px;
+    overflow: auto;
+    color: #dbeafe;
+    font-size: 13px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+.python-page .py-comment { color: #64748b; }
+.python-page .py-string { color: #fbbf24; }
+.python-page .py-keyword { color: #c084fc; }
+.python-page .py-function { color: #60a5fa; }
+
+.python-page .python-code-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 18px;
+    border-top: 1px solid #24364e;
+    background: #0b1728;
+}
+
+.python-page .python-code-result span {
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.python-page .python-code-result strong {
+    color: #4ade80;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* Progress and welcome */
+.python-page .python-progress-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+    align-items: center;
+    gap: 34px;
+    background: linear-gradient(120deg, #ffffff, #f8fbff);
+}
+
+.python-page .python-progress-summary {
+    padding: 18px;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.python-page .python-progress-number {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+}
+
+.python-page .python-progress-number strong {
+    color: var(--python-blue);
+    font-size: 30px;
+}
+
+.python-page .python-progress-number span {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.python-page .python-progress-track {
+    height: 11px;
+    margin: 12px 0;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e2e8f0;
+}
+
+.python-page #pythonProgressBar {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #2563eb, #f5c542);
+    transition: width 0.3s ease;
+}
+
+.python-page .python-progress-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #334155;
+    font-size: 12px;
+}
+
+.python-page #pythonResetProgress {
+    padding: 5px 0;
+    border: 0;
+    background: transparent;
+    color: #64748b;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 750;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.python-page .python-welcome-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border-left: 5px solid var(--python-gold);
+}
+
+.python-page .python-welcome-icon {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+    place-items: center;
+    border-radius: 15px;
+    background: #fffbeb;
+    font-size: 27px;
+}
+
+/* Path and levels */
+.python-page .python-path-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.python-page .python-path-card {
+    position: relative;
+    min-height: 355px;
+    overflow: hidden;
+    padding: 26px;
+    border: 1px solid var(--python-border);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.045);
+}
+
+.python-page .python-path-card::after {
+    content: "";
+    position: absolute;
+    right: -32px;
+    bottom: -32px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.python-page .python-path-card > span {
+    color: var(--python-blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+}
+
+.python-page .python-path-icon {
+    margin: 20px 0 12px;
+    font-size: 35px;
+}
+
+.python-page .python-path-card h3 {
+    margin: 0 0 10px;
+    color: var(--python-navy);
+    font-size: 21px;
+}
+
+.python-page .python-path-card p {
+    min-height: 65px;
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.python-page .python-path-card ul,
+.python-page .python-level-card ul {
+    margin: 17px 0 0;
+    padding-left: 20px;
+    color: #475569;
+    font-size: 12px;
+}
+
+.python-page .python-path-card li,
+.python-page .python-level-card li {
+    margin: 6px 0;
+}
+
+.python-page .python-path-foundations { border-top: 4px solid #2563eb; }
+.python-page .python-path-solving { border-top: 4px solid #d4af37; }
+.python-page .python-path-applied { border-top: 4px solid #16a34a; }
+
+.python-page .python-level-section {
+    padding-top: 12px;
+    scroll-margin-top: 90px;
+}
+
+.python-page .python-level-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.python-page .python-level-card {
+    position: relative;
+    display: flex;
+    min-height: 380px;
+    flex-direction: column;
+    padding: 25px;
+    border: 1px solid var(--python-border);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.045);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.python-page .python-level-card:hover {
+    transform: translateY(-3px);
+    border-color: #93c5fd;
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.09);
+}
+
+.python-page .python-level-card.is-complete {
+    border-color: #86efac;
+    background: linear-gradient(150deg, #ffffff, #f0fdf4);
+}
+
+.python-page .python-level-number {
+    align-self: flex-start;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.python-page .python-level-card .topic-icon {
+    position: absolute;
+    top: 22px;
+    right: 24px;
+    font-size: 30px;
+}
+
+.python-page .python-level-card h3 {
+    margin: 20px 0 8px;
+    color: var(--python-navy);
+    font-size: 21px;
+    line-height: 1.3;
+}
+
+.python-page .python-level-card h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.python-page .python-level-card h3 a:hover {
+    color: var(--python-blue);
+}
+
+.python-page .python-level-card > p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.python-page .python-level-card code {
+    color: #1d4ed8;
+    font-weight: 700;
+}
+
+.python-page .python-level-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.python-page .python-complete-button {
+    min-height: 44px;
+    padding: 9px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #475569;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.python-page .python-complete-button[aria-pressed="true"] {
+    border-color: #86efac;
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* Starter lab */
+.python-page .python-lab {
+    overflow: hidden;
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.python-page .python-lab-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 22px;
+    margin-bottom: 18px;
+}
+
+.python-page .python-lab-heading h2 {
+    margin-top: 4px;
+}
+
+.python-page .python-lab-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+.python-page .python-lab-tabs button {
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #475569;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.python-page .python-lab-tabs button[aria-selected="true"] {
+    border-color: var(--python-blue);
+    background: var(--python-blue);
+    color: #ffffff;
+}
+
+.python-page .python-lab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.python-page .python-lab-editor,
+.python-page .python-lab-output {
+    overflow: hidden;
+    border: 1px solid #263852;
+    border-radius: 14px;
+    background: var(--python-code);
+}
+
+.python-page .python-lab-toolbar button {
+    padding: 5px 9px;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    background: #17263c;
+    color: #cbd5e1;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.python-page .python-lab-editor pre,
+.python-page .python-lab-output > pre {
+    height: 285px;
+    margin: 0;
+    padding: 20px;
+    overflow: auto;
+    color: #dbeafe;
+    font-size: 13px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+}
+
+.python-page .python-lab-output > pre {
+    color: #86efac;
+}
+
+.python-page #pythonRunStatus {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+.python-page #pythonRunStatus.is-running {
+    color: #fde68a;
+}
+
+.python-page #pythonRunStatus.is-complete {
+    color: #86efac;
+}
+
+.python-page .python-demo-explanation {
+    min-height: 110px;
+    padding: 15px 18px;
+    border-top: 1px solid #24364e;
+    background: #101d31;
+}
+
+.python-page .python-demo-explanation strong {
+    color: #93c5fd;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.python-page .python-demo-explanation p {
+    margin: 5px 0 0;
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.python-page .python-button-run {
+    min-width: 170px;
+    margin-top: 15px;
+    background: #16a34a;
+    color: #ffffff;
+    box-shadow: 0 7px 18px rgba(22, 163, 74, 0.18);
+}
+
+/* Benefits and method */
+.python-page .python-benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.python-page .python-benefit-grid article {
+    min-height: 180px;
+    padding: 22px;
+    border: 1px solid var(--python-border);
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.python-page .python-benefit-grid article > span {
+    font-size: 28px;
+}
+
+.python-page .python-benefit-grid h3 {
+    margin: 12px 0 7px;
+    color: var(--python-navy);
+    font-size: 17px;
+}
+
+.python-page .python-benefit-grid p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.python-page .python-learning-method {
+    background:
+        linear-gradient(120deg, rgba(37, 99, 235, 0.05), rgba(212, 175, 55, 0.05)),
+        #ffffff;
+}
+
+.python-page .python-method-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.python-page .python-method-grid article {
+    position: relative;
+    padding: 19px;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.88);
+}
+
+.python-page .python-method-grid strong {
+    color: #bfdbfe;
+    font-size: 31px;
+    line-height: 1;
+}
+
+.python-page .python-method-grid h3 {
+    margin: 12px 0 5px;
+    color: var(--python-heading);
+    font-size: 16px;
+}
+
+.python-page .python-method-grid p {
+    margin: 0;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.python-page .python-topic-navigation {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.python-page .python-topic-navigation a {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    max-width: 48%;
+    padding: 13px 18px;
+    border: 1px solid var(--python-border);
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--python-heading);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.python-page .python-topic-navigation .next-topic {
+    margin-left: auto;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    text-align: right;
+}
+
+/* Footer */
+.python-page .footer {
+    width: 100%;
+    margin: 0;
+    border-top: 3px solid var(--python-gold);
+    background: var(--python-navy);
+    color: #cbd5e1;
+}
+
+.python-page .footer-container {
+    display: grid;
+    grid-template-columns: 1.45fr repeat(3, 1fr);
+    gap: 38px;
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 42px 0 34px;
+}
+
+.python-page .footer-brand {
+    font: 700 28px/1 Georgia, "Times New Roman", serif;
+}
+
+.python-page .footer-code { color: #b8d8f0; }
+.python-page .footer-bhavya { color: var(--python-gold-light); }
+
+.python-page .footer-tagline {
+    margin: 13px 0 5px;
+    color: var(--python-gold-light);
+    font-weight: 800;
+}
+
+.python-page .footer-description {
+    max-width: 330px;
+    margin: 0;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.python-page .footer-column h3 {
+    margin: 0 0 13px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.python-page .footer-column a {
+    display: block;
+    margin: 8px 0;
+    color: #cbd5e1;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.python-page .footer-column a:hover {
+    color: var(--python-gold-light);
+}
+
+.python-page .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 17px 0;
+    border-top: 1px solid #26384d;
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.python-page .footer-bottom p {
+    margin: 0;
+}
+
+/* Search states */
+.python-page .python-level-card.is-search-hidden,
+.python-page .python-topic-link.is-search-hidden,
+.python-page .python-level-section.is-search-hidden,
+.python-page .sidebar .python-sidebar-group.is-search-hidden {
+    display: none !important;
+}
+
+.python-page .python-level-card.is-search-match {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 1180px) {
+    .python-page .top-header {
+        padding: 0 18px;
+    }
+
+    .python-page .top-nav {
+        max-width: calc(100vw - 250px);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .python-page .top-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .python-page .sidebar {
+        width: 260px;
+        flex-basis: 260px;
+    }
+
+    .python-page .main-content {
+        width: calc(100% - 260px);
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+
+    .python-page .python-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .python-page .python-hero-code {
+        max-width: 760px;
+    }
+
+    .python-page .python-path-grid,
+    .python-page .python-benefit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .python-page .python-path-card:last-child {
+        grid-column: 1 / -1;
+        min-height: 0;
+    }
+
+    .python-page .python-lab-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .python-page .python-lab-tabs {
+        justify-content: flex-start;
+    }
+
+    .python-page .python-method-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 880px) {
+    .python-page .top-header {
+        position: relative;
+        min-height: auto;
+        padding: 0 16px 12px;
+        flex-wrap: wrap;
+    }
+
+    .python-page .top-header .logo {
+        height: 66px;
+        font-size: 25px;
+    }
+
+    .python-page .main-logo {
+        width: 62px;
+        height: 62px;
+    }
+
+    .python-page .top-nav {
+        width: 100%;
+        max-width: none;
+        justify-content: flex-start;
+    }
+
+    .python-page .python-sidebar-toggle {
+        position: sticky;
+        top: 0;
+        z-index: 900;
+        display: block;
+        width: 100%;
+        min-height: 45px;
+        padding: 10px 18px;
+        border: 0;
+        border-bottom: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: var(--python-heading);
+        font: inherit;
+        font-size: 13px;
+        font-weight: 850;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .python-page .docs-layout {
+        position: relative !important;
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        inset: auto !important;
+        transform: none !important;
+    }
+
+    .python-page .docs-layout > .sidebar {
+        position: fixed !important;
+        top: 45px !important;
+        right: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        z-index: 850 !important;
+        width: min(330px, 88vw) !important;
+        min-width: 0 !important;
+        height: calc(100vh - 45px) !important;
+        max-height: none !important;
+        margin: 0 !important;
+        float: none !important;
+        transform: translateX(-105%);
+        box-shadow: 12px 0 30px rgba(15, 23, 42, 0.16);
+        transition: transform 0.22s ease;
+    }
+
+    .python-page .sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .python-page .docs-layout > .main-content {
+        position: relative !important;
+        display: block !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 24px 18px 45px !important;
+        float: none !important;
+        transform: none !important;
+    }
+
+    .python-page .python-progress-card,
+    .python-page .python-lab-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .python-page .python-level-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .python-page .footer-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .python-page .top-header {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .python-page .top-header .logo {
+        font-size: 22px;
+    }
+
+    .python-page .main-logo {
+        width: 55px;
+        height: 55px;
+        margin-right: 5px;
+    }
+
+    .python-page .top-nav a {
+        padding: 8px 9px;
+        font-size: 12px;
+    }
+
+    .python-page .docs-layout > .main-content {
+        padding: 18px 12px 40px !important;
+    }
+
+    .python-page .python-hero,
+    .python-page .content-card,
+    .python-page .python-level-card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .python-page .python-hero .page-title {
+        font-size: 34px;
+    }
+
+    .python-page .python-hero-stats,
+    .python-page .python-path-grid,
+    .python-page .python-benefit-grid,
+    .python-page .python-method-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .python-page .python-path-card:last-child {
+        grid-column: auto;
+    }
+
+    .python-page .python-hero-code pre {
+        min-height: 0;
+        padding: 17px;
+        font-size: 11px;
+    }
+
+    .python-page .python-progress-footer,
+    .python-page .python-welcome-card,
+    .python-page .python-topic-navigation,
+    .python-page .footer-bottom {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .python-page .python-welcome-icon {
+        width: 48px;
+        height: 48px;
+        flex-basis: 48px;
+    }
+
+    .python-page .python-level-actions,
+    .python-page .python-level-actions .python-button,
+    .python-page .python-level-actions .python-complete-button {
+        width: 100%;
+    }
+
+    .python-page .python-topic-navigation a {
+        width: 100%;
+        max-width: none;
+    }
+
+    .python-page .footer-container {
+        grid-template-columns: 1fr;
+        width: calc(100% - 32px);
+    }
+
+    .python-page .footer-bottom {
+        width: calc(100% - 32px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .python-page *,
+    .python-page *::before,
+    .python-page *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/*
+ * Desktop alignment safeguard
+ *
+ * The shared website stylesheet contains older sidebar positioning rules.
+ * These Python-specific declarations keep the sidebar flush below the
+ * header and aligned with the top of the main content without affecting
+ * any other CodeBhavya course page.
+ */
+@media (min-width: 881px) {
+    html,
+    body.python-page {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+
+    .python-page .docs-layout {
+        align-items: flex-start !important;
+        gap: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .python-page .docs-layout > .sidebar {
+        position: sticky !important;
+        top: 72px !important;
+        align-self: flex-start !important;
+        width: 235px !important;
+        min-width: 235px !important;
+        height: calc(100vh - 72px) !important;
+        max-height: calc(100vh - 72px) !important;
+        margin: 0 !important;
+        padding: 20px 12px !important;
+        flex: 0 0 235px !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        border-radius: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .python-page .docs-layout > .main-content {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        flex: 1 1 auto !important;
+        box-sizing: border-box !important;
+    }
+}
+
+@media (min-width: 881px) and (max-width: 1180px) {
+    .python-page .docs-layout > .sidebar {
+        width: 215px !important;
+        min-width: 215px !important;
+        flex-basis: 215px !important;
+    }
+}
+
+/* ================================================================
+   PYTHON LESSON PAGES
+   ================================================================ */
+
+.python-page .python-topic-link.active {
+    border-left-color: var(--python-blue);
+    background: linear-gradient(90deg, #dbeafe, #eff6ff);
+    color: #123b78;
+    font-weight: 800;
+}
+
+.python-lesson-page .main-content {
+    color: #334155;
+}
+
+.python-lesson-page .python-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.python-lesson-page .python-breadcrumb a {
+    color: var(--python-blue);
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.python-lesson-page .python-breadcrumb strong {
+    color: #475569;
+}
+
+.python-lesson-page .python-lesson-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(350px, 0.85fr);
+    gap: clamp(28px, 4vw, 56px);
+    margin-bottom: 28px;
+    padding: clamp(30px, 4vw, 52px);
+    overflow: hidden;
+    border: 1px solid #cfe0fa;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 4% 3%, rgba(37, 99, 235, 0.14), transparent 31%),
+        radial-gradient(circle at 96% 95%, rgba(212, 175, 55, 0.16), transparent 26%),
+        linear-gradient(135deg, #ffffff, #f5f9ff);
+    box-shadow: 0 12px 34px rgba(15, 23, 42, 0.07);
+}
+
+.python-lesson-page .python-lesson-hero::after {
+    content: "01";
+    position: absolute;
+    right: 2%;
+    bottom: -58px;
+    color: rgba(37, 99, 235, 0.045);
+    font: 900 205px/1 sans-serif;
+    pointer-events: none;
+}
+
+.python-lesson-page .python-lesson-hero-copy,
+.python-lesson-page .python-lesson-terminal {
+    position: relative;
+    z-index: 1;
+}
+
+.python-lesson-page .python-lesson-hero h1 {
+    margin: 13px 0 14px;
+    color: var(--python-navy);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+}
+
+.python-lesson-page .python-lesson-hero-copy > p {
+    max-width: 720px;
+    margin: 0;
+    color: #475569;
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.python-lesson-page .python-lesson-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.python-lesson-page .python-lesson-meta span {
+    padding: 7px 10px;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #475569;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.python-lesson-page .python-lesson-terminal {
+    align-self: center;
+    overflow: hidden;
+    border: 1px solid #1e3a5f;
+    border-radius: 17px;
+    background: var(--python-code);
+    box-shadow: 0 22px 44px rgba(15, 23, 42, 0.24);
+}
+
+.python-lesson-page .python-lesson-terminal pre {
+    min-height: 235px;
+    margin: 0;
+    padding: 25px;
+    overflow: auto;
+    color: #dbeafe;
+    font-size: 13px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+.python-lesson-page .python-lesson-terminal .python-code-result strong {
+    text-align: right;
+}
+
+.python-lesson-page .python-objectives {
+    scroll-margin-top: 90px;
+    border-top: 4px solid var(--python-blue);
+}
+
+.python-lesson-page .python-objective-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.python-lesson-page .python-objective-grid article {
+    min-height: 140px;
+    padding: 18px;
+    border: 1px solid #dbeafe;
+    border-radius: 13px;
+    background: #f8fbff;
+}
+
+.python-lesson-page .python-objective-grid span {
+    display: grid;
+    width: 31px;
+    height: 31px;
+    place-items: center;
+    border-radius: 9px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-objective-grid p {
+    margin: 14px 0 0;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.python-lesson-page .python-objective-grid code,
+.python-lesson-page .python-section-intro code,
+.python-lesson-page .python-explanation-card code,
+.python-lesson-page .python-note code,
+.python-lesson-page .python-rule-grid code,
+.python-lesson-page .python-quiz code,
+.python-lesson-page .python-practice-list code {
+    color: #1d4ed8;
+    font-weight: 750;
+}
+
+.python-lesson-page .python-lesson-section {
+    margin-bottom: 28px;
+    padding: clamp(24px, 3.2vw, 38px);
+    scroll-margin-top: 90px;
+    border: 1px solid var(--python-border);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.045);
+}
+
+.python-lesson-page .python-lesson-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.python-lesson-page .python-section-number {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 900;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+}
+
+.python-lesson-page .python-lesson-heading h2 {
+    margin: 3px 0 0;
+    color: var(--python-navy);
+    font-size: clamp(24px, 3.2vw, 34px);
+    line-height: 1.25;
+}
+
+.python-lesson-page .python-lesson-heading p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.python-lesson-page .python-section-intro {
+    margin: 0 0 20px;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.python-lesson-page .python-explanation-card {
+    padding: 22px;
+    border-left: 5px solid var(--python-blue);
+    border-radius: 13px;
+    background: #eff6ff;
+}
+
+.python-lesson-page .python-explanation-card > p {
+    margin: 0;
+    color: #334155;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.python-lesson-page .python-definition {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 14px;
+    margin-top: 16px;
+    padding-top: 15px;
+    border-top: 1px solid #bfdbfe;
+}
+
+.python-lesson-page .python-definition span {
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-definition p {
+    margin: 0;
+    color: #334155;
+    font-size: 13px;
+}
+
+.python-lesson-page .python-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px;
+    margin-top: 19px;
+}
+
+.python-lesson-page .python-feature-grid article {
+    min-height: 182px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-feature-grid article > span {
+    font-size: 28px;
+}
+
+.python-lesson-page .python-feature-grid h3 {
+    margin: 12px 0 7px;
+    color: var(--python-navy);
+    font-size: 16px;
+}
+
+.python-lesson-page .python-feature-grid p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.python-lesson-page .python-use-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.python-lesson-page .python-use-grid article {
+    padding: 15px;
+    border: 1px solid #fde68a;
+    border-radius: 11px;
+    background: #fffbeb;
+}
+
+.python-lesson-page .python-use-grid strong,
+.python-lesson-page .python-use-grid span {
+    display: block;
+}
+
+.python-lesson-page .python-use-grid strong {
+    color: #92400e;
+    font-size: 12px;
+}
+
+.python-lesson-page .python-use-grid span {
+    margin-top: 5px;
+    color: #78716c;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.python-lesson-page .python-execution-flow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.python-lesson-page .python-execution-flow article {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 145px;
+    padding: 19px;
+    text-align: center;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #ffffff, #f8fbff);
+}
+
+.python-lesson-page .python-execution-flow article > span {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 12px;
+    place-items: center;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-execution-flow strong,
+.python-lesson-page .python-execution-flow small {
+    display: block;
+}
+
+.python-lesson-page .python-execution-flow strong {
+    color: var(--python-navy);
+    font-size: 15px;
+}
+
+.python-lesson-page .python-execution-flow small {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.python-lesson-page .python-execution-flow > b {
+    flex: 0 0 auto;
+    color: var(--python-gold);
+    font-size: 28px;
+}
+
+.python-lesson-page .python-note {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    gap: 14px;
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 12px;
+}
+
+.python-lesson-page .python-note strong {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-note p {
+    margin: 0;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.python-lesson-page .python-note-blue {
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+}
+
+.python-lesson-page .python-note-blue strong {
+    color: #1d4ed8;
+}
+
+.python-lesson-page .python-note-gold {
+    border: 1px solid #fde68a;
+    background: #fffbeb;
+}
+
+.python-lesson-page .python-note-gold strong {
+    color: #92400e;
+}
+
+.python-lesson-page .python-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.python-lesson-page .python-choice-grid article {
+    position: relative;
+    min-height: 320px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-choice-grid article.recommended {
+    border-color: #93c5fd;
+    background: linear-gradient(150deg, #ffffff, #eff6ff);
+    box-shadow: 0 9px 24px rgba(37, 99, 235, 0.08);
+}
+
+.python-lesson-page .python-choice-badge {
+    color: #1d4ed8;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.python-lesson-page .python-choice-grid h3 {
+    margin: 15px 0 9px;
+    color: var(--python-navy);
+    font-size: 19px;
+}
+
+.python-lesson-page .python-choice-grid p,
+.python-lesson-page .python-choice-grid ol {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.python-lesson-page .python-choice-grid ol {
+    margin: 17px 0 0;
+    padding-left: 20px;
+}
+
+.python-lesson-page .python-choice-grid li {
+    margin: 5px 0;
+}
+
+.python-lesson-page .python-choice-grid code {
+    color: #1d4ed8;
+    font-weight: 750;
+}
+
+.python-lesson-page .python-example-card {
+    margin-top: 18px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+    border-radius: 15px;
+    background: #f8fafc;
+}
+
+.python-lesson-page .python-example-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 17px;
+    border-bottom: 1px solid #cbd5e1;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-example-title span {
+    color: var(--python-blue);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+}
+
+.python-lesson-page .python-example-title h3 {
+    margin: 3px 0 0;
+    color: var(--python-navy);
+    font-size: 16px;
+}
+
+.python-lesson-page .python-copy-button,
+.python-lesson-page .python-reveal-button {
+    min-height: 35px;
+    padding: 7px 12px;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.python-lesson-page .python-copy-button:hover,
+.python-lesson-page .python-reveal-button:hover {
+    border-color: var(--python-blue);
+    background: #dbeafe;
+}
+
+.python-lesson-page .python-example-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(230px, 0.75fr);
+}
+
+.python-lesson-page .python-code-block {
+    margin: 0;
+    padding: 20px;
+    overflow: auto;
+    border: 0;
+    border-radius: 0;
+    background: var(--python-code);
+    color: #dbeafe;
+    font-size: 12px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+}
+
+.python-lesson-page .python-example-output {
+    min-height: 150px;
+    padding: 20px;
+    border-left: 1px solid #263852;
+    background: #0b1728;
+}
+
+.python-lesson-page .python-example-output > span {
+    color: #64748b;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.python-lesson-page .python-example-output pre {
+    margin: 14px 0 0;
+    color: #86efac;
+    font-size: 12px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+}
+
+.python-lesson-page .python-syntax-breakdown {
+    margin: 20px 0;
+    padding: 26px;
+    border: 1px solid #dbeafe;
+    border-radius: 15px;
+    background: #f8fbff;
+}
+
+.python-lesson-page .python-syntax-code {
+    padding: 24px;
+    text-align: center;
+    border-radius: 12px;
+    background: var(--python-code);
+    font: 750 clamp(21px, 4vw, 34px)/1.4 monospace;
+}
+
+.python-lesson-page .syntax-function { color: #60a5fa; }
+.python-lesson-page .syntax-paren { color: #fbbf24; }
+.python-lesson-page .syntax-string { color: #86efac; }
+
+.python-lesson-page .python-syntax-labels {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.python-lesson-page .python-syntax-labels > span {
+    display: grid;
+    grid-template-columns: 10px 1fr;
+    column-gap: 8px;
+    padding: 12px;
+    border-radius: 9px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-syntax-labels i {
+    width: 8px;
+    height: 8px;
+    margin-top: 4px;
+    border-radius: 50%;
+}
+
+.python-lesson-page .python-syntax-labels i.blue { background: #60a5fa; }
+.python-lesson-page .python-syntax-labels i.gold { background: #fbbf24; }
+.python-lesson-page .python-syntax-labels i.green { background: #22c55e; }
+
+.python-lesson-page .python-syntax-labels strong,
+.python-lesson-page .python-syntax-labels small {
+    grid-column: 2;
+}
+
+.python-lesson-page .python-syntax-labels strong {
+    color: #334155;
+    font-size: 11px;
+}
+
+.python-lesson-page .python-syntax-labels small {
+    margin-top: 2px;
+    color: #64748b;
+    font-size: 9px;
+}
+
+.python-lesson-page .python-trace-card {
+    margin-top: 20px;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-trace-card h3 {
+    margin: 4px 0 15px;
+    color: var(--python-navy);
+}
+
+.python-lesson-page .python-table-wrap {
+    overflow-x: auto;
+}
+
+.python-lesson-page .python-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.python-lesson-page .python-table-wrap th,
+.python-lesson-page .python-table-wrap td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+
+.python-lesson-page .python-table-wrap th {
+    background: #eff6ff;
+    color: #1e3a5f;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-table-wrap code {
+    color: #1d4ed8;
+    font-weight: 700;
+}
+
+.python-lesson-page .python-rule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.python-lesson-page .python-rule-grid article {
+    position: relative;
+    min-height: 210px;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-rule-grid article > span {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-rule-grid h3 {
+    margin: 0 38px 14px 0;
+    color: var(--python-navy);
+    font-size: 15px;
+}
+
+.python-lesson-page .python-rule-grid pre,
+.python-lesson-page .python-compare-grid pre {
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+    border-radius: 9px;
+    background: var(--python-code);
+    color: #dbeafe;
+    font-size: 11px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+}
+
+.python-lesson-page .python-rule-grid p {
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* Text labels used by the Level 12 complexity cards */
+.python-lesson-page .python-complexity-grid article {
+    padding-top: 22px;
+}
+
+.python-lesson-page .python-complexity-grid article > span {
+    position: static !important;
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: 100%;
+    height: auto !important;
+    min-height: 28px;
+    margin: 0 0 14px;
+    padding: 5px 10px;
+    place-items: initial;
+    align-items: center;
+    border-radius: 999px;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    white-space: normal;
+}
+
+.python-lesson-page .python-complexity-grid h3 {
+    margin: 0 0 14px;
+}
+
+.python-lesson-page .python-compare-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.python-lesson-page .python-compare-grid article {
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-compare-grid article.correct { border-top: 4px solid #22c55e; }
+.python-lesson-page .python-compare-grid article.wrong { border-top: 4px solid #ef4444; }
+
+.python-lesson-page .python-compare-grid article > span {
+    display: block;
+    margin-bottom: 11px;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-compare-grid article.correct > span { color: #15803d; }
+.python-lesson-page .python-compare-grid article.wrong > span { color: #b91c1c; }
+
+.python-lesson-page .python-compare-grid p {
+    margin: 12px 0 0;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.python-lesson-page .python-tip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 11px;
+    margin-top: 16px;
+}
+
+.python-lesson-page .python-tip-grid article {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+}
+
+.python-lesson-page .python-tip-grid span {
+    display: grid;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-tip-grid article:last-child span {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.python-lesson-page .python-tip-grid p {
+    margin: 1px 0 0;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.python-lesson-page .python-mistakes-card {
+    border-top: 4px solid #ef4444;
+}
+
+.python-lesson-page .python-mistakes-card h2 {
+    margin: 5px 0 18px;
+}
+
+.python-lesson-page .python-mistake-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.python-lesson-page .python-mistake-list article {
+    overflow: hidden;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    background: #fffafa;
+}
+
+.python-lesson-page .python-mistake-list article > span {
+    display: block;
+    padding: 9px 13px;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-mistake-list article > div {
+    padding: 15px;
+}
+
+.python-lesson-page .python-mistake-list code {
+    color: #991b1b;
+    font-size: 11px;
+}
+
+.python-lesson-page .python-mistake-list p {
+    margin: 10px 0 0;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.python-lesson-page .python-debug-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    font-size: 11px;
+}
+
+.python-lesson-page .python-debug-steps strong {
+    margin-right: 4px;
+    color: #334155;
+}
+
+.python-lesson-page .python-debug-steps span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.python-lesson-page .python-quiz {
+    scroll-margin-top: 90px;
+    border-top: 4px solid var(--python-gold);
+}
+
+.python-lesson-page .python-quiz-count {
+    flex: 0 0 auto;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #fffbeb;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-quiz-question {
+    margin: 14px 0 0;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-quiz-question.is-correct {
+    border-color: #86efac;
+    background: #f0fdf4;
+}
+
+.python-lesson-page .python-quiz-question.is-wrong {
+    border-color: #fca5a5;
+    background: #fef2f2;
+}
+
+.python-lesson-page .python-quiz-question legend {
+    width: 100%;
+    padding: 0;
+    color: var(--python-navy);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.python-lesson-page .python-quiz-question legend span {
+    display: inline-grid;
+    width: 28px;
+    height: 28px;
+    margin-right: 7px;
+    place-items: center;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 10px;
+}
+
+.python-lesson-page .python-quiz-question label {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 9px;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    color: #475569;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.python-lesson-page .python-quiz-question label:hover {
+    border-color: #93c5fd;
+    background: #f8fbff;
+}
+
+.python-lesson-page .python-quiz-question input {
+    margin-top: 2px;
+    accent-color: var(--python-blue);
+}
+
+.python-lesson-page .python-quiz-feedback {
+    margin: 12px 0 0;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.python-lesson-page .python-quiz-question.is-correct .python-quiz-feedback { color: #15803d; }
+.python-lesson-page .python-quiz-question.is-wrong .python-quiz-feedback { color: #b91c1c; }
+
+.python-lesson-page .python-quiz-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.python-lesson-page .python-quiz-result {
+    margin: 0 0 0 auto;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 850;
+}
+
+.python-lesson-page .python-practice-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.python-lesson-page .python-practice-list > article {
+    display: flex;
+    min-height: 355px;
+    flex-direction: column;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-practice-head span {
+    color: #b98400;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+}
+
+.python-lesson-page .python-practice-head h3 {
+    margin: 5px 0 12px;
+    color: var(--python-navy);
+    font-size: 18px;
+}
+
+.python-lesson-page .python-practice-list > article > p {
+    margin: 0 0 13px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.python-lesson-page .python-sample {
+    padding: 12px;
+    border-radius: 9px;
+    background: #f8fafc;
+}
+
+.python-lesson-page .python-sample strong,
+.python-lesson-page .python-sample code {
+    display: block;
+}
+
+.python-lesson-page .python-sample strong {
+    margin-bottom: 7px;
+    color: #475569;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-sample code {
+    color: #334155;
+    font-weight: 650;
+    line-height: 1.65;
+}
+
+.python-lesson-page .python-practice-list > article > .python-code-block {
+    margin-bottom: 14px;
+    border-radius: 10px;
+}
+
+.python-lesson-page .python-reveal-button {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.python-lesson-page .python-hidden-solution {
+    margin-top: 12px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.python-lesson-page .python-hidden-solution[hidden] {
+    display: none;
+}
+
+.python-lesson-page .python-level-complete {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 25px;
+    border: 1px solid #86efac;
+    border-left: 5px solid #22c55e;
+    background: linear-gradient(135deg, #ffffff, #f0fdf4);
+}
+
+.python-lesson-page .python-level-complete h2 {
+    margin: 5px 0 8px;
+}
+
+.python-lesson-page .python-level-complete p {
+    max-width: 740px;
+}
+
+.python-lesson-page .python-level-complete-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.python-lesson-page .python-level-complete-actions .python-complete-button {
+    min-height: 44px;
+}
+
+@media (max-width: 1180px) {
+    .python-lesson-page .python-lesson-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-lesson-terminal {
+        max-width: 760px;
+    }
+
+    .python-lesson-page .python-objective-grid,
+    .python-lesson-page .python-feature-grid,
+    .python-lesson-page .python-use-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .python-lesson-page .python-choice-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-choice-grid article {
+        min-height: 0;
+    }
+
+    .python-lesson-page .python-mistake-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 880px) {
+    .python-lesson-page .python-execution-flow {
+        flex-direction: column;
+    }
+
+    .python-lesson-page .python-execution-flow article {
+        flex: none;
+        width: 100%;
+    }
+
+    .python-lesson-page .python-execution-flow > b {
+        transform: rotate(90deg);
+        text-align: center;
+    }
+
+    .python-lesson-page .python-example-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-example-output {
+        border-top: 1px solid #263852;
+        border-left: 0;
+    }
+
+    .python-lesson-page .python-practice-list {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-practice-list > article {
+        min-height: 0;
+    }
+
+    .python-lesson-page .python-level-complete {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 620px) {
+    .python-lesson-page .python-lesson-hero,
+    .python-lesson-page .python-lesson-section {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .python-lesson-page .python-lesson-hero h1 {
+        font-size: 35px;
+    }
+
+    .python-lesson-page .python-lesson-terminal pre {
+        min-height: 0;
+        padding: 17px;
+        font-size: 11px;
+    }
+
+    .python-lesson-page .python-objective-grid,
+    .python-lesson-page .python-feature-grid,
+    .python-lesson-page .python-use-grid,
+    .python-lesson-page .python-rule-grid,
+    .python-lesson-page .python-compare-grid,
+    .python-lesson-page .python-tip-grid,
+    .python-lesson-page .python-syntax-labels {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-definition,
+    .python-lesson-page .python-note {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-example-title,
+    .python-lesson-page .python-quiz-actions,
+    .python-lesson-page .python-level-complete-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .python-lesson-page .python-copy-button,
+    .python-lesson-page .python-quiz-actions .python-button,
+    .python-lesson-page .python-level-complete-actions .python-button,
+    .python-lesson-page .python-level-complete-actions .python-complete-button {
+        width: 100%;
+    }
+
+    .python-lesson-page .python-quiz-result {
+        margin-left: 0;
+    }
+}
+
+/* ================================================================
+   CODEBHAVYA STANDARD LEARNING SECTIONS — PYTHON LEVEL 1
+   ================================================================ */
+
+.python-lesson-page .python-standard-section {
+    margin-bottom: 28px;
+    scroll-margin-top: 90px;
+}
+
+.python-lesson-page .python-standard-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 5px 10px;
+    border: 1px solid #fde68a;
+    border-radius: 999px;
+    background: #fffbeb;
+    color: #9a6700;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-standard-section > h2 {
+    margin: 10px 0 8px;
+    color: var(--python-navy);
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.25;
+}
+
+.python-lesson-page .python-standard-intro {
+    margin: 0 0 20px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.python-lesson-page .python-standard-section code {
+    color: #1d4ed8;
+    font-weight: 750;
+}
+
+/* Quick revision */
+.python-lesson-page .python-revision-section {
+    border-top: 4px solid var(--python-blue);
+}
+
+.python-lesson-page .python-revision-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.python-lesson-page .python-revision-grid article {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    align-items: start;
+    gap: 12px;
+    min-height: 84px;
+    padding: 15px;
+    border: 1px solid #dbeafe;
+    border-radius: 11px;
+    background: #f8fbff;
+}
+
+.python-lesson-page .python-revision-grid article > span {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 9px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-revision-grid p {
+    margin: 2px 0 0;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Programming problem arena */
+.python-lesson-page .python-programming-section {
+    border-top: 4px solid #16a34a;
+}
+
+.python-lesson-page .python-practice-overall {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #bfdbfe;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #0d1b2a, #153b6f);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(13, 27, 42, 0.16);
+}
+
+.python-lesson-page .python-practice-overall-title {
+    margin-bottom: 15px;
+    color: #f5d76e;
+    font-size: 14px;
+    font-weight: 850;
+}
+
+.python-lesson-page .python-practice-overall-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.python-lesson-page .python-practice-overall-grid > div {
+    padding: 13px;
+    border: 1px solid rgba(147, 197, 253, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.python-lesson-page .python-practice-overall-grid strong,
+.python-lesson-page .python-practice-overall-grid span {
+    display: block;
+}
+
+.python-lesson-page .python-practice-overall-grid strong {
+    color: #cbd5e1;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-practice-overall-grid span {
+    margin-top: 5px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-practice-progress-track {
+    height: 10px;
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.python-lesson-page .python-practice-progress-track > span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #22c55e, #f5d76e);
+    transition: width 0.3s ease;
+}
+
+.python-lesson-page .python-practice-overall > p {
+    margin: 11px 0 0;
+    color: #cbd5e1;
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.python-lesson-page .python-coding-problem-list {
+    display: grid;
+    gap: 16px;
+}
+
+.python-lesson-page .python-coding-problem {
+    overflow: hidden;
+    padding: 22px;
+    border: 1px solid #dbe4f0;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 7px 20px rgba(15, 23, 42, 0.045);
+}
+
+.python-lesson-page .python-coding-problem.is-solved {
+    border-color: #86efac;
+    background: linear-gradient(150deg, #ffffff, #f0fdf4);
+}
+
+.python-lesson-page .python-coding-problem.is-completed {
+    border-color: #fde68a;
+    background: linear-gradient(150deg, #ffffff, #fffbeb);
+}
+
+.python-lesson-page .python-coding-problem-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.python-lesson-page .python-coding-problem-head > strong {
+    color: var(--python-navy);
+    font-size: 17px;
+}
+
+.python-lesson-page .python-practice-badge {
+    min-height: 24px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    color: #475569;
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-practice-badge.solved {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.python-lesson-page .python-practice-badge.completed {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.python-lesson-page .python-coding-problem > p {
+    margin: 10px 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.python-lesson-page .python-problem-io {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.python-lesson-page .python-problem-io > span {
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 10px;
+}
+
+.python-lesson-page .python-coding-buttons,
+.python-lesson-page .python-editor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.python-lesson-page .python-coding-buttons button,
+.python-lesson-page .python-editor-actions button,
+.python-lesson-page .python-standard-controls button,
+.python-lesson-page .python-compact-toggle,
+.python-lesson-page .python-interview-list button {
+    min-height: 38px;
+    padding: 8px 13px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 850;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.python-lesson-page .python-coding-buttons button:hover,
+.python-lesson-page .python-editor-actions button:hover,
+.python-lesson-page .python-standard-controls button:hover,
+.python-lesson-page .python-compact-toggle:hover,
+.python-lesson-page .python-interview-list button:hover {
+    transform: translateY(-1px);
+}
+
+.python-lesson-page .python-solve-button,
+.python-lesson-page .python-run-button {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.python-lesson-page .python-hint-button {
+    border-color: #fde68a !important;
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.python-lesson-page .python-program-button {
+    border-color: #cbd5e1 !important;
+    background: #ffffff;
+    color: #475569;
+}
+
+.python-lesson-page .python-check-button {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.python-lesson-page .python-reset-button {
+    border-color: #475569 !important;
+    background: #17263c;
+    color: #e2e8f0;
+}
+
+.python-lesson-page .python-problem-hint {
+    margin-top: 13px;
+    padding: 12px 14px;
+    border: 1px solid #fde68a;
+    border-radius: 9px;
+    background: #fffbeb;
+    color: #78716c;
+    font-size: 11px;
+}
+
+.python-lesson-page .python-coding-workspace {
+    margin-top: 15px;
+    overflow: hidden;
+    border: 1px solid #263852;
+    border-radius: 13px;
+    background: #0b1728;
+}
+
+.python-lesson-page .python-workspace-title {
+    padding: 11px 15px;
+    border-bottom: 1px solid #263852;
+    background: #101d31;
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: 850;
+}
+
+.python-lesson-page .python-workspace-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+}
+
+.python-lesson-page .python-workspace-panel {
+    min-width: 0;
+    padding: 16px;
+}
+
+.python-lesson-page .python-workspace-panel + .python-workspace-panel {
+    border-left: 1px solid #263852;
+}
+
+.python-lesson-page .python-workspace-panel h3 {
+    margin: 0 0 9px;
+    color: #cbd5e1;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-workspace-panel h3:not(:first-child) {
+    margin-top: 15px;
+}
+
+.python-lesson-page .python-workspace-panel textarea[data-problem-code] {
+    width: 100%;
+    min-height: 235px;
+    resize: vertical;
+    padding: 15px;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    outline: none;
+    background: #07111f;
+    color: #dbeafe;
+    font: 12px/1.7 "SFMono-Regular", Consolas, monospace;
+    tab-size: 4;
+}
+
+.python-lesson-page .python-workspace-panel textarea[data-problem-code]:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.12);
+}
+
+.python-lesson-page .python-workspace-output {
+    min-height: 115px;
+    margin: 0;
+    padding: 14px;
+    overflow: auto;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    background: #07111f;
+    color: #86efac;
+    font-size: 11px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+}
+
+.python-lesson-page .python-test-results > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #17263c;
+    color: #94a3b8;
+    font-size: 10px;
+}
+
+.python-lesson-page .python-test-results > div.pass {
+    background: rgba(22, 163, 74, 0.16);
+    color: #86efac;
+}
+
+.python-lesson-page .python-test-results > div.fail {
+    background: rgba(239, 68, 68, 0.14);
+    color: #fca5a5;
+}
+
+.python-lesson-page .python-problem-score {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0 16px 14px;
+}
+
+.python-lesson-page .python-problem-score > div {
+    padding: 10px 12px;
+    border: 1px solid #263852;
+    border-radius: 8px;
+    background: #101d31;
+}
+
+.python-lesson-page .python-problem-score strong,
+.python-lesson-page .python-problem-score span {
+    display: block;
+}
+
+.python-lesson-page .python-problem-score strong {
+    color: #64748b;
+    font-size: 8px;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-problem-score span {
+    margin-top: 4px;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.python-lesson-page .python-problem-message {
+    margin: 0 16px 16px !important;
+    padding: 11px 13px;
+    border-radius: 8px;
+    background: #17263c;
+    color: #cbd5e1 !important;
+    font-size: 10px !important;
+}
+
+.python-lesson-page .python-official-solution {
+    margin-top: 14px;
+    overflow: hidden;
+    border: 1px solid #bfdbfe;
+    border-radius: 11px;
+}
+
+.python-lesson-page .python-official-solution > strong {
+    display: block;
+    padding: 10px 13px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-official-solution pre {
+    margin: 0;
+    padding: 17px;
+    overflow: auto;
+    background: var(--python-code);
+    color: #dbeafe;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* Key takeaway */
+.python-lesson-page .python-takeaway-section {
+    border-left: 5px solid var(--python-gold);
+    background: linear-gradient(135deg, #ffffff, #fffbeb);
+}
+
+.python-lesson-page .python-takeaway-flow {
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.python-lesson-page .python-takeaway-flow article {
+    min-height: 145px;
+    padding: 16px;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-takeaway-flow article > span {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    place-items: center;
+    border-radius: 50%;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-takeaway-flow strong {
+    color: var(--python-navy);
+    font-size: 13px;
+}
+
+.python-lesson-page .python-takeaway-flow p {
+    margin: 6px 0 0;
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.python-lesson-page .python-takeaway-flow > b {
+    color: var(--python-gold);
+    font-size: 22px;
+}
+
+.python-lesson-page .python-takeaway-message {
+    margin: 16px 0 0;
+    padding: 13px 15px;
+    border-radius: 9px;
+    background: #fef3c7;
+    color: #78350f;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.6;
+}
+
+/* Visualizer and tracer */
+.python-lesson-page .python-compact-learning {
+    border-top: 4px solid #7c3aed;
+}
+
+.python-lesson-page .python-compact-toggle {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 7px 16px rgba(37, 99, 235, 0.16);
+}
+
+.python-lesson-page .python-compact-panel {
+    margin-top: 16px;
+}
+
+.python-lesson-page .python-visualizer,
+.python-lesson-page .python-program-tracer {
+    overflow: hidden;
+    border: 1px solid #263852;
+    border-radius: 15px;
+    background: #0b1728;
+    color: #e2e8f0;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+}
+
+.python-lesson-page .python-interactive-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 11px 16px;
+    border-bottom: 1px solid #263852;
+    background: #101d31;
+    color: #94a3b8;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+}
+
+.python-lesson-page .python-interactive-topbar strong {
+    color: var(--python-gold-light);
+    font-family: Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0;
+}
+
+.python-lesson-page .python-interactive-topbar strong i {
+    color: #93c5fd;
+    font-style: normal;
+}
+
+.python-lesson-page .python-visualizer > h3 {
+    margin: 20px 20px 8px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.python-lesson-page .python-visual-flow {
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    align-items: center;
+    gap: 7px;
+    margin: 18px;
+    overflow-x: auto;
+}
+
+.python-lesson-page .python-visual-flow span {
+    min-width: 112px;
+    padding: 11px 10px;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    background: #101d31;
+    color: #94a3b8;
+    font-size: 9px;
+    font-weight: 800;
+    text-align: center;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.python-lesson-page .python-visual-flow span.is-complete {
+    border-color: #22c55e;
+    background: rgba(22, 163, 74, 0.14);
+    color: #86efac;
+}
+
+.python-lesson-page .python-visual-flow span.is-active {
+    border-color: #60a5fa;
+    background: rgba(37, 99, 235, 0.22);
+    color: #bfdbfe;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.09);
+}
+
+.python-lesson-page .python-visual-flow b {
+    color: var(--python-gold-light);
+}
+
+.python-lesson-page .python-visual-stage {
+    min-height: 190px;
+    margin: 0 18px;
+    padding: 24px;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    background: radial-gradient(circle at 5% 0, rgba(37, 99, 235, 0.18), transparent 36%), #07111f;
+}
+
+.python-lesson-page .python-visual-stage > span {
+    color: var(--python-gold-light);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-visual-stage h3 {
+    margin: 11px 0 7px;
+    color: #ffffff;
+    font-size: 19px;
+}
+
+.python-lesson-page .python-visual-stage p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.python-lesson-page .python-visual-dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+.python-lesson-page .python-visual-dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #334155;
+}
+
+.python-lesson-page .python-visual-dots i.active {
+    width: 24px;
+    border-radius: 999px;
+    background: #60a5fa;
+}
+
+.python-lesson-page .python-standard-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 18px 12px;
+}
+
+.python-lesson-page .python-standard-controls button {
+    color: #ffffff;
+}
+
+.python-lesson-page .python-standard-controls .previous { background: #475569; }
+.python-lesson-page .python-standard-controls .next { background: #2563eb; }
+.python-lesson-page .python-standard-controls .auto { background: #16a34a; }
+.python-lesson-page .python-standard-controls .pause { background: #d97706; }
+.python-lesson-page .python-standard-controls .reset { background: #7c3aed; }
+
+.python-lesson-page .python-mini-progress {
+    height: 7px;
+    margin: 0 18px 18px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #1e293b;
+}
+
+.python-lesson-page .python-mini-progress > span {
+    display: block;
+    width: 20%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #2563eb, #f5d76e);
+    transition: width 0.25s ease;
+}
+
+.python-lesson-page .python-tracer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+}
+
+.python-lesson-page .python-tracer-code-wrap,
+.python-lesson-page .python-tracer-state-wrap {
+    min-width: 0;
+}
+
+.python-lesson-page .python-tracer-state-wrap {
+    border-left: 1px solid #263852;
+}
+
+.python-lesson-page .python-tracer-heading {
+    padding: 11px 15px;
+    border-bottom: 1px solid #263852;
+    background: #101d31;
+    color: #93c5fd;
+    font-size: 10px;
+    font-weight: 850;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-tracer-code {
+    min-height: 320px;
+    margin: 0;
+    padding: 16px 0;
+    overflow: auto;
+    color: #dbeafe;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.python-lesson-page .python-tracer-code span {
+    display: block;
+    padding: 3px 16px;
+    border-left: 3px solid transparent;
+    white-space: pre;
+}
+
+.python-lesson-page .python-tracer-code span.is-active {
+    border-left-color: #f5d76e;
+    background: rgba(245, 215, 110, 0.1);
+    color: #ffffff;
+}
+
+.python-lesson-page .python-tracer-note {
+    min-height: 70px;
+    margin: 16px;
+    padding: 13px;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    background: #101d31;
+    color: #cbd5e1;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.python-lesson-page .python-live-state {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 16px 16px;
+}
+
+.python-lesson-page .python-live-state > div {
+    padding: 11px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #07111f;
+}
+
+.python-lesson-page .python-live-state strong,
+.python-lesson-page .python-live-state span {
+    display: block;
+}
+
+.python-lesson-page .python-live-state strong {
+    color: #64748b;
+    font-size: 8px;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-live-state span {
+    margin-top: 4px;
+    color: #f5d76e;
+    font: 750 11px/1.45 monospace;
+}
+
+.python-lesson-page .python-tracer-output {
+    margin: 0 16px 16px;
+}
+
+.python-lesson-page .python-tracer-output > strong {
+    color: #94a3b8;
+    font-size: 9px;
+    text-transform: uppercase;
+}
+
+.python-lesson-page .python-tracer-output pre {
+    min-height: 80px;
+    margin: 7px 0 0;
+    padding: 12px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #07111f;
+    color: #86efac;
+    font-size: 11px;
+    white-space: pre-wrap;
+}
+
+.python-lesson-page .python-tracer-status {
+    margin: 0 18px 18px;
+    padding: 8px 11px;
+    border-radius: 8px;
+    background: #101d31;
+    color: #94a3b8;
+    font-size: 9px;
+    text-align: center;
+}
+
+/* Interview, tips and extra practice */
+.python-lesson-page .python-interview-list {
+    display: grid;
+    gap: 10px;
+}
+
+.python-lesson-page .python-interview-list article {
+    overflow: hidden;
+    border: 1px solid #dbe4f0;
+    border-radius: 11px;
+    background: #ffffff;
+}
+
+.python-lesson-page .python-interview-list article > div {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+}
+
+.python-lesson-page .python-interview-list article > div > span {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-interview-list article > div > p {
+    margin: 0;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.python-lesson-page .python-interview-list button {
+    border-color: #bfdbfe;
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.python-lesson-page .python-interview-list article > p {
+    margin: 0;
+    padding: 14px 18px;
+    border-top: 1px solid #dbeafe;
+    background: #f8fbff;
+    color: #475569;
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+.python-lesson-page .python-extra-tip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+    margin: 19px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.python-lesson-page .python-extra-tip-grid li {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 11px;
+    padding: 16px;
+    border: 1px solid #fde68a;
+    border-radius: 11px;
+    background: #fffbeb;
+}
+
+.python-lesson-page .python-extra-tip-grid span {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 10px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-extra-tip-grid p {
+    margin: 2px 0 0;
+    color: #57534e;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.python-lesson-page .python-extra-practice-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 19px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: python-extra-practice;
+}
+
+.python-lesson-page .python-extra-practice-list li {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    min-height: 78px;
+    padding: 16px;
+    border: 1px solid #dbe4f0;
+    border-radius: 11px;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 11px;
+    line-height: 1.6;
+    counter-increment: python-extra-practice;
+}
+
+.python-lesson-page .python-extra-practice-list li::before {
+    content: counter(python-extra-practice, decimal-leading-zero);
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 10px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.python-lesson-page .python-extra-practice-text {
+    display: block;
+    min-width: 0;
+    padding-top: 4px;
+    overflow-wrap: anywhere;
+}
+
+/* Readability refinement */
+.python-lesson-page .python-objective-grid p,
+.python-lesson-page .python-section-intro,
+.python-lesson-page .python-explanation-card > p,
+.python-lesson-page .python-definition p,
+.python-lesson-page .python-feature-grid p,
+.python-lesson-page .python-note p,
+.python-lesson-page .python-choice-grid p,
+.python-lesson-page .python-choice-grid ol,
+.python-lesson-page .python-rule-grid p,
+.python-lesson-page .python-compare-grid p,
+.python-lesson-page .python-tip-grid p,
+.python-lesson-page .python-mistake-list p,
+.python-lesson-page .python-quiz-question label,
+.python-lesson-page .python-practice-list > article > p,
+.python-lesson-page .python-revision-grid p,
+.python-lesson-page .python-coding-problem > p,
+.python-lesson-page .python-standard-intro,
+.python-lesson-page .python-takeaway-message,
+.python-lesson-page .python-visual-stage p,
+.python-lesson-page .python-interview-list article > div > p,
+.python-lesson-page .python-interview-list article > p,
+.python-lesson-page .python-extra-tip-grid p,
+.python-lesson-page .python-extra-practice-list li {
+    font-size: 14px;
+}
+
+.python-lesson-page .python-use-grid span,
+.python-lesson-page .python-execution-flow small,
+.python-lesson-page .python-syntax-labels small,
+.python-lesson-page .python-table-wrap table,
+.python-lesson-page .python-problem-io > span,
+.python-lesson-page .python-practice-overall > p,
+.python-lesson-page .python-problem-hint,
+.python-lesson-page .python-workspace-title,
+.python-lesson-page .python-workspace-panel h3,
+.python-lesson-page .python-test-results > div,
+.python-lesson-page .python-official-solution > strong,
+.python-lesson-page .python-takeaway-flow p,
+.python-lesson-page .python-visual-flow span,
+.python-lesson-page .python-tracer-heading,
+.python-lesson-page .python-tracer-status {
+    font-size: 12px;
+}
+
+.python-lesson-page .python-code-block,
+.python-lesson-page .python-example-output pre,
+.python-lesson-page .python-rule-grid pre,
+.python-lesson-page .python-workspace-panel textarea[data-problem-code],
+.python-lesson-page .python-workspace-output,
+.python-lesson-page .python-official-solution pre,
+.python-lesson-page .python-tracer-code,
+.python-lesson-page .python-tracer-note,
+.python-lesson-page .python-live-state span,
+.python-lesson-page .python-tracer-output pre {
+    font-size: 13px;
+}
+
+.python-lesson-page .python-coding-buttons button,
+.python-lesson-page .python-editor-actions button,
+.python-lesson-page .python-standard-controls button,
+.python-lesson-page .python-compact-toggle,
+.python-lesson-page .python-interview-list button {
+    font-size: 12px;
+}
+
+.python-lesson-page .python-problem-message {
+    font-size: 13px !important;
+}
+
+.python-lesson-page .python-standard-controls button:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+    filter: grayscale(0.45);
+    transform: none;
+    box-shadow: none;
+}
+
+@media (max-width: 1180px) {
+    .python-lesson-page .python-practice-overall-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .python-lesson-page .python-takeaway-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .python-lesson-page .python-takeaway-flow > b {
+        display: none;
+    }
+}
+
+@media (max-width: 880px) {
+    .python-lesson-page .python-workspace-grid,
+    .python-lesson-page .python-tracer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-workspace-panel + .python-workspace-panel,
+    .python-lesson-page .python-tracer-state-wrap {
+        border-top: 1px solid #263852;
+        border-left: 0;
+    }
+
+    .python-lesson-page .python-visual-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-visual-flow b {
+        transform: rotate(90deg);
+        text-align: center;
+    }
+
+    .python-lesson-page .python-visual-flow span {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 620px) {
+    .python-lesson-page .python-revision-grid,
+    .python-lesson-page .python-practice-overall-grid,
+    .python-lesson-page .python-problem-score,
+    .python-lesson-page .python-takeaway-flow,
+    .python-lesson-page .python-extra-tip-grid,
+    .python-lesson-page .python-extra-practice-list {
+        grid-template-columns: 1fr;
+    }
+
+    .python-lesson-page .python-coding-problem {
+        padding: 17px;
+    }
+
+    .python-lesson-page .python-coding-problem-head,
+    .python-lesson-page .python-coding-buttons,
+    .python-lesson-page .python-editor-actions,
+    .python-lesson-page .python-standard-controls {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .python-lesson-page .python-coding-buttons button,
+    .python-lesson-page .python-editor-actions button,
+    .python-lesson-page .python-standard-controls button,
+    .python-lesson-page .python-compact-toggle {
+        width: 100%;
+    }
+
+    .python-lesson-page .python-interview-list article > div {
+        grid-template-columns: 32px 1fr;
+    }
+
+    .python-lesson-page .python-interview-list button {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .python-lesson-page .python-interactive-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* ================================================================
+   FINAL MOBILE SIDEBAR SAFEGUARD
+
+   Keep the topic control visible while scrolling. The closed sidebar
+   is removed from layout completely, so it can never leave an empty
+   sidebar-height gap above the lesson content. When opened, it becomes
+   a viewport overlay below the sticky control.
+   ================================================================ */
+@media (max-width: 880px) {
+    html,
+    body.python-page {
+        overflow-x: hidden !important;
+    }
+
+    .python-page .python-sidebar-toggle {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1200 !important;
+        display: flex !important;
+        align-items: center;
+        width: 100% !important;
+        min-height: 48px !important;
+        margin: 0 !important;
+        padding: 11px 18px !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.08);
+    }
+
+    .python-page .docs-layout {
+        display: block !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .python-page .docs-layout > .sidebar {
+        display: none !important;
+        position: fixed !important;
+        top: 48px !important;
+        right: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        z-index: 1150 !important;
+        width: min(340px, 90vw) !important;
+        min-width: 0 !important;
+        height: calc(100dvh - 48px) !important;
+        max-height: calc(100dvh - 48px) !important;
+        margin: 0 !important;
+        padding: 20px 14px !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain;
+        transform: none !important;
+        box-shadow: 14px 0 34px rgba(15, 23, 42, 0.24);
+    }
+
+    .python-page .docs-layout > .sidebar.is-open {
+        display: block !important;
+    }
+
+    /* Open the mobile menu as one clean viewport drawer. */
+    body.python-page:has(.docs-layout > .sidebar.is-open) {
+        overflow: hidden !important;
+    }
+
+    body.python-page:has(.docs-layout > .sidebar.is-open) .python-sidebar-toggle {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        z-index: 1250 !important;
+    }
+
+    body.python-page:has(.docs-layout > .sidebar.is-open) .docs-layout > .sidebar {
+        top: 48px !important;
+        height: calc(100dvh - 48px) !important;
+        max-height: calc(100dvh - 48px) !important;
+    }
+
+    .python-page .docs-layout > .main-content {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        float: none !important;
+        transform: none !important;
+    }
+}
+
+/* Practice editors: keep CodeMirror's visible and measuring lines compact.
+   Course-level <pre> styles must not affect its hidden height measurements. */
+.python-page .cb-python-new-student {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1250;
+    max-width: calc(100vw - 32px);
+    padding: 11px 14px;
+    border: 1px solid #b34c54;
+    border-radius: 12px;
+    background: #fff;
+    color: #81232e;
+    font: 700 13px/1.3 Arial, Helvetica, sans-serif;
+    box-shadow: 0 5px 20px #09244333;
+    cursor: pointer;
+}
+.python-page .cb-python-new-student:hover,
+.python-page .cb-python-new-student:focus-visible { background: #fff1f2; }
+.python-lesson-page .python-workspace-panel .CodeMirror,
+.python-practice-page .cb-c-practice-panel .CodeMirror {
+    width: 100%;
+    height: 340px;
+    max-width: 100%;
+    border: 1px solid #455a78;
+    border-radius: 10px;
+    background: #07111f;
+    color: #dbeafe;
+    font: 14px/22px "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    text-align: left;
+}
+.python-lesson-page .python-workspace-panel .CodeMirror pre,
+.python-practice-page .cb-c-practice-panel .CodeMirror pre {
+    margin: 0 !important;
+    padding: 0 4px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    box-sizing: content-box !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+.python-lesson-page .python-workspace-panel .CodeMirror-gutters,
+.python-practice-page .cb-c-practice-panel .CodeMirror-gutters {
+    border-right: 1px solid #354864;
+    background: #10203a;
+}
+.python-lesson-page .python-workspace-panel .CodeMirror-linenumber,
+.python-practice-page .cb-c-practice-panel .CodeMirror-linenumber { color: #91a7c2; }
+.python-lesson-page .python-workspace-panel .CodeMirror-cursor,
+.python-practice-page .cb-c-practice-panel .CodeMirror-cursor { border-left: 2px solid #f4c54b; }
+.python-lesson-page .python-workspace-panel .cm-keyword,
+.python-practice-page .cb-c-practice-panel .cm-keyword { color: #93c5fd; }
+.python-lesson-page .python-workspace-panel .cm-string,
+.python-practice-page .cb-c-practice-panel .cm-string { color: #fbbf7d; }
+.python-lesson-page .python-workspace-panel .cm-comment,
+.python-practice-page .cb-c-practice-panel .cm-comment { color: #a5b9a3; }
+.python-lesson-page .python-workspace-panel .cm-number,
+.python-practice-page .cb-c-practice-panel .cm-number { color: #fda4af; }
+.python-lesson-page .python-workspace-panel .CodeMirror-focused .CodeMirror-selected,
+.python-practice-page .cb-c-practice-panel .CodeMirror-focused .CodeMirror-selected { background: #2f5682; }
+@media (max-width: 650px) {
+    .python-page .cb-python-new-student { right: 12px; bottom: 12px; padding: 9px 11px; font-size: 12px; }
+    .python-lesson-page .python-workspace-panel .CodeMirror,
+    .python-practice-page .cb-c-practice-panel .CodeMirror {
+        height: 270px;
+        font-size: 13px;
+    }
+}
