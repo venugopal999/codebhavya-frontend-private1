@@ -1,0 +1,931 @@
+(function () {
+    "use strict";
+
+    const cloud = window.CodeBhavyaSupabase || {};
+    const client = cloud.client || null;
+    const $ = (id) => document.getElementById(id);
+    const pageParameters = new URLSearchParams(location.search);
+    const fullAssessmentEmbed = pageParameters.has("fullmock");
+    const requestedTopic = pageParameters.get("topic");
+    const topic = ["c", "java", "python", "dsa", "database", "ai-ml"].includes(requestedTopic) ? requestedTopic : "c";
+    const topicLabel = { c: "C", java: "Java", python: "Python", dsa: "DSA", database: "Database & SQL", "ai-ml": "AI & ML" }[topic];
+    const targetLabels = {
+        general: "General Campus",
+        service: "Foundation Hiring",
+        product: topic === "database" ? "Product Engineering SQL" : topic === "ai-ml" ? "Product Engineering & Applied ML" : "Product Engineering",
+        ai: "Data, AI & Analytics"
+    };
+
+    let user = null;
+    let active = null;
+    let busy = false;
+    let editor = null;
+    let lastSubmissionId = null;
+    let draftTimer = null;
+    let runtimeLanguage = topic === "java" ? "java" : topic === "python" || topic === "ai-ml" ? "python" : topic === "database" ? "sql" : "c";
+    let solveTimerStartedAt = 0;
+    let solveTimerCompletedSeconds = null;
+    let solveTimerInterval = null;
+    let submissionRows = [];
+    const problemLoadTimeoutMs = 15000;
+
+    if (fullAssessmentEmbed) {
+        document.documentElement.classList.add("full-assessment-embed");
+        document.body.classList.add("full-assessment-embed-page");
+        document.addEventListener("click", (event) => {
+            const link = event.target.closest("a[href]");
+            if (!link) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }, true);
+    }
+
+    function setStatus(text, tone = "neutral") {
+        $("judgeStatus").textContent = text;
+        $("judgeStatus").dataset.tone = tone;
+    }
+
+
+    function formatDuration(totalSeconds) {
+        const value = Math.max(0, Number(totalSeconds) || 0);
+        const hours = Math.floor(value / 3600);
+        const minutes = Math.floor((value % 3600) / 60);
+        const seconds = value % 60;
+        return hours > 0
+            ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+            : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
+
+    function formatSubmissionDate(value) {
+        if (!value) return "Not recorded";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "Not recorded";
+        return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+    }
+
+    function solveTimerKey() {
+        if (!active?.id) return null;
+        return `codebhavya-solve-timer-v1:${user?.id || "guest"}:${active.id}`;
+    }
+
+    function saveSolveTimerState() {
+        const key = solveTimerKey();
+        if (!key) return;
+        try {
+            localStorage.setItem(key, JSON.stringify({
+                startedAt: solveTimerStartedAt || Date.now(),
+                completedSeconds: solveTimerCompletedSeconds
+            }));
+        } catch (_error) { /* Timer still works for this page. */ }
+    }
+
+    function currentSolveDurationSeconds() {
+        if (solveTimerCompletedSeconds !== null) return solveTimerCompletedSeconds;
+        if (!solveTimerStartedAt) return 0;
+        return Math.max(0, Math.floor((Date.now() - solveTimerStartedAt) / 1000));
+    }
+
+    function paintSolveTimer() {
+        const output = $("solveTimer");
+        const card = $("solveTimerCard");
+        if (!output || !card) return;
+        output.textContent = formatDuration(currentSolveDurationSeconds());
+        card.classList.toggle("completed", solveTimerCompletedSeconds !== null);
+        card.querySelector("span").textContent = solveTimerCompletedSeconds !== null ? "COMPLETED IN" : "SOLVE TIME";
+    }
+
+    function beginSolveTimer(forceNew = false) {
+        if (fullAssessmentEmbed || !active) return;
+        window.clearInterval(solveTimerInterval);
+        solveTimerStartedAt = Date.now();
+        solveTimerCompletedSeconds = null;
+        const key = solveTimerKey();
+        if (!forceNew && key) {
+            try {
+                const saved = JSON.parse(localStorage.getItem(key) || "null");
+                if (saved?.startedAt) solveTimerStartedAt = Number(saved.startedAt) || Date.now();
+                if (Number.isFinite(saved?.completedSeconds)) solveTimerCompletedSeconds = Number(saved.completedSeconds);
+            } catch (_error) { /* Start a clean timer. */ }
+        }
+        paintSolveTimer();
+        if (solveTimerCompletedSeconds === null) {
+            solveTimerInterval = window.setInterval(paintSolveTimer, 1000);
+        }
+        saveSolveTimerState();
+    }
+
+    function completeSolveTimer(seconds) {
+        window.clearInterval(solveTimerInterval);
+        solveTimerCompletedSeconds = Math.max(0, Number(seconds) || currentSolveDurationSeconds());
+        paintSolveTimer();
+        saveSolveTimerState();
+    }
+
+    function restartSolveTimer() {
+        if (!active) return;
+        if (solveTimerCompletedSeconds !== null && !window.confirm("Start a new solve timer for this problem? Your previous submission history will remain saved.")) return;
+        beginSolveTimer(true);
+    }
+
+    async function saveSubmissionDuration(submissionId, seconds) {
+        if (!client || !user || !submissionId) return;
+        try {
+            const result = await client.rpc("set_my_coding_submission_duration_v1", {
+                p_submission_id: String(submissionId),
+                p_duration_seconds: Math.max(0, Number(seconds) || 0)
+            });
+            if (result.error) console.warn("Solve duration was not stored. Run the coding submission history SQL migration.", result.error);
+        } catch (error) {
+            console.warn("Solve duration was not stored.", error);
+        }
+    }
+
+    function normalizeSubmissionRow(row) {
+        return {
+            submission_id: String(row.submission_id ?? row.id ?? ""),
+            language: String(row.language || ""),
+            source_code: String(row.source_code || ""),
+            status: String(row.status || "Submitted"),
+            passed_tests: Number(row.passed_tests) || 0,
+            total_tests: Number(row.total_tests) || 0,
+            execution_time: row.execution_time == null ? null : Number(row.execution_time),
+            memory_kb: row.memory_kb == null ? null : Number(row.memory_kb),
+            points_awarded: Number(row.points_awarded) || 0,
+            submitted_at: row.submitted_at || row.created_at || null,
+            solve_duration_seconds: row.solve_duration_seconds == null ? null : Number(row.solve_duration_seconds)
+        };
+    }
+
+    async function fetchMySubmissions() {
+        if (!client || !user || !active?.id) return [];
+        try {
+            const rpc = await client.rpc("get_my_coding_submissions_v1", { p_problem_id: String(active.id) });
+            if (!rpc.error) return (rpc.data || []).map(normalizeSubmissionRow);
+        } catch (_error) { /* Fall through to the table query for older deployments. */ }
+
+        const rich = await client.from("coding_submissions")
+            .select("id,language,source_code,status,passed_tests,total_tests,execution_time,memory_kb,points_awarded,created_at,solve_duration_seconds")
+            .eq("user_id", user.id).eq("problem_id", active.id)
+            .order("created_at", { ascending: false }).limit(50);
+        if (!rich.error) return (rich.data || []).map(normalizeSubmissionRow);
+
+        const legacy = await client.from("coding_submissions")
+            .select("id,language,source_code,status,passed_tests,total_tests,execution_time,memory_kb,points_awarded")
+            .eq("user_id", user.id).eq("problem_id", active.id).limit(50);
+        if (!legacy.error) return (legacy.data || []).map(normalizeSubmissionRow);
+        console.warn("Unable to load coding submission history", rich.error || legacy.error);
+        return [];
+    }
+
+    function submissionMetaCard(label, value, className = "") {
+        const card = document.createElement("article");
+        if (className) card.className = className;
+        const caption = document.createElement("span"); caption.textContent = label;
+        const content = document.createElement("strong"); content.textContent = value;
+        card.append(caption, content);
+        return card;
+    }
+
+    function loadSubmissionIntoEditor(row) {
+        if (!row?.source_code) return;
+        if (editorValue().trim() && editorValue() !== starter(active) && !window.confirm("Replace the current editor code with this submitted solution?")) return;
+        setEditorValue(row.source_code);
+        scheduleDraftSave();
+        $("draftStatus").textContent = "Submitted code loaded";
+        setStatus("Submitted code restored to the editor", "neutral");
+        document.querySelector(".code-lab")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function setPaneView(view) {
+        const submissions = view === "submissions" && !$('submissionsTab').disabled;
+        if ($('codingActive').classList.contains('statement-collapsed')) collapseStatement(false);
+        $('problemPane').classList.toggle('show-submissions', submissions);
+        $('problemTab').classList.toggle('active', !submissions);
+        $('submissionsTab').classList.toggle('active', submissions);
+        $('problemTab').setAttribute('aria-pressed', String(!submissions));
+        $('submissionsTab').setAttribute('aria-pressed', String(submissions));
+        if (submissions && submissionRows.length > 1) {
+            $('submissionHistory').hidden = false;
+            $('toggleSubmissionHistory').textContent = 'Hide attempts';
+        }
+    }
+
+    function renderSubmissionHistory(rows) {
+        submissionRows = rows;
+        const panel = $("submissionPanel");
+        if (!panel) return;
+        panel.hidden = !user || fullAssessmentEmbed;
+        $('submissionsTab').disabled = panel.hidden;
+        if (panel.hidden) {
+            setPaneView('problem');
+            return;
+        }
+        $('submissionsTab').textContent = rows.length ? `Submissions (${rows.length})` : 'Submissions';
+        const empty = $("submissionEmpty");
+        const latestBox = $("latestSubmission");
+        const toggle = $("toggleSubmissionHistory");
+        const history = $("submissionHistory");
+        history.replaceChildren();
+        if (!rows.length) {
+            empty.hidden = false;
+            latestBox.hidden = true;
+            toggle.hidden = true;
+            history.hidden = true;
+            return;
+        }
+        empty.hidden = true;
+        latestBox.hidden = false;
+        const latest = rows[0];
+        const meta = $("latestSubmissionMeta");
+        meta.replaceChildren(
+            submissionMetaCard("Status", latest.status, latest.status.toLowerCase() === "accepted" ? "accepted" : ""),
+            submissionMetaCard("Submitted", formatSubmissionDate(latest.submitted_at)),
+            submissionMetaCard("Solve time", latest.solve_duration_seconds == null ? "Not recorded" : formatDuration(latest.solve_duration_seconds)),
+            submissionMetaCard("Points", String(latest.points_awarded))
+        );
+        const latestCode = $("latestSubmissionCode");
+        latestCode.textContent = latest.source_code || "Submitted source code is unavailable.";
+        latestCode.hidden = true;
+        const latestCodeToggle = $("toggleLatestSubmissionCode");
+        if (latestCodeToggle) {
+            latestCodeToggle.textContent = "View code";
+            latestCodeToggle.setAttribute("aria-expanded", "false");
+        }
+        toggle.hidden = rows.length <= 1;
+        toggle.textContent = history.hidden ? `Show all attempts (${rows.length})` : "Hide attempts";
+
+        rows.forEach((row, index) => {
+            const details = document.createElement("details");
+            const summary = document.createElement("summary");
+            const status = document.createElement("strong");
+            status.textContent = `#${index + 1} · ${row.status}`;
+            if (row.status.toLowerCase() === "accepted") status.className = "accepted";
+            const submitted = document.createElement("span"); submitted.textContent = formatSubmissionDate(row.submitted_at);
+            const duration = document.createElement("span"); duration.textContent = row.solve_duration_seconds == null ? "Time —" : `Time ${formatDuration(row.solve_duration_seconds)}`;
+            const points = document.createElement("span"); points.textContent = `${row.points_awarded} pts`;
+            summary.append(status, submitted, duration, points);
+            const body = document.createElement("div"); body.className = "history-body";
+            const actions = document.createElement("div"); actions.className = "history-actions";
+            const load = document.createElement("button"); load.type = "button"; load.textContent = "Load this code"; load.addEventListener("click", () => loadSubmissionIntoEditor(row));
+            actions.append(load);
+            const code = document.createElement("pre"); code.className = "submitted-code"; code.textContent = row.source_code || "Submitted source code is unavailable.";
+            body.append(actions, code); details.append(summary, body); history.append(details);
+        });
+    }
+
+    async function loadSubmissionHistory() {
+        if (!user || !active || fullAssessmentEmbed) {
+            if ($("submissionPanel")) $("submissionPanel").hidden = true;
+            $('submissionsTab').disabled = true;
+            setPaneView('problem');
+            return;
+        }
+        const rows = await fetchMySubmissions();
+        renderSubmissionHistory(rows);
+    }
+
+    function setEmpty(title, text) {
+        const empty = $("codingEmpty");
+        empty.querySelector("h2").textContent = title;
+        empty.querySelector("p").textContent = text;
+    }
+
+    function showWorkspace(hasProblem) {
+        const empty = $("codingEmpty");
+        const workspace = $("codingActive");
+        empty.hidden = hasProblem;
+        workspace.hidden = !hasProblem;
+        empty.style.display = hasProblem ? "none" : "";
+        workspace.style.display = hasProblem ? "grid" : "none";
+    }
+
+    function starter(problem) {
+        const value = problem?.starter_code || {};
+        if (value[runtimeLanguage]) return value[runtimeLanguage];
+        if (runtimeLanguage === "java") return "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        // Read input and write the solution here.\n    }\n}\n";
+        if (runtimeLanguage === "sql") return "-- Write one read-only SELECT or WITH query.\nSELECT\n    -- required columns\n;";
+        return runtimeLanguage === "python"
+            ? "import sys\n\ndef solve(data: str) -> str:\n    # Write your solution here\n    return \"\"\n\nif __name__ == \"__main__\":\n    print(solve(sys.stdin.read()), end=\"\")\n"
+            : "#include <stdio.h>\n\nint main(void) {\n    // Write your solution here\n    return 0;\n}\n";
+    }
+
+    function arrayValue(value) {
+        if (Array.isArray(value)) return value;
+        if (typeof value !== "string") return [];
+        try {
+            const parsed = JSON.parse(value);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (_error) {
+            return [];
+        }
+    }
+
+    function withTimeout(request, milliseconds, message) {
+        let timer;
+        const timeout = new Promise((_resolve, reject) => {
+            timer = window.setTimeout(() => reject(new Error(message)), milliseconds);
+        });
+        return Promise.race([Promise.resolve(request), timeout]).finally(() => window.clearTimeout(timer));
+    }
+
+    function readableProblemError(error) {
+        const message = String(error?.message || "Unknown database error");
+        if (/timed out/i.test(message)) {
+            return "The database did not respond within 15 seconds. Check that the Supabase project is active, then reload this challenge.";
+        }
+        if (/failed to fetch|networkerror|load failed/i.test(message)) {
+            return "The browser cannot reach Supabase. Check the project URL, internet connection and Supabase project status.";
+        }
+        if (/column .* does not exist/i.test(message)) {
+            return "The Coding Arena database schema is older than the page. Run the latest placement-v2-schema.sql file.";
+        }
+        if (/permission|row-level security|401|403/i.test(message)) {
+            return "Supabase blocked the problem query. Confirm the published-problems read policy and anon access from the placement schema.";
+        }
+        return "Supabase returned: " + message;
+    }
+
+    function updateFallbackLines() {
+        if (editor) return;
+        const textarea = $("codeEditor");
+        const count = textarea.value.split("\n").length;
+        $("lineNumbers").textContent = Array.from({ length: count }, (_, index) => index + 1).join("\n");
+        $("lineNumbers").scrollTop = textarea.scrollTop;
+    }
+
+    function initializeEditor() {
+        const textarea = $("codeEditor");
+        if (window.CodeMirror) {
+            editor = window.CodeMirror.fromTextArea(textarea, {
+                mode: runtimeLanguage === "python" ? "python" : runtimeLanguage === "sql" ? "text/x-sql" : runtimeLanguage === "java" ? "text/x-java" : "text/x-csrc",
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: false
+            });
+            textarea.closest(".editor-shell").classList.add("has-codemirror");
+            editor.getWrapperElement().setAttribute("data-gramm", "false");
+            editor.getInputField().setAttribute("data-gramm", "false");
+            editor.setSize("100%", "100%");
+
+            if (typeof editor.addOverlay === "function") {
+                const builtins = /^(?:print|input|len|range|enumerate|zip|map|filter|sum|min|max|sorted|reversed|set|dict|list|tuple|str|int|float|bool|abs|round|open|super|isinstance|mean|median|pstdev|variance|exp|log|log1p|log2|sqrt|pow|tanh|ceil|floor|comb|printf|scanf|fgets|puts|putchar|getchar|strlen|strcmp|strcpy|strncpy|malloc|calloc|realloc|free|labs|tolower|toupper|isdigit|isalpha|qsort|count|avg|coalesce|substr|strftime|julianday|row_number|rank|dense_rank|lag|lead|first_value|ntile)\b/i;
+                editor.addOverlay({
+                    token(stream) {
+                        if (stream.match(builtins)) return "builtin";
+                        stream.next();
+                        while (!stream.eol()) {
+                            if (stream.match(builtins, false)) break;
+                            stream.next();
+                        }
+                        return null;
+                    }
+                });
+            }
+            editor.on("change", scheduleDraftSave);
+            return;
+        }
+
+        textarea.addEventListener("input", () => {
+            updateFallbackLines();
+            scheduleDraftSave();
+        });
+        textarea.addEventListener("scroll", () => {
+            $("lineNumbers").scrollTop = textarea.scrollTop;
+        });
+        textarea.addEventListener("keydown", (event) => {
+            if (event.key !== "Tab") return;
+            event.preventDefault();
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.setRangeText("    ", start, end, "end");
+            updateFallbackLines();
+        });
+    }
+
+    function editorValue() {
+        return editor ? editor.getValue() : $("codeEditor").value;
+    }
+
+    function setEditorValue(value) {
+        if (editor) {
+            editor.setValue(value);
+            window.setTimeout(() => editor.refresh(), 0);
+        } else {
+            $("codeEditor").value = value;
+            updateFallbackLines();
+        }
+    }
+
+    function draftKey() {
+        if (!active?.slug) return null;
+        return topic === "dsa"
+            ? `codebhavya-dsa-${runtimeLanguage}-draft:${user?.id || "guest"}:${active.slug}`
+            : `codebhavya-${topic}-draft:${user?.id || "guest"}:${active.slug}`;
+    }
+
+    function storedDraft() {
+        const key = draftKey();
+        if (!key) return null;
+        try {
+            return localStorage.getItem(key);
+        } catch (_error) {
+            return null;
+        }
+    }
+
+    function scheduleDraftSave() {
+        if (!active) return;
+        window.clearTimeout(draftTimer);
+        const status = $("draftStatus");
+        if (status) status.textContent = "Saving draft…";
+        draftTimer = window.setTimeout(() => {
+            const key = draftKey();
+            if (!key) return;
+            try {
+                localStorage.setItem(key, editorValue());
+                if (status) status.textContent = "Draft saved on this device";
+            } catch (_error) {
+                if (status) status.textContent = "Draft could not be saved";
+            }
+        }, 450);
+    }
+
+    function saveDraftNow() {
+        if (!active) return;
+        window.clearTimeout(draftTimer);
+        const key = draftKey();
+        if (!key) return;
+        try { localStorage.setItem(key, editorValue()); }
+        catch (_error) { /* The workspace still works without local drafts. */ }
+    }
+
+    function updateLanguageUI() {
+        const languageLabel = runtimeLanguage === "java" ? "Java" : runtimeLanguage === "python" ? "Python" : runtimeLanguage === "sql" ? "SQL" : "C";
+        $("editorFilename").textContent = runtimeLanguage === "java" ? "Main.java" : runtimeLanguage === "python" ? "solution.py" : runtimeLanguage === "sql" ? "solution.sql" : "solution.c";
+        $("codeEditor").setAttribute("aria-label", `${languageLabel} solution for ${topicLabel} practice`);
+        if (editor) {
+            editor.setOption("mode", runtimeLanguage === "python" ? "python" : runtimeLanguage === "sql" ? "text/x-sql" : "text/x-java");
+            window.setTimeout(() => editor.refresh(), 0);
+        }
+        if (topic === "dsa") {
+            try { localStorage.setItem("codebhavya-dsa-runtime-v1", runtimeLanguage); }
+            catch (_error) { /* Language selection remains usable for this page. */ }
+        }
+    }
+
+    function changeLanguage() {
+        if (topic !== "dsa") return;
+        saveDraftNow();
+        runtimeLanguage = $("codingLanguage").value === "python" ? "python" : "c";
+        updateLanguageUI();
+        if (!active) return;
+        const draft = storedDraft();
+        setEditorValue(draft === null ? starter(active) : draft);
+        $("draftStatus").textContent = draft === null ? `New ${runtimeLanguage === "python" ? "Python" : "C"} draft` : "Saved draft restored";
+        resetResultState();
+        setStatus("Ready");
+    }
+
+    function collapseStatement(collapsed) {
+        $("codingActive").classList.toggle("statement-collapsed", collapsed);
+        $("toggleStatement").textContent = collapsed ? "Show problem" : "Hide problem";
+        $("toggleStatement").setAttribute("aria-expanded", String(!collapsed));
+        if (editor) window.setTimeout(() => editor.refresh(), 0);
+    }
+
+    function resetResultState() {
+        lastSubmissionId = null;
+        $("revealCase").hidden = true;
+        $("revealCase").disabled = false;
+        $("assistanceNote").hidden = true;
+        $("assistanceNote").textContent = "";
+        $("testResults").replaceChildren();
+        $("testSummary").textContent = topic === "database" ? "Run your query to see results." : "Run your code to see results.";
+        setStatus("Ready");
+    }
+
+    function configureBackLinks(parameters) {
+        const query = new URLSearchParams({ topic });
+        if (parameters.get("mode")) query.set("mode", parameters.get("mode"));
+        if (parameters.get("group")) query.set("group", parameters.get("group"));
+        if (parameters.get("track")) query.set("track", parameters.get("track"));
+        if (parameters.get("company")) query.set("company", parameters.get("company"));
+        if (parameters.get("difficulty")) query.set("difficulty", parameters.get("difficulty"));
+        const destination = "coding.html?" + query.toString();
+        if ($("backToProblems")) $("backToProblems").href = destination;
+        if ($("toolbarBack")) $("toolbarBack").href = destination;
+    }
+
+    async function loadRequestedProblem() {
+        const parameters = new URLSearchParams(location.search);
+        configureBackLinks(parameters);
+        const slug = String(parameters.get("problem") || "").trim();
+        if (!slug || !/^[a-z0-9-]+$/i.test(slug)) {
+            showWorkspace(false);
+            setEmpty(`Choose a ${topic === "database" ? "SQL" : topicLabel} problem first`, "Return to the Problem Library and select the challenge you want to solve.");
+            return;
+        }
+        if (!client) {
+            showWorkspace(false);
+            setEmpty("Database connection unavailable", "Confirm the existing Supabase configuration, then reload this challenge.");
+            return;
+        }
+
+        showWorkspace(false);
+        setEmpty(`Loading your ${topicLabel} challenge…`, "Preparing the problem statement, editor and saved draft.");
+        try {
+            const result = await withTimeout(
+                client.from("coding_problems")
+                    .select("id,slug,title,topic,topic_group,subtopic,problem_type,skill_tags,difficulty,target_path,statement,input_format,output_format,constraints,examples,starter_code,points,time_limit_seconds,memory_limit_kb")
+                    .eq("is_published", true)
+                    .eq("topic", topic)
+                    .eq("slug", slug)
+                    .single(),
+                problemLoadTimeoutMs,
+                "Problem loading timed out"
+            );
+            if (result.error) throw result.error;
+            selectProblem(result.data);
+        } catch (error) {
+            const message = readableProblemError(error);
+            showWorkspace(false);
+            setEmpty("Problem could not load", message);
+            console.error("Unable to load requested coding problem", error);
+        }
+    }
+
+    function renderExamples(values) {
+        const box = $("problemExamples");
+        box.replaceChildren();
+        arrayValue(values).forEach((example, index) => {
+            const card = document.createElement("article");
+            card.className = "example-card";
+            const heading = document.createElement("strong");
+            heading.textContent = (topic === "database" ? "Dataset " : "Example ") + (index + 1);
+            const input = document.createElement("pre");
+            input.textContent = (topic === "database" ? "Available rows\n" : "Input\n") + (example.input || "");
+            const output = document.createElement("pre");
+            output.textContent = "Output\n" + (example.output || "");
+            card.append(heading, input, output);
+            if (example.explanation) {
+                const explanation = document.createElement("p");
+                explanation.textContent = example.explanation;
+                card.append(explanation);
+            }
+            box.append(card);
+        });
+    }
+
+    function selectProblem(problem) {
+        try {
+            active = problem;
+            showWorkspace(true);
+            collapseStatement(false);
+            $("problemDifficulty").textContent = problem.difficulty || "beginner";
+            $("problemTarget").textContent = targetLabels[problem.target_path] || problem.target_path || "General";
+            $("problemPoints").textContent = Number(problem.points || 0) + " points";
+            if ($("problemSubtopic")) $("problemSubtopic").textContent = problem.subtopic || `${topicLabel} programming`;
+            if ($("problemType")) $("problemType").textContent = String(problem.problem_type || "complete-program").replaceAll("-", " ");
+            $("problemTitle").textContent = problem.title || `${topic === "database" ? "SQL" : topicLabel} problem`;
+            $("problemText").textContent = problem.statement || "Problem statement unavailable.";
+            $("inputFormat").textContent = problem.input_format || "See the examples.";
+            $("outputFormat").textContent = problem.output_format || "See the examples.";
+            if ($("solveCrumb")) $("solveCrumb").textContent = problem.title || "Coding Workspace";
+            document.title = (problem.title || `${topicLabel} Coding Workspace`) + " | CodeBhavya";
+
+            const constraints = $("problemConstraints");
+            constraints.replaceChildren();
+            arrayValue(problem.constraints).forEach((value) => {
+                const item = document.createElement("li");
+                item.textContent = value;
+                constraints.append(item);
+            });
+
+            renderExamples(problem.examples);
+            const draft = storedDraft();
+            setEditorValue(draft === null ? starter(problem) : draft);
+            if ($("draftStatus")) $("draftStatus").textContent = draft === null ? "New draft" : "Saved draft restored";
+            resetResultState();
+            beginSolveTimer(false);
+            loadSubmissionHistory();
+        } catch (error) {
+            console.error("Unable to open coding problem", error);
+            active = null;
+            showWorkspace(false);
+            setEmpty("Problem could not open", "Refresh the page and load the problems again. If this continues, check the browser console for the reported field.");
+        }
+    }
+
+    function renderTests(result, mode) {
+        const box = $("testResults");
+        box.replaceChildren();
+        const tests = result.tests || [];
+        tests.forEach((test, index) => {
+            const row = document.createElement("article");
+            row.className = "test-row " + (test.passed ? "pass" : "fail");
+            const icon = document.createElement("b");
+            icon.textContent = test.passed ? "✓" : "!";
+            const title = document.createElement("strong");
+                title.textContent = (mode === "run" ? (topic === "database" ? "Dataset " : "Sample ") : "Test ") + (index + 1);
+            const status = document.createElement("span");
+            status.textContent = test.status || (test.passed ? "Passed" : "Failed");
+            row.append(icon, title, status);
+            if (mode === "run") {
+                const detail = document.createElement("pre");
+                detail.textContent = (topic === "database" ? "Dataset:\n" : "Input: ") + (test.input || "(empty)") + "\n\nExpected:\n" + (test.expected_output || "") + "\n\nYour output:\n" + (test.actual_output || "");
+                row.append(detail);
+            }
+            box.append(row);
+        });
+
+        if (result.compile_output || result.stderr) {
+            const row = document.createElement("article");
+            row.className = "test-row fail";
+            const output = document.createElement("pre");
+            output.textContent = result.compile_output || result.stderr;
+            row.append(document.createTextNode("Compiler / runtime output"), output);
+            box.prepend(row);
+        }
+
+        const pointText = result.points_awarded !== undefined ? " · " + result.points_awarded + " points" + (result.assisted ? " (assisted)" : "") : "";
+        $("testSummary").textContent = (result.passed_tests || 0) + " of " + (result.total_tests || 0) + " tests passed" + pointText;
+
+        if (mode === "submit") {
+            lastSubmissionId = result.submission_id || null;
+            $("revealCase").hidden = !(result.reveal_available && lastSubmissionId);
+            $("revealCase").disabled = false;
+        }
+    }
+
+    function renderRevealedCase(result) {
+        const test = result.test;
+        if (!test) return;
+        const row = document.createElement("article");
+        row.className = "test-row revealed";
+        const icon = document.createElement("b");
+        icon.textContent = "?";
+        const title = document.createElement("strong");
+        title.textContent = "Revealed failed hidden case";
+        const status = document.createElement("span");
+        status.textContent = test.status || "Wrong Answer";
+        const detail = document.createElement("pre");
+        detail.textContent = (topic === "database" ? "Dataset:\n" : "Input:\n") + (test.input || "(empty)") + "\n\nExpected output:\n" + (test.expected_output || "") + "\n\nYour output:\n" + (test.actual_output || "");
+        row.append(icon, title, status, detail);
+        $("testResults").prepend(row);
+
+        const assistedPoints = Math.ceil(Number(active?.points || 0) / 2);
+        const note = $("assistanceNote");
+        note.textContent = "Learning reveal used. This problem is now assisted: a future accepted solution can earn up to " + assistedPoints + " points (50%) so the leaderboard remains fair.";
+        note.hidden = false;
+        $("problemPoints").textContent = (active?.points || 0) + " points · assisted max " + assistedPoints;
+        $("revealCase").hidden = true;
+    }
+
+    async function readableFunctionError(error) {
+        const fallback = "The judge could not run this submission.";
+        if (error?.context) {
+            try {
+                const payload = await error.context.clone().json();
+                if (payload?.error) return String(payload.error);
+            } catch (_ignored) {
+                // The error response did not contain JSON.
+            }
+        }
+        const message = String(error?.message || fallback);
+        if (/failed to send a request/i.test(message)) return "Cannot reach the judge-submission Edge Function. Confirm that the latest function is deployed.";
+        if (/non-2xx/i.test(message)) return "The Edge Function responded with an error. Open Supabase → Edge Functions → judge-submission → Logs for the exact cause.";
+        return message;
+    }
+
+    async function invokeJudge(body) {
+        const sessionResult = await client.auth.getSession();
+        const accessToken = sessionResult.data?.session?.access_token;
+        if (!accessToken) throw new Error("Your sign-in session expired. Sign in again, then retry.");
+        const response = await client.functions.invoke("judge-submission", {
+            headers: { Authorization: "Bearer " + accessToken },
+            body
+        });
+        if (response.error) throw response.error;
+        return response.data;
+    }
+
+    function setJudgeBusy(isBusy) {
+        busy = isBusy;
+        $("runSamples").disabled = isBusy;
+        $("submitCode").disabled = isBusy;
+        $("revealCase").disabled = isBusy;
+    }
+
+    async function judge(mode) {
+        if (busy || !active || !client) return;
+        if (!user) {
+            setStatus(`Sign in from the Placement page before running or submitting ${topic === "database" ? "SQL" : "code"}.`, "error");
+            return;
+        }
+        const code = editorValue();
+        if (code.trim().length < (runtimeLanguage === "sql" ? 6 : 20)) {
+            setStatus(runtimeLanguage === "sql" ? "Write one read-only SELECT or WITH query before running." : `Write a complete ${runtimeLanguage === "java" ? "Java" : runtimeLanguage === "python" ? "Python" : "C"} program before running.`, "error");
+            return;
+        }
+
+        const submittedSolveSeconds = mode === "submit" ? currentSolveDurationSeconds() : null;
+        setJudgeBusy(true);
+        setStatus(mode === "run" ? "Running sample tests…" : "Running 10 protected tests…");
+        try {
+            const result = await invokeJudge({
+                problem_slug: active.slug,
+                language: runtimeLanguage,
+                source_code: code,
+                mode
+            });
+            renderTests(result, mode);
+            const accepted = Number(result.passed_tests) === Number(result.total_tests) && Number(result.total_tests) > 0;
+            setStatus(result.status || "Finished", accepted ? "success" : "error");
+            if (mode === "submit") {
+                if (result.submission_id) await saveSubmissionDuration(result.submission_id, submittedSolveSeconds);
+                if (accepted) completeSolveTimer(submittedSolveSeconds);
+                await loadMyScore();
+                await loadSubmissionHistory();
+            }
+        } catch (error) {
+            setStatus(await readableFunctionError(error), "error");
+        } finally {
+            setJudgeBusy(false);
+        }
+    }
+
+    async function revealFailedCase() {
+        if (busy || !active || !lastSubmissionId || !client) return;
+        const accepted = window.confirm("Reveal one failed hidden case from your last submission? This is learning assistance, so future accepted attempts for this problem will earn at most 50% of its points.");
+        if (!accepted) return;
+
+        setJudgeBusy(true);
+        setStatus("Finding a useful failed hidden case…");
+        try {
+            const result = await invokeJudge({
+                problem_slug: active.slug,
+                language: runtimeLanguage,
+                submission_id: lastSubmissionId,
+                mode: "reveal"
+            });
+            renderRevealedCase(result);
+            setStatus("Failed hidden case revealed", "neutral");
+            loadMyScore();
+        } catch (error) {
+            setStatus(await readableFunctionError(error), "error");
+        } finally {
+            setJudgeBusy(false);
+        }
+    }
+
+    async function calculateBestTopicScore() {
+        if (!client || !user) return 0;
+        const problems = await client.from("coding_problems")
+            .select("id")
+            .eq("topic", topic)
+            .eq("is_published", true)
+            .limit(1000);
+        if (problems.error) throw problems.error;
+        const problemIds = (problems.data || []).map((row) => row.id).filter(Boolean);
+        if (!problemIds.length) return 0;
+        const submissions = await client.from("coding_submissions")
+            .select("problem_id,status,points_awarded")
+            .eq("user_id", user.id)
+            .in("problem_id", problemIds)
+            .limit(5000);
+        if (submissions.error) throw submissions.error;
+        const bestByProblem = new Map();
+        (submissions.data || []).forEach((row) => {
+            const points = Number(row.points_awarded) || 0;
+            const accepted = String(row.status || "").toLowerCase() === "accepted" || points > 0;
+            if (!accepted) return;
+            bestByProblem.set(row.problem_id, Math.max(bestByProblem.get(row.problem_id) || 0, points));
+        });
+        return Array.from(bestByProblem.values()).reduce((sum, points) => sum + points, 0);
+    }
+
+    async function loadMyScore() {
+        if (!client || !user) {
+            $("myCodingScore").textContent = "0";
+            return;
+        }
+        try {
+            $("myCodingScore").textContent = String(await calculateBestTopicScore());
+        } catch (error) {
+            console.warn("Unable to calculate best-per-problem coding score; falling back to the existing summary RPC.", error);
+            const result = await client.rpc("get_my_coding_summary", { p_topic: topic });
+            if (!result.error) $("myCodingScore").textContent = String(Number(result.data?.points) || 0);
+        }
+    }
+
+    async function showLeaderboard() {
+        if (!client) return;
+        const result = await client.rpc("get_coding_leaderboard", { p_topic: topic });
+        const body = $("leaderboardRows");
+        body.replaceChildren();
+        (result.data || []).forEach((row) => {
+            const tableRow = document.createElement("tr");
+            [row.rank, row.student_alias, row.solved, row.points].forEach((value) => {
+                const cell = document.createElement("td");
+                cell.textContent = String(value);
+                tableRow.append(cell);
+            });
+            body.append(tableRow);
+        });
+        if (!body.children.length) {
+            const tableRow = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 4;
+            cell.textContent = "No accepted submissions yet.";
+            tableRow.append(cell);
+            body.append(tableRow);
+        }
+        $("leaderboardDialog").showModal();
+    }
+
+    async function initialize() {
+        $("arenaHeading").textContent = topic === "database" ? "SQL Query Arena" : topic === "ai-ml" ? "Applied AI & ML Lab" : `${topicLabel} Coding Arena`;
+        $("backToProblems").textContent = topic === "database" ? "SQL Problem Library" : topic === "ai-ml" ? "AI & ML Problem Library" : `${topicLabel} Problem Library`;
+        $("leaderboardEyebrow").textContent = `${topicLabel.toUpperCase()} PLACEMENT RANKING`;
+        if (topic === "dsa") {
+            try { runtimeLanguage = localStorage.getItem("codebhavya-dsa-runtime-v1") === "python" ? "python" : "c"; }
+            catch (_error) { runtimeLanguage = "c"; }
+            $("codingLanguage").replaceChildren(new Option("C (GCC)", "c"), new Option("Python 3", "python"));
+            $("codingLanguage").value = runtimeLanguage;
+        } else {
+            const label = topic === "java" ? "Java 17" : topic === "python" || topic === "ai-ml" ? "Python 3" : topic === "database" ? "SQL (SQLite)" : "C (GCC)";
+            const value = topic === "database" ? "sql" : topic === "ai-ml" ? "python" : topic;
+            $("codingLanguage").replaceChildren(new Option(label, value));
+        }
+        updateLanguageUI();
+        $("navMcq").href = `mcq-library.html?topic=${topic}`;
+        $("navQuiz").href = `quiz.html?topic=${topic}`;
+        $("navQuiz").textContent = `${topicLabel} Quiz`;
+        $("navCoding").href = `coding.html?topic=${topic}`;
+        if (topic === "database") $("navCoding").textContent = "SQL Arena";
+        if (topic === "ai-ml") $("navCoding").textContent = "AI/ML Lab";
+        $("navProgress").href = `progress.html?topic=${topic}`;
+        initializeEditor();
+        if (topic === "database") {
+            $("runSamples").textContent = "Run sample datasets";
+            $("submitCode").textContent = "Submit query";
+            $("resetCode").textContent = "Reset query";
+            $("testSummary").textContent = "Run your query to see results.";
+        }
+        if (client) {
+            const auth = await client.auth.getUser();
+            user = auth.data?.user || null;
+            client.auth.onAuthStateChange((_event, session) => {
+                user = session?.user || null;
+                loadMyScore();
+                if (active) {
+                    beginSolveTimer(false);
+                    loadSubmissionHistory();
+                }
+            });
+        }
+
+        $("runSamples").addEventListener("click", () => judge("run"));
+        $("submitCode").addEventListener("click", () => judge("submit"));
+        $("revealCase").addEventListener("click", revealFailedCase);
+        $("resetCode").addEventListener("click", () => {
+            if (active && window.confirm("Reset your code to the starter template? Your saved draft for this problem will be replaced.")) {
+                setEditorValue(starter(active));
+                scheduleDraftSave();
+            }
+        });
+        $("toggleStatement").addEventListener("click", () => {
+            collapseStatement(!$("codingActive").classList.contains("statement-collapsed"));
+        });
+        $('problemTab').addEventListener('click', () => setPaneView('problem'));
+        $('submissionsTab').addEventListener('click', () => setPaneView('submissions'));
+        $("openLeaderboard").addEventListener("click", showLeaderboard);
+        $("codingLanguage").addEventListener("change", changeLanguage);
+        $("restartSolveTimer")?.addEventListener("click", restartSolveTimer);
+        $("loadLatestSubmission")?.addEventListener("click", () => loadSubmissionIntoEditor(submissionRows[0]));
+        $("toggleLatestSubmissionCode")?.addEventListener("click", () => {
+            const code = $("latestSubmissionCode");
+            const button = $("toggleLatestSubmissionCode");
+            if (!code || !button) return;
+            code.hidden = !code.hidden;
+            button.textContent = code.hidden ? "View code" : "Hide code";
+            button.setAttribute("aria-expanded", code.hidden ? "false" : "true");
+        });
+        $("toggleSubmissionHistory")?.addEventListener("click", () => {
+            const history = $("submissionHistory");
+            history.hidden = !history.hidden;
+            $("toggleSubmissionHistory").textContent = history.hidden ? `Show all attempts (${submissionRows.length})` : "Hide attempts";
+        });
+
+        updateFallbackLines();
+        loadMyScore();
+        loadRequestedProblem();
+    }
+
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize);
+    else initialize();
+}());
