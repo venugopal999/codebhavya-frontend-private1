@@ -1,5 +1,5 @@
 {
-  "name": "codebhavya",
+  "name": "codebhavya-theme-test",
   "compatibility_date": "2026-09-01",
   "assets": {
     "directory": ".",
@@ -16,6 +16,6 @@
   },
   "main": "worker.js",
   "vars": {
-    "PAYMENTS_ENABLED": "true"
+    "PAYMENTS_ENABLED": "false"
   }
 }
