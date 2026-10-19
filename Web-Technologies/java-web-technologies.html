@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn the Java web ecosystem, Servlets, JSP, JDBC, application layers and compatibility with diagrams, a visualizer, catalog lab and MCQs.">
+
+    
+
+    <title>
+        Level 22 — Java Web Technologies | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/java-web-technologies.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt22-skip-link" href="#wt22Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt22Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 22</div><div class="level-badge">LEVEL 22 · JAVA WEB</div><h1>Java Web Technologies</h1><p class="wt-hero-description">Connect requests, application layers and server-rendered or JSON responses.</p><div class="wt-hero-meta"><span>☕ Java web</span><span>🧭 Application layers</span><span>📄 JSP + JDBC</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Java</strong> web applications connect Java code to <strong class="wt-content-key">HTTP</strong> requests through a supported server runtime. </li><li>This lesson maps the ecosystem before the next lesson develops <strong class="wt-content-key">servlet</strong> processing in more detail. </li><li>You will explain the jobs of a <strong class="wt-content-key">servlet</strong>, service, repository, <strong class="wt-content-key">JSP</strong> view and JDBC connection without treating them as interchangeable components.</li></ul><ul class="wt-content-points"><li>Our example is a public course catalog. </li><li>A controller validates filters, a service asks a repository for records, and a view returns <strong class="wt-content-key">HTML</strong> or <strong class="wt-content-key">JSON</strong>. </li><li>The <strong class="wt-content-key">browser</strong> lab simulates those boundaries locally; it does not run <strong class="wt-content-key">Java</strong>, compile JSP or connect to a database.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">☕</span><h3>Runtime</h3><p>Distinguish <strong class="wt-content-key">Java</strong> source, the JVM and a <strong class="wt-content-key">servlet</strong> container.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Layers</h3><p>Assign <strong class="wt-content-key">request</strong>, business, data and view responsibilities.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Views</h3><p>Explain <strong class="wt-content-key">JSP</strong> output and the role of an escaped model.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗃️</span><h3>Data</h3><p>Recognize <strong class="wt-content-key">JDBC</strong>, drivers and <strong class="wt-content-key">parameterized queries</strong>.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🖥️</span>Java in a Web Application</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Java</strong> source is compiled into bytecode that a Java runtime executes. </li><li>In a servlet-based web application, a container accepts a <strong class="wt-content-key">request</strong> and invokes the mapped component. </li><li>The <strong class="wt-content-key">browser</strong> receives the produced <strong class="wt-content-key">response</strong> rather than executing the servlet’s Java source.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Java</strong> and <strong class="wt-content-key">JavaScript</strong> are distinct languages. </li><li>A <strong class="wt-content-key">Java</strong> <strong class="wt-content-key">backend</strong> can return HTML that loads ordinary browser JavaScript. </li><li>It can also return <strong class="wt-content-key">JSON</strong> to a static <strong class="wt-content-key">frontend</strong>; using Java on the server does not force every page to be server-rendered.</li></ul><ul class="wt-content-points"><li>A working <strong class="wt-content-key">Java</strong> command is not the same as a complete web environment. </li><li>Compiling source requires a compiler and relevant dependencies. </li><li>Running a <strong class="wt-content-key">servlet</strong> requires a compatible container or an application framework that supplies that runtime.</li></ul><figure class="wt-diagram"><figcaption>Separate the environments</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Browser</strong><p><strong class="wt-content-key">HTML</strong>, <strong class="wt-content-key">CSS</strong> and browser JavaScript.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>HTTP</strong><p><strong class="wt-content-key">Request</strong> and <strong class="wt-content-key">response</strong> contract.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">☕</span><strong>Java runtime</strong><p>Executes compiled application code.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧰</span><strong>Container</strong><p>Maps requests and manages web components.</p></div></div></figure><ul class="wt-content-points"><li>Uploading a .<strong class="wt-content-key">java</strong> file to a static <strong class="wt-content-key">frontend</strong> does not compile or execute it. </li><li>This lesson publishes teaching <strong class="wt-content-key">HTML</strong> and <strong class="wt-content-key">JavaScript</strong>; it does not change the frontend hosting into a Java server.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>The Main Technologies and Their Roles</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">Servlet</strong> handles requests through a container-managed <strong class="wt-content-key">Java</strong> component. </li><li><strong class="wt-content-key">JSP</strong>, now specified as Jakarta Pages, provides a server-side page technology for constructing a view. </li><li><strong class="wt-content-key">JDBC</strong> is the <strong class="wt-content-key">Java</strong> database-access API used with an appropriate driver and data source.</li></ul><ul class="wt-content-points"><li>A service and repository are application design roles rather than mandatory classes supplied by one specification. </li><li>Keeping them separate helps a controller stay focused on <strong class="wt-content-key">request</strong> handling while business and data-access logic can be tested independently.</li></ul><p>A framework can organize these responsibilities differently, but the boundaries remain useful: incoming data is not already a business model, and a template is not the right place to decide whether a caller may change a protected record.</p><div class="wt9-table-wrap"><table class="wt9-table"><thead><tr><th>Component</th><th>Main responsibility</th><th>Catalog example</th></tr></thead><tbody><tr><td>Servlet/controller</td><td>Request and response decisions</td><td>Validate category, availability, limit and view</td></tr><tr><td>Service</td><td>Application rules and coordination</td><td>Filter accepted records before applying the limit</td></tr><tr><td>Repository/DAO</td><td>Data-access boundary</td><td>Load course records</td></tr><tr><td>JSP/view</td><td>Presentation</td><td>Render the accepted catalog as HTML</td></tr><tr><td>JDBC</td><td>Database operations through Java APIs</td><td>Bind values and read a result set</td></tr></tbody></table></div><ul class="wt-content-points"><li>The lab’s repository is a fixed local fixture. </li><li>It has no <strong class="wt-content-key">SQL</strong> connection. </li><li>The data panel and trace show the conceptual boundary so you can explain where a real <strong class="wt-content-key">JDBC</strong> implementation would fit.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Java EE, Jakarta EE and Namespace Compatibility</h2><ul class="wt-content-points"><li>Older <strong class="wt-content-key">Java</strong> EE <strong class="wt-content-key">servlet</strong> examples commonly import javax.servlet classes. </li><li>Modern Jakarta <strong class="wt-content-key">Servlet</strong> examples use jakarta.servlet. </li><li>The namespace choice must match the application’s dependencies and the target container; changing a package name in one source file does not automatically migrate an entire application.</li></ul><ul class="wt-content-points"><li>For example, Tomcat 9 uses the older <strong class="wt-content-key">servlet</strong> namespace, while Tomcat 10 and later use Jakarta APIs. </li><li>Tomcat 10.1 implements <strong class="wt-content-key">Servlet</strong> 6.0 and Pages 3.1; these are specific compatibility targets, not instructions to always select one <strong class="wt-content-key">server</strong> version.</li></ul><ul class="wt-content-points"><li>Do not mechanically rename every javax package. </li><li><strong class="wt-content-key">JDBC</strong> types such as javax.<strong class="wt-content-key">sql</strong>.DataSource remain Java platform APIs. </li><li>The <strong class="wt-content-key">servlet</strong> namespace migration does not turn that type into jakarta.<strong class="wt-content-key">sql</strong>.DataSource.</li></ul><div class="code-block"><pre><code>// Modern Jakarta Servlet imports:
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+// JDBC data-source API remains:
+import javax.sql.DataSource;</code></pre></div><ul class="wt-content-points"><li>Check the container’s supported specification level, required <strong class="wt-content-key">Java</strong> version and your project’s <strong class="wt-content-key">API</strong> dependencies together. </li><li>The lesson’s <strong class="wt-content-key">servlet</strong> and <strong class="wt-content-key">JSP</strong> fragments use Jakarta-style names; legacy javax.servlet projects need their own matched setup.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🧰</span>The Container and Component Lifecycle</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">servlet</strong> container maps <strong class="wt-content-key">request</strong> paths, provides request/response objects and manages servlet lifecycle calls. </li><li>A <strong class="wt-content-key">servlet</strong>’s init phase prepares it, service handles requests, and destroy is part of lifecycle cleanup. </li><li>The next lesson explores those callbacks and <strong class="wt-content-key">HTTP</strong> handlers in detail.</li></ul><ul class="wt-content-points"><li>The container can serve static resources alongside mapped components. </li><li>It can also translate and compile <strong class="wt-content-key">JSP</strong> pages for server-side execution. </li><li><strong class="wt-content-key">JSP</strong> source is not a special <strong class="wt-content-key">browser</strong> language that becomes dynamic merely by being downloaded.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">servlet</strong> instance may serve concurrent requests. </li><li>Do not put the current learner, selected filter or per-request output into a mutable instance field and assume each <strong class="wt-content-key">request</strong> has its own <strong class="wt-content-key">servlet</strong> object. </li><li>Keep request-specific work in appropriate local variables or <strong class="wt-content-key">request</strong> attributes.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚙️</span><h3>Initialize</h3><p>Prepare component-level dependencies deliberately.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Handle</h3><p>Process each <strong class="wt-content-key">request</strong> with its own input and outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Concurrency</h3><p>Protect shared state and avoid mixing callers’ data.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Cleanup</h3><p>Release owned resources according to their lifecycle.</p></article></div><ul class="wt-content-points"><li>A connection pool or shared service <strong class="wt-content-key">object</strong> needs a suitable lifecycle too. </li><li>A component being managed by a container does not make every <strong class="wt-content-key">object</strong> you store inside it automatically thread-safe.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>URL Mapping, Context Paths and HTTP Methods</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">servlet</strong> mapping associates an application-relative <strong class="wt-content-key">URL</strong> pattern with a component. </li><li>A deployed application can also have a context path. </li><li>A <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">request</strong> to /learning/catalog may reach a /catalog mapping inside the /learning application.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">servlet</strong> mapping is not simply a <strong class="wt-content-key">Java</strong> filename. </li><li>The lab models GET /catalog as its only public route, with 404 for an unknown path and 405 plus Allow: GET for an unsupported method. </li><li>Its routing is intentionally narrower than a complete container.</li></ul><ul class="wt-content-points"><li>Real HttpServlet behavior includes method handling beyond this toy route, including framework/container treatment of HEAD and OPTIONS. </li><li>Do not copy the simulator’s limited router as if it were a full <strong class="wt-content-key">servlet</strong> implementation.</li></ul><div class="code-block"><pre><code>import java.io.IOException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet(&quot;/hello&quot;)
+public class HelloServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws IOException {
+        res.setContentType(&quot;text/plain; charset=UTF-8&quot;);
+        res.getWriter().println(&quot;Java handles this request on the server.&quot;);
+    }
+}</code></pre></div><ul class="wt-content-points"><li>This small class requires a matching <strong class="wt-content-key">Servlet</strong> <strong class="wt-content-key">API</strong> dependency and container. </li><li>It is an illustrative component, not a standalone main program or a deployed endpoint in this website.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Parameters Are Input; Attributes Carry a Model</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Request</strong> parameters are incoming values associated with a query or supported form submission. </li><li><strong class="wt-content-key">Request</strong> attributes are objects that application components can attach while handling the request. </li><li>The two serve different purposes.</li></ul><ul class="wt-content-points"><li>The catalog controller accepts four scalar strings: category, available, limit and view. </li><li>Category is all, web or <strong class="wt-content-key">backend</strong>. </li><li>Available is exactly true or false. </li><li>Limit is exactly 1, 2 or 3. </li><li>View is <strong class="wt-content-key">jsp</strong> or <strong class="wt-content-key">json</strong>. </li><li>Only after acceptance does the controller convert the boolean and limit.</li></ul><ul class="wt-content-points"><li>A repeated query parameter can produce multiple values. </li><li>The lab includes an array-valued category variant to represent that shape; it rejects the <strong class="wt-content-key">request</strong> rather than silently choosing one. </li><li>A real <strong class="wt-content-key">servlet</strong> should deliberately inspect getParameterValues when uniqueness matters.</li></ul><div class="code-block"><pre><code>// Illustrative controller fragment:
+String[] values = request.getParameterValues(&quot;category&quot;);
+if (values == null || values.length != 1) {
+    response.sendError(400, &quot;One category value is required&quot;);
+    return;
+}
+// Validate the value, call the service, then attach an accepted model.
+request.setAttribute(&quot;catalog&quot;, acceptedCourses);</code></pre></div><ul class="wt-content-points"><li>The fragment assumes <strong class="wt-content-key">request</strong>, <strong class="wt-content-key">response</strong> and an acceptedCourses model supplied by the surrounding handler. </li><li><strong class="wt-content-key">Request</strong> attributes survive an internal forward of that request; they are not durable <strong class="wt-content-key">browser</strong> storage or an automatic login identity.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Controller, Service and Repository Boundaries</h2><ul class="wt-content-points"><li>A controller decides whether input is acceptable and selects the representation. </li><li>A service coordinates application behavior. </li><li>A repository or DAO isolates the data-access implementation. </li><li>This separation lets a service use a fake repository in tests and a database-backed implementation in a <strong class="wt-content-key">deployment</strong>.</li></ul><ul class="wt-content-points"><li>The lab validates before calling its repository. </li><li>The repository returns at most ten bounded records. </li><li>The service validates that record model, filters by category and availability, then applies the accepted limit in fixture order. </li><li>Filtering after the limit could accidentally hide a matching course.</li></ul><ul class="wt-content-points"><li>No <strong class="wt-content-key">request</strong> changes course records. </li><li>The visible repository call count is just a local teaching counter. </li><li>Empty results are accepted data, while an unavailable repository and an unacceptable returned record are different failures.</li></ul><figure class="wt-diagram"><figcaption>Catalog responsibilities</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Controller</strong><p>Validate input and choose a representation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Service</strong><p>Coordinate filtering and accepted model rules.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Repository</strong><p>Return data or a deliberate failure.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>View</strong><p>Render only the accepted model.</p></div></div></figure><ul class="wt-content-points"><li>A larger application may enforce filtering efficiently in its repository or <strong class="wt-content-key">database</strong>. </li><li>The exercise keeps three fixtures in memory so the order of decisions remains visible; it is not a <strong class="wt-content-key">performance</strong> design for an unbounded catalog.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">📄</span>JSP as a Server-Side View</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">JSP</strong> page is processed on the <strong class="wt-content-key">server</strong>. </li><li>In a controller/view flow, the controller attaches a model and forwards to a view that focuses on presentation. </li><li>Keep <strong class="wt-content-key">authorization</strong>, <strong class="wt-content-key">SQL</strong> operations and business mutations out of the page template.</li></ul><ul class="wt-content-points"><li>Expression Language such as ${course.title} reads model properties. </li><li>For conventional JavaBean-style objects, a title property is exposed through a getter such as getTitle. </li><li>Do not assume that displaying an expression automatically provides the output encoding your context needs.</li></ul><ul class="wt-content-points"><li>The following modern Jakarta Tags fragment uses c:out for <strong class="wt-content-key">HTML</strong> text and c:forEach for a catalog. </li><li>The appropriate tag-library implementation must be available in the application; a <strong class="wt-content-key">servlet</strong> container alone is not a guarantee that every <strong class="wt-content-key">JSP</strong> tag library is installed.</li></ul><div class="code-block"><pre><code>&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
+&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;jakarta.tags.core&quot; %&gt;
+&lt;h2&gt;Course catalog&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;c:forEach var=&quot;course&quot; items=&quot;${catalog}&quot;&gt;
+    &lt;li&gt;
+      &lt;c:out value=&quot;${course.title}&quot; /&gt;
+      — &lt;c:out value=&quot;${course.available}&quot; /&gt; places
+    &lt;/li&gt;
+  &lt;/c:forEach&gt;
+&lt;/ul&gt;</code></pre></div><ul class="wt-content-points"><li>This template is a teaching fragment for an accepted catalog model. </li><li>The <strong class="wt-content-key">browser</strong> lab generates a simplified JSP-style <strong class="wt-content-key">HTML</strong> result using JavaScript, and it never compiles or evaluates this JSP source.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">↪️</span>Forwarding and Redirecting Are Different Flows</h2><ul class="wt-content-points"><li>An internal forward passes the same <strong class="wt-content-key">request</strong> to another <strong class="wt-content-key">server</strong> resource before the response is committed. </li><li>A controller can attach <strong class="wt-content-key">request</strong> attributes and forward to a <strong class="wt-content-key">JSP</strong> under WEB-INF. </li><li>That view can use the model without asking the <strong class="wt-content-key">browser</strong> to issue a second <strong class="wt-content-key">request</strong>.</li></ul><ul class="wt-content-points"><li>A redirect returns a <strong class="wt-content-key">response</strong> instructing the client to <strong class="wt-content-key">request</strong> another URL. </li><li>That later <strong class="wt-content-key">request</strong> does not automatically carry the first request’s attributes. </li><li>Decide how needed state is preserved instead of assuming a forward and redirect are interchangeable.</li></ul><ul class="wt-content-points"><li>Keeping a <strong class="wt-content-key">JSP</strong> under WEB-INF helps make the controller the intended entry point because those resources are not directly served as ordinary client requests. </li><li>That arrangement does not replace <strong class="wt-content-key">authorization</strong> checks at protected handlers.</li></ul><div class="code-block"><pre><code>// Illustrative accepted-model branch:
+request.setAttribute(&quot;catalog&quot;, acceptedCourses);
+request.getRequestDispatcher(&quot;/WEB-INF/views/catalog.jsp&quot;)
+       .forward(request, response);
+// Do this before committing response body output.</code></pre></div><ul class="wt-content-points"><li>The lab’s <strong class="wt-content-key">JSP</strong> branch records a simulated internal forward; it does not navigate the <strong class="wt-content-key">browser</strong> or call RequestDispatcher. </li><li>Its <strong class="wt-content-key">JSON</strong> branch instead serializes the accepted model directly. </li><li>Both are deliberate <strong class="wt-content-key">response</strong> choices.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🗃️</span>JDBC, Drivers and Prepared Statements</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JDBC</strong> supplies <strong class="wt-content-key">Java</strong> APIs for connecting to a database, executing statements and reading results. </li><li>A suitable driver and configured connection or DataSource are required. </li><li>A <strong class="wt-content-key">JDBC</strong> <strong class="wt-content-key">API</strong> import alone does not create a database or make a connection succeed.</li></ul><ul class="wt-content-points"><li>Use bound values in prepared statements instead of concatenating untrusted input into <strong class="wt-content-key">SQL</strong>. </li><li>Parameter binding keeps a value separate from the statement’s structure; dynamic table names or arbitrary <strong class="wt-content-key">SQL</strong> fragments need different deliberate controls.</li></ul><ul class="wt-content-points"><li>Connections, statements and result sets have lifecycles. </li><li>Try-with-resources helps close owned <strong class="wt-content-key">JDBC</strong> resources. </li><li>Closing a pooled connection normally returns it to its pool; pool setup and credentials belong in protected <strong class="wt-content-key">backend</strong> configuration.</li></ul><div class="code-block"><pre><code>// Illustrative repository fragment; dataSource is already configured.
+String sql = &quot;SELECT id, title, available FROM courses &quot;
+           + &quot;WHERE category = ? ORDER BY id&quot;;
+try (java.sql.Connection con = dataSource.getConnection();
+     java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+    ps.setString(1, acceptedCategory);
+    try (java.sql.ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            // Map checked columns into CourseView objects.
+        }
+    }
+}</code></pre></div><ul class="wt-content-points"><li>The lab does not execute this query or load a <strong class="wt-content-key">JDBC</strong> driver. </li><li>Its repository fixtures let you test the service boundary without pretending that <strong class="wt-content-key">database</strong> availability, transactions or resource cleanup have been verified.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">👤</span>Scopes, Sessions and Shared State</h2><ul class="wt-content-points"><li>Choose the lifetime of an <strong class="wt-content-key">object</strong> deliberately. </li><li><strong class="wt-content-key">Request</strong> <strong class="wt-content-key">scope</strong> suits one accepted catalog model. </li><li><strong class="wt-content-key">Session</strong> <strong class="wt-content-key">scope</strong> can hold application state associated with a user’s session. </li><li>Application <strong class="wt-content-key">scope</strong> can hold shared configuration or resources, with suitable safety and lifecycle rules.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">session</strong> <strong class="wt-content-key">object</strong> does not prove permission merely because it exists. </li><li>Establish a trustworthy identity and apply <strong class="wt-content-key">authorization</strong> before returning protected data or changing records. </li><li>The public catalog demonstration has no login or <strong class="wt-content-key">session</strong> system.</li></ul><ul class="wt-content-points"><li>Do not copy one <strong class="wt-content-key">request</strong>’s selected filter into a global field and let a later request accidentally reuse it. </li><li>Shared collections and <strong class="wt-content-key">session</strong> attributes can be accessed concurrently and need an appropriate strategy.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Request</h3><p>One <strong class="wt-content-key">request</strong>’s validated filters and view model.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Session</h3><p>State deliberately associated with a recognized <strong class="wt-content-key">session</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌐</span><h3>Application</h3><p>Shared dependencies with appropriate lifecycle and safety.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Thread safety</h3><p>A <strong class="wt-content-key">scope</strong> name does not make mutable objects safe automatically.</p></article></div><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> simulation is synchronous and local. </li><li>Its tests can check that one run does not reuse an earlier model; they do not prove real <strong class="wt-content-key">servlet</strong> concurrency or distributed <strong class="wt-content-key">session</strong> behavior.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">⚠️</span>Errors, Empty Results and Representations</h2><ul class="wt-content-points"><li>An empty catalog can be a successful 200 <strong class="wt-content-key">response</strong> with no matching records. </li><li>Invalid query data returns 400 in this exercise. </li><li>An unknown path and unsupported method have their own route outcomes. </li><li>These decisions should not be collapsed into a generic <strong class="wt-content-key">database</strong> error.</li></ul><ul class="wt-content-points"><li>The unavailable-repository fixture returns a simulated 503 without disclosing connection details. </li><li>The malformed-record fixture returns 500 because the repository output fails the service’s accepted model <strong class="wt-content-key">contract</strong>. </li><li>Neither outcome produces an accepted catalog view.</li></ul><ul class="wt-content-points"><li>A JSP-style <strong class="wt-content-key">response</strong> uses text/<strong class="wt-content-key">html</strong>; a JSON response uses application/json. </li><li>The caller should know which representation to parse. </li><li>The Level 18 loader already illustrated why a received <strong class="wt-content-key">response</strong>, successful status and acceptable data are separate stages.</li></ul><figure class="wt-diagram"><figcaption>Respond deliberately</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Accepted records</strong><p>Render <strong class="wt-content-key">HTML</strong> or serialize <strong class="wt-content-key">JSON</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📭</span><strong>Empty records</strong><p>Return a completed zero-result outcome.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Invalid request</strong><p>Reject before repository access.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⚠️</span><strong>Repository failure</strong><p>Return a stable error without partial <strong class="wt-content-key">rendering</strong>.</p></div></div></figure><ul class="wt-content-points"><li>A deployed <strong class="wt-content-key">server</strong> can log private diagnostics while sending a stable public message. </li><li>The lab trace is visible teaching output and is not a recommendation to expose <strong class="wt-content-key">SQL</strong> details, credentials or production stack traces.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Build and Deploy a Matched Application</h2><ul class="wt-content-points"><li>A project needs a matched <strong class="wt-content-key">Java</strong> toolchain, web <strong class="wt-content-key">API</strong> dependencies and runtime. </li><li>A WAR is one packaging option for deploying a web application to a container; some frameworks package an embedded <strong class="wt-content-key">server</strong> differently. </li><li>Packaging conventions are not interchangeable with static file uploads.</li></ul><ul class="wt-content-points"><li>A conventional layout can keep <strong class="wt-content-key">Java</strong> source under a source tree, static web assets under a web-resource tree and <strong class="wt-content-key">JSP</strong> views under WEB-INF. </li><li>The exact build configuration depends on the chosen tools. </li><li>Mark container-provided APIs appropriately so incompatible copies are not bundled accidentally.</li></ul><ul class="wt-content-points"><li>Test the mapping, context path, <strong class="wt-content-key">response</strong> encoding, <strong class="wt-content-key">JSP</strong>/tag-library availability and data-source configuration in the deployed environment. </li><li>A successful compile does not establish that the runtime, driver or <strong class="wt-content-key">database</strong> has been configured correctly.</li></ul><div class="code-block"><pre><code>Illustrative project roles:
+src/main/java/.../CatalogServlet.java      controller
+src/main/java/.../CatalogService.java      service
+src/main/java/.../CourseRepository.java    data boundary
+src/main/webapp/WEB-INF/views/catalog.jsp  view
+Build configuration                       matched APIs/runtime</code></pre></div><ul class="wt-content-points"><li>This lesson supplies explanatory fragments rather than a complete WAR project. </li><li>No <strong class="wt-content-key">Java</strong> web <strong class="wt-content-key">server</strong> or database is deployed by the lesson patch. </li><li>The next lesson builds understanding of <strong class="wt-content-key">Java</strong> Servlets before later <strong class="wt-content-key">JSP</strong> and database work.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Test Boundaries Before Integrating Everything</h2><ul class="wt-content-points"><li>A service can be tested with a fake repository to check valid records, empty data and failure behavior. </li><li>A controller test can verify bad parameters are rejected before service access. </li><li>A view test can check literal text and representation output. </li><li>Real integration tests still need the container and data source.</li></ul><ul class="wt-content-points"><li>For the catalog, test that category and availability filtering happen before limiting. </li><li>Check invalid numeric spellings, duplicate-shaped parameters, missing fields and unknown view values. </li><li>A repeated <strong class="wt-content-key">request</strong> should not inherit an earlier accepted model or stale <strong class="wt-content-key">HTML</strong> after a failure.</li></ul><ul class="wt-content-points"><li>Keep the <strong class="wt-content-key">Java</strong> build and <strong class="wt-content-key">deployment</strong> checks separate from the browser lab’s automated checks. </li><li>The simulation explains responsibilities and verifies its own <strong class="wt-content-key">JavaScript</strong> logic, but it does not establish <strong class="wt-content-key">Servlet</strong>, JSP, JDBC or JVM behavior.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Unit boundary</h3><p>Use controlled inputs and repository fixtures.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Integration</h3><p>Verify actual <strong class="wt-content-key">servlet</strong> mappings and <strong class="wt-content-key">JSP</strong> behavior.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗃️</span><h3>Data source</h3><p>Exercise driver, connection and real query outcomes.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪟</span><h3>Browser</h3><p>Inspect status, representation, <strong class="wt-content-key">keyboard</strong> use and layout.</p></article></div><ul class="wt-content-points"><li>The visualizer follows one accepted catalog <strong class="wt-content-key">request</strong>. </li><li>The lab lets you change the query, repository outcome and <strong class="wt-content-key">response</strong> representation to locate the first failed boundary. </li><li>Level 23 will continue with <strong class="wt-content-key">Java</strong> Servlets.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — A Java Web Application Request</h2><p>Follow a fixed catalog request through mapping, controller validation, service coordination, repository access and view selection. The player uses the same approved five-stage presentation. It explains the architecture without executing Java, JSP or JDBC.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="javaweb">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>JAVA WEB APPLICATION TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🧰</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Map a catalog request</h3><p data-trace-description>A compatible container selects the application and servlet mapping.</p></div><pre class="trace-code"><code data-trace-code>GET /catalog?category=backend&amp;available=true&amp;limit=3&amp;view=jsp</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Map" aria-pressed="true"><span>01</span><strong>Map</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Validate" aria-pressed="false"><span>02</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Service" aria-pressed="false"><span>03</span><strong>Service</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Repository" aria-pressed="false"><span>04</span><strong>Repository</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: View" aria-pressed="false"><span>05</span><strong>View</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>The browser lab models one public route; a real container manages the actual request and component lifecycle.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Catalog Layers Demonstration</h2><ul class="wt-content-points"><li>This is a <strong class="wt-content-key">JavaScript</strong> model of application layers, not a <strong class="wt-content-key">servlet</strong> container or JVM. </li><li>It sends no requests, executes no <strong class="wt-content-key">SQL</strong> and stores no course changes. </li><li>The repository call count is a local teaching counter that Reset clears.</li></ul><ul class="wt-content-points"><li>The three normal records are <strong class="wt-content-key">HTML</strong> &amp; <strong class="wt-content-key">CSS</strong> (web, 12 places), Java Servlets (backend, 8) and JSP &lt;Views&gt; (backend, 0). </li><li>The service filters by category and availability before applying a limit. </li><li>Its model validates record shape, unique IDs, bounded titles and non-negative integer availability.</li></ul><ul class="wt-content-points"><li>Choose a JSP-style <strong class="wt-content-key">HTML</strong> <strong class="wt-content-key">response</strong> or JSON. </li><li>Inspect the decoded query, trace, accepted model and <strong class="wt-content-key">response</strong> source. </li><li>Empty repository data is a successful empty result; offline data returns simulated 503, and malformed data returns 500. </li><li>Bad query parameters fail before repository access.</li></ul><div class="wt9-demo wt22-lab"><label for="wt22Method">Simulated method</label><select id="wt22Method"><option value="GET">GET · catalog read</option><option value="POST">POST · unsupported in this toy route</option><option value="DELETE">DELETE · unsupported in this toy route</option></select><label for="wt22Path">Simulated application-relative path</label><select id="wt22Path"><option value="/catalog">/catalog · mapped controller</option><option value="/missing">/missing · unknown route</option></select><label for="wt22Category">Category parameter</label><select id="wt22Category"><option value="all">all</option><option value="web">web</option><option value="backend">backend</option></select><label for="wt22Available">Availability parameter</label><select id="wt22Available"><option value="false">false · include zero-place records</option><option value="true">true · positive places only</option></select><label for="wt22Limit">Limit parameter · exactly 1, 2 or 3</label><input type="text" id="wt22Limit" value="3" maxlength="8" inputmode="numeric"><label for="wt22View">Response representation parameter</label><select id="wt22View"><option value="jsp">jsp · simulated internal forward and HTML view</option><option value="json">json · serialize accepted model</option></select><label for="wt22Variant">Decoded query shape</label><select id="wt22Variant"><option value="normal">Normal · four scalar strings</option><option value="missing">Missing limit</option><option value="array">Array-valued category · repeated-value shape</option><option value="extra">Extra query field</option></select><label for="wt22Repository">Mock repository outcome</label><select id="wt22Repository"><option value="normal">Three valid records</option><option value="empty">Empty data · accepted result</option><option value="offline">Unavailable repository · simulated 503</option><option value="invalid">Malformed record · simulated 500</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt22Process">Process catalog demonstration</button><button type="button" class="secondary-button" id="wt22Reset">Reset demonstration</button></div><p id="wt22Status" role="status">Idle. JavaScript model; Java, JSP and JDBC are not running here.</p><p id="wt22Calls">Mock repository calls: 0</p><h3>Simulated decoded request</h3><pre class="wt22-result"><code id="wt22Input">No request processed.</code></pre><h3>Application stage trace</h3><pre class="wt22-result"><code id="wt22Trace">No trace yet.</code></pre><h3>Accepted model</h3><pre class="wt22-result"><code id="wt22Model">No accepted model.</code></pre><h3>Response metadata</h3><pre class="wt22-result"><code id="wt22Response">No response yet.</code></pre><h3>Response body source · displayed literally</h3><pre class="wt22-result"><code id="wt22Source">No response body yet.</code></pre><h3>Safe browser preview</h3><div id="wt22Preview" class="wt22-preview"><p>No preview yet.</p></div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Locate the Layer</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Compatibility</h3><p>Match namespaces, <strong class="wt-content-key">API</strong> dependencies and runtime specification levels.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Controller</h3><p>Check mapping, scalar query values and normalization before data access.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗃️</span><h3>Repository</h3><p>Distinguish unavailable data access from a malformed returned model.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>View</h3><p>Check model names, getters, tag libraries and output encoding.</p></article></div><ul class="wt-content-points"><li>If a modern <strong class="wt-content-key">servlet</strong> import is unresolved, check the <strong class="wt-content-key">API</strong> dependency and target container rather than replacing every javax import blindly. </li><li>If a view receives no catalog, check which <strong class="wt-content-key">request</strong> attribute the controller sets and whether the request was forwarded or redirected.</li></ul><ul class="wt-content-points"><li>If a filter produces no matching course unexpectedly, check that limiting happens after filtering. </li><li>If the view still shows an older catalog after a failure, clear the earlier model and <strong class="wt-content-key">response</strong> rather than presenting stale data as a new success.</li></ul><ul class="wt-content-points"><li>A mock repository test does not verify a driver, connection pool or real query. </li><li>A <strong class="wt-content-key">JavaScript</strong> view preview does not verify <strong class="wt-content-key">JSP</strong> compilation. </li><li>Keep those integration checks explicit when building the real application.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does uploading a .java file to a static frontend execute it?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does uploading a .java file to a static frontend execute it?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Java web components need compilation, dependencies and a compatible runtime or container.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is a servlet’s role compared with a JSP view?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is a servlet’s role compared with a JSP view?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The servlet/controller handles request decisions and can attach a model; the JSP focuses on server-side presentation.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why should javax.sql.DataSource not be renamed mechanically?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why should javax.sql.DataSource not be renamed mechanically?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It remains a Java platform JDBC API. The Servlet namespace migration does not rename every javax package.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do request parameters differ from attributes?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do request parameters differ from attributes?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Parameters are incoming values. Attributes carry application objects within the request processing flow.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between forward and redirect?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between forward and redirect?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A forward dispatches the same request internally before commitment. A redirect asks the client to make another request, which does not automatically carry the original attributes.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why filter records before applying the catalog limit?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why filter records before applying the catalog limit?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Limiting first can discard records that would match the requested filters, producing the wrong result.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does Expression Language automatically solve output encoding?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does Expression Language automatically solve output encoding?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Use the appropriate output encoding for the destination; the example uses c:out for HTML text.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a mock repository prove JDBC integration works?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a mock repository prove JDBC integration works?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Real driver, data-source, query, resource and deployment behavior need separate integration tests.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Match the Java Web Responsibility</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The container invokes server-side Java code and produces a response."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which environment executes a servlet?</h3><div class="wt8-options"><button type="button" class="wt8-option">The browser DOM</button><button type="button" class="wt8-option">A compatible server-side servlet runtime/container</button><button type="button" class="wt8-option">CSS</button><button type="button" class="wt8-option">The sitemap parser</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The controller and service prepare a model; the JSP focuses on presentation."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What is JSP primarily used for in the illustrated layered design?</h3><div class="wt8-options"><button type="button" class="wt8-option">Choosing a database password</button><button type="button" class="wt8-option">Trusting a client role</button><button type="button" class="wt8-option">Rendering the accepted model</button><button type="button" class="wt8-option">Running browser JavaScript directly</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The example uses modern Jakarta Servlet names; the container/API version must match."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which modern Servlet package is used in the snippets?</h3><div class="wt8-options"><button type="button" class="wt8-option">jakarta.servlet</button><button type="button" class="wt8-option">java.browser</button><button type="button" class="wt8-option">jakarta.sql</button><button type="button" class="wt8-option">javax.javascript</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The Servlet migration does not rename the Java platform DataSource API."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which package remains appropriate for the JDBC DataSource type?</h3><div class="wt8-options"><button type="button" class="wt8-option">jakarta.servlet.sql</button><button type="button" class="wt8-option">javascript.sql</button><button type="button" class="wt8-option">jakarta.sql always</button><button type="button" class="wt8-option">javax.sql</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The controller attaches application objects for the request/view flow."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What is a request attribute used for here?</h3><div class="wt8-options"><button type="button" class="wt8-option">A trusted browser password</button><button type="button" class="wt8-option">The accepted catalog model</button><button type="button" class="wt8-option">A permanent database table</button><button type="button" class="wt8-option">A static file extension</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A redirect creates a new client request, unlike an internal forward."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What happens to attributes automatically after a redirect?</h3><div class="wt8-options"><button type="button" class="wt8-option">They always become session data</button><button type="button" class="wt8-option">They become SQL</button><button type="button" class="wt8-option">They are not automatically carried to the new request</button><button type="button" class="wt8-option">They become cookies</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The controller rejects shape/type/value failures before repository access."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. When does invalid query data reach the repository in this lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">It does not; validation rejects first</button><button type="button" class="wt8-option">Before routing</button><button type="button" class="wt8-option">After every reset</button><button type="button" class="wt8-option">Only for JSON views</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Applying the limit first can hide a matching later record."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which order produces the requested catalog correctly?</h3><div class="wt8-options"><button type="button" class="wt8-option">Limit, then filter always</button><button type="button" class="wt8-option">Render, then validate</button><button type="button" class="wt8-option">Serialize, then query</button><button type="button" class="wt8-option">Filter, then apply the accepted limit</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Zero records is valid data and should have a completed empty display."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. How is a normal empty repository result handled?</h3><div class="wt8-options"><button type="button" class="wt8-option">As an endless loading state</button><button type="button" class="wt8-option">As an accepted empty 200 outcome</button><button type="button" class="wt8-option">As a successful database write</button><button type="button" class="wt8-option">As a forced login</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Unavailable data access is distinct from malformed returned records."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does the unavailable repository fixture return?</h3><div class="wt8-options"><button type="button" class="wt8-option">201 with new courses</button><button type="button" class="wt8-option">405 only</button><button type="button" class="wt8-option">Simulated 503 with no accepted model</button><button type="button" class="wt8-option">The database password</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Bind values through JDBC rather than concatenating them into the statement."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Which JDBC pattern separates values from SQL structure?</h3><div class="wt8-options"><button type="button" class="wt8-option">PreparedStatement with bound values</button><button type="button" class="wt8-option">String concatenation of every parameter</button><button type="button" class="wt8-option">A JSP scriptlet containing a password</button><button type="button" class="wt8-option">A browser-side role field</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The local simulation proves its JavaScript logic, not Java web runtime behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Do browser-model tests verify JSP compilation and JDBC connections?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes, automatically</button><button type="button" class="wt8-option">Only when styled</button><button type="button" class="wt8-option">Only with JSON</button><button type="button" class="wt8-option">No; real integration needs separate checks</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt22QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Trace Specific Layer Outcomes</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Initial catalog</h3><p>GET /catalog, all/false/3, <strong class="wt-content-key">JSP</strong>, normal repository. Expected: 200 and all three records.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Filter before limit</h3><p><strong class="wt-content-key">Backend</strong>/true/1. Expected: only <strong class="wt-content-key">Java</strong> Servlets with 8 places, despite the first fixture being a web course.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Representation</h3><p>Switch the accepted <strong class="wt-content-key">request</strong> to <strong class="wt-content-key">JSON</strong>. Expected: application/json and the same selected records; earlier HTML preview cleared.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Empty data</h3><p>Choose empty repository. Expected: 200, zero accepted courses and a clear empty outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Invalid query</h3><p>Try limit "03", "3.0", "0", missing limit, <strong class="wt-content-key">array</strong> category or extra field. Expected: 400 and no repository call.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Route/method</h3><p>Try /missing and POST /catalog. Expected: 404 and 405 with Allow: GET; no repository access.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Repository failure</h3><p>Try offline and invalid-record fixtures. Expected: 503 and 500 respectively; no accepted model or stale cards.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Literal title</h3><p>Use <strong class="wt-content-key">backend</strong>/false/3 with <strong class="wt-content-key">JSP</strong>. Expected: JSP &lt;Views&gt; shown literally, encoded body source and no injected view element.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">☕</span><strong>Java runtime:</strong> Server Java and browser JavaScript are distinct.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧰</span><strong>Container:</strong> Mappings, web objects and component lifecycle.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Compatibility:</strong> Match namespaces and specification levels.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Controller:</strong> Validate requests and choose responses.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Service:</strong> Coordinate application rules.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Repository:</strong> Isolate data access and failure handling.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>JSP:</strong> Render an accepted model on the server.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">↪️</span><strong>Dispatch:</strong> Forward and redirect have different request lifetimes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>JDBC:</strong> Bind values and manage resource lifecycles.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Verification:</strong> Separate mock logic from deployed integration.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Servlet container"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Servlet container</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Servlet container</h4><p>A runtime that manages servlet components and request dispatch.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Servlet"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Servlet</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Servlet</h4><p>A container-managed Java web component that handles requests.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JSP / Jakarta Pages"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JSP / Jakarta Pages</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JSP / Jakarta Pages</h4><p>A server-side page technology used to construct views.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JDBC"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JDBC</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JDBC</h4><p>Java APIs for database access with appropriate drivers and resources.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Controller"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Controller</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Controller</h4><p>The request-facing layer that validates input and chooses an outcome.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Service"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Service</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Service</h4><p>The layer that coordinates application rules and operations.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Repository / DAO"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Repository / DAO</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Repository / DAO</h4><p>A boundary that isolates data-access implementation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Request attribute"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Request attribute</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Request attribute</h4><p>An application object attached to a request processing flow.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Internal forward"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Internal forward</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Internal forward</h4><p>Dispatch of the same request to another server resource before response commitment.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term WAR"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>WAR</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>WAR</h4><p>A web-application archive format for deployment to a compatible runtime.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Specify a Layered Java Catalog</h2><ul class="wt-content-points"><li>Design a catalog controller with unique scalar category, availability, limit and representation parameters. </li><li>Validate before service access. </li><li>Have a service accept a bounded repository model, filter before limiting and return a clear zero-result outcome.</li></ul><ul class="wt-content-points"><li>Specify a <strong class="wt-content-key">JSP</strong> view using an accepted <strong class="wt-content-key">request</strong> model and appropriate HTML text encoding, plus a JSON response branch. </li><li>Explain forwarding versus redirecting, model <strong class="wt-content-key">scope</strong> and which pieces require a compatible Jakarta or legacy <strong class="wt-content-key">Java</strong> EE runtime.</li></ul><ul class="wt-content-points"><li>Define separate tests for controller rejections, repository failure, malformed rows, service filtering and literal titles. </li><li>A real project must then verify <strong class="wt-content-key">servlet</strong> mapping, <strong class="wt-content-key">JSP</strong>/tag libraries, JDBC driver/data source and actual HTTP output. </li><li>Do not infer those integration results from this local <strong class="wt-content-key">browser</strong> demonstration.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> map each application responsibility to the right layer and trace both accepted and rejected catalog requests. </li><li>Level 23 will develop <strong class="wt-content-key">Java</strong> Servlets in more detail.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 22 Complete?</h2><p>Before marking complete, explain the Servlet/JSP/JDBC roles, compare a forward with a redirect and reproduce query, repository and representation outcomes in the lab. Identify which real Java runtime checks remain separate. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="php-fundamentals.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">PHP Fundamentals</span><span class="nav-action">Review Level 21</span></a></div><div class="topic-nav-side next"><a href="java-servlets.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Java Servlets</span><span class="nav-action">Open Level 23</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="java-web-technologies.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=17" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=14" defer></script>
+</body></html>

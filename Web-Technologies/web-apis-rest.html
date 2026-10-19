@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn web API resources, HTTP methods, JSON, status codes and conditional updates with diagrams, a visualizer, API lab and MCQs.">
+
+    
+
+    <title>
+        Level 27 — Web APIs and REST | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/web-apis-rest.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt27-skip-link" href="#wt27Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt27Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 27</div><div class="level-badge">LEVEL 27 · WEB APIs + REST</div><h1>Web APIs and REST</h1><p class="wt-hero-description">Design predictable resource requests, representations and response outcomes.</p><div class="wt-hero-meta"><span>☕ Java web</span><span>📨 HTTP methods</span><span>🧩 JSON contracts</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>A web <strong class="wt-content-key">API</strong> defines how a client requests application operations and interprets their outcomes. </li><li>This lesson connects resource identifiers, <strong class="wt-content-key">HTTP</strong> methods, status codes and <strong class="wt-content-key">JSON</strong> to the controller, service and database boundaries already developed. </li><li>You will distinguish a representation from stored state and design predictable errors.</li></ul><ul class="wt-content-points"><li>The local lab models a small task <strong class="wt-content-key">API</strong>: read a collection or item, create a task, replace an existing task and delete it. </li><li>It runs synchronous <strong class="wt-content-key">JavaScript</strong> only. </li><li>No network <strong class="wt-content-key">request</strong>, <strong class="wt-content-key">backend</strong>, account, authentication or database is involved.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗺️</span><h3>Resources</h3><p>Give collections and items clear identifiers.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Methods</h3><p>Distinguish reads, creation, replacement and deletion.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Responses</h3><p>Match status, headers and body to the outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Contracts</h3><p>Validate <strong class="wt-content-key">JSON</strong> and conditional changes deliberately.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🔌</span>An API Is an Application Contract</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">API</strong> exposes controlled operations rather than direct <strong class="wt-content-key">database</strong> access. </li><li>A client sends an allowed <strong class="wt-content-key">request</strong>, the <strong class="wt-content-key">backend</strong> validates and authorizes it, application code performs its work, and a response describes the outcome. </li><li>The <strong class="wt-content-key">browser</strong> does not need <strong class="wt-content-key">database</strong> credentials to consume that contract.</li></ul><ul class="wt-content-points"><li>A representation is a particular description of a resource, such as <strong class="wt-content-key">JSON</strong> for a task. </li><li>It is not necessarily a <strong class="wt-content-key">database</strong> row serialized without filtering. </li><li>Keep internal fields, secrets and implementation details out of public responses.</li></ul><ul class="wt-content-points"><li>An endpoint returning <strong class="wt-content-key">JSON</strong> is not automatically a complete <strong class="wt-content-key">REST</strong> design. </li><li>It can be a useful <strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">API</strong> while still lacking architectural constraints or a consistent application protocol.</li></ul><figure class="wt-diagram"><figcaption>API boundary</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Client</strong><p>Constructs a <strong class="wt-content-key">request</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>API handler</strong><p>Validates and authorizes.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Application</strong><p>Coordinates the operation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Representation</strong><p>Returns accepted public data.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>REST Constraints and Practical HTTP APIs</h2><ul class="wt-content-points"><li><strong class="wt-content-key">REST</strong> describes an architectural style with constraints including client/<strong class="wt-content-key">server</strong> separation, stateless interactions, cacheability, a uniform interface and layered systems; code-on-demand is optional. </li><li>Resource identification, representations and meaningful protocol controls help clients interact predictably.</li></ul><ul class="wt-content-points"><li>Stateless interaction means a <strong class="wt-content-key">request</strong> carries the context needed to understand it rather than depending on hidden conversational <strong class="wt-content-key">server</strong> state. </li><li>It does not mean a <strong class="wt-content-key">server</strong> has no <strong class="wt-content-key">database</strong>, a resource cannot change or every authentication design is identical.</li></ul><ul class="wt-content-points"><li>Hypermedia links and controls can describe available application transitions. </li><li>Many practical APIs use only part of this style. </li><li>Describe their actual <strong class="wt-content-key">contract</strong> instead of claiming that plural paths plus <strong class="wt-content-key">JSON</strong> prove full REST compliance.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪟</span><h3>Client/server</h3><p>Separate presentation and application responsibilities.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Stateless request</h3><p>Carry the needed interaction context.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Cache rules</h3><p>State whether a <strong class="wt-content-key">response</strong> can be reused.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Uniform interface</h3><p>Use resources and protocol semantics deliberately.</p></article></div><ul class="wt-content-points"><li>The lab is intentionally a narrow <strong class="wt-content-key">HTTP</strong> resource model, not a complete <strong class="wt-content-key">REST</strong> or server implementation. </li><li>It provides no <strong class="wt-content-key">cache</strong>, hypermedia workflow or transport integration.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🗺️</span>Collection and Item URLs</h2><ul class="wt-content-points"><li>A collection <strong class="wt-content-key">URL</strong> such as /<strong class="wt-content-key">api</strong>/tasks identifies a set of tasks. </li><li>An item <strong class="wt-content-key">URL</strong> such as /<strong class="wt-content-key">api</strong>/tasks/1 identifies one task. </li><li>The route is an application identifier, not a <strong class="wt-content-key">promise</strong> about source filenames, framework classes or <strong class="wt-content-key">database</strong> table names.</li></ul><ul class="wt-content-points"><li>Choose stable identifiers and a consistent path <strong class="wt-content-key">contract</strong>. </li><li>Query parameters can describe filtering or pagination for a collection, but arbitrary query fields should not silently become <strong class="wt-content-key">SQL</strong> fragments or privileged choices.</li></ul><ul class="wt-content-points"><li>The lab has an exact collection path and canonical one-digit item IDs 1–9. </li><li>It rejects other paths as unknown. </li><li>It has no query parsing, <strong class="wt-content-key">URL</strong> normalization or encoded-path handling beyond that stated <strong class="wt-content-key">contract</strong>.</li></ul><div class="code-block"><pre><code>GET    /api/tasks      read collection
+POST   /api/tasks      create a task
+GET    /api/tasks/1    read one task
+PUT    /api/tasks/1    replace existing task fields
+DELETE /api/tasks/1    delete an existing task</code></pre></div><ul class="wt-content-points"><li>Real APIs can support additional routes and creation semantics. </li><li>The toy item PUT updates existing tasks only; it does not create a missing item.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Methods, Safety and Idempotency</h2><ul class="wt-content-points"><li>GET is a read with safe semantics: the client is not requesting a state-changing action. </li><li>A <strong class="wt-content-key">server</strong> can still log or collect operational metrics, so safe does not mean absolutely no incidental server activity.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Idempotency</strong> concerns the intended effect of repeating the same <strong class="wt-content-key">request</strong>, not identical status codes or response bodies. </li><li>PUT and DELETE have idempotent method semantics; POST does not provide that general guarantee. </li><li>Retrying a creation POST can create another resource.</li></ul><ul class="wt-content-points"><li>A second DELETE can return 404 because the first removed the resource, while the deletion effect remains the same. </li><li>Conditional PUT can fail when the stored version changes without making an unsafe blind overwrite.</li></ul><div class="wt9-table-wrap"><table class="wt9-table"><thead><tr><th>Method</th><th>Task operation</th><th>Important distinction</th></tr></thead><tbody><tr><td>GET</td><td>Read collection/item</td><td>No requested mutation</td></tr><tr><td>POST</td><td>Create in collection</td><td>Repeated accepted request can create another item</td></tr><tr><td>PUT</td><td>Replace existing title/completed fields</td><td>Full accepted field set, not a partial patch</td></tr><tr><td>DELETE</td><td>Remove existing item</td><td>Repeated response may differ</td></tr></tbody></table></div><ul class="wt-content-points"><li>PATCH is a separate method for partial modification with a defined patch format; the lab does not implement it. </li><li>HEAD and OPTIONS also remain outside its small router.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>JSON Syntax and Application Shape</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JSON</strong> can represent objects, arrays, strings, numbers, booleans and <strong class="wt-content-key">null</strong>. </li><li><strong class="wt-content-key">Object</strong> property names and string values use double quotes. </li><li>A syntactically valid <strong class="wt-content-key">JSON</strong> value can still be unacceptable application input.</li></ul><ul class="wt-content-points"><li>The task body must be an <strong class="wt-content-key">object</strong> with exactly title and completed. </li><li>Title trims to 1–80 Unicode code points with no C0/C1 controls or unpaired surrogates; completed must be boolean. </li><li>The client cannot submit an ID, version, role or arbitrary extra field.</li></ul><ul class="wt-content-points"><li>The lab parses <strong class="wt-content-key">JSON</strong> with JSON.parse after bounding the raw string to 1,000 <strong class="wt-content-key">JavaScript</strong> code units. </li><li>That parser can keep the last value for duplicate property names; it does not provide duplicate-key detection. </li><li>Real APIs should document or reject ambiguous payloads rather than assuming all parsers agree.</li></ul><div class="code-block"><pre><code>{
+  &quot;title&quot;: &quot;Review HTTP methods&quot;,
+  &quot;completed&quot;: false
+}</code></pre></div><ul class="wt-content-points"><li>Numbers such as NaN and Infinity are not <strong class="wt-content-key">JSON</strong> numeric literals. </li><li>A <strong class="wt-content-key">JSON</strong> string "false" is also different from the boolean false required by this task <strong class="wt-content-key">contract</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Content-Type and Representation Expectations</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Content-Type</strong> describes the representation carried in a message. </li><li>A <strong class="wt-content-key">JSON</strong> <strong class="wt-content-key">request</strong> should declare an appropriate JSON media type. </li><li>Accept expresses which <strong class="wt-content-key">response</strong> representations the client can receive; it is not a substitute for the <strong class="wt-content-key">request</strong> Content-Type.</li></ul><ul class="wt-content-points"><li>The lab’s POST and PUT require exactly application/<strong class="wt-content-key">json</strong>. </li><li>It rejects another media type with 415 before parsing or changing a task. </li><li>This is a deliberately restricted teaching check, not a complete media-type parser or content-negotiation system.</li></ul><ul class="wt-content-points"><li>GET and DELETE in this toy <strong class="wt-content-key">contract</strong> ignore the body and media-type controls. </li><li>A successful delete has no <strong class="wt-content-key">response</strong> body. </li><li>Clients should not always call a <strong class="wt-content-key">JSON</strong> parser regardless of status and representation.</li></ul><div class="code-block"><pre><code>POST /api/tasks
+Content-Type: application/json
+
+{&quot;title&quot;:&quot;Review HTTP&quot;,&quot;completed&quot;:false}
+
+Expected accepted creation:
+201 Created
+Location: /api/tasks/3
+Content-Type: application/json</code></pre></div><p>The <strong class="wt-content-key">request</strong> text illustrates an <strong class="wt-content-key">HTTP</strong> contract; no request is sent when the lesson lab runs.</p></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">📤</span>Status Codes, Location and Empty Bodies</h2><ul class="wt-content-points"><li>Status codes distinguish outcomes instead of hiding every result inside a 200 body. </li><li>The lab uses 200 for accepted reads/replacement, 201 plus Location for creation and 204 with no body for successful deletion.</li></ul><ul class="wt-content-points"><li>Unknown paths or missing items use 404. </li><li>Unsupported methods use 405 with Allow. </li><li>Invalid <strong class="wt-content-key">JSON</strong> or shape uses 400, unsupported media type 415, required missing precondition 428 and a stale accepted precondition 412. </li><li>These are the toy application’s explicit decisions.</li></ul><ul class="wt-content-points"><li>A bounded collection reaching its capacity returns 409 here because creation conflicts with the toy store’s current limits. </li><li>A real system should define its own capacity/rate/availability behavior; those are not interchangeable errors.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>200 / 201</h3><p>Accepted result or created resource.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>204</h3><p>No <strong class="wt-content-key">response</strong> content to parse.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>400 / 415</h3><p>Invalid representation or media type.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>428 / 412</h3><p>Required condition absent or no longer matching.</p></article></div><p>The lab clears old previews on every error. A stale task card must not make a failed change look successful.</p></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Validate Before Changing Application State</h2><ul class="wt-content-points"><li>Routing and method checks determine the applicable operation. </li><li>For a <strong class="wt-content-key">JSON</strong> write, media type, syntax, size and shape <strong class="wt-content-key">validation</strong> precede mutation. </li><li>A creation limit and a conditional version check then decide whether accepted data can be applied.</li></ul><ul class="wt-content-points"><li>A task’s ID is server-chosen in this model. </li><li>The accepted title/completed values are copied rather than sharing a caller-owned <strong class="wt-content-key">object</strong>. </li><li>Rejected requests allocate no ID and leave every stored task unchanged.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Validation</strong> is not <strong class="wt-content-key">authorization</strong>. </li><li>A title can be well-formed while the caller still lacks permission to edit that task. </li><li>This public fictional lab has no users or protected records and does not establish production access control.</li></ul><figure class="wt-diagram"><figcaption>Mutation gate</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗺️</span><strong>Route/method</strong><p>Choose a known operation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Validate</strong><p>Accept media type and data <strong class="wt-content-key">contract</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Condition</strong><p>Check limits or current item version.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">💾</span><strong>Apply</strong><p>Change only accepted task state.</p></div></div></figure><ul class="wt-content-points"><li>In a real <strong class="wt-content-key">backend</strong>, version comparison and mutation must be coordinated atomically with <strong class="wt-content-key">database</strong> state. </li><li>A synchronous local <strong class="wt-content-key">function</strong> cannot demonstrate concurrent requests or distributed enforcement.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>ETag and Conditional Updates</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">ETag</strong> is a representation <strong class="wt-content-key">validator</strong>. </li><li>A client can read an item, retain its <strong class="wt-content-key">validator</strong> and send <strong class="wt-content-key">If-Match</strong> when changing it. </li><li>If the current representation no longer matches, a <strong class="wt-content-key">server</strong> can reject the change rather than overwriting someone else’s work.</li></ul><ul class="wt-content-points"><li>The lab gives item GET a strong teaching tag such as "task-1-v1". </li><li>PUT and DELETE require one exact quoted tag from this format; missing returns 428, malformed/unsupported syntax 400 and a well-formed mismatching tag 412. </li><li>It does not implement tag lists, wildcard or weak-validator rules.</li></ul><ul class="wt-content-points"><li>A successful changed replacement advances the item version. </li><li>Replacing it with the same accepted fields leaves its version unchanged in this model. </li><li>After a change, GET the item again to obtain the new tag before another conditional write.</li></ul><div class="code-block"><pre><code>GET /api/tasks/1
+→ 200, ETag: &quot;task-1-v1&quot;
+
+PUT /api/tasks/1
+If-Match: &quot;task-1-v1&quot;
+Content-Type: application/json
+
+{&quot;title&quot;:&quot;A changed title&quot;,&quot;completed&quot;:true}
+
+GET again before editing with the new validator.</code></pre></div><ul class="wt-content-points"><li>The toy PUT normalizes title text and returns a generated public representation, so it omits a <strong class="wt-content-key">response</strong> <strong class="wt-content-key">validator</strong> rather than claiming the submitted bytes were saved unchanged. </li><li>The following GET supplies the current <strong class="wt-content-key">ETag</strong>. </li><li>An <strong class="wt-content-key">ETag</strong> is not a password or permission token.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Caching and Validators Are Different Decisions</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">validator</strong> can support conditional interaction, while <strong class="wt-content-key">Cache-Control</strong> describes response reuse. </li><li>An <strong class="wt-content-key">ETag</strong> does not automatically mean a <strong class="wt-content-key">response</strong> should be cached. </li><li>Private or sensitive data needs a deliberate <strong class="wt-content-key">cache</strong> policy.</li></ul><ul class="wt-content-points"><li>The lab marks every <strong class="wt-content-key">response</strong> <strong class="wt-content-key">no-store</strong> so the teaching model does not imply a browser cache. </li><li>Its version checks demonstrate conditional changes, not <strong class="wt-content-key">cache</strong> revalidation. </li><li>It does not implement <strong class="wt-content-key">If-None-Match</strong> or 304.</li></ul><ul class="wt-content-points"><li>For an actual <strong class="wt-content-key">API</strong>, design <strong class="wt-content-key">cache</strong> headers, freshness and validation together. </li><li>Avoid reusing a cached result as proof of <strong class="wt-content-key">authorization</strong> or assuming a stale client copy is always the latest <strong class="wt-content-key">server</strong> state.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Validator</h3><p>Identify a representation version.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Freshness</h3><p>State when reuse is allowed.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔒</span><h3>Privacy</h3><p>Protect user-specific <strong class="wt-content-key">response</strong> data.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Integration</h3><p>Verify actual <strong class="wt-content-key">cache</strong>/proxy behavior.</p></article></div><p>The 428 <strong class="wt-content-key">response</strong> is not cacheable; this lab’s <strong class="wt-content-key">no-store</strong> policy also covers that outcome explicitly.</p></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🪟</span>Browser Fetch and Response Parsing</h2><ul class="wt-content-points"><li>A received <strong class="wt-content-key">HTTP</strong> error <strong class="wt-content-key">response</strong> is different from a failed network request. </li><li><strong class="wt-content-key">Fetch</strong> can resolve to a <strong class="wt-content-key">Response</strong> for an HTTP error, so a client must inspect its status and validate the intended representation rather than assuming resolution means success.</li></ul><ul class="wt-content-points"><li>A 204 has no body. </li><li>Other successful <strong class="wt-content-key">JSON</strong> outcomes require a suitable <strong class="wt-content-key">Content-Type</strong> and acceptable data shape. </li><li>A parseable <strong class="wt-content-key">object</strong> is not automatically the model your UI expected.</li></ul><ul class="wt-content-points"><li>The following client fragment is illustrative and is not called by the lab. </li><li>Its <strong class="wt-content-key">fetch</strong> requires a real same-origin <strong class="wt-content-key">backend</strong> route; this frontend course patch supplies no live /api/tasks service.</li></ul><div class="code-block"><pre><code>async function readTasks() {
+    const response = await fetch(&quot;/api/tasks&quot;);
+    if (!response.ok) {
+        throw new Error(&quot;Task read was not accepted&quot;);
+    }
+    const type = response.headers.get(&quot;Content-Type&quot;) || &quot;&quot;;
+    if (type.split(&quot;;&quot;)[0].trim().toLowerCase() !== &quot;application/json&quot;) {
+        throw new Error(&quot;Unexpected representation&quot;);
+    }
+    const data = await response.json();
+    // Validate data shape before presenting task rows.
+    return data;
+}</code></pre></div><ul class="wt-content-points"><li>A robust client should use an appropriate media-type check, controlled error display and response-model guard. </li><li>Render task titles as text, not interpreted <strong class="wt-content-key">HTML</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🌐</span>CORS, Origins and Preflight</h2><ul class="wt-content-points"><li>Browsers apply origin-based rules to script access. </li><li><strong class="wt-content-key">CORS</strong> lets a <strong class="wt-content-key">server</strong> opt into certain cross-origin response access through headers; some requests trigger a preflight check. </li><li>It is a <strong class="wt-content-key">browser</strong> protocol, not a login mechanism.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">request</strong> using <strong class="wt-content-key">JSON</strong> or a custom header such as If-Match may require preflight across origins. </li><li>The <strong class="wt-content-key">backend</strong> needs an appropriate origin/method/header policy and must still authenticate and authorize operations.</li></ul><ul class="wt-content-points"><li>Do not use no-cors as a way to read a blocked <strong class="wt-content-key">API</strong>: an opaque <strong class="wt-content-key">response</strong> cannot give the normal script access needed to read and validate its body. </li><li><strong class="wt-content-key">CORS</strong> also does not protect a <strong class="wt-content-key">server</strong> against non-browser clients.</li></ul><figure class="wt-diagram"><figcaption>Separate permission boundaries</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Browser origin</strong><p>Applies script access rules.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>CORS policy</strong><p><strong class="wt-content-key">Server</strong> declares allowed cross-origin access.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔐</span><strong>Authentication</strong><p>Establishes caller identity.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛂</span><strong>Authorization</strong><p>Checks the requested operation.</p></div></div></figure><p>The local lab sends no requests or <strong class="wt-content-key">CORS</strong> preflights. Its behavior cannot prove Cloudflare/Render origin configuration.</p></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🔐</span>Authentication, Authorization and Error Design</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Authentication</strong> establishes who the caller is; <strong class="wt-content-key">authorization</strong> determines what that caller may do. </li><li>A client-provided role, task ID or valid <strong class="wt-content-key">ETag</strong> is not sufficient proof of permission. </li><li>Check protected operations on the <strong class="wt-content-key">backend</strong>.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">authentication</strong> can use 401 with an appropriate challenge; 403 communicates refusal for a request the server will not authorize. </li><li>An <strong class="wt-content-key">API</strong> can also deliberately hide resource existence. </li><li>Choose a documented policy rather than exposing private records through inconsistent errors.</li></ul><ul class="wt-content-points"><li>Keep public errors stable and useful without returning secrets or production stack traces. </li><li>A machine-readable error code and a controlled message can help the client choose an appropriate next step.</li></ul><div class="code-block"><pre><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;stale_version&quot;,
+    &quot;message&quot;: &quot;Read the task again before changing it.&quot;
+  }
+}</code></pre></div><p>The next lesson develops Web Security. The task lab has no <strong class="wt-content-key">authentication</strong> and makes no claim of protecting real user data.</p></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">📄</span>Pagination, Compatibility and Contract Tests</h2><ul class="wt-content-points"><li>Bound collection results and specify stable ordering when an <strong class="wt-content-key">API</strong> grows beyond a small fixture. </li><li>Cursor or offset pagination must have a defined <strong class="wt-content-key">contract</strong>. </li><li>Adding filters should preserve the meaning of existing fields rather than silently changing accepted results.</li></ul><ul class="wt-content-points"><li>Version breaking changes deliberately and document <strong class="wt-content-key">request</strong> fields, <strong class="wt-content-key">response</strong> fields, error behavior and limits. </li><li>Generated <strong class="wt-content-key">API</strong> descriptions can help tooling, but they do not replace tested examples and a correct <strong class="wt-content-key">backend</strong> implementation.</li></ul><ul class="wt-content-points"><li>Retries need operation-specific rules. </li><li>Repeating POST creation can duplicate work; conditional PUT may reject a stale version; repeating DELETE may find the item already absent. </li><li>An <strong class="wt-content-key">idempotency</strong> mechanism needs actual <strong class="wt-content-key">backend</strong> enforcement, not just a client header.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Bounded results</h3><p>Specify order and pagination.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Compatibility</h3><p>Make <strong class="wt-content-key">contract</strong> changes deliberate.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Retries</h3><p>Distinguish repeatable effects from duplicate work.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Documentation</h3><p>Verify examples against behavior.</p></article></div><ul class="wt-content-points"><li>The lab deliberately limits active tasks to five, IDs to 1–9 and raw write input to 1,000 code units. </li><li>It has no pagination, persistent storage, retry <strong class="wt-content-key">cache</strong> or idempotency-key implementation.</li></ul><ul class="wt-content-points"><li>Test routing, method Allow headers, invalid representations, accepted creation, full replacement, deletion and stale preconditions. </li><li>Check stored state before and after each rejection and avoid carrying an old successful preview into an error run.</li></ul><ul class="wt-content-points"><li>For the real <strong class="wt-content-key">backend</strong>, separately verify <strong class="wt-content-key">HTTP</strong> serialization, body/header limits, atomic version enforcement, authentication, CORS, cache policy and concurrent requests. </li><li>Use controlled fixtures rather than publishing real credentials or private task data in traces.</li></ul><ul class="wt-content-points"><li>The lab checks local <strong class="wt-content-key">JavaScript</strong> state transitions and safe <strong class="wt-content-key">rendering</strong> only. </li><li>The visualizer follows one accepted creation; the interactive controls let you examine reads, writes, errors and preconditions.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Rejected input</h3><p>No ID allocation or state mutation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Accepted write</h3><p>Controlled outcome and public representation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Stale condition</h3><p>Reject without overwriting current state.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌐</span><h3>Transport</h3><p>Verify real headers/network independently.</p></article></div><ul class="wt-content-points"><li>Next: Level 28 — Web Security. </li><li>Keep the distinction between a predictable <strong class="wt-content-key">API</strong> <strong class="wt-content-key">contract</strong> and actual security enforcement clear.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — An API Resource Request</h2><p>Follow an accepted task creation through routing, validation, state change, response and safe presentation. This approved five-stage player explains the request contract without sending HTTP.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="rest">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>API RESOURCE REQUEST TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🗺️</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Identify the resource operation</h3><p data-trace-description>POST to the task collection requests creation.</p></div><pre class="trace-code"><code data-trace-code>POST /api/tasks</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Route" aria-pressed="true"><span>01</span><strong>Route</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Validate" aria-pressed="false"><span>02</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Apply" aria-pressed="false"><span>03</span><strong>Apply</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Respond" aria-pressed="false"><span>04</span><strong>Respond</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Present" aria-pressed="false"><span>05</span><strong>Present</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>A collection write differs from item read/replacement/deletion.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — A Local Task API Contract</h2><ul class="wt-content-points"><li>This synchronous <strong class="wt-content-key">JavaScript</strong> model runs no network, <strong class="wt-content-key">server</strong>, authentication or database. </li><li>Its in-memory task collection starts with task1 Review <strong class="wt-content-key">HTTP</strong> methods and task2 Practise <strong class="wt-content-key">JSON</strong> &lt;objects&gt;, both incomplete. </li><li>Only completion uses local storage.</li></ul><ul class="wt-content-points"><li>Collection: GET reads, POST creates. </li><li>Item: GET reads, PUT replaces exactly title/completed, DELETE removes. </li><li>POST/PUT require exact application/<strong class="wt-content-key">json</strong> and a JSON <strong class="wt-content-key">object</strong> with exactly title (trimmed 1–80 Unicode code points, no controls/lone surrogates) and completed (boolean). </li><li>Raw input is bounded to 1,000 <strong class="wt-content-key">JavaScript</strong> code units.</li></ul><ul class="wt-content-points"><li>PUT/DELETE require the exact current single strong mock <strong class="wt-content-key">ETag</strong>. </li><li>Read GET first and copy the quoted <strong class="wt-content-key">ETag</strong> into <strong class="wt-content-key">If-Match</strong>. </li><li>Missing is 428; malformed/unsupported syntax 400; stale is 412. </li><li>PUT normalizes data and omits <strong class="wt-content-key">response</strong> <strong class="wt-content-key">ETag</strong>; read again for the new tag. </li><li>DELETE 204 has no body or <strong class="wt-content-key">Content-Type</strong>.</li></ul><ul class="wt-content-points"><li>At most five active tasks and monotonic IDs1–9 are allowed. </li><li>Accepted repeated POST can create another task; deleted IDs are not reused. </li><li>Reset clears all task state and restores the original fixture. </li><li>The limited router, media check and tag format are not full <strong class="wt-content-key">HTTP</strong> implementations.</li></ul><div class="wt9-demo wt27-lab"><label for="wt27Method">Simulated HTTP method</label><select id="wt27Method"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option><option>PATCH</option></select><label for="wt27Path">Application resource path</label><select id="wt27Path"><option>/api/tasks</option><option>/api/tasks/1</option><option>/api/tasks/2</option><option>/api/tasks/3</option><option>/api/tasks/99</option><option>/missing</option></select><label for="wt27Type">Request Content-Type · POST/PUT only</label><select id="wt27Type"><option>application/json</option><option>text/plain</option></select><label for="wt27IfMatch">If-Match · PUT/DELETE only, include quotation marks</label><input type="text" id="wt27IfMatch" value='"task-1-v1"' maxlength="80"><label for="wt27Body">Raw JSON body · POST/PUT only</label><textarea id="wt27Body" rows="6" maxlength="1200">{"title":"Review HTTP methods","completed":false}</textarea><div class="wt9-actions"><button type="button" class="primary-button" id="wt27Process">Process mock API request</button><button type="button" class="secondary-button" id="wt27Reset">Reset task API</button></div><p id="wt27Status" role="status">Idle. Local JavaScript API model; no HTTP request sent.</p><h3>Current mock resource state · versions are internal teaching data</h3><pre class="wt27-result"><code id="wt27State"></code></pre><h3>Simulated request</h3><pre class="wt27-result"><code id="wt27Request">No request yet.</code></pre><h3>Decision trace</h3><pre class="wt27-result"><code id="wt27Trace">No trace yet.</code></pre><h3>Response status and headers</h3><pre class="wt27-result"><code id="wt27Response">No response yet.</code></pre><h3>Response body · displayed literally</h3><pre class="wt27-result"><code id="wt27Source">No response body yet.</code></pre><h3>Safe outcome preview</h3><div class="wt27-preview" id="wt27Preview">No result yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Inspect the First Rejection</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗺️</span><h3>Route/method</h3><p>Compare exact path and Allow before assuming body failure.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Representation</h3><p>Check media type, syntax, keys and value types.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Condition</h3><p>Read the current tag instead of overwriting a changed task.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Empty body</h3><p>A204 is complete without <strong class="wt-content-key">JSON</strong> content.</p></article></div><ul class="wt-content-points"><li>If a create succeeds twice, inspect whether the client retried a non-idempotent POST. </li><li>If PUT fails with 412, read the current task and decide how to reconcile changes rather than deleting the precondition blindly.</li></ul><ul class="wt-content-points"><li>If parsing fails after deletion, check the status before reading <strong class="wt-content-key">JSON</strong>. </li><li>If the screen still shows an older task after an error, clear the previous preview and display the rejected outcome.</li></ul><ul class="wt-content-points"><li>The lab is not a debugger for a deployed <strong class="wt-content-key">backend</strong>, <strong class="wt-content-key">CORS</strong> policy or authentication system. </li><li>Verify those boundaries with real requests separately.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is every JSON endpoint fully RESTful?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is every JSON endpoint fully RESTful?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. REST has architectural constraints beyond JSON and resource-looking paths; describe the actual API contract.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does idempotency mean?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does idempotency mean?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Repeating the same request has the same intended effect; status and response body need not be identical.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why can repeated accepted POST create duplicate work?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why can repeated accepted POST create duplicate work?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>POST does not provide a general idempotent creation guarantee; a separate enforced retry policy may be needed.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does Content-Type describe?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does Content-Type describe?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The representation in the message; Accept describes what response representations the client can receive.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why return201 with Location after creation?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why return201 with Location after creation?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It communicates creation and identifies the created resource in this contract.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why should a204 not be parsed as JSON?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why should a204 not be parsed as JSON?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It has no response content; the client must handle the completed empty outcome.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does a stale If-Match check prevent in this model?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does a stale If-Match check prevent in this model?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It prevents replacing/deleting a task whose current version no longer matches the supplied condition.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does CORS authenticate a caller?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does CORS authenticate a caller?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It controls browser cross-origin access; authentication and authorization remain separate backend checks.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain API Outcomes</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The collection and individual items have distinct resource identifiers."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which URL identifies the task collection?</h3><div class="wt8-options"><button type="button" class="wt8-option">A database password</button><button type="button" class="wt8-option">/api/tasks</button><button type="button" class="wt8-option">A CSS import</button><button type="button" class="wt8-option">Only /api/tasks/1</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="POST to the collection applies its documented creation behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Which operation creates a task in this lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">GET item</button><button type="button" class="wt8-option">DELETE item</button><button type="button" class="wt8-option">POST collection</button><button type="button" class="wt8-option">PATCH every path</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A repeated DELETE may return404 after a204 while the deletion effect remains idempotent."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What does idempotency describe?</h3><div class="wt8-options"><button type="button" class="wt8-option">Repeated intended effect</button><button type="button" class="wt8-option">Always identical status</button><button type="button" class="wt8-option">No server data ever</button><button type="button" class="wt8-option">A browser cache only</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The exact body contract requires boolean completed."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which type is completed in an accepted task body?</h3><div class="wt8-options"><button type="button" class="wt8-option">A role string</button><button type="button" class="wt8-option">A SQL expression</button><button type="button" class="wt8-option">An arbitrary array</button><button type="button" class="wt8-option">A JSON boolean</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The accepted201 includes the new task path in Location."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which header identifies the created resource?</h3><div class="wt8-options"><button type="button" class="wt8-option">A favicon header</button><button type="button" class="wt8-option">Location</button><button type="button" class="wt8-option">A client role field</button><button type="button" class="wt8-option">A CSS selector</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The client should not blindly parse JSON after a204."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What content does a204 deletion return?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always a task JSON object</button><button type="button" class="wt8-option">A database row</button><button type="button" class="wt8-option">No response body</button><button type="button" class="wt8-option">A login form</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Method rejection declares the supported route methods."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What does this lab return for unsupported methods?</h3><div class="wt8-options"><button type="button" class="wt8-option">405 with Allow</button><button type="button" class="wt8-option">200 always</button><button type="button" class="wt8-option">A silent mutation</button><button type="button" class="wt8-option">A new task</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The supplied tag no longer matches the current representation."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What happens on a well-formed stale If-Match?</h3><div class="wt8-options"><button type="button" class="wt8-option">The old task is overwritten</button><button type="button" class="wt8-option">A new ID is allocated</button><button type="button" class="wt8-option">CORS logs in the client</button><button type="button" class="wt8-option">412 and no state change</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="This contract requires a conditional PUT/DELETE."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What happens when the required If-Match is absent?</h3><div class="wt8-options"><button type="button" class="wt8-option">The task is always deleted</button><button type="button" class="wt8-option">428 with a condition-required message</button><button type="button" class="wt8-option">The body becomes a cookie</button><button type="button" class="wt8-option">A new database is created</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The toy write normalizes data, so it does not claim unchanged submitted bytes."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does the successful normalized PUT do about a response validator?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always copies the submitted tag</button><button type="button" class="wt8-option">Treats title as HTML</button><button type="button" class="wt8-option">Omits ETag; a following GET supplies the current tag</button><button type="button" class="wt8-option">Returns a browser password</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Authorization and authentication must still be enforced separately."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What does CORS provide?</h3><div class="wt8-options"><button type="button" class="wt8-option">Browser cross-origin access controls</button><button type="button" class="wt8-option">Caller identity automatically</button><button type="button" class="wt8-option">Database constraints</button><button type="button" class="wt8-option">An API retry guarantee</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The lab checks synchronous JavaScript decisions; transport and backend behavior require integration checks."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Does this local model verify real HTTP/CORS/concurrency?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only after reset</button><button type="button" class="wt8-option">Only for GET</button><button type="button" class="wt8-option">No</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt27QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Follow a Resource Lifecycle</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Read</h3><p>GET collection:200, two tasks. GET /<strong class="wt-content-key">api</strong>/tasks/1:200 with quoted tag task-1-v1.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🆕</span><h3>Create</h3><p>POST collection with New task/false:201, Location /<strong class="wt-content-key">api</strong>/tasks/3, three stored items. Repeat: another item.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Replace</h3><p>PUT item1 with changed fields and tagv1:200, version2 internally, no <strong class="wt-content-key">response</strong> <strong class="wt-content-key">ETag</strong>. GET again for tagv2.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Stale update</h3><p>Repeat changed PUT with old tagv1:412 and unchanged current task.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Delete</h3><p>DELETE item1 with current tag:204 and empty body. Repeat:404; no additional mutation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Bad input</h3><p>Try invalid <strong class="wt-content-key">JSON</strong>, completed as string, extra ID or text/plain on POST. Expect400/415 and no allocation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Required condition</h3><p>Empty <strong class="wt-content-key">If-Match</strong> on PUT/DELETE:428. Malformed tag:400. Valid tag for another version/item:412.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Literal text</h3><p>Create title &lt;Demo&gt; &amp; <strong class="wt-content-key">API</strong>. It remains text in <strong class="wt-content-key">JSON</strong>/preview. Reset restores original task state.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗺️</span><strong>Resource:</strong> Collection and item identifiers.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Method:</strong> Read/create/replace/delete contract.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>JSON:</strong> Syntax and application shape differ.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Media type:</strong> Describe message representation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Outcome:</strong> Status, headers and body agree.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📭</span><strong>204:</strong> Completed empty response.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Conditional write:</strong> Avoid overwriting stale versions.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Caching:</strong> Validator and reuse policy differ.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>CORS:</strong> Browser access, not identity.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Integration:</strong> Verify actual transport/security separately.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Web API"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Web API</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Web API</h4><p>An application interface accessed through web requests and responses.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Resource"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Resource</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Resource</h4><p>A concept identified and interacted with through the application protocol.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Representation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Representation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Representation</h4><p>A particular description of resource state, such as JSON.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term REST"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>REST</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>REST</h4><p>An architectural style with defined distributed-system constraints.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Safe method"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Safe method</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Safe method</h4><p>A method whose requested semantics are read-only.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Idempotency"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Idempotency</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Idempotency</h4><p>The same intended effect when an identical request is repeated.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Content-Type"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Content-Type</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Content-Type</h4><p>Metadata describing the representation carried by a message.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term ETag"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>ETag</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>ETag</h4><p>A validator identifying a representation version.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term If-Match"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>If-Match</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>If-Match</h4><p>A request condition requiring a matching current representation validator.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term CORS"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>CORS</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>CORS</h4><p>A browser protocol for controlled cross-origin response access.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Specify a Task API</h2><ul class="wt-content-points"><li>Write a collection/item <strong class="wt-content-key">contract</strong> with methods, exact accepted input, status/headers/body and bounded results. </li><li>Separate client representations from internal state, and define what repeated creation or deletion does.</li></ul><ul class="wt-content-points"><li>Require deliberate conditions for protected replacements, with a real atomic version check and a defined stale-update outcome. </li><li>Validate title/completed and render titles as text; do not accept role or ID fields as permission.</li></ul><ul class="wt-content-points"><li>Test invalid syntax/type/media,404/405,201+Location,204 empty content, stale conditions and state preservation after rejection. </li><li>Separately verify actual <strong class="wt-content-key">HTTP</strong>, <strong class="wt-content-key">authentication</strong>, authorization, CORS, cache policy and concurrent updates.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> predict both <strong class="wt-content-key">response</strong> and stored state for every accepted and rejected operation. </li><li>Next: Level28 — Web Security.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 27 Complete?</h2><p>Explain resource/method/representation distinctions, reproduce creation/replacement/deletion and stale preconditions, and handle204 without JSON parsing. Identify the actual transport/security checks the local lab cannot perform. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="databases-sql-web-applications.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Databases and SQL for Web Applications</span><span class="nav-action">Review Level 26</span></a></div><div class="topic-nav-side next"><a href="web-security.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Web Security</span><span class="nav-action">Open Level 28</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="web-apis-rest.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=22" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=19" defer></script>
+</body></html>

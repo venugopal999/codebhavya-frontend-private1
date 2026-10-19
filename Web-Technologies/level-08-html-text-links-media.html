@@ -1,0 +1,3347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Level 08 — HTML Text, Links and Media | CodeBhavya</title>
+
+    <meta
+        name="description"
+        content="CodeBhavya Web Technologies Level 08 — Learn HTML text, headings, links, images, audio, video, iframe and media embedding with practical examples."
+    >
+
+    <meta
+        name="keywords"
+        content="HTML text, HTML links, HTML images, HTML audio, HTML video, iframe, HTML media, Web Technologies, CodeBhavya"
+    >
+
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css">
+
+    <style>
+        /* =========================================================
+           LEVEL 08 — SMALL LEVEL-SPECIFIC ADDITIONS
+           Existing Web Technologies CSS remains the main system.
+           ========================================================= */
+
+        .wt-l8-example-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin: 22px 0;
+        }
+
+        .wt-l8-example-card {
+            background: #101317;
+            border: 1px solid rgba(101, 203, 210, 0.18);
+            border-radius: 14px;
+            padding: 18px;
+            min-width: 0;
+        }
+
+        .wt-l8-example-card h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt-l8-example-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .wt-l8-code {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .wt-l8-code code {
+            white-space: pre;
+        }
+
+        .wt-l8-table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .wt-l8-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        .wt-l8-table th,
+        .wt-l8-table td {
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .wt-l8-table th {
+            color: #efc65b;
+            background: #101317;
+        }
+
+        .wt-l8-table td code {
+            color: #65cbd2;
+        }
+
+        .wt-l8-media-demo {
+            background: #101317;
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            margin: 20px 0;
+        }
+
+        .wt-l8-media-demo img {
+            display: block;
+            max-width: 100%;
+            width: 100%;
+            max-height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+        }
+
+        .wt-l8-media-demo audio,
+        .wt-l8-media-demo video {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .wt-l8-figure {
+            margin: 22px auto;
+            padding: 15px;
+            background: #101317;
+            border-radius: 14px;
+            max-width: 720px;
+        }
+
+        .wt-l8-figure img {
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .wt-l8-figure figcaption {
+            margin-top: 12px;
+            color: #b7c0c8;
+            font-size: 0.92rem;
+            text-align: center;
+        }
+
+        .wt-l8-link-box {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .wt-l8-link-box a {
+            display: block;
+            padding: 15px;
+            background: #23282d;
+            border: 1px solid rgba(101,203,210,0.16);
+            border-radius: 12px;
+            color: #65cbd2;
+            text-decoration: none;
+        }
+
+        .wt-l8-link-box a:hover {
+            border-color: #65cbd2;
+            transform: translateY(-2px);
+        }
+
+        .wt-l8-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .wt-l8-flow span {
+            padding: 12px 16px;
+            background: #23282d;
+            border: 1px solid rgba(239,198,91,0.2);
+            border-radius: 10px;
+            color: #efc65b;
+            font-weight: 700;
+        }
+
+        .wt-l8-flow b {
+            color: #65cbd2;
+        }
+
+        .wt-l8-checklist {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .wt-l8-check-item {
+            padding: 14px 16px;
+            border-radius: 11px;
+            background: #23282d;
+            border-left: 4px solid #67c596;
+        }
+
+        .wt-l8-warning {
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-left: 4px solid #e8786d;
+            background: rgba(232,120,109,0.08);
+            border-radius: 10px;
+        }
+
+        .wt-l8-tip {
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,0.07);
+            border-radius: 10px;
+        }
+
+        .wt-l8-playground {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .wt-l8-playground-panel {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 18px;
+            min-width: 0;
+        }
+
+        .wt-l8-playground textarea {
+            width: 100%;
+            min-height: 300px;
+            resize: vertical;
+            box-sizing: border-box;
+            background: #0b0e11;
+            color: #d9e2e8;
+            border: 1px solid rgba(101,203,210,0.18);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: Consolas, Monaco, monospace;
+            line-height: 1.55;
+        }
+
+        .wt-l8-preview {
+            min-height: 300px;
+            background: #ffffff;
+            color: #111;
+            border-radius: 10px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt-l8-playground-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .wt-l8-playground-actions button {
+            border: 0;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt-l8-run {
+            background: #65cbd2;
+            color: #101317;
+        }
+
+        .wt-l8-reset {
+            background: #292f35;
+            color: #fff;
+        }
+
+        .wt-l8-mcq {
+            display: grid;
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .wt-l8-question {
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 13px;
+            padding: 18px;
+        }
+
+        .wt-l8-question h3 {
+            margin-top: 0;
+        }
+
+        .wt-l8-options {
+            display: grid;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .wt-l8-option {
+            padding: 11px 13px;
+            border-radius: 9px;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,0.08);
+            cursor: pointer;
+        }
+
+        .wt-l8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt-l8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,0.1);
+        }
+
+        .wt-l8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,0.1);
+        }
+
+        .wt-l8-answer {
+            margin-top: 10px;
+            color: #b7c0c8;
+            font-size: 0.92rem;
+        }
+
+        .wt-l8-interview-grid,
+        .wt-l8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+            align-items: stretch;
+        }
+
+        .wt-l8-flip-card {
+            min-height: 210px;
+            perspective: 1000px;
+        }
+
+        .wt-l8-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 210px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .wt-l8-flip-card:hover .wt-l8-flip-inner,
+        .wt-l8-flip-card:focus-within .wt-l8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt-l8-flip-front,
+        .wt-l8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #23282d;
+            border: 1px solid rgba(101,203,210,0.15);
+        }
+
+        .wt-l8-flip-front {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wt-l8-flip-front span {
+            color: #efc65b;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .wt-l8-flip-front h3 {
+            color: #65cbd2;
+            margin-bottom: 0;
+        }
+
+        .wt-l8-flip-back {
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .wt-l8-completion {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(
+                145deg,
+                rgba(101,203,210,0.08),
+                rgba(239,198,91,0.06)
+            );
+            border: 1px solid rgba(101,203,210,0.16);
+            border-radius: 16px;
+        }
+
+        .wt-l8-completion-mark {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .wt-l8-progress {
+            height: 9px;
+            background: #101317;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .wt-l8-progress span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #67c596;
+            transition: width 0.3s ease;
+        }
+
+        .wt-l8-mini-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .wt-l8-mini-nav a {
+            flex: 1;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .wt-l8-mini-nav strong {
+            display: block;
+            margin-top: 5px;
+            color: #65cbd2;
+        }
+
+        @media (max-width: 900px) {
+            .wt-l8-example-grid,
+            .wt-l8-playground,
+            .wt-l8-interview-grid,
+            .wt-l8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt-l8-link-box,
+            .wt-l8-checklist {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .wt-l8-mini-nav {
+                flex-direction: column;
+            }
+
+            .wt-l8-flow {
+                flex-direction: column;
+            }
+
+            .wt-l8-flow b {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/html-text-links-media.html">
+
+<link rel="stylesheet" href="../css/common.css">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=3">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-presentation" data-cb-theme-layout="course">
+
+<!-- =========================================================
+     HEADER
+     Keep your existing centralized CodeBhavya header here.
+     ========================================================= -->
+
+<header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header>
+
+<div class="reading-progress" id="readingProgress"></div>
+
+<!-- =========================================================
+     PAGE LAYOUT
+     ========================================================= -->
+
+<div class="docs-layout">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar" id="courseSidebar"><div class="sidebar-title">Web Technologies</div><input type="search" id="topicSearch" class="search-box" placeholder="Search Web Technologies" aria-label="Search Web Technologies topics"><a href="index.html" class="sidebar-course-home">Web Technologies Home</a><a href="introduction.html" class="wt-topic-link">01 — Introduction to Web Technologies</a><a href="internet-web-architecture.html" class="wt-topic-link">02 — Internet and Web Architecture</a><a href="urls-http-https.html" class="wt-topic-link">03 — URLs, HTTP and HTTPS</a><a href="browsers-and-web-servers.html" class="wt-topic-link">04 — Browsers and Web Servers</a><a href="web-application-architecture.html" class="wt-topic-link">05 — Web Application Architecture</a><a href="web-development-tools-and-workflow.html" class="wt-topic-link">06 — Web Development Tools and Workflow</a><a href="html-fundamentals.html" class="wt-topic-link">07 — HTML Fundamentals</a><a href="html-text-links-media.html" class="wt-topic-link">08 — HTML Text, Links and Media</a><a href="html-lists-tables-forms.html" class="wt-topic-link">09 — HTML Lists, Tables and Forms</a><a href="semantic-html-accessibility.html" class="wt-topic-link">10 — Semantic HTML and Accessibility</a><a href="css-fundamentals.html" class="wt-topic-link">11 — CSS Fundamentals</a><a href="css-box-model-layout.html" class="wt-topic-link">12 — CSS Box Model and Layout</a><a href="flexbox-grid-responsive-design.html" class="wt-topic-link">13 — Flexbox, Grid and Responsive Design</a><a href="javascript-fundamentals.html" class="wt-topic-link">14 — JavaScript Fundamentals</a><a href="javascript-arrays-objects-logic.html" class="wt-topic-link">15 — JavaScript Arrays, Objects and Logic</a><a href="dom-browser-programming.html" class="wt-topic-link">16 — DOM and Browser Programming</a><a href="javascript-events-forms.html" class="wt-topic-link">17 — JavaScript Events and Forms</a><a href="asynchronous-javascript-apis.html" class="wt-topic-link">18 — Asynchronous JavaScript and APIs</a><a href="browser-storage-web-apis.html" class="wt-topic-link">19 — Browser Storage and Web APIs</a><a href="server-side-web-programming.html" class="wt-topic-link">20 — Server-Side Web Programming</a><a href="php-fundamentals.html" class="wt-topic-link">21 — PHP Fundamentals</a><a href="java-web-technologies.html" class="wt-topic-link">22 — Java Web Technologies</a><a href="java-servlets.html" class="wt-topic-link">23 — Java Servlets</a><a href="jsp-java-server-pages.html" class="wt-topic-link">24 — JSP — JavaServer Pages</a><a href="jdbc-database-connectivity.html" class="wt-topic-link">25 — JDBC and Database Connectivity</a><a href="databases-sql-web-applications.html" class="wt-topic-link">26 — Databases and SQL for Web Applications</a><a href="web-apis-rest.html" class="wt-topic-link">27 — Web APIs and REST</a><a href="web-security.html" class="wt-topic-link">28 — Web Security</a><a href="web-performance-deployment.html" class="wt-topic-link">29 — Web Performance and Deployment</a><a href="web-technologies-capstone-placement.html" class="wt-topic-link">30 — Web Technologies Capstone and Placement</a></aside>
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="lesson-content">
+
+        <!-- HERO -->
+
+        <section class="lesson-hero">
+
+            <div class="lesson-hero-kicker">
+                WEB TECHNOLOGIES • LEVEL 08
+            </div>
+
+            <h1>
+                HTML Text, Links &amp; Media
+            </h1>
+
+            <p class="lesson-hero-summary">
+                Learn how HTML communicates written content, creates navigation,
+                displays images, embeds audio and video, and connects external
+                content to a web page.
+            </p>
+
+            <div class="lesson-meta">
+
+                <span>
+                    ⏱️ Estimated Learning Time: 3–4 Hours
+                </span>
+
+                <span>
+                    🟢 Beginner
+                </span>
+
+                <span>
+                    📚 25+ Core Concepts
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LEARNING OUTCOMES
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                LEARNING OUTCOMES
+            </span>
+
+            <h2>
+                What You Will Learn
+            </h2>
+
+            <p>
+                After completing this level, you should be able to create
+                meaningful text content, navigation links and multimedia
+                content using HTML.
+            </p>
+
+            <div class="wt-l8-checklist">
+
+                <div class="wt-l8-check-item">
+                    ✓ Create paragraphs and headings correctly.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Use inline text-formatting elements appropriately.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Create absolute and relative hyperlinks.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Create internal page navigation.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Create email and telephone links.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add meaningful alternative text to images.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Use figure and figcaption for media explanations.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Embed audio and video.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Understand the purpose of source elements.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Embed external content using iframe.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             1. TEXT
+             ================================================= -->
+
+        <section class="content-card" id="text-content">
+
+            <span class="section-label">
+                PART 01 • HTML TEXT
+            </span>
+
+            <h2>
+                1. Text Content in HTML
+            </h2>
+
+            <p>
+                HTML is not only about creating boxes on a screen.
+                One of its most important jobs is to communicate the
+                structure and meaning of written content.
+            </p>
+
+            <p>
+                A browser needs to understand whether a piece of content is
+                a heading, paragraph, quotation, code sample or emphasized
+                statement.
+            </p>
+
+            <div class="why-important">
+
+                <h3>
+                    Why does this matter?
+                </h3>
+
+                <p>
+                    Correct HTML structure improves readability, accessibility,
+                    maintainability and the way browsers and assistive
+                    technologies understand a page.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             2. PARAGRAPHS
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                TEXT FUNDAMENTALS
+            </span>
+
+            <h2>
+                2. Paragraphs and Line Breaks
+            </h2>
+
+            <p>
+                The <code>&lt;p&gt;</code> element represents a paragraph.
+            </p>
+
+            <pre class="code-block wt-l8-code"><code>&lt;p&gt;HTML gives structure to web content.&lt;/p&gt;
+
+&lt;p&gt;CSS controls presentation.&lt;/p&gt;
+
+&lt;p&gt;JavaScript adds behaviour.&lt;/p&gt;</code></pre>
+
+            <h3>
+                Line Break — <code>&lt;br&gt;</code>
+            </h3>
+
+            <p>
+                The <code>&lt;br&gt;</code> element creates a line break
+                within text.
+            </p>
+
+            <pre class="code-block wt-l8-code"><code>&lt;p&gt;
+    CodeBhavya&lt;br&gt;
+    From Learning to Limitless Possibilities.
+&lt;/p&gt;</code></pre>
+
+            <div class="wt-l8-warning">
+
+                <strong>Important:</strong>
+
+                Do not use many <code>&lt;br&gt;</code> elements just to
+                create page spacing. Layout spacing should normally be
+                handled by CSS.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             3. HEADINGS
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                DOCUMENT HIERARCHY
+            </span>
+
+            <h2>
+                3. Headings and Heading Hierarchy
+            </h2>
+
+            <p>
+                HTML provides six heading levels:
+            </p>
+
+            <pre class="code-block"><code>&lt;h1&gt;Main Heading&lt;/h1&gt;
+&lt;h2&gt;Major Section&lt;/h2&gt;
+&lt;h3&gt;Subsection&lt;/h3&gt;
+&lt;h4&gt;Detailed Subsection&lt;/h4&gt;
+&lt;h5&gt;Smaller Heading&lt;/h5&gt;
+&lt;h6&gt;Smallest Heading&lt;/h6&gt;</code></pre>
+
+            <p>
+                Think of headings as the outline of your document.
+            </p>
+
+            <div class="wt-l8-flow">
+
+                <span>h1</span>
+                <b>→</b>
+                <span>h2</span>
+                <b>→</b>
+                <span>h3</span>
+                <b>→</b>
+                <span>h4</span>
+
+            </div>
+
+            <div class="wt-l8-tip">
+
+                <strong>Remember:</strong>
+
+                Choose headings because of their structural meaning,
+                not simply because one heading looks visually larger.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             4. TEXT EMPHASIS
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                INLINE TEXT
+            </span>
+
+            <h2>
+                4. Bold, Italic and Semantic Emphasis
+            </h2>
+
+            <div class="wt-l8-table-wrap">
+
+                <table class="wt-l8-table">
+
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>Purpose</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td><code>&lt;strong&gt;</code></td>
+                            <td>Strong importance</td>
+                            <td><strong>Important concept</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;em&gt;</code></td>
+                            <td>Emphasis</td>
+                            <td><em>Important word</em></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;mark&gt;</code></td>
+                            <td>Highlighted/relevant text</td>
+                            <td><mark>Highlighted</mark></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;small&gt;</code></td>
+                            <td>Side information</td>
+                            <td><small>Additional information</small></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;del&gt;</code></td>
+                            <td>Deleted content</td>
+                            <td><del>Old price</del></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;ins&gt;</code></td>
+                            <td>Inserted content</td>
+                            <td><ins>New price</ins></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;sub&gt;</code></td>
+                            <td>Subscript</td>
+                            <td>H<sub>2</sub>O</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>&lt;sup&gt;</code></td>
+                            <td>Superscript</td>
+                            <td>x<sup>2</sup></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <pre class="code-block"><code>&lt;p&gt;
+    HTML is &lt;strong&gt;important&lt;/strong&gt; for web development.
+&lt;/p&gt;
+
+&lt;p&gt;
+    Learn &lt;em&gt;step by step&lt;/em&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+    Water = H&lt;sub&gt;2&lt;/sub&gt;O
+&lt;/p&gt;
+
+&lt;p&gt;
+    Area = x&lt;sup&gt;2&lt;/sup&gt;
+&lt;/p&gt;</code></pre>
+
+        </section>
+
+
+        <!-- =================================================
+             5. QUOTATIONS
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                QUOTATIONS
+            </span>
+
+            <h2>
+                5. Quotations and Citations
+            </h2>
+
+            <h3>
+                Short quotation — <code>&lt;q&gt;</code>
+            </h3>
+
+            <pre class="code-block"><code>&lt;p&gt;
+    The instructor said:
+    &lt;q&gt;Learn by building.&lt;/q&gt;
+&lt;/p&gt;</code></pre>
+
+            <h3>
+                Long quotation — <code>&lt;blockquote&gt;</code>
+            </h3>
+
+            <pre class="code-block"><code>&lt;blockquote&gt;
+    Learning web development requires understanding
+    how structure, presentation and behaviour work together.
+&lt;/blockquote&gt;</code></pre>
+
+            <h3>
+                Citation — <code>&lt;cite&gt;</code>
+            </h3>
+
+            <pre class="code-block"><code>&lt;p&gt;
+    Source:
+    &lt;cite&gt;HTML Living Standard&lt;/cite&gt;
+&lt;/p&gt;</code></pre>
+
+        </section>
+
+
+        <!-- =================================================
+             6. CODE
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                CODE CONTENT
+            </span>
+
+            <h2>
+                6. <code>&lt;code&gt;</code> and <code>&lt;pre&gt;</code>
+            </h2>
+
+            <p>
+                The <code>&lt;code&gt;</code> element represents a fragment
+                of computer code.
+            </p>
+
+            <pre class="code-block"><code>&lt;p&gt;
+Use the &lt;code&gt;console.log()&lt;/code&gt; function.
+&lt;/p&gt;</code></pre>
+
+            <p>
+                The <code>&lt;pre&gt;</code> element preserves whitespace
+                and line breaks.
+            </p>
+
+            <pre class="code-block"><code>&lt;pre&gt;
+function hello() {
+    console.log("Hello");
+}
+&lt;/pre&gt;</code></pre>
+
+        </section>
+
+
+        <!-- =================================================
+             7. LINKS
+             ================================================= -->
+
+        <section class="content-card" id="links">
+
+            <span class="section-label">
+                PART 02 • HYPERLINKS
+            </span>
+
+            <h2>
+                7. Hyperlinks with <code>&lt;a&gt;</code>
+            </h2>
+
+            <p>
+                The anchor element creates hyperlinks.
+            </p>
+
+            <pre class="code-block"><code>&lt;a href="https://codebhavya.com/"&gt;
+    Visit CodeBhavya
+&lt;/a&gt;</code></pre>
+
+            <div class="wt-l8-link-box">
+
+                <a href="https://codebhavya.com/" target="_blank" rel="noopener noreferrer">
+                    Visit CodeBhavya ↗
+                </a>
+
+                <a href="#text-content">
+                    Jump to Text Section
+                </a>
+
+                <a href="mailto:example@example.com">
+                    Send Email
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             8. ABSOLUTE VS RELATIVE
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                LINK PATHS
+            </span>
+
+            <h2>
+                8. Absolute vs Relative URLs
+            </h2>
+
+            <div class="wt-l8-example-grid">
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Absolute URL
+                    </h4>
+
+                    <p>
+                        Contains the complete address.
+                    </p>
+
+                    <pre class="code-block"><code>&lt;a href="https://codebhavya.com/"&gt;
+CodeBhavya
+&lt;/a&gt;</code></pre>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Relative URL
+                    </h4>
+
+                    <p>
+                        Describes a location relative to the current page.
+                    </p>
+
+                    <pre class="code-block"><code>&lt;a href="index.html"&gt;
+Web Technologies
+&lt;/a&gt;</code></pre>
+
+                </article>
+
+            </div>
+
+            <div class="wt-l8-tip">
+
+                <strong>Easy rule:</strong>
+
+                Use absolute URLs when linking to another website.
+                Use relative URLs when navigating within your own website.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             9. INTERNAL LINKS
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                PAGE NAVIGATION
+            </span>
+
+            <h2>
+                9. Internal Page Links
+            </h2>
+
+            <p>
+                An element can have an <code>id</code>, and a link can use
+                that ID with <code>#</code>.
+            </p>
+
+            <pre class="code-block"><code>&lt;section id="media"&gt;
+    &lt;h2&gt;Media&lt;/h2&gt;
+&lt;/section&gt;
+
+&lt;a href="#media"&gt;
+    Jump to Media
+&lt;/a&gt;</code></pre>
+
+            <p>
+                This technique is useful for long documentation pages.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             10. NEW TAB
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                SAFE EXTERNAL LINKS
+            </span>
+
+            <h2>
+                10. Opening Links in a New Tab
+            </h2>
+
+            <pre class="code-block"><code>&lt;a
+    href="https://example.com"
+    target="_blank"
+    rel="noopener noreferrer"
+&gt;
+    Open Website
+&lt;/a&gt;</code></pre>
+
+            <div class="wt-l8-warning">
+
+                When using <code>target="_blank"</code>, using
+                <code>rel="noopener noreferrer"</code> is a good defensive
+                practice for external links.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             11. EMAIL / PHONE
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                SPECIAL LINKS
+            </span>
+
+            <h2>
+                11. Email and Telephone Links
+            </h2>
+
+            <pre class="code-block"><code>&lt;a href="mailto:hello@example.com"&gt;
+    Email Us
+&lt;/a&gt;
+
+&lt;a href="tel:+911234567890"&gt;
+    Call Us
+&lt;/a&gt;</code></pre>
+
+            <p>
+                These links allow devices to hand the action to an
+                appropriate email or telephone application.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             12. IMAGES
+             ================================================= -->
+
+        <section class="content-card" id="images">
+
+            <span class="section-label">
+                PART 03 • IMAGES
+            </span>
+
+            <h2>
+                12. Images with <code>&lt;img&gt;</code>
+            </h2>
+
+            <p>
+                Images are embedded using the <code>&lt;img&gt;</code>
+                element.
+            </p>
+
+            <pre class="code-block"><code>&lt;img
+    src="images/codebhavya.png"
+    alt="CodeBhavya learning platform"
+&gt;</code></pre>
+
+            <div class="wt-l8-warning">
+
+                <strong>Important:</strong>
+
+                The <code>img</code> element is a void element.
+                It does not have a closing <code>&lt;/img&gt;</code> tag.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             13. ALT
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                ACCESSIBLE IMAGES
+            </span>
+
+            <h2>
+                13. Alternative Text — <code>alt</code>
+            </h2>
+
+            <p>
+                The <code>alt</code> attribute provides a text alternative
+                for an image.
+            </p>
+
+            <div class="wt-l8-example-grid">
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Informative image
+                    </h4>
+
+                    <pre class="code-block"><code>&lt;img
+    src="http-flow.png"
+    alt="Diagram showing an HTTP request from a browser to a server"
+&gt;</code></pre>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Decorative image
+                    </h4>
+
+                    <pre class="code-block"><code>&lt;img
+    src="decorative-line.png"
+    alt=""
+&gt;</code></pre>
+
+                </article>
+
+            </div>
+
+            <div class="wt-l8-tip">
+
+                Good alt text describes the useful meaning of the image,
+                not simply its filename.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             14. WIDTH / HEIGHT
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                IMAGE DIMENSIONS
+            </span>
+
+            <h2>
+                14. Image Dimensions
+            </h2>
+
+            <pre class="code-block"><code>&lt;img
+    src="course.jpg"
+    alt="Web Technologies course"
+    width="800"
+    height="450"
+&gt;</code></pre>
+
+            <p>
+                Width and height can communicate the intrinsic dimensions
+                of an image. CSS can then control its responsive display.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             15. FIGURE
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                FIGURES
+            </span>
+
+            <h2>
+                15. <code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code>
+            </h2>
+
+            <pre class="code-block"><code>&lt;figure&gt;
+
+    &lt;img
+        src="browser-flow.png"
+        alt="Browser request and response flow"
+    &gt;
+
+    &lt;figcaption&gt;
+        Basic browser-server communication.
+    &lt;/figcaption&gt;
+
+&lt;/figure&gt;</code></pre>
+
+            <figure class="wt-l8-figure">
+
+                <img
+                    src="https://dummyimage.com/900x350/23282d/65cbd2&amp;text=Browser+%E2%86%92+Server+%E2%86%92+Response"
+                    alt="Illustrative browser to server communication diagram"
+                >
+
+                <figcaption>
+                    Example figure with a descriptive caption.
+                </figcaption>
+
+            </figure>
+
+        </section>
+
+
+        <!-- =================================================
+             16. AUDIO
+             ================================================= -->
+
+        <section class="content-card" id="media">
+
+            <span class="section-label">
+                PART 04 • AUDIO
+            </span>
+
+            <h2>
+                16. Audio with <code>&lt;audio&gt;</code>
+            </h2>
+
+            <p>
+                HTML provides native audio support.
+            </p>
+
+            <pre class="code-block"><code>&lt;audio controls&gt;
+
+    &lt;source
+        src="audio/lesson.mp3"
+        type="audio/mpeg"
+    &gt;
+
+    Your browser does not support audio playback.
+
+&lt;/audio&gt;</code></pre>
+
+            <div class="wt-l8-media-demo">
+
+                <p>
+                    Example audio player (a two-tone WAV sound generated for this lesson):
+                </p>
+
+                <audio controls>
+                    <source
+                        src="audio/sample.wav"
+                        type="audio/wav"
+                    >
+                    Your browser does not support audio playback.
+                </audio>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             17. VIDEO
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                VIDEO
+            </span>
+
+            <h2>
+                17. Video with <code>&lt;video&gt;</code>
+            </h2>
+
+            <pre class="code-block"><code>&lt;video
+    controls
+    width="720"
+&gt;
+
+    &lt;source
+        src="video/lesson.mp4"
+        type="video/mp4"
+    &gt;
+
+    Your browser does not support video playback.
+
+&lt;/video&gt;</code></pre>
+
+            <div class="wt-l8-media-demo">
+
+                <p>
+                    Example video player (a short, silent CodeBhavya HTML media demo):
+                </p>
+
+                <video controls preload="metadata">
+                    <source
+                        src="video/sample.mp4"
+                        type="video/mp4"
+                    >
+                    Your browser does not support video playback.
+                </video>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             18. SOURCE
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                MEDIA FORMATS
+            </span>
+
+            <h2>
+                18. Why Use <code>&lt;source&gt;</code>?
+            </h2>
+
+            <p>
+                A media element can contain multiple source files.
+                This allows the browser to choose a supported source.
+            </p>
+
+            <pre class="code-block"><code>&lt;video controls&gt;
+
+    &lt;source
+        src="lesson.webm"
+        type="video/webm"
+    &gt;
+
+    &lt;source
+        src="lesson.mp4"
+        type="video/mp4"
+    &gt;
+
+    Your browser does not support video.
+
+&lt;/video&gt;</code></pre>
+
+            <div class="wt-l8-tip">
+
+                The <code>type</code> attribute tells the browser what
+                media format the source represents.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             19. IFRAME
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                EMBEDDED CONTENT
+            </span>
+
+            <h2>
+                19. <code>&lt;iframe&gt;</code>
+            </h2>
+
+            <p>
+                An iframe embeds another browsing context inside the page.
+            </p>
+
+            <pre class="code-block"><code>&lt;iframe
+    src="https://example.com"
+    title="Example website"
+    width="100%"
+    height="400"
+&gt;
+&lt;/iframe&gt;</code></pre>
+
+            <div class="wt-l8-warning">
+
+                <strong>Security and privacy:</strong>
+
+                Only embed content from sources you trust and understand.
+                Many websites deliberately prevent themselves from being
+                embedded.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             20. MEDIA ACCESSIBILITY
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                ACCESSIBLE MEDIA
+            </span>
+
+            <h2>
+                20. Making Media More Useful
+            </h2>
+
+            <div class="wt-l8-checklist">
+
+                <div class="wt-l8-check-item">
+                    ✓ Give informative images meaningful alt text.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Use empty alt text for decorative images when appropriate.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Give iframe content a meaningful title.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Provide fallback text for audio/video.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Consider captions/transcripts for important video content.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Do not make essential information available only through images.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             21. RESPONSIVE MEDIA
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                RESPONSIVE WEB
+            </span>
+
+            <h2>
+                21. Responsive Media Basics
+            </h2>
+
+            <p>
+                Images, video and embedded content should not overflow
+                smaller screens.
+            </p>
+
+            <pre class="code-block"><code>img,
+video,
+iframe {
+    max-width: 100%;
+}</code></pre>
+
+            <p>
+                CSS will become much more powerful for responsive layouts
+                when we reach the CSS section of this course.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             22. COMMON MISTAKES
+             ================================================= -->
+
+        <section class="content-card">
+
+            <span class="section-label">
+                COMMON MISTAKES
+            </span>
+
+            <h2>
+                22. Common Text, Link and Media Mistakes
+            </h2>
+
+            <div class="wt-l8-example-grid">
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Mistake 01
+                    </h4>
+
+                    <p>
+                        Using headings only because they look large.
+                    </p>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Mistake 02
+                    </h4>
+
+                    <p>
+                        Using many <code>&lt;br&gt;</code> elements for layout.
+                    </p>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Mistake 03
+                    </h4>
+
+                    <p>
+                        Leaving useful images without meaningful alt text.
+                    </p>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Mistake 04
+                    </h4>
+
+                    <p>
+                        Using a clickable image without explaining its purpose.
+                    </p>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Mistake 05
+                    </h4>
+
+                    <p>
+                        Opening external pages in new tabs without considering
+                        the security relationship.
+                    </p>
+
+                </article>
+
+                <article class="wt-l8-example-card">
+
+                    <h4>
+                        Mistake 06
+                    </h4>
+
+                    <p>
+                        Embedding media that cannot be used on mobile screens.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             23. INTERACTIVE PLAYGROUND
+             ================================================= -->
+
+        <section class="content-card" id="playground">
+
+            <span class="section-label">
+                INTERACTIVE LAB
+            </span>
+
+            <h2>
+                23. HTML Text, Links &amp; Media Playground
+            </h2>
+
+            <p>
+                Write HTML on the left and see the browser-rendered result
+                on the right.
+            </p>
+
+            <div class="wt-l8-playground">
+
+                <div class="wt-l8-playground-panel">
+
+                    <h3>
+                        Your HTML
+                    </h3>
+
+                    <textarea
+                        id="htmlPlaygroundInput"
+                        spellcheck="false"
+                    >&lt;h2&gt;Welcome to CodeBhavya&lt;/h2&gt;
+
+&lt;p&gt;
+    Learn &lt;strong&gt;HTML&lt;/strong&gt;
+    step by step.
+&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;a href="https://codebhavya.com/" target="_blank" rel="noopener noreferrer"&gt;
+        Visit CodeBhavya
+    &lt;/a&gt;
+&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;img
+        src="https://dummyimage.com/600x250/23282d/65cbd2&amp;text=CodeBhavya"
+        alt="CodeBhavya learning platform"
+        style="max-width:100%;"
+    &gt;
+    &lt;figcaption&gt;Learn by understanding.&lt;/figcaption&gt;
+&lt;/figure&gt;</textarea>
+
+                    <div class="wt-l8-playground-actions">
+
+                        <button
+                            type="button"
+                            class="wt-l8-run"
+                            id="runHtmlPlayground"
+                        >
+                            ▶ Run HTML
+                        </button>
+
+                        <button
+                            type="button"
+                            class="wt-l8-reset"
+                            id="resetHtmlPlayground"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="wt-l8-playground-panel">
+
+                    <h3>
+                        Browser Preview
+                    </h3>
+
+                    <div
+                        class="wt-l8-preview"
+                        id="htmlPlaygroundPreview"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             24. PRACTICE
+             ================================================= -->
+
+        <section class="content-card" id="practiceArena">
+
+            <span class="section-label">
+                PRACTICE ARENA
+            </span>
+
+            <h2>
+                24. Practice Challenges
+            </h2>
+
+            <p>
+                Try these challenges without looking at the solution first.
+            </p>
+
+            <div class="challenge-list">
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 01 — Text Page</strong>
+                        <span>Easy</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Create an HTML page containing a title,
+                            three headings and four paragraphs.
+                        </p>
+
+                        <p>
+                            <strong>Goal:</strong>
+                            Practice document hierarchy.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 02 — Course Navigation</strong>
+                        <span>Easy</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Create links for Home, C, Python, AI &amp; ML
+                            and Web Technologies.
+                        </p>
+
+                        <p>
+                            Use relative links for pages inside your website.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 03 — Internal Navigation</strong>
+                        <span>Easy</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Create a page with Introduction, HTML, CSS and
+                            JavaScript sections. Add a navigation menu that
+                            jumps to each section.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 04 — Accessible Image</strong>
+                        <span>Medium</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Add three images:
+                        </p>
+
+                        <ul>
+                            <li>An informative diagram</li>
+                            <li>A decorative icon</li>
+                            <li>A course thumbnail</li>
+                        </ul>
+
+                        <p>
+                            Write appropriate alt text for each.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 05 — Media Page</strong>
+                        <span>Medium</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Create a page containing an image, audio player,
+                            video player and an iframe.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 06 — Code Documentation</strong>
+                        <span>Medium</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Create an HTML tutorial explaining
+                            <code>&lt;a&gt;</code>,
+                            <code>&lt;img&gt;</code>,
+                            <code>&lt;audio&gt;</code> and
+                            <code>&lt;video&gt;</code>.
+                        </p>
+
+                        <p>
+                            Display the examples using
+                            <code>&lt;pre&gt;</code> and
+                            <code>&lt;code&gt;</code>.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 07 — CodeBhavya Lesson</strong>
+                        <span>Hard</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Build a complete HTML-only CodeBhavya lesson.
+                        </p>
+
+                        <p>
+                            Include headings, paragraphs, internal navigation,
+                            external links, images, figure captions, audio,
+                            video and a final resources section.
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="challenge-card">
+
+                    <summary>
+                        <strong>Challenge 08 — Placement Resource Page</strong>
+                        <span>Hard</span>
+                    </summary>
+
+                    <div class="challenge-body">
+
+                        <p>
+                            Build a placement preparation resource page
+                            containing links to C, DSA, Python, Java and
+                            aptitude resources.
+                        </p>
+
+                        <p>
+                            Add relevant images and a video learning resource.
+                        </p>
+
+                    </div>
+
+                </details>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             25. KNOWLEDGE CHECK
+             ================================================= -->
+
+        <section class="content-card" id="knowledgeCheck">
+
+            <span class="section-label">
+                KNOWLEDGE CHECK
+            </span>
+
+            <h2>
+                25. Test Your Understanding
+            </h2>
+
+            <div class="wt-l8-mcq">
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 01
+                    </h3>
+
+                    <p>
+                        Which element represents a paragraph?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. &lt;heading&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. &lt;p&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. &lt;text&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. &lt;para&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 02
+                    </h3>
+
+                    <p>
+                        Which element creates a hyperlink?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. &lt;link&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. &lt;a&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. &lt;href&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. &lt;url&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 03
+                    </h3>
+
+                    <p>
+                        Which attribute specifies the destination of a link?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. src
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. href
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. link
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. destination
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 04
+                    </h3>
+
+                    <p>
+                        Which attribute provides alternative text for an image?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            A. alt
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            B. title
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. text
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. description
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 05
+                    </h3>
+
+                    <p>
+                        Which element is used for audio?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. &lt;sound&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. &lt;audio&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. &lt;music&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. &lt;media&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 06
+                    </h3>
+
+                    <p>
+                        Which element is used to embed video?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. &lt;movie&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. &lt;video&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. &lt;media&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. &lt;film&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 07
+                    </h3>
+
+                    <p>
+                        Which element provides a caption for a figure?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. &lt;caption&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. &lt;figcaption&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. &lt;figure-title&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. &lt;label&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+
+                <article class="wt-l8-question">
+
+                    <h3>
+                        Question 08
+                    </h3>
+
+                    <p>
+                        Which element embeds another browsing context?
+                    </p>
+
+                    <div class="wt-l8-options">
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            A. &lt;embed-page&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="correct">
+                            B. &lt;iframe&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            C. &lt;framepage&gt;
+                        </button>
+
+                        <button class="wt-l8-option" data-answer="wrong">
+                            D. &lt;window&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt-l8-answer"></div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             INTERVIEW PREPARATION
+             ================================================= -->
+
+        <section class="content-card" id="interviewPreparation">
+
+            <span class="section-label">
+                INTERVIEW PREPARATION
+            </span>
+
+            <h2>
+                26. Interview Preparation
+            </h2>
+
+            <p>
+                Hover over a card to reveal the answer.
+            </p>
+
+            <div class="wt-l8-interview-grid">
+
+                <article class="wt-l8-flip-card" tabindex="0">
+
+                    <div class="wt-l8-flip-inner">
+
+                        <div class="wt-l8-flip-front">
+
+                            <span>
+                                QUESTION 01
+                            </span>
+
+                            <h3>
+                                What is the difference between strong and b?
+                            </h3>
+
+                        </div>
+
+                        <div class="wt-l8-flip-back">
+
+                            <p>
+                                <code>&lt;strong&gt;</code> conveys strong
+                                importance, while <code>&lt;b&gt;</code>
+                                mainly draws attention without adding the
+                                same semantic meaning.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card" tabindex="0">
+
+                    <div class="wt-l8-flip-inner">
+
+                        <div class="wt-l8-flip-front">
+
+                            <span>
+                                QUESTION 02
+                            </span>
+
+                            <h3>
+                                What is the purpose of alt?
+                            </h3>
+
+                        </div>
+
+                        <div class="wt-l8-flip-back">
+
+                            <p>
+                                It provides a text alternative that
+                                communicates the useful meaning of an image
+                                when the image cannot be perceived.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card" tabindex="0">
+
+                    <div class="wt-l8-flip-inner">
+
+                        <div class="wt-l8-flip-front">
+
+                            <span>
+                                QUESTION 03
+                            </span>
+
+                            <h3>
+                                What is href?
+                            </h3>
+
+                        </div>
+
+                        <div class="wt-l8-flip-back">
+
+                            <p>
+                                <code>href</code> specifies the destination
+                                of an anchor link.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card" tabindex="0">
+
+                    <div class="wt-l8-flip-inner">
+
+                        <div class="wt-l8-flip-front">
+
+                            <span>
+                                QUESTION 04
+                            </span>
+
+                            <h3>
+                                What is the difference between absolute and relative URLs?
+                            </h3>
+
+                        </div>
+
+                        <div class="wt-l8-flip-back">
+
+                            <p>
+                                An absolute URL identifies a complete address.
+                                A relative URL describes a location relative
+                                to the current document.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card" tabindex="0">
+
+                    <div class="wt-l8-flip-inner">
+
+                        <div class="wt-l8-flip-front">
+
+                            <span>
+                                QUESTION 05
+                            </span>
+
+                            <h3>
+                                Why use figure and figcaption?
+                            </h3>
+
+                        </div>
+
+                        <div class="wt-l8-flip-back">
+
+                            <p>
+                                They group media with an associated caption,
+                                making the relationship between the content
+                                and its explanation explicit.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card" tabindex="0">
+
+                    <div class="wt-l8-flip-inner">
+
+                        <div class="wt-l8-flip-front">
+
+                            <span>
+                                QUESTION 06
+                            </span>
+
+                            <h3>
+                                Why use source inside video?
+                            </h3>
+
+                        </div>
+
+                        <div class="wt-l8-flip-back">
+
+                            <p>
+                                Multiple source files can be supplied so the
+                                browser can choose a format it supports.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             QUICK REVISION
+             ================================================= -->
+
+        <section class="content-card" id="quickRevision">
+
+            <span class="section-label">
+                QUICK REVISION
+            </span>
+
+            <h2>
+                27. Quick Revision
+            </h2>
+
+            <div class="wt-l8-table-wrap">
+
+                <table class="wt-l8-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Concept</th>
+                            <th>Remember</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Paragraph</td>
+                            <td><code>&lt;p&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Heading</td>
+                            <td><code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Hyperlink</td>
+                            <td><code>&lt;a href="..."&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Internal link</td>
+                            <td><code>href="#id"</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Image</td>
+                            <td><code>&lt;img&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Image alternative</td>
+                            <td><code>alt</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Figure</td>
+                            <td><code>&lt;figure&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Figure caption</td>
+                            <td><code>&lt;figcaption&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Audio</td>
+                            <td><code>&lt;audio&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Video</td>
+                            <td><code>&lt;video&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Media source</td>
+                            <td><code>&lt;source&gt;</code></td>
+                        </tr>
+
+                        <tr>
+                            <td>Embedded browsing context</td>
+                            <td><code>&lt;iframe&gt;</code></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GLOSSARY
+             ================================================= -->
+
+        <section class="content-card" id="glossary">
+
+            <span class="section-label">
+                GLOSSARY
+            </span>
+
+            <h2>
+                28. Glossary
+            </h2>
+
+            <p>
+                Hover over each card to reveal the definition.
+            </p>
+
+            <div class="wt-l8-glossary-grid">
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 01</span>
+                            <h3>Anchor</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                An HTML element used to create hyperlinks.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 02</span>
+                            <h3>Absolute URL</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                A complete URL containing the full destination
+                                address.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 03</span>
+                            <h3>Relative URL</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                A URL interpreted relative to the current
+                                document or site location.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 04</span>
+                            <h3>Alternative Text</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                Text that communicates the useful meaning
+                                of an image.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 05</span>
+                            <h3>Figure</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                A self-contained piece of media or content
+                                that can have an associated caption.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 06</span>
+                            <h3>Iframe</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                An element used to embed another browsing
+                                context inside the current page.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 07</span>
+                            <h3>Media Source</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                A specific audio or video resource supplied
+                                using the source element.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 08</span>
+                            <h3>Semantic Emphasis</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                Marking content according to its meaning,
+                                such as strong importance or emphasis.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="wt-l8-flip-card wt-term-card" tabindex="0" role="button" aria-pressed="false">
+
+                    <div class="wt-l8-flip-inner wt-term-inner">
+
+                        <div class="wt-l8-flip-front wt-term-front">
+                            <span>TERM 09</span>
+                            <h3>Responsive Media</h3>
+                        </div>
+
+                        <div class="wt-l8-flip-back wt-term-back">
+                            <p>
+                                Media that can adapt to available screen
+                                space without causing unwanted overflow.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FINAL CHALLENGE
+             ================================================= -->
+
+        <section class="content-card" id="finalChallenge">
+
+            <span class="section-label">
+                FINAL CHALLENGE
+            </span>
+
+            <h2>
+                29. Build a Complete HTML Media Lesson
+            </h2>
+
+            <p>
+                Create one complete HTML page called
+                <strong>web-learning-resources.html</strong>.
+            </p>
+
+            <div class="wt-l8-checklist">
+
+                <div class="wt-l8-check-item">
+                    ✓ Add a meaningful h1.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add at least three h2 sections.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add paragraphs.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add internal navigation links.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add two external links.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add an informative image.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add figure and figcaption.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add an audio player.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add a video player.
+                </div>
+
+                <div class="wt-l8-check-item">
+                    ✓ Add an iframe with a meaningful title.
+                </div>
+
+            </div>
+
+            <div class="wt-l8-tip">
+
+                <strong>Placement mindset:</strong>
+
+                Do not merely memorize tags. Be able to explain
+                <em>why</em> you selected each element.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             COMPLETION
+             ================================================= -->
+
+        <section class="content-card">
+
+            <div class="wt-l8-completion">
+
+                <div class="wt-l8-completion-mark">
+                    ✓
+                </div>
+
+                <span class="section-label">
+                    LEVEL COMPLETE
+                </span>
+
+                <h2>
+                    You Can Now Build Rich HTML Content
+                </h2>
+
+                <p>
+                    You now understand how HTML represents text,
+                    creates navigation and embeds different types
+                    of media.
+                </p>
+
+                <p>
+                    The next major step is to expand your HTML knowledge
+                    with additional document structures and controls before
+                    moving deeper into CSS.
+                </p>
+
+                <div class="wt-l8-progress">
+                    <span id="levelProgressBar"></span>
+                </div>
+
+                <p id="completionText">
+                    Complete the knowledge check and practice challenges
+                    to reinforce this level.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <nav
+            class="wt-l8-mini-nav"
+            aria-label="Level navigation"
+        >
+
+            <a href="html-fundamentals.html">
+
+                <span>
+                    ← Previous Level
+                </span>
+
+                <strong>
+                    Level 07 — Semantic HTML
+                </strong>
+
+            </a>
+
+            <a href="html-fundamentals.html">
+
+                <span>
+                    Next Level →
+                </span>
+
+                <strong>
+                    Level 09 — HTML Lists
+                </strong>
+
+            </a>
+
+        </nav>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+
+
+<script>
+"use strict";
+
+/* =========================================================
+   CODEBHAVYA — LEVEL 08 INTERACTIONS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* -----------------------------------------------------
+       MOBILE NAVIGATION
+       ----------------------------------------------------- */
+
+    const menuButton =
+        document.getElementById("mobileMenuToggle");
+
+    const mainNav =
+        document.getElementById("mainNav");
+
+    if (menuButton && mainNav) {
+
+        menuButton.addEventListener("click", function () {
+
+            const opened =
+                mainNav.classList.toggle("is-open");
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                opened ? "true" : "false"
+            );
+
+        });
+
+    }
+
+
+    /* -----------------------------------------------------
+       READING PROGRESS
+       ----------------------------------------------------- */
+
+    const progress =
+        document.getElementById("readingProgress");
+
+    function updateReadingProgress() {
+
+        if (!progress) {
+            return;
+        }
+
+        const documentHeight =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+        if (documentHeight <= 0) {
+            progress.style.width = "100%";
+            return;
+        }
+
+        const percentage =
+            (window.scrollY / documentHeight) * 100;
+
+        progress.style.width =
+            Math.min(100, Math.max(0, percentage)) + "%";
+    }
+
+    window.addEventListener(
+        "scroll",
+        updateReadingProgress,
+        { passive: true }
+    );
+
+    updateReadingProgress();
+
+
+    /* -----------------------------------------------------
+       TOPIC SEARCH
+       ----------------------------------------------------- */
+
+    const searchInput =
+        document.getElementById("topicSearch");
+
+    if (searchInput) {
+
+        const sidebarLinks =
+            document.querySelectorAll(
+                ".sidebar .wt-topic-link"
+            );
+
+        searchInput.addEventListener(
+            "input",
+            function () {
+
+                const query =
+                    searchInput.value
+                        .trim()
+                        .toLowerCase();
+
+                sidebarLinks.forEach(
+                    function (link) {
+
+                        const text =
+                            link.textContent.toLowerCase();
+
+                        link.style.display =
+                            !query || text.includes(query)
+                                ? ""
+                                : "none";
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       HTML PLAYGROUND
+       ----------------------------------------------------- */
+
+    const playgroundInput =
+        document.getElementById(
+            "htmlPlaygroundInput"
+        );
+
+    const playgroundPreview =
+        document.getElementById(
+            "htmlPlaygroundPreview"
+        );
+
+    const runButton =
+        document.getElementById(
+            "runHtmlPlayground"
+        );
+
+    const resetButton =
+        document.getElementById(
+            "resetHtmlPlayground"
+        );
+
+    const defaultHTML =
+`<h2>Welcome to CodeBhavya</h2>
+
+<p>
+    Learn <strong>HTML</strong>
+    step by step.
+</p>
+
+<p>
+    <a
+        href="https://codebhavya.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Visit CodeBhavya
+    </a>
+</p>
+
+<figure>
+    <img
+        src="https://dummyimage.com/600x250/23282d/65cbd2&text=CodeBhavya"
+        alt="CodeBhavya learning platform"
+        style="max-width:100%;"
+    >
+    <figcaption>
+        Learn by understanding.
+    </figcaption>
+</figure>`;
+
+    function runPlayground() {
+
+        if (!playgroundInput ||
+            !playgroundPreview) {
+            return;
+        }
+
+        /*
+         * This playground intentionally renders the user's HTML
+         * into a sandboxed iframe rather than directly injecting
+         * it into the lesson DOM.
+         */
+
+        playgroundPreview.innerHTML = "";
+
+        const frame =
+            document.createElement("iframe");
+
+        frame.title =
+            "HTML playground preview";
+
+        frame.style.width = "100%";
+        frame.style.height = "280px";
+        frame.style.border = "0";
+        frame.style.borderRadius = "8px";
+        frame.setAttribute(
+            "sandbox",
+            ""
+        );
+
+        playgroundPreview.appendChild(frame);
+
+        const frameDocument =
+            frame.contentDocument ||
+            frame.contentWindow.document;
+
+        frameDocument.open();
+
+        frameDocument.write(
+            "<!doctype html>" +
+            "<html><head>" +
+            "<meta charset='utf-8'>" +
+            "<style>" +
+            "body{font-family:Arial,sans-serif;padding:18px;color:#111;}" +
+            "img{max-width:100%;}" +
+            "figure{margin:15px 0;}" +
+            "figcaption{color:#555;}" +
+            "a{color:#176b75;}" +
+            "</style>" +
+            "</head><body>" +
+            playgroundInput.value +
+            "</body></html>"
+        );
+
+        frameDocument.close();
+    }
+
+    if (runButton) {
+
+        runButton.addEventListener(
+            "click",
+            runPlayground
+        );
+
+    }
+
+    if (resetButton) {
+
+        resetButton.addEventListener(
+            "click",
+            function () {
+
+                playgroundInput.value =
+                    defaultHTML;
+
+                runPlayground();
+
+            }
+        );
+
+    }
+
+    if (playgroundInput) {
+
+        playgroundInput.value =
+            defaultHTML;
+
+        runPlayground();
+
+    }
+
+
+    /* -----------------------------------------------------
+       MCQ SYSTEM
+       ----------------------------------------------------- */
+
+    const questions =
+        document.querySelectorAll(
+            ".wt-l8-question"
+        );
+
+    let answeredQuestions = 0;
+
+    questions.forEach(
+        function (question) {
+
+            const options =
+                question.querySelectorAll(
+                    ".wt-l8-option"
+                );
+
+            const answer =
+                question.querySelector(
+                    ".wt-l8-answer"
+                );
+
+            options.forEach(
+                function (option) {
+
+                    option.addEventListener(
+                        "click",
+                        function () {
+
+                            if (
+                                question.dataset.answered ===
+                                "true"
+                            ) {
+                                return;
+                            }
+
+                            question.dataset.answered =
+                                "true";
+
+                            answeredQuestions++;
+
+                            const correct =
+                                option.dataset.answer ===
+                                "correct";
+
+                            option.classList.add(
+                                correct
+                                    ? "correct"
+                                    : "wrong"
+                            );
+
+                            if (correct) {
+
+                                answer.textContent =
+                                    "✓ Correct. Well done.";
+
+                            } else {
+
+                                const correctOption =
+                                    question.querySelector(
+                                        '[data-answer="correct"]'
+                                    );
+
+                                if (correctOption) {
+
+                                    correctOption.classList.add(
+                                        "correct"
+                                    );
+
+                                }
+
+                                answer.textContent =
+                                    "✗ Not quite. Review the correct option highlighted above.";
+
+                            }
+
+                            updateCompletion();
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       COMPLETION
+       ----------------------------------------------------- */
+
+    const progressBar =
+        document.getElementById(
+            "levelProgressBar"
+        );
+
+    const completionText =
+        document.getElementById(
+            "completionText"
+        );
+
+    function updateCompletion() {
+
+        if (!progressBar) {
+            return;
+        }
+
+        const total =
+            questions.length;
+
+        const percentage =
+            total
+                ? (answeredQuestions / total) * 100
+                : 0;
+
+        progressBar.style.width =
+            percentage + "%";
+
+        if (
+            completionText &&
+            answeredQuestions === total
+        ) {
+
+            completionText.textContent =
+                "✓ Knowledge Check completed. Level 08 has been reinforced successfully.";
+
+        }
+
+    }
+
+});
+</script>
+
+<script src="web-technologies-presentation.js?v=3"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+</body>
+</html>

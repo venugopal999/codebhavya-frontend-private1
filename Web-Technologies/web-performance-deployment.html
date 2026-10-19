@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn caching, compression, loading priorities, performance measurement and safe releases through diagrams, a cache decision lab and MCQs.">
+
+    
+
+    <title>
+        Level 29 — Web Performance and Deployment | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/web-performance-deployment.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt29-skip-link" href="#wt29Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt29Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 29</div><div class="level-badge">LEVEL 29 · PERFORMANCE + DEPLOYMENT</div><h1>Web Performance and Deployment</h1><p class="wt-hero-description">Measure real experience, deliver smaller resources and publish predictable releases.</p><div class="wt-hero-meta"><span>⏱️ Measure first</span><span>📦 Cache + compress</span><span>🚀 Safe releases</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level28 protected application boundaries. </li><li>Level29 asks how to deliver the same correct experience with less delay, smaller transfers and predictable releases. </li><li>Distinguish a measurement from an estimate, <strong class="wt-content-key">cache</strong> freshness from <strong class="wt-content-key">validation</strong>, and deployment success from live-site correctness.</li></ul><div class="code-block"><pre><code>measure → identify bottleneck → change → verify → release</code></pre></div><p><strong>Outcome worksheet:</strong> Explain the change in user-visible behavior as well as its effect on transferred bytes.</p></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🗺️</span>Follow the Page Loading Journey</h2><ul class="wt-content-points"><li>A page visit includes connection work, a document <strong class="wt-content-key">response</strong>, discovery of dependent resources, parsing, <strong class="wt-content-key">rendering</strong> and script execution. </li><li>Some work overlaps; a simple sum of file sizes does not predict when the page becomes useful. </li><li>A small blocking script can delay discovery and <strong class="wt-content-key">rendering</strong> even when images dominate bytes.</li></ul><div class="code-block"><pre><code>document request
+critical CSS and main content
+script execution and interaction
+secondary content</code></pre></div><ul class="wt-content-points"><li><strong>Investigation sequence:</strong> In the network waterfall, inspect dependencies and timing. </li><li>In the <strong class="wt-content-key">performance</strong> trace, inspect main-thread work; a fast download does not imply a <strong class="wt-content-key">responsive</strong> page.</li></ul><figure class="wt-diagram"><figcaption>From request to usable page</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Response</strong><p>Receive the document</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Discover</strong><p>Find required resources</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Render</strong><p>Present and respond</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">📊</span>Measure User Experience</h2><ul class="wt-content-points"><li>Largest Contentful Paint describes main-content loading, Interaction to Next Paint describes interaction responsiveness, and Cumulative Layout Shift describes unexpected visual movement. </li><li>Use field observations across representative devices alongside repeatable laboratory tests. </li><li>A single favorable run cannot establish what most visitors experience.</li></ul><div class="code-block"><pre><code>page + release + device/network conditions
+loading / interaction / layout movement
+repeat runs + field distribution</code></pre></div><ul class="wt-content-points"><li><strong>Measurement record:</strong> Current good targets are <strong class="wt-content-key">LCP</strong> at most2.5 seconds, <strong class="wt-content-key">INP</strong> at most200 milliseconds and CLS at most0.1, assessed at the75th percentile for mobile and desktop separately. </li><li>These metrics do not measure every aspect of usability.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Set a Baseline and a Performance Budget</h2><ul class="wt-content-points"><li>Choose a meaningful page and interaction, record the current release and repeat conditions, then decide an acceptable budget for initial resources and responsiveness. </li><li>A budget is a project decision, not a universal rule. </li><li>Compare equivalent scenarios before claiming an improvement.</li></ul><div class="code-block"><pre><code>initial script transfer: project-defined limit
+main image: correct display dimensions
+interaction: no unnecessary synchronous work</code></pre></div><ul class="wt-content-points"><li><strong>Budget example — chosen for a practice project:</strong> Use cold and repeat visits, a slower device, <strong class="wt-content-key">keyboard</strong> interaction and realistic content. </li><li>Preserve functionality and <strong class="wt-content-key">accessibility</strong> while optimizing.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Reduce Resource Work</h2><ul class="wt-content-points"><li>Remove unused code and duplicate dependencies before adding complex delivery tricks. </li><li><strong class="wt-content-key">Minification</strong> removes unnecessary source bytes; <strong class="wt-content-key">compression</strong> changes transfer encoding; neither removes the execution cost of unused JavaScript. </li><li>Split optional features when their discovery and interaction requirements justify it.</li></ul><div class="code-block"><pre><code>is this library needed on this page?
+is the same feature loaded twice?
+can optional work start after user intent?</code></pre></div><ul class="wt-content-points"><li><strong>Code review questions:</strong> Do not split so aggressively that dependency chains create new delays. </li><li>Check bundle composition and the actual execution trace after each change.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🖼️</span>Images and Stable Layout</h2><ul class="wt-content-points"><li>Serve appropriately sized images, choose a suitable format, and reserve layout space with dimensions or an aspect ratio. </li><li>Lazy-load suitable offscreen content. </li><li>Do not lazy-load the likely main above-the-fold image merely to reduce initial bytes; delaying it can harm main-content loading.</li></ul><div class="code-block"><pre><code>&lt;img src=&quot;diagram.webp&quot; alt=&quot;Request passing through a cache&quot;
+     width=&quot;800&quot; height=&quot;450&quot; loading=&quot;lazy&quot;&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Offscreen image illustration:</strong> This source is illustrative and requires the actual file. </li><li>Dimensions reserve space; <strong class="wt-content-key">responsive</strong> image candidates can avoid transferring an unnecessarily large asset.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">⚙️</span>Script Loading and Main-Thread Work</h2><ul class="wt-content-points"><li>For external classic scripts, <strong class="wt-content-key">defer</strong> allows parsing to continue and preserves ordered execution after parsing. </li><li><strong class="wt-content-key">Async</strong> executes when ready without preserving dependency order. </li><li>Module scripts <strong class="wt-content-key">defer</strong> by default unless configured otherwise. </li><li>Avoid loading dependent scripts as independent <strong class="wt-content-key">async</strong> tasks.</li></ul><div class="code-block"><pre><code>&lt;script src=&quot;lesson-controls.js&quot; defer&gt;&lt;/script&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Classic script with a DOM dependency:</strong> Choose ordering deliberately. </li><li>Then reduce long synchronous tasks, measure <strong class="wt-content-key">event</strong> handlers, and avoid repeating expensive <strong class="wt-content-key">DOM</strong> work on every scroll event.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🗂️</span>Browser, Shared and Application Caches</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">cache</strong> is private to a client; a shared cache may serve many clients. </li><li>Application-managed caches and service workers introduce additional logic. </li><li>A <strong class="wt-content-key">CDN</strong> hit does not prove that the <strong class="wt-content-key">browser</strong> fetched the latest representation, and a browser cache hit may skip the CDN entirely.</li></ul><div class="code-block"><pre><code>browser → shared edge → origin
+service worker: separate application-controlled interception</code></pre></div><ul class="wt-content-points"><li><strong>Cache boundary map:</strong> Identify which layer serves the <strong class="wt-content-key">response</strong> before clearing caches. </li><li>Never place personalized data into a shared <strong class="wt-content-key">cache</strong> accidentally; identity and permissions must remain correct.</li></ul><figure class="wt-diagram"><figcaption>Identify the serving layer</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">💻</span><strong>Browser</strong><p>Private stored <strong class="wt-content-key">response</strong></p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>Edge</strong><p>Shared delivery layer</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Origin</strong><p>Published representation</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">⏳</span>Freshness — Reuse Without Validation</h2><ul class="wt-content-points"><li>An explicit <strong class="wt-content-key">max-age</strong> defines a freshness lifetime. </li><li>While a stored <strong class="wt-content-key">response</strong> is fresh, a normal eligible <strong class="wt-content-key">request</strong> may reuse it without contacting the origin. </li><li>At the lifetime boundary it is stale. </li><li>Real age calculations include <strong class="wt-content-key">response</strong> metadata and time in transit; the lab uses one simplified local clock.</li></ul><div class="code-block"><pre><code>Cache-Control: public, max-age=60
+ETag: &quot;release-1&quot;</code></pre></div><ul class="wt-content-points"><li><strong>Illustrative response headers:</strong> A release published at the same <strong class="wt-content-key">URL</strong> does not directly alter an already fresh <strong class="wt-content-key">browser</strong> entry. </li><li>A short lifetime trades more <strong class="wt-content-key">validation</strong> opportunities for fewer long-lived stale views.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Validation — Ask Whether It Changed</h2><ul class="wt-content-points"><li>A stale stored <strong class="wt-content-key">response</strong> with a <strong class="wt-content-key">validator</strong> can be checked using a conditional request. </li><li><strong class="wt-content-key">If-None-Match</strong> supplies the stored <strong class="wt-content-key">ETag</strong>. </li><li>An unchanged representation may produce304 without a <strong class="wt-content-key">response</strong> body; the client continues using its stored content and updates metadata. </li><li>A changed representation needs a full <strong class="wt-content-key">response</strong>.</li></ul><div class="code-block"><pre><code>GET /release.txt
+If-None-Match: &quot;release-1&quot;
+
+unchanged →304, reuse stored body
+changed →200, replace stored body</code></pre></div><ul class="wt-content-points"><li><strong>Conditional read illustration:</strong> <strong class="wt-content-key">Validation</strong> still requires network work. </li><li>Do not describe a304 as a fresh <strong class="wt-content-key">cache</strong> hit or attempt to parse its absent body as a new document.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Choose a Cache Policy for the Resource</h2><ul class="wt-content-points"><li><strong class="wt-content-key">No-cache</strong> permits storage but requires <strong class="wt-content-key">validation</strong> before reuse. </li><li><strong class="wt-content-key">No-store</strong> directs <strong class="wt-content-key">HTTP</strong> caches not to store the response. </li><li>Private restricts shared-cache storage; it does not itself make a <strong class="wt-content-key">response</strong> uncacheable in a <strong class="wt-content-key">browser</strong>. </li><li>Freshness and permission to store are separate decisions.</li></ul><div class="code-block"><pre><code>changing document: Cache-Control: no-cache
+sensitive response: Cache-Control: no-store
+fingerprinted public asset: long max-age + immutable</code></pre></div><ul class="wt-content-points"><li><strong>Different resource contracts:</strong> These are examples, not a blanket configuration for this website. </li><li><strong class="wt-content-key">No-store</strong> is not a <strong class="wt-content-key">promise</strong> to erase previously stored copies; application caches and actual provider settings need separate attention.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🗜️</span>Compression and Representation Variants</h2><ul class="wt-content-points"><li>A suitable content coding can reduce transferred text bytes when the client and <strong class="wt-content-key">server</strong> support it. </li><li>Already compressed media may gain little. </li><li><strong class="wt-content-key">Content-Encoding</strong> describes the representation coding, and Vary: Accept-Encoding helps caches distinguish negotiated variants. </li><li>Savings depend on actual content and configuration.</li></ul><div class="code-block"><pre><code>Accept-Encoding: gzip, br
+
+Content-Encoding: gzip
+Vary: Accept-Encoding</code></pre></div><ul class="wt-content-points"><li><strong>Negotiation illustration:</strong> The lab uses fixed12000-byte identity and4000-byte gzip fixture bodies. </li><li>It runs no compressor and predicts no latency. </li><li>Byte counters exclude headers, connection costs and processing.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🚀</span>Release Identity and Safe Deployment</h2><ul class="wt-content-points"><li>Connect an accepted source commit to a successful production build and the domain serving it. </li><li>Review the actual output directory and required assets. </li><li>A green build proves completion of its configured steps; it does not prove all pages, APIs or custom-domain routes work.</li></ul><div class="code-block"><pre><code>commit → production build → deployed version
+custom domain → document → referenced asset versions</code></pre></div><ul class="wt-content-points"><li><strong>Release sequence:</strong> Publish new fingerprinted asset URLs with document references to that release. </li><li>Keep old assets available long enough for older documents. </li><li>A query-string version can identify a resource only if the relevant <strong class="wt-content-key">cache</strong> key respects it.</li></ul><figure class="wt-diagram"><figcaption>A release needs a matching asset set</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧾</span><strong>Commit</strong><p>Accepted source</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏗️</span><strong>Build</strong><p>Produced output</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🚀</span><strong>Domain</strong><p>Verified release</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Diagnose an Update That Is Not Visible</h2><ul class="wt-content-points"><li>First verify the commit, production branch, <strong class="wt-content-key">deployment</strong> status and serving domain. </li><li>Then inspect the returned document, asset <strong class="wt-content-key">URL</strong>, <strong class="wt-content-key">response</strong> headers and browser network result. </li><li>Distinguish build <strong class="wt-content-key">cache</strong> from delivery cache: cached build dependencies are not the same as a stored <strong class="wt-content-key">browser</strong> response.</li></ul><div class="code-block"><pre><code>correct commit and output?
+correct production domain?
+old document or old referenced script?
+browser / edge / service-worker layer?</code></pre></div><ul class="wt-content-points"><li><strong>Diagnosis checklist:</strong> Inspect actual headers from the serving path. </li><li>For Cloudflare static assets a _headers file can configure matching responses, while responses generated by Worker code need headers attached in that code. </li><li>This lesson changes neither production configuration nor <strong class="wt-content-key">cache</strong> policies.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Verify, Monitor and Roll Back</h2><ul class="wt-content-points"><li>Smoke-test navigation, key interactions, error outcomes and <strong class="wt-content-key">backend</strong> calls on the production domain after <strong class="wt-content-key">deployment</strong>. </li><li>Compare <strong class="wt-content-key">performance</strong> under equivalent conditions and monitor real-user regressions. </li><li>Define a <strong class="wt-content-key">rollback</strong> release and confirm document/asset compatibility before relying on it.</li></ul><div class="code-block"><pre><code>before/after under same conditions
+functional + keyboard + mobile checks
+release ID + rollback target
+observed errors and performance</code></pre></div><ul class="wt-content-points"><li><strong>Review record:</strong> Rolling back a <strong class="wt-content-key">frontend</strong> does not automatically reverse <strong class="wt-content-key">database</strong> migrations or invalidate every stored response. </li><li>Coordinate <strong class="wt-content-key">backend</strong> contracts and <strong class="wt-content-key">cache</strong> strategy rather than treating redeploy as universal recovery.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Deliver a Changed Release</h2><p>Follow a changed release through publication, freshness, validation, transfer and presentation. The approved player explains one stale-cache path without a network request.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="performance">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>RELEASE CACHE DECISION TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📦</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Publish an identified release</h3><p data-trace-description>The origin now holds release2 at the stable teaching URL.</p></div><pre class="trace-code"><code data-trace-code>origin v2; browser cached v1</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Release" aria-pressed="true"><span>01</span><strong>Release</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Age" aria-pressed="false"><span>02</span><strong>Age</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Validate" aria-pressed="false"><span>03</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Transfer" aria-pressed="false"><span>04</span><strong>Transfer</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Present" aria-pressed="false"><span>05</span><strong>Present</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Publishing does not directly delete an already fresh browser entry.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Release Cache Decision Lab</h2><ul class="wt-content-points"><li>This synchronous local model has one fictional stable <strong class="wt-content-key">URL</strong> /release.txt, origin release1 and an empty private <strong class="wt-content-key">browser</strong> cache. </li><li>Choose max-age60, <strong class="wt-content-key">no-cache</strong> or <strong class="wt-content-key">no-store</strong>. </li><li>The origin policy stays fixed within an experiment. </li><li>Policy or coding changes start a new experiment and clear all fixtures/counters; that reset is not how a production policy change purges existing caches.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Request</strong> once for a simulated200. </li><li>With max-age60, another <strong class="wt-content-key">request</strong> before age60 uses stored content without network. </li><li>At age60 it validates: unchanged origin gives304 with no body; changed origin gives200. </li><li><strong class="wt-content-key">No-cache</strong> validates every stored reuse. </li><li><strong class="wt-content-key">No-store</strong> transfers a new200 each time and keeps no <strong class="wt-content-key">cache</strong> entry.</li></ul><ul class="wt-content-points"><li>Publish increments the origin version at the same <strong class="wt-content-key">URL</strong> without changing the <strong class="wt-content-key">browser</strong> entry. </li><li>Advance moves a toy clock by whole0–3600 seconds, up to86400 total. </li><li>Both actions clear previous result panels; they do not send requests. </li><li>At most20 origin releases are allowed before reset.</li></ul><ul class="wt-content-points"><li>Identity and gzip represent fixed estimated body sizes12000 and4000 bytes. </li><li>They are not actual encoded content and provide no latency or Web Vitals measurement. </li><li>The counters exclude headers/TLS/processing. </li><li>The model omits real Date/Age, Vary matching, reloads, shared caches, service workers, failures and concurrent requests. </li><li>Only the study-completion marker uses local storage.</li></ul><div class="wt9-demo wt29-lab"><label for="wt29Policy">Fixed origin cache policy · change starts new experiment</label><select id="wt29Policy"><option value="max-age=60">max-age=60</option><option value="no-cache">no-cache</option><option value="no-store">no-store</option></select><label for="wt29Coding">Fixture body coding · change starts new experiment</label><select id="wt29Coding"><option value="identity">identity ·12000 bytes</option><option value="gzip">gzip ·4000 bytes</option></select><label for="wt29Seconds">Advance toy seconds · whole0–3600</label><input type="text" inputmode="numeric" id="wt29Seconds" value="60" maxlength="4"><div class="wt9-actions"><button type="button" class="primary-button" id="wt29Process">Request release</button><button type="button" class="secondary-button" id="wt29Advance">Advance clock</button><button type="button" class="secondary-button" id="wt29Publish">Publish next release</button><button type="button" class="secondary-button" id="wt29Reset">Reset experiment</button></div><p id="wt29Status" role="status">Idle. Local cache model only.</p><h3>Origin, cache and counters · teaching state</h3><pre class="wt29-result"><code id="wt29State"></code></pre><h3>Simulated request</h3><pre class="wt29-result"><code id="wt29Request">No request yet.</code></pre><h3>Decision trace</h3><pre class="wt29-result"><code id="wt29Trace">No trace yet.</code></pre><h3>Delivery result · null status means no network response</h3><pre class="wt29-result"><code id="wt29Response">No response yet.</code></pre><h3>Selected representation ·304 reuses stored body</h3><pre class="wt29-result"><code id="wt29Source">No representation yet.</code></pre><h3>Safe release preview</h3><div class="wt29-preview" id="wt29Preview">No result yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Locate the Delivery Decision</h2><ul class="wt-content-points"><li>If a newly published version is not visible, inspect the stored entry and age first. </li><li>A fresh <strong class="wt-content-key">max-age</strong> entry is allowed to show the previous representation. </li><li>Advancing time alone never fetches a new release; <strong class="wt-content-key">Request</strong> performs the delivery decision.</li></ul><ul class="wt-content-points"><li>A304 means the origin was contacted and the stored representation was still valid. </li><li>It transfers no new body in this lab but still increases the network-request count. </li><li><strong class="wt-content-key">No-store</strong> repeats full transfers. </li><li>Coding changes reset the experiment so two variant caches are never mixed.</li></ul><ul class="wt-content-points"><li>For a real <strong class="wt-content-key">deployment</strong> inspect the actual document and its referenced asset URLs, the serving branch/domain, <strong class="wt-content-key">response</strong> headers and service-worker behavior. </li><li>These teaching counters cannot diagnose production latency or prove <strong class="wt-content-key">cache</strong> configuration.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a200 response guarantee latest code?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a200 response guarantee latest code?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Identify the serving release, resource URL and applicable cache layer.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question No-cache versus no-store?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>No-cache versus no-store?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No-cache permits storage but requires validation; no-store directs HTTP caches not to store.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Fresh hit versus304?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Fresh hit versus304?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A fresh hit can avoid network;304 is a network validation response with no new body.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why fingerprint assets?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why fingerprint assets?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A new asset URL can identify changed content while older documents retain compatible old assets.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Compression versus minification?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Compression versus minification?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Compression changes transfer encoding; minification reduces source bytes. Neither necessarily removes execution work.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why not lazy-load the main visible image?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why not lazy-load the main visible image?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Delaying its discovery/loading can harm main-content presentation.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does a green deployment prove?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does a green deployment prove?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Configured deployment steps succeeded; verify routes, assets, backend contracts and user behavior separately.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a higher lab score prove field performance?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a higher lab score prove field performance?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Measure representative real visits and interactions alongside controlled comparisons.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain Delivery Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Age is less than the fixed lifetime; the stored entry is fresh."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. A max-age60 entry has age59. What does this lab do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always304</button><button type="button" class="wt8-option">Reuse without network</button><button type="button" class="wt8-option">Delete origin</button><button type="button" class="wt8-option">Always200</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The exact boundary is stale and triggers validation."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. At age60 with unchanged origin, what happens?</h3><div class="wt8-options"><button type="button" class="wt8-option">Fresh hit</button><button type="button" class="wt8-option">New release</button><button type="button" class="wt8-option">304 and stored body reuse</button><button type="button" class="wt8-option">No-store</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="It differs from no-store."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. No-cache means?</h3><div class="wt8-options"><button type="button" class="wt8-option">Store but validate before reuse</button><button type="button" class="wt8-option">Never store</button><button type="button" class="wt8-option">Always fresh</button><button type="button" class="wt8-option">No network ever</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="This fixed experiment never creates an HTTP cache entry."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. No-store repeated requests mean here?</h3><div class="wt8-options"><button type="button" class="wt8-option">Reuse forever</button><button type="button" class="wt8-option">Always304</button><button type="button" class="wt8-option">Ignore origin</button><button type="button" class="wt8-option">Full200 each time, no stored entry</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Publication alone does not delete a fresh private cache entry."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Publish at the same URL while old entry is fresh means?</h3><div class="wt8-options"><button type="button" class="wt8-option">Immediate purge</button><button type="button" class="wt8-option">Old cached version may remain visible</button><button type="button" class="wt8-option">Automatic hard reload</button><button type="button" class="wt8-option">No origin change</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The client reuses its stored representation."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What new body is carried by304?</h3><div class="wt8-options"><button type="button" class="wt8-option">Full HTML</button><button type="button" class="wt8-option">New script</button><button type="button" class="wt8-option">None</button><button type="button" class="wt8-option">Always gzip</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Representation negotiation requires suitable cache matching."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What separates coding variants in a real HTTP cache?</h3><div class="wt8-options"><button type="button" class="wt8-option">Appropriate Vary such as Accept-Encoding</button><button type="button" class="wt8-option">Favicon</button><button type="button" class="wt8-option">Lesson number</button><button type="button" class="wt8-option">Cookie name only</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Production correctness needs additional verification."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. A green build proves?</h3><div class="wt8-options"><button type="button" class="wt8-option">All interactions work</button><button type="button" class="wt8-option">All users get latest bytes</button><button type="button" class="wt8-option">No cache exists</button><button type="button" class="wt8-option">Configured build completed</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="External classic defer scripts run after parsing in document order."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which classic script attribute preserves deferred order?</h3><div class="wt8-options"><button type="button" class="wt8-option">async</button><button type="button" class="wt8-option">defer</button><button type="button" class="wt8-option">hidden</button><button type="button" class="wt8-option">lazy</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Its loading is important to main-content presentation."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Which image is often unsuitable for lazy loading?</h3><div class="wt8-options"><button type="button" class="wt8-option">Offscreen diagram</button><button type="button" class="wt8-option">Below-fold thumbnail</button><button type="button" class="wt8-option">Likely main above-fold image</button><button type="button" class="wt8-option">Unused icon</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Equivalent conditions support a meaningful comparison."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What should an optimization comparison hold consistent?</h3><div class="wt8-options"><button type="button" class="wt8-option">Scenario and measurement conditions</button><button type="button" class="wt8-option">Only color</button><button type="button" class="wt8-option">Only domain spelling</button><button type="button" class="wt8-option">Nothing</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The sizes are fixed fixture estimates, excluding important real costs."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Do this lab’s gzip bytes measure actual latency?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only at age60</button><button type="button" class="wt8-option">Only for304</button><button type="button" class="wt8-option">No</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt29QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Follow a Cached Release</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Cold</h3><p>Default <strong class="wt-content-key">Request</strong>:200 release1,12000 bytes, one stored entry.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏳</span><h3>Fresh</h3><p>Repeat at time0: cached release1, no network,0 extra body bytes.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚀</span><h3>Publish</h3><p>Publish release2 and <strong class="wt-content-key">Request</strong> before60: still cached release1.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Changed</h3><p>Advance60 then <strong class="wt-content-key">Request</strong>:200 release2 and replace entry.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Unchanged</h3><p>Advance another60 with no publish:304, no body, stored release2.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>No-cache</h3><p>Change policy resets. <strong class="wt-content-key">Request</strong> twice:200 then304, two network requests.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>No-store</h3><p>Change policy resets. <strong class="wt-content-key">Request</strong> twice:200 twice,24000 bytes, no entry.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗜️</span><h3>Gzip fixture</h3><p>Change coding resets. Cold200 uses4000 estimated bytes. Reset restores defaults.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⏱️</span><strong>Measure:</strong> Field and controlled observations.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📏</span><strong>Budget:</strong> Project-specific limits.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🖼️</span><strong>Images:</strong> Right size and reserved space.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚙️</span><strong>Scripts:</strong> Deliberate order and less work.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Layer:</strong> Identify the serving cache.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⏳</span><strong>Freshness:</strong> Reuse within lifetime.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Validation:</strong> Network check of stored version.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗜️</span><strong>Coding:</strong> Transfer representation variant.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🚀</span><strong>Release:</strong> Source, output and domain agree.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Recovery:</strong> Verify compatible rollback.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term LCP"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>LCP</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>LCP</h4><p>Largest Contentful Paint, a main-content loading metric.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term INP"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>INP</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>INP</h4><p>Interaction to Next Paint, a responsiveness metric.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term CLS"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>CLS</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>CLS</h4><p>Cumulative Layout Shift, a visual-stability metric.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Performance budget"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Performance budget</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Performance budget</h4><p>A chosen limit for resource or user-experience costs.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Freshness lifetime"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Freshness lifetime</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Freshness lifetime</h4><p>The interval during which an eligible stored response can be reused without validation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Validator"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Validator</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Validator</h4><p>Metadata such as an ETag used to check a stored representation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Revalidation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Revalidation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Revalidation</h4><p>Checking whether a stored response remains suitable for reuse.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Content coding"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Content coding</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Content coding</h4><p>An encoding such as gzip applied to a representation for transfer.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Fingerprint"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Fingerprint</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Fingerprint</h4><p>A content-dependent asset identifier used in its resource URL.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Rollback"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Rollback</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Rollback</h4><p>Restoring an earlier compatible release after a regression.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Measured Release Plan</h2><ul class="wt-content-points"><li>Choose a real page and interaction, record a <strong class="wt-content-key">baseline</strong> and release identifier, and propose one change tied to an observed bottleneck. </li><li>Keep functionality and <strong class="wt-content-key">keyboard</strong>/mobile behavior intact. </li><li>Compare equivalent measurements after the change.</li></ul><ul class="wt-content-points"><li>Specify separate policies for changing documents, fingerprinted public assets and sensitive responses. </li><li>Define release-compatible asset references, <strong class="wt-content-key">backend</strong> contracts, smoke checks and a <strong class="wt-content-key">rollback</strong> target. </li><li>Do not treat a <strong class="wt-content-key">browser</strong> refresh as a <strong class="wt-content-key">deployment</strong> verification procedure.</li></ul><ul class="wt-content-points"><li>Predict cold, fresh, stale-unchanged and stale-changed outcomes in the lab, including network counts, body bytes and visible versions. </li><li>Verify actual production headers and <strong class="wt-content-key">performance</strong> independently. </li><li>Next: Level30 — Web Technologies Capstone and Placement.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 29 Complete?</h2><p>Explain delivery layers, predict cache and304 behavior, distinguish fixture bytes from measurements, and describe a verified release/rollback process. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="web-security.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Web Security</span><span class="nav-action">Review Level 28</span></a></div><div class="topic-nav-side next"><a href="web-technologies-capstone-placement.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Web Technologies Capstone and Placement</span><span class="nav-action">Open Level 30</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="web-performance-deployment.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=24" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=21" defer></script>
+</body></html>

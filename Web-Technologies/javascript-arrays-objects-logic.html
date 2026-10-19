@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn JavaScript arrays, objects, copies, callbacks, filtering, sorting and summaries with diagrams, a visualizer, catalog lab and MCQs.">
+
+    
+
+    <title>
+        Level 15 — JavaScript Arrays, Objects and Logic | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/javascript-arrays-objects-logic.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt15-skip-link" href="#wt15Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt15Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 15</div><div class="level-badge">LEVEL 15 · JAVASCRIPT</div><h1>JavaScript Arrays, Objects and Logic</h1><p class="wt-hero-description">Model collections, preserve source data and explain every transformation.</p><div class="wt-hero-meta"><span>📚 Arrays</span><span>🗃️ Objects</span><span>🔗 Data logic</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 14 calculated one workshop’s remaining seats. </li><li>Real pages often manage a collection of workshops. </li><li>This lesson groups values into arrays and objects, derives useful fields, selects matching records, orders the results and calculates a summary.</li></ul><ul class="wt-content-points"><li>You will explain which methods return new arrays, which operations mutate data, and why a new outer <strong class="wt-content-key">array</strong> does not necessarily contain newly copied objects. </li><li>You will also test empty collections, full workshops and equal sort values instead of assuming every collection has a matching first item.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Collections</h3><p>Use <strong class="wt-content-key">array</strong> positions and iteration deliberately.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗃️</span><h3>Records</h3><p>Give related properties meaningful names.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Transformations</h3><p>Distinguish map, filter, find and reduce.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Verification</h3><p>Check source preservation, no-match results and tie behavior.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🗺️</span>Model the Task Before Choosing a Method</h2><ul class="wt-content-points"><li>Our task is a workshop catalog. </li><li>Each record needs a stable ID, title, capacity and reserved count. </li><li>The collection has an order, and a learner may search it or choose only workshops with available places. </li><li>A record’s identity should not depend on its current display position.</li></ul><ul class="wt-content-points"><li>Use an <strong class="wt-content-key">array</strong> when a sequence or collection is useful. </li><li>Use an <strong class="wt-content-key">object</strong> to group named properties of one record. </li><li>An <strong class="wt-content-key">array</strong> of objects combines these roles without forcing capacity, title and reserved values into several separate arrays that must stay synchronized.</li></ul><ul class="wt-content-points"><li>State the data <strong class="wt-content-key">contract</strong> before calculating: capacity and reserved are small non-negative integers, reserved does not exceed capacity, and each workshop has a unique ID. </li><li>This lesson’s lab supplies trusted, predefined records; a real external data source would need its own <strong class="wt-content-key">validation</strong>.</li></ul><figure class="wt-diagram"><figcaption>One catalog, three levels</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📚</span><strong>Array</strong><p>The ordered collection of workshops.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Object</strong><p>One workshop record with named fields.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Property</strong><p>A value such as title, capacity or reserved.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">📚</span>Arrays — Positions, Length and Access</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">array</strong> is an <strong class="wt-content-key">object</strong> designed for indexed collections. </li><li>Ordinary <strong class="wt-content-key">array</strong> indexes start at zero. </li><li>An <strong class="wt-content-key">array</strong> with three consecutive items has indexes 0, 1 and 2, while its length is 3. </li><li>The final index in that dense <strong class="wt-content-key">array</strong> is length - 1.</li></ul><ul class="wt-content-points"><li>Reading a missing ordinary index produces undefined. </li><li>It does not magically create a valid workshop. </li><li>Checking the collection length or finding a record explicitly is safer than assuming records[0] exists.</li></ul><ul class="wt-content-points"><li>Length and the number of explicitly present elements can differ for sparse arrays. </li><li>Our examples use dense arrays to avoid hiding a beginner logic error behind empty slots. </li><li>Avoid assigning far beyond the current end just to represent a workshop ID.</li></ul><div class="code-block"><pre><code>const topics = [&quot;HTML&quot;, &quot;CSS&quot;, &quot;JavaScript&quot;];
+console.log(topics[0]); // HTML
+console.log(topics.length); // 3
+console.log(topics[3]); // undefined
+console.log(Array.isArray(topics)); // true</code></pre></div><ul class="wt-content-points"><li>Typeof topics is "<strong class="wt-content-key">object</strong>". </li><li><strong class="wt-content-key">Array</strong>.isArray is the useful test when the task requires an actual array. </li><li>A numeric ID such as 103 is a property of a record, not a requirement to store it at <strong class="wt-content-key">array</strong> index 103.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">✏️</span>Changing Arrays — Know the Mutation</h2><ul class="wt-content-points"><li>Push appends items and returns the new length. </li><li>Pop removes and returns the last item, or undefined for an empty <strong class="wt-content-key">array</strong>. </li><li>Unshift and shift operate at the beginning. </li><li>These methods change the <strong class="wt-content-key">array</strong> they are called on.</li></ul><ul class="wt-content-points"><li>Splice can remove, replace or insert items in place; it returns an <strong class="wt-content-key">array</strong> of removed items. </li><li>Slice returns a shallow copy of a selected range and does not remove those elements from the original. </li><li>Similar names do not imply identical behavior.</li></ul><ul class="wt-content-points"><li>A const binding can still refer to a mutable <strong class="wt-content-key">array</strong>. </li><li>Const prevents rebinding the name to a different <strong class="wt-content-key">array</strong>; it does not disable push, splice or other allowed changes to the existing array.</li></ul><div class="code-block"><pre><code>const topics = [&quot;HTML&quot;, &quot;CSS&quot;];
+const length = topics.push(&quot;JavaScript&quot;); // 3
+const preview = topics.slice(0, 2); // [&quot;HTML&quot;, &quot;CSS&quot;]
+const removed = topics.splice(1, 1); // [&quot;CSS&quot;]
+// topics is now [&quot;HTML&quot;, &quot;JavaScript&quot;]</code></pre></div><ul class="wt-content-points"><li>Write down both the return value and the <strong class="wt-content-key">array</strong> after the method call. </li><li>Do not write const topics = topics.push(...) and expect push to return the collection.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🔁</span>Iteration — Indexes or Values?</h2><ul class="wt-content-points"><li>A traditional for <strong class="wt-content-key">loop</strong> is useful when the index is part of the task. </li><li>For...of visits values from an iterable such as an <strong class="wt-content-key">array</strong>. </li><li>For...in enumerates property keys and can include inherited enumerable properties; it is not the default choice for reading <strong class="wt-content-key">array</strong> values.</li></ul><ul class="wt-content-points"><li>ForEach calls a callback for present <strong class="wt-content-key">array</strong> elements and returns undefined. </li><li>It is suitable for a deliberate side effect, such as logging. </li><li>It does not build the transformed output <strong class="wt-content-key">array</strong> that map builds, and a return inside its callback does not break the surrounding iteration.</li></ul><ul class="wt-content-points"><li>For these synchronous beginner examples, a for...of <strong class="wt-content-key">loop</strong> can use break when the task should stop. </li><li>Do not assume an asynchronous callback supplied to forEach will be awaited in sequence.</li></ul><div class="code-block"><pre><code>const topics = [&quot;HTML&quot;, &quot;CSS&quot;, &quot;JavaScript&quot;];
+for (let index = 0; index &lt; topics.length; index += 1) {
+  console.log(index, topics[index]);
+}
+for (const topic of topics) {
+  console.log(topic);
+}</code></pre></div><ul class="wt-content-points"><li>The first <strong class="wt-content-key">loop</strong> exposes both index and value. </li><li>The second directly names the value. </li><li>Choose the clearer version for the job instead of using an index when it contributes nothing.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🗃️</span>Object Literals and Named Properties</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">object</strong> literal groups related fields. </li><li>Dot notation reads a property with a suitable literal name. </li><li>Bracket notation can use a variable key or a property name that does not fit ordinary dot notation. </li><li>Missing properties generally read as undefined unless inheritance supplies them.</li></ul><ul class="wt-content-points"><li>Property names and values have separate roles. </li><li>In workshop.title, title names the field; "<strong class="wt-content-key">HTML</strong>" is the stored value. </li><li>Keep numeric fields as numbers after <strong class="wt-content-key">validation</strong> rather than storing display strings such as "30 seats" and expecting arithmetic to work.</li></ul><ul class="wt-content-points"><li>Use a stable ID when matching or updating records. </li><li>A title can change and two titles can be the same. </li><li>The <strong class="wt-content-key">array</strong> index can change when the collection is filtered or sorted.</li></ul><div class="code-block"><pre><code>const workshop = {
+  id: &quot;w1&quot;, title: &quot;HTML&quot;, capacity: 30, reserved: 12
+};
+console.log(workshop.title); // HTML
+const key = &quot;capacity&quot;;
+console.log(workshop[key]); // 30
+console.log(workshop.missing); // undefined</code></pre></div></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🧰</span>Object Updates, Methods and Inspection</h2><ul class="wt-content-points"><li>Assigning workshop.reserved = 15 changes that property on the referenced <strong class="wt-content-key">object</strong>. </li><li><strong class="wt-content-key">Object</strong>.keys and Object.entries can help inspect an object’s own enumerable string-keyed fields. </li><li>They do not <strong class="wt-content-key">promise</strong> to expose every inherited or non-enumerable property.</li></ul><ul class="wt-content-points"><li>An <strong class="wt-content-key">object</strong> can contain a function-valued property, often used as a method. </li><li>A regular method can access this when called with the expected receiver. </li><li>This depends on how a <strong class="wt-content-key">function</strong> is invoked; it is not permanently the name of the <strong class="wt-content-key">object</strong> where the function was first written.</li></ul><ul class="wt-content-points"><li>Arrow functions do not create their own this binding. </li><li>For a beginner catalog calculation, a pure helper that takes a record argument is usually easier to test than relying on an invocation-dependent receiver.</li></ul><div class="code-block"><pre><code>function remainingSeats(workshop) {
+  return workshop.capacity - workshop.reserved;
+}
+const workshop = { id: &quot;w1&quot;, title: &quot;HTML&quot;, capacity: 30, reserved: 12 };
+console.log(remainingSeats(workshop)); // 18
+console.log(Object.keys(workshop));
+// [&quot;id&quot;, &quot;title&quot;, &quot;capacity&quot;, &quot;reserved&quot;]</code></pre></div><ul class="wt-content-points"><li>The helper assumes the record already meets the data <strong class="wt-content-key">contract</strong>. </li><li>Inspecting keys or subtracting two fields is not a substitute for validating an external record.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🧵</span>References, Identity and Shallow Copies</h2><ul class="wt-content-points"><li>Assigning another binding to an <strong class="wt-content-key">array</strong> or <strong class="wt-content-key">object</strong> does not automatically clone it. </li><li>The two bindings can refer to the same <strong class="wt-content-key">object</strong>. </li><li>An update through one is then observable through the other. </li><li>Strict equality between objects checks identity, not a deep comparison of their fields.</li></ul><ul class="wt-content-points"><li>Spread can copy the outer <strong class="wt-content-key">array</strong> or an <strong class="wt-content-key">object</strong>’s own enumerable properties. </li><li>The copy is shallow: nested objects remain shared unless you deliberately copy those nested levels too. </li><li><strong class="wt-content-key">Array</strong> methods that return new arrays can still retain references to the original item objects.</li></ul><ul class="wt-content-points"><li>Our catalog uses flat records. </li><li>The lab derives a new <strong class="wt-content-key">object</strong> for each record before doing later work and sorts a copied <strong class="wt-content-key">array</strong>. </li><li>Do not generalize that approach into a <strong class="wt-content-key">promise</strong> that arbitrary nested data has been deeply cloned.</li></ul><div class="code-block"><pre><code>const original = [{ title: &quot;HTML&quot;, meta: { room: &quot;A&quot; } }];
+const outerCopy = [...original];
+outerCopy[0].title = &quot;Updated&quot;; // changes original[0].title too
+
+const recordCopy = { ...original[0] };
+recordCopy.title = &quot;Local&quot;; // independent top-level field
+recordCopy.meta.room = &quot;B&quot;; // nested meta remains shared</code></pre></div><p>A new outer container and a new nested <strong class="wt-content-key">object</strong> are different claims. Explain exactly which levels are copied.</p></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🎁</span>Destructuring, Spread and Defaults</h2><ul class="wt-content-points"><li>Destructuring gives local names to selected <strong class="wt-content-key">array</strong> positions or <strong class="wt-content-key">object</strong> properties. </li><li><strong class="wt-content-key">Object</strong> patterns match property names, not their order in the literal. </li><li>A default initializer applies when the extracted value is undefined; it does not replace <strong class="wt-content-key">null</strong> or zero.</li></ul><ul class="wt-content-points"><li>Spread collects existing values or properties into a new outer container. </li><li>In an <strong class="wt-content-key">object</strong> literal, later properties can replace an earlier property with the same name. </li><li>A remaining field written after ...workshop becomes the derived value we intended.</li></ul><div class="code-block"><pre><code>const workshop = { title: &quot;HTML&quot;, capacity: 30, reserved: 12 };
+const { title, capacity, reserved = 0 } = workshop;
+const enriched = { ...workshop, remaining: capacity - reserved };
+const [first, second] = [&quot;HTML&quot;, &quot;CSS&quot;];</code></pre></div><ul class="wt-content-points"><li>Default reserved = 0 is a language behavior, not always the right data policy. </li><li>If an external catalog requires reserved to be present, silently replacing a missing field could hide a data error. </li><li>The lab’s predefined records always include it.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>map — Build a Derived Collection</h2><ul class="wt-content-points"><li>Map creates a new <strong class="wt-content-key">array</strong> from the callback’s returned values for present elements. </li><li>For our dense <strong class="wt-content-key">array</strong>, it produces one output item per input item. </li><li>It is the right fit when every workshop needs a derived remaining field.</li></ul><ul class="wt-content-points"><li>Return a new record <strong class="wt-content-key">object</strong> to preserve the original flat record. </li><li>Mutating a record inside a map callback would still mutate that referenced record even though map returns a new outer <strong class="wt-content-key">array</strong>.</li></ul><ul class="wt-content-points"><li>An arrow <strong class="wt-content-key">function</strong> that directly returns an <strong class="wt-content-key">object</strong> literal wraps it in parentheses. </li><li>Without the intended return, a block-bodied callback can produce undefined output elements.</li></ul><div class="code-block"><pre><code>const enriched = workshops.map(workshop =&gt; ({
+  ...workshop,
+  remaining: workshop.capacity - workshop.reserved
+}));</code></pre></div><ul class="wt-content-points"><li>Each dense input record produces a new <strong class="wt-content-key">object</strong> with the original fields plus remaining. </li><li>Verify the source records still have their original fields and values after the transformation.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🧲</span>filter and find — Collection or First Match?</h2><ul class="wt-content-points"><li>Filter returns a new <strong class="wt-content-key">array</strong> containing the elements whose predicate passes. </li><li>It can return several matches, one match or an empty <strong class="wt-content-key">array</strong>. </li><li>It does not create new record objects by itself.</li></ul><ul class="wt-content-points"><li>Find returns the first matching element, or undefined if none matches. </li><li>A found <strong class="wt-content-key">object</strong> still refers to an existing item; it is not automatically a detached copy. </li><li>Check the no-match result before reading a property.</li></ul><ul class="wt-content-points"><li>Includes is convenient for checking a primitive value such as an ID in an <strong class="wt-content-key">array</strong> of IDs. </li><li>Passing a newly written <strong class="wt-content-key">object</strong> with the same fields does not make it match an existing object by structural equality.</li></ul><div class="code-block"><pre><code>const available = enriched.filter(workshop =&gt; workshop.remaining &gt; 0);
+const chosen = enriched.find(workshop =&gt; workshop.id === &quot;w2&quot;);
+if (chosen === undefined) {
+  console.log(&quot;Workshop not found&quot;);
+}</code></pre></div><ul class="wt-content-points"><li>The predicate must return its decision. </li><li>A callback with braces but no return can unintentionally select no workshops. </li><li>An empty filtered <strong class="wt-content-key">array</strong> is still truthy; test length when the question is whether results exist.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>some and every — Ask a Collection Question</h2><ul class="wt-content-points"><li>Some asks whether at least one present element passes its predicate. </li><li>Every asks whether all present elements pass. </li><li>Both can stop once the answer is determined. </li><li>They return booleans rather than a record or a collection.</li></ul><ul class="wt-content-points"><li>On an empty <strong class="wt-content-key">array</strong>, some returns false and every returns true. </li><li>That every result follows the universal-test rule: there is no failing item. </li><li>It does not prove that an actual full workshop exists in the collection.</li></ul><ul class="wt-content-points"><li>If the interface means “there are records and all are full,” combine a non-empty check with every. </li><li>The lab shows the raw every result and explains it for an empty selection.</li></ul><div class="code-block"><pre><code>const anyAvailable = enriched.some(w =&gt; w.remaining &gt; 0);
+const allFull = enriched.every(w =&gt; w.remaining === 0);
+const nonEmptyAndFull = enriched.length &gt; 0 &amp;&amp; allFull;</code></pre></div><ul class="wt-content-points"><li>For three available workshops, anyAvailable is true and allFull is false. </li><li>For an empty selection, the raw values are false and true respectively, while nonEmptyAndFull is false.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>reduce — Summarize with an Initial Value</h2><ul class="wt-content-points"><li>Reduce combines present elements using an accumulator. </li><li>For an available-seat total, start the accumulator at numeric zero and add each remaining count. </li><li>The callback must return the next accumulator value.</li></ul><ul class="wt-content-points"><li>Providing an initial value makes the empty case meaningful: an empty collection’s total is zero. </li><li>Reduce without an initial value on an empty <strong class="wt-content-key">array</strong> throws TypeError. </li><li>A safe summary should not rely on there always being a first element.</li></ul><ul class="wt-content-points"><li>Reduce can also build richer summaries, but readability matters. </li><li>A short <strong class="wt-content-key">loop</strong> is a good alternative when it explains the task more clearly. </li><li>Do not use reduce simply to make every algorithm a one-line expression.</li></ul><div class="code-block"><pre><code>const totalRemaining = enriched.reduce(
+  (total, workshop) =&gt; total + workshop.remaining,
+  0
+);
+// [] with this initial value gives 0</code></pre></div><ul class="wt-content-points"><li>In the normal catalog, the remaining values are 18, 0, 30 and 12. </li><li>Their total is 60. </li><li>The total after filtering is the total for the selected workshops, not necessarily the whole catalog.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">↕️</span>Sorting — Comparator, Mutation and Ties</h2><ul class="wt-content-points"><li>Sort rearranges its <strong class="wt-content-key">array</strong> in place and returns that same array. </li><li>Without a comparator, ordinary values are compared using string forms in UTF-16 code-unit order, which is unsuitable for many numeric tasks. </li><li>Copy first if the source order must be preserved.</li></ul><ul class="wt-content-points"><li>A numeric ascending comparator can return a - b. </li><li>A negative return places the first value before the second; a positive return places it after; zero treats their order as equal for sorting. </li><li>The comparator must describe a consistent ordering, not just return true or false.</li></ul><ul class="wt-content-points"><li>Modern <strong class="wt-content-key">JavaScript</strong> specifies stable sort, but an explicit tie rule can also make the intended ranking visible. </li><li>Our catalog sorts equal remaining counts by its stable ID using a simple comparison. </li><li>This is a teaching policy, not a general locale-aware name-sorting solution.</li></ul><div class="code-block"><pre><code>const numbers = [2, 10, 3];
+[...numbers].sort(); // [10, 2, 3]
+[...numbers].sort((a, b) =&gt; a - b); // [2, 3, 10]
+
+const bySeats = [...enriched].sort((a, b) =&gt;
+  b.remaining - a.remaining || (a.id &lt; b.id ? -1 : a.id &gt; b.id ? 1 : 0)
+);</code></pre></div><ul class="wt-content-points"><li>The original enriched <strong class="wt-content-key">array</strong> keeps its order because the sort receiver is a new outer array. </li><li>The items remain references to the derived records; sorting alone does not deep-copy them.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🔗</span>A Clear Pipeline — Derive, Select, Order, Summarize</h2><ul class="wt-content-points"><li>A useful pipeline gives each step one job. </li><li>First derive remaining for every trusted workshop record. </li><li>Then select records by title and availability. </li><li>Next order the selected records without changing the source. </li><li>Finally summarize the records that are actually displayed.</li></ul><ul class="wt-content-points"><li>Normalize a search phrase deliberately: the lab trims it and uses lowercase matching for its fixed English titles. </li><li>An empty search phrase matches all titles. </li><li>It is a simple substring search, not fuzzy matching or a multilingual search engine.</li></ul><ul class="wt-content-points"><li>Keep intermediate collections inspectable while learning. </li><li>A compact chain is useful only if you can explain which value each stage receives and returns. </li><li>The lab displays the source, selected records and summary separately.</li></ul><figure class="wt-diagram"><figcaption>Catalog transformation</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>map</strong><p>Derive a remaining field on new flat records.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧲</span><strong>filter</strong><p>Select by title and availability.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">↕️</span><strong>copy + sort</strong><p>Order a separate result <strong class="wt-content-key">array</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧮</span><strong>reduce</strong><p>Total the selected remaining counts.</p></div></div></figure><ul class="wt-content-points"><li>Filtering by available seats removes the full <strong class="wt-content-key">CSS</strong> workshop in the normal dataset. </li><li>Sorting the remaining records from most seats to fewest gives <strong class="wt-content-key">JavaScript</strong>, <strong class="wt-content-key">HTML</strong>, Accessibility. </li><li>Mapping their titles supplies those three display labels; reduction totals 60 available seats.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Workshop Collection Journey</h2><p>Follow the normal dataset through a fixed available-workshop query. Use the established numbered timeline and playback controls to inspect the role of each method. The source data stays separate from the displayed results.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="collections">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>JAVASCRIPT COLLECTION TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📚</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Start with four workshop records</h3><p data-trace-description>The fixed catalog contains HTML, CSS, JavaScript and Accessibility.</p></div><pre class="trace-code"><code data-trace-code>capacity / reserved: 30/12, 20/20, 40/10, 12/0</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Source" aria-pressed="true"><span>01</span><strong>Source</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Derive" aria-pressed="false"><span>02</span><strong>Derive</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Select" aria-pressed="false"><span>03</span><strong>Select</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Order" aria-pressed="false"><span>04</span><strong>Order</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Summarize" aria-pressed="false"><span>05</span><strong>Summarize</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>The predefined records meet the data contract. Preserve their original values and source order.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Catalog Logic Lab</h2><ul class="wt-content-points"><li>Choose a normal catalog, an empty catalog, an all-full catalog or equal-seat records. </li><li>Search the title, select an availability filter and choose the result order. </li><li>The lab executes fixed <strong class="wt-content-key">array</strong>/<strong class="wt-content-key">object</strong> operations on trusted predefined data; it does not evaluate arbitrary code or accept an external dataset.</li></ul><ul class="wt-content-points"><li>Inspect the original records, the selected derived records, their title list and the summary. </li><li>A no-match selection is reported explicitly. </li><li>The raw every-full result is true for an empty selection and is explained rather than presented as proof that workshops exist.</li></ul><ul class="wt-content-points"><li>Equal remaining counts use the ID as a tie rule. </li><li>The fixed titles use simple lowercase comparison; this lab is not a general locale-aware sorting service. </li><li>Each run begins from the chosen source dataset, so one run does not silently mutate the next run’s input.</li></ul><div class="wt9-demo"><label for="wt15Dataset">Source dataset</label><select id="wt15Dataset"><option value="normal" selected>Normal catalog: four workshops</option><option value="empty">Empty catalog</option><option value="full">All workshops full</option><option value="ties">Equal remaining-seat counts</option></select><label for="wt15Search">Title contains</label><input type="text" id="wt15Search" maxlength="64" autocomplete="off" placeholder="Try HTML or a phrase with no match"><label for="wt15Filter">Availability selection</label><select id="wt15Filter"><option value="all">All records</option><option value="available" selected>Available places only</option><option value="full">Full workshops only</option></select><label for="wt15Order">Result order</label><select id="wt15Order"><option value="source">Source order</option><option value="desc" selected>Remaining seats: most first</option><option value="asc">Remaining seats: fewest first</option><option value="title">Title: simple alphabetical order</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt15Run">Run query</button><button type="button" class="secondary-button" id="wt15Reset">Reset lab</button></div><p id="wt15Status" role="status">Ready to select available workshops.</p><h3>Original source records</h3><pre class="trace-code"><code id="wt15Source"></code></pre><h3>Operations applied</h3><pre class="trace-code"><code id="wt15Code"></code></pre><h3>Selected records and summary</h3><pre class="wt15-result"><code id="wt15Result"></code></pre><p id="wt15Explanation"></p></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Inspect Shape, Return and Mutation</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Shape</h3><p>Confirm an actual <strong class="wt-content-key">array</strong> and the required record fields.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↩️</span><h3>Return</h3><p>Check that callbacks return their mapped value or predicate decision.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Mutation</h3><p>Inspect both the outer <strong class="wt-content-key">array</strong> and referenced objects.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Empty case</h3><p>Check length, find results and reduction initial values.</p></article></div><ul class="wt-content-points"><li>If map yields undefined entries, inspect the callback’s return path. </li><li>If filter returns no records, inspect the predicate and the data types it compares. </li><li>If a numeric sort gives 10 before 2, check whether a numeric comparator is missing. </li><li>If an empty result crashes, look for a missing initial accumulator or unchecked records[0].</li></ul><ul class="wt-content-points"><li>A changed source title after a copy can indicate shared item references. </li><li>A changed source order can indicate sort was called directly on the source. </li><li>Use targeted snapshots or known assertions to inspect the actual <strong class="wt-content-key">contract</strong>, rather than assuming every method that returns an <strong class="wt-content-key">array</strong> is deeply non-mutating.</li></ul><ul class="wt-content-points"><li>For this lab, normal/available/descending yields three records and a total of 60. </li><li>Empty/all yields zero records and total zero. </li><li>Full/available yields no matches. </li><li>Ties/available/descending keeps the ID tie rule explicit.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between an array and a record object?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between an array and a record object?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>An array organizes an indexed collection; an object groups named properties. An array of objects can represent a catalog.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does const prevent push on an array?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does const prevent push on an array?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Const prevents reassignment of the binding, not allowed changes to the array it references.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do slice and splice differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do slice and splice differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Slice creates a shallow range copy. Splice changes its receiver and returns the removed items.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between map and filter?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between map and filter?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Map derives output values for present input elements. Filter selects existing elements whose predicate passes.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does find return with no match?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does find return with no match?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Undefined. Check that result before accessing properties.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why does every return true for an empty array?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why does every return true for an empty array?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>There is no present item that fails the predicate. Combine it with a non-empty check when the task requires records to exist.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why copy before calling sort?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why copy before calling sort?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Sort mutates its receiver. Sorting a copied outer array preserves the original array order, while item references may still be shared.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why provide an initial value to reduce?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why provide an initial value to reduce?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It defines the accumulator’s starting value and supports an empty collection. For seat totals, initial zero gives an empty total of zero.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain the Collection</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Array indexing begins at zero; a dense three-item array ends at index two."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. What is the first ordinary array index?</h3><div class="wt8-options"><button type="button" class="wt8-option">1</button><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">-1</button><button type="button" class="wt8-option">The length</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Push changes the array and returns its new length."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What does push return?</h3><div class="wt8-options"><button type="button" class="wt8-option">A detached array copy</button><button type="button" class="wt8-option">The appended item</button><button type="button" class="wt8-option">The new array length</button><button type="button" class="wt8-option">undefined always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Slice returns a shallow selected-range copy; splice mutates its receiver."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which method creates a shallow range copy without removing source items?</h3><div class="wt8-options"><button type="button" class="wt8-option">slice</button><button type="button" class="wt8-option">splice</button><button type="button" class="wt8-option">pop</button><button type="button" class="wt8-option">shift</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="For...of reads iterable values. For...in enumerates property keys."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which loop directly visits array values?</h3><div class="wt8-options"><button type="button" class="wt8-option">for...in</button><button type="button" class="wt8-option">if</button><button type="button" class="wt8-option">switch</button><button type="button" class="wt8-option">for...of</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Map collects callback results into a new array; callback mutation is still a separate concern."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does map produce when this dense input callback returns a derived record?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only the first matching record</button><button type="button" class="wt8-option">A new array of returned records</button><button type="button" class="wt8-option">A numeric total automatically</button><button type="button" class="wt8-option">The original binding</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Find supplies an element or undefined, not a collection of matches."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What does find return when no record matches?</h3><div class="wt8-options"><button type="button" class="wt8-option">[]</button><button type="button" class="wt8-option">null automatically</button><button type="button" class="wt8-option">undefined</button><button type="button" class="wt8-option">false always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="With no present failing item, every returns true; that does not prove records exist."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What does an empty array’s every predicate test return?</h3><div class="wt8-options"><button type="button" class="wt8-option">false</button><button type="button" class="wt8-option">null</button><button type="button" class="wt8-option">undefined</button><button type="button" class="wt8-option">true</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Numeric zero is the starting total and supports an empty result."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which initial value fits a reduce calculation of total remaining seats?</h3><div class="wt8-options"><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">undefined</button><button type="button" class="wt8-option">The title string</button><button type="button" class="wt8-option">A comparator</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Default sorting compares string forms, so use a numeric comparator for numeric order."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What does default sort do to [2, 10, 3]?</h3><div class="wt8-options"><button type="button" class="wt8-option">[2, 3, 10]</button><button type="button" class="wt8-option">[10, 2, 3]</button><button type="button" class="wt8-option">[3, 10, 2]</button><button type="button" class="wt8-option">It rejects numbers</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The item references remain shared unless copied separately; nested copying needs further care."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Does [...records] deeply clone every nested record?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always</button><button type="button" class="wt8-option">Only when const is used</button><button type="button" class="wt8-option">No; it copies the outer array</button><button type="button" class="wt8-option">Only when records is empty</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A no-match selection is a normal outcome; summarize it with the defined empty-case policy."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What should a no-match filtered result be reported as?</h3><div class="wt8-options"><button type="button" class="wt8-option">An automatic error</button><button type="button" class="wt8-option">The first source record</button><button type="button" class="wt8-option">A full workshop exists</button><button type="button" class="wt8-option">An empty selection with total zero</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="HTML 18, JavaScript 30 and Accessibility 12 total 60; full CSS contributes no available seats."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Which total belongs to normal/available in this lesson?</h3><div class="wt8-options"><button type="button" class="wt8-option">60</button><button type="button" class="wt8-option">42</button><button type="button" class="wt8-option">102</button><button type="button" class="wt8-option">18</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt15QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Test Specific Collection Cases</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Normal query</h3><p>Select normal/available/most first. Expected titles: <strong class="wt-content-key">JavaScript</strong>, <strong class="wt-content-key">HTML</strong>, Accessibility; total 60.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Empty source</h3><p>Select empty/all. Expected: zero records, total zero, some available false, raw every full true.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚫</span><h3>No availability</h3><p>Select full/available. Expected: no matching records; do not read a nonexistent first title.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Search phrase</h3><p>Use normal/all and search <strong class="wt-content-key">HTML</strong>. Expected: one HTML record, remaining total 18.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>No match</h3><p>Search a phrase absent from every title. Expected: an empty selection and clear explanation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↕️</span><h3>Tie rule</h3><p>Select ties/available/most first. Expected: IDs t1, t2, t3; each has 10 remaining, total 30.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✏️</span><h3>Copy experiment</h3><ul class="wt-content-points"><li>Copy an <strong class="wt-content-key">array</strong> containing one <strong class="wt-content-key">object</strong>, then edit the copied item title. </li><li>Expected: shared item changes the original until you copy that <strong class="wt-content-key">object</strong> too.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧮</span><h3>Reduce comparison</h3><p>Total [18, 0, 30, 12] with a <strong class="wt-content-key">loop</strong> and reduce initial zero. Expected: both yield 60; empty input yields zero.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📚</span><strong>Array:</strong> Use zero-based positions and distinguish length from an ID.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Object:</strong> Group named fields and preserve stable identity.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✏️</span><strong>Mutation:</strong> Know both the return value and the changed receiver.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧵</span><strong>Copies:</strong> New outer arrays can share referenced items.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>map:</strong> Return a derived value for each present item.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧲</span><strong>filter/find:</strong> Distinguish a selected array from a first match.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>some/every:</strong> Explain the empty-case boolean results.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧮</span><strong>reduce:</strong> Choose an initial accumulator that fits the task.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">↕️</span><strong>sort:</strong> Copy first, use a comparator and state ties.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Pipeline:</strong> Summarize the selection actually displayed.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Array"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Array</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Array</h4><p>An object used for indexed collections and array operations.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Index"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Index</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Index</h4><p>A position key used to access an array item, commonly starting at zero.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Property"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Property</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Property</h4><p>A named or keyed field on an object.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Reference"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Reference</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Reference</h4><p>An association with an object that can be shared by multiple bindings.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Mutation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Mutation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Mutation</h4><p>A change to an existing object or array.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Shallow copy"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Shallow copy</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Shallow copy</h4><p>A new outer container whose nested object references may remain shared.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Callback"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Callback</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Callback</h4><p>A function passed to another operation to be called by it.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Predicate"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Predicate</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Predicate</h4><p>A function or expression used to decide whether a condition passes.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Accumulator"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Accumulator</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Accumulator</h4><p>The carried summary value updated during a reduction.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Comparator"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Comparator</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Comparator</h4><p>A function that defines how two values should be ordered for sorting.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Catalog Query Function</h2><ul class="wt-content-points"><li>Write a pure query <strong class="wt-content-key">function</strong> that accepts a trusted flat workshop collection and options for title search, availability and order. </li><li>Return derived selected records, their title list, a count and total remaining seats. </li><li>Preserve the source fields and order. </li><li>State the required input <strong class="wt-content-key">contract</strong>.</li></ul><ul class="wt-content-points"><li>Use map to create new derived record objects, filter for the query, and copy before sort. </li><li>Choose an explicit tie rule. </li><li>Provide an initial zero to reduction. </li><li>Check a missing find result before reading it, and keep an empty query result distinct from an invalid source record.</li></ul><ul class="wt-content-points"><li>Test the four predefined scenarios, a title match and a no-match phrase. </li><li>Snapshot the input before a query and compare it afterward. </li><li>Verify 60 selected remaining seats for the normal available query, zero for an empty selection and 30 for the tie dataset. </li><li>Explain the raw empty every result in plain language.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain each method’s input and return shape, prove source preservation for these flat records and report empty results clearly. </li><li>Level 16 will connect these data results to <strong class="wt-content-key">DOM</strong> and <strong class="wt-content-key">browser</strong> programming.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 15 Complete?</h2><p>Before marking complete, derive and select a catalog, sort a copy, summarize an empty collection and explain a shallow-copy limitation. Completion is a local study marker rather than an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="javascript-fundamentals.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">JavaScript Fundamentals</span><span class="nav-action">Review Level 14</span></a></div><div class="topic-nav-side next"><a href="dom-browser-programming.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">DOM and Browser Programming</span><span class="nav-action">Open Level 16</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="javascript-arrays-objects-logic.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=10" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=7" defer></script>
+</body></html>

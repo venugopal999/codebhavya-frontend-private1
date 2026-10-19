@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn HTML lists, accessible data tables and forms with worked examples, a form submission visualizer, practice, MCQs and revision.">
+
+    
+
+    <title>
+        Level 09 — HTML Lists, Tables and Forms | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/html-lists-tables-forms.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 09</div><div class="level-badge">LEVEL 09 · HTML</div><h1>HTML Lists, Tables and Forms</h1><p class="wt-hero-description">Organize related content, explain tabular data and build forms whose submitted values you can predict.</p><div class="wt-hero-meta"><span>📚 HTML</span><span>⏱ Beginner → Intermediate</span><span>🎯 Practical Web Development</span><span>🧪 Practice + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 08 introduced text, links and media. </li><li>This lesson organizes information and collects user input. </li><li>You will choose the right list, build a readable data table, associate labels with controls, and explain which values a form submits.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>Lists</h3><p>Use unordered, ordered, nested and description lists according to the meaning of the content.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📊</span><h3>Tables</h3><p>Use captions, row and column headers, table sections and carefully chosen cell spans.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📝</span><h3>Forms</h3><p>Use labels, names, groups, input types, selects and text areas with appropriate <strong class="wt-content-key">validation</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Submission</h3><p>Distinguish GET from POST and predict submitted name/value pairs without confusing <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">validation</strong> with server security.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>Choose the Structure Before the Tags</h2><ul class="wt-content-points"><li>Imagine a CodeBhavya workshop page. </li><li>Its prerequisites are a list, its timetable is a table, and its registration area is a form. </li><li>Choosing by appearance alone can create confusing markup.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>List</h3><p>Related items: prerequisites, steps or terms. Sequence matters for steps, but not for a collection of topics.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📊</span><h3>Table</h3><p>Related values across two dimensions: each workshop row has a topic, day and seat count.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📝</span><h3>Form</h3><p>Controls through which the learner provides information or requests an action.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎨</span><h3>Layout</h3><p>Use <strong class="wt-content-key">CSS</strong> for arranging page regions. A table is for tabular data, not a shortcut for positioning a page.</p></article></div><figure class="wt-diagram"><figcaption>One workshop page, three information structures</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📋</span><strong>List · related items</strong><p>Prerequisites → <strong class="wt-content-key">HTML</strong> basics, links, a code editor.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📊</span><strong>Table · row and column relationships</strong><p>Workshop × seats → <strong class="wt-content-key">HTML</strong> Foundations has 20 seats.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📝</span><strong>Form · learner input</strong><p>Labelled controls → values ready for inspection.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">📋</span>Unordered Lists — Related Items</h2><ul class="wt-content-points"><li>Use <code>&lt;ul&gt;</code> when rearranging the items does not change their meaning. </li><li>Each item belongs inside an <code>&lt;li&gt;</code>. </li><li><strong class="wt-content-key">Browser</strong> bullets are a default presentation; <strong class="wt-content-key">CSS</strong> can change their appearance.</li></ul><div class="code-block"><pre><code>&lt;ul&gt;
+  &lt;li&gt;HTML document structure&lt;/li&gt;
+  &lt;li&gt;Links and images&lt;/li&gt;
+  &lt;li&gt;A code editor&lt;/li&gt;
+&lt;/ul&gt;</code></pre></div><p><strong>Expected result:</strong> three related prerequisite items. A bullet is not manually typed into each item.</p></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🔢</span>Ordered Lists — Meaningful Sequence</h2><p>Use <code>&lt;ol&gt;</code> for steps, rankings or another sequence where position matters. <code>start</code> changes the initial number; <code>reversed</code> reverses numbering; an item’s <code>value</code> sets its number and affects subsequent numbering.</p><div class="code-block"><pre><code>&lt;ol start=&quot;3&quot;&gt;
+  &lt;li&gt;Validate the HTML.&lt;/li&gt;
+  &lt;li&gt;Test keyboard navigation.&lt;/li&gt;
+  &lt;li&gt;Publish the page.&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div><p><strong>Expected labels:</strong> 3, 4, 5. Numbering alone does not make unrelated content a meaningful sequence.</p></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🌳</span>Nested Lists and Description Lists</h2><ul class="wt-content-points"><li>A nested list belongs <em>inside</em> the parent item, before that item’s closing tag. </li><li>A description list associates terms or names with descriptions; it does not use <code>li</code>.</li></ul><div class="code-block"><pre><code>&lt;ul&gt;
+  &lt;li&gt;Frontend
+    &lt;ul&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;li&gt;CSS&lt;/li&gt;&lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Backend&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;GET&lt;/dt&gt;&lt;dd&gt;A method used to retrieve a representation.&lt;/dd&gt;
+  &lt;dt&gt;POST&lt;/dt&gt;&lt;dd&gt;A method commonly used to submit data for processing.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div><ul class="wt-content-points"><li>A term can have multiple descriptions, and multiple terms can share a description. </li><li>Use the grouping that matches your information rather than forcing every definition into a two-column table.</li></ul><figure class="wt-diagram"><figcaption>A nested list keeps each child inside its parent item</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌳</span><strong>Parent li · Frontend</strong><p>Contains an inner ul before the parent closing tag.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Child li · HTML</strong><p>First item inside the inner list.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎨</span><strong>Child li · CSS</strong><p>Second item inside the same inner list.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">📊</span>Table Anatomy — Rows, Headers and Cells</h2><ul class="wt-content-points"><li><code>table</code> contains a data table, <code>tr</code> creates a row, <code>th</code> identifies a header cell and <code>td</code> contains a data cell. </li><li>A caption gives the table a meaningful title. <code>thead</code>, <code>tbody</code> and <code>tfoot</code> group rows; they do not create columns.</li></ul><div class="code-block"><pre><code>&lt;table&gt;
+  &lt;caption&gt;CodeBhavya workshop seats&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Workshop&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Seats&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;HTML Foundations&lt;/th&gt;&lt;td&gt;20&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Forms Practice&lt;/th&gt;&lt;td&gt;15&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Total&lt;/th&gt;&lt;td&gt;35&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre></div><div class="wt9-table-wrap"><table class="wt9-table">
+  <caption>CodeBhavya workshop seats</caption>
+  <thead>
+    <tr><th scope="col">Workshop</th><th scope="col">Seats</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">HTML Foundations</th><td>20</td></tr>
+    <tr><th scope="row">Forms Practice</th><td>15</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><th scope="row">Total</th><td>35</td></tr>
+  </tfoot>
+</table></div><ul class="wt-content-points"><li><strong>Read the result:</strong> the total is 35 seats. </li><li>The <strong class="wt-content-key">HTML</strong> structure communicates the data; borders and spacing in this rendered example come from <strong class="wt-content-key">CSS</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Header Relationships and Accessible Tables</h2><ul class="wt-content-points"><li>For a simple table, <code>scope="col"</code> marks a column header and <code>scope="row"</code> marks a row header. </li><li>This helps tools associate a value with its context. </li><li>A visually bold <code>td</code> is still a data cell.</li></ul><ul class="wt-content-points"><li>For complex tables with multiple header levels, explicit header IDs and a cell’s <code>headers</code> attribute may be needed. </li><li>Prefer splitting a complicated table into simpler tables when that makes the information easier to understand.</li></ul><ul class="wt-content-points"><li>Keep tables readable on phones with a horizontal scrolling wrapper. </li><li>Do not remove their <strong class="wt-content-key">semantic</strong> structure merely to fit the viewport.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>colspan and rowspan — Plan the Grid</h2><ul class="wt-content-points"><li><code>colspan</code> extends a cell across columns; <code>rowspan</code> extends it across rows. </li><li>Cells covered by a span must not also be added as ordinary cells.</li></ul><div class="code-block"><pre><code>&lt;table&gt;
+  &lt;caption&gt;Workshop session plan&lt;/caption&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Day&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Session&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot; rowspan=&quot;2&quot;&gt;Monday&lt;/th&gt;&lt;td&gt;Lists&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Tables&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;Independent practice&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Trace the grid:</strong> Monday occupies the first column in two rows. </li><li>The second row therefore contains only the Tables cell. </li><li>The final practice cell occupies both columns. </li><li>Complex spanning also requires careful header associations.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">📝</span>Forms — Controls, action and method</h2><ul class="wt-content-points"><li>A form groups controls for submission. <code>action</code> identifies the destination, and <code>method</code> specifies how the <strong class="wt-content-key">browser</strong> submits the data. </li><li><strong class="wt-content-key">HTML</strong> creates the interface; a real destination needs <strong class="wt-content-key">server</strong> logic to process and validate it.</li></ul><div class="code-block"><pre><code>&lt;!-- /workshop-register is an illustrative server endpoint. --&gt;
+&lt;form action=&quot;/workshop-register&quot; method=&quot;post&quot;&gt;
+  &lt;label for=&quot;student-name&quot;&gt;Student name&lt;/label&gt;
+  &lt;input id=&quot;student-name&quot; name=&quot;student&quot; type=&quot;text&quot; required&gt;
+  &lt;button type=&quot;submit&quot;&gt;Register&lt;/button&gt;
+&lt;/form&gt;</code></pre></div><ul class="wt-content-points"><li>The endpoint above is an example, not a working CodeBhavya registration service. </li><li>The interactive lab later in this lesson prevents network submission and shows the payload locally.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Labels, id, name and value</h2><p><code>id</code> identifies an element in the document; a label’s <code>for</code> matches that ID. <code>name</code> is the submitted field key. <code>value</code> supplies the field value, or its initial value for controls such as a text input.</p><div class="code-block"><pre><code>&lt;label for=&quot;learner-email&quot;&gt;Email address&lt;/label&gt;
+&lt;input id=&quot;learner-email&quot; name=&quot;email&quot; type=&quot;email&quot;
+       placeholder=&quot;learner@example.com&quot; required&gt;</code></pre></div><ul class="wt-content-points"><li>Entering <code>learner@example.com</code> yields the pair <code>email=learner@example.com</code>. </li><li>An ID does not replace a name. </li><li>Placeholder text is a hint, not a persistent label. </li><li>IDs should be unique in the document.</li></ul><figure class="wt-diagram"><figcaption>Label, control and submitted pair</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Label for="student"</strong><p>The label points to a control with id="student".</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📝</span><strong>Input id="student"</strong><p>The input is identified in the page. name="student" supplies the submission key.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Pair · student=Asha</strong><p>An eligible named control contributes its current value.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>Input Types and Native Validation</h2><ul class="wt-content-points"><li>Choose a type that matches the data. </li><li>Types improve <strong class="wt-content-key">browser</strong> interaction and, for some controls, provide constraints. </li><li><strong class="wt-content-key">Browser</strong> presentation varies by device.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><h3>text and email</h3><p>Text is general input. Email checks an email-shaped value, not whether the address exists or belongs to the learner.</p></article><article class="wt8-concept-card"><h3>number and date</h3><ul class="wt-content-points"><li>Number supports constraints such as min, max and step. </li><li>Date represents a calendar date; its visible picker is <strong class="wt-content-key">browser</strong> dependent.</li></ul></article><article class="wt8-concept-card"><h3>password and tel</h3><ul class="wt-content-points"><li>Password obscures the display but does not encrypt transmission. </li><li>Telephone input can improve <strong class="wt-content-key">keyboard</strong> choice but has no universal built-in phone-number format check.</li></ul></article><article class="wt8-concept-card"><h3>required and pattern</h3><ul class="wt-content-points"><li>Required checks that an applicable control has a value. </li><li>Pattern constrains applicable text-like controls; explain the expected format visibly.</li></ul></article></div><div class="code-block"><pre><code>&lt;label for=&quot;seat-count&quot;&gt;Seats requested (1–4)&lt;/label&gt;
+&lt;input id=&quot;seat-count&quot; name=&quot;seats&quot; type=&quot;number&quot;
+       min=&quot;1&quot; max=&quot;4&quot; step=&quot;1&quot; value=&quot;1&quot; required&gt;</code></pre></div><ul class="wt-content-points"><li>Try 0, 1, 4, 5 and 1.5. </li><li>The allowed values are whole numbers from 1 through 4. </li><li>Client-side <strong class="wt-content-key">validation</strong> can be bypassed; the <strong class="wt-content-key">server</strong> must validate independently.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">☑️</span>Radio Buttons, Checkboxes and Groups</h2><ul class="wt-content-points"><li>Radio buttons with the same name in the same form form a mutually exclusive group. </li><li>Checkboxes represent independent choices. </li><li>A checked checkbox submits its value; an unchecked one contributes no pair.</li></ul><div class="code-block"><pre><code>&lt;fieldset&gt;
+  &lt;legend&gt;Attendance mode&lt;/legend&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;mode&quot; value=&quot;online&quot; checked&gt; Online&lt;/label&gt;
+  &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;mode&quot; value=&quot;campus&quot;&gt; Campus&lt;/label&gt;
+&lt;/fieldset&gt;
+&lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;updates&quot; value=&quot;yes&quot;&gt; Send workshop updates&lt;/label&gt;</code></pre></div><ul class="wt-content-points"><li>Selecting Campus and leaving updates unchecked yields <code>mode=campus</code>, with no <code>updates</code> pair. </li><li>Give choice controls explicit values so their meaning is clear.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">📂</span>select, textarea, fieldset and Buttons</h2><ul class="wt-content-points"><li>A <code>select</code> presents options, and the selected option’s value is submitted. </li><li>A <code>textarea</code> accepts multiple lines; its initial content goes between its tags. </li><li>A <code>fieldset</code> groups related controls and its <code>legend</code> names that group.</li></ul><div class="code-block"><pre><code>&lt;label for=&quot;topic&quot;&gt;Workshop topic&lt;/label&gt;
+&lt;select id=&quot;topic&quot; name=&quot;topic&quot; required&gt;
+  &lt;option value=&quot;&quot;&gt;Choose a topic&lt;/option&gt;
+  &lt;option value=&quot;html&quot;&gt;HTML Foundations&lt;/option&gt;
+  &lt;option value=&quot;forms&quot;&gt;Forms Practice&lt;/option&gt;
+&lt;/select&gt;
+&lt;label for=&quot;notes&quot;&gt;Learning goal&lt;/label&gt;
+&lt;textarea id=&quot;notes&quot; name=&quot;notes&quot; rows=&quot;3&quot;&gt;Practise accessible forms.&lt;/textarea&gt;
+&lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+&lt;button type=&quot;reset&quot;&gt;Restore defaults&lt;/button&gt;
+&lt;button type=&quot;button&quot;&gt;Show help&lt;/button&gt;</code></pre></div><ul class="wt-content-points"><li>Inside a form, a button without an explicit type commonly acts as a submit button. </li><li>Use <code>type="button"</code> for helper actions. </li><li>Reset restores initial defaults, which may not be empty values; it does not erase data already stored by a <strong class="wt-content-key">server</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🖱️</span>Which Values Are Submitted?</h2><ul class="wt-content-points"><li>For the basic controls in this lesson, a submitted pair generally needs a name and an enabled control. </li><li>Unchecked checkboxes and radios are omitted. </li><li>A selected option contributes its value. </li><li>Repeated names can produce multiple pairs.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><h3>disabled</h3><p>A disabled control is omitted and does not participate in constraint <strong class="wt-content-key">validation</strong>. It is not a security boundary.</p></article><article class="wt8-concept-card"><h3>readonly</h3><ul class="wt-content-points"><li>A read-only text control can still submit its named value. </li><li>Readonly applies only to supported control types; it does not make a select read-only.</li></ul></article><article class="wt8-concept-card"><h3>Hidden fields</h3><ul class="wt-content-points"><li>A hidden input contributes a named value, but users can inspect and modify it. </li><li>Never trust a hidden price or role without <strong class="wt-content-key">server</strong> checks.</li></ul></article><article class="wt8-concept-card"><h3>Submit buttons</h3><ul class="wt-content-points"><li>A named submit button can contribute its own name/value when it is the submitter. </li><li>A helper button is not submitted as a field.</li></ul></article></div><div class="code-block"><pre><code>&lt;input name=&quot;course&quot; value=&quot;HTML&quot; readonly&gt;
+&lt;input name=&quot;internalNote&quot; value=&quot;Draft&quot; disabled&gt;
+&lt;input value=&quot;Unnamed field&quot;&gt;
+&lt;input type=&quot;checkbox&quot; name=&quot;updates&quot; value=&quot;yes&quot;&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Expected pairs:</strong> only <code>course=HTML</code>, assuming the checkbox remains unchecked. </li><li>The lab uses an unnamed submit button, so its button adds no field.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>GET, POST and Encoding</h2><ul class="wt-content-points"><li>A GET form typically puts encoded data in the <strong class="wt-content-key">URL</strong> query. </li><li>It suits retrieval such as searching. </li><li>A POST form typically sends data in the <strong class="wt-content-key">request</strong> body and is commonly used for actions that change <strong class="wt-content-key">server</strong> state. </li><li>POST by itself is not encryption; <strong class="wt-content-key">HTTPS</strong> protects transport for both methods.</li></ul><ul class="wt-content-points"><li>The usual form encoding is <code>application/x-www-form-urlencoded</code>. </li><li>Spaces become <code>+</code> and special characters are escaped. </li><li>Repeated fields remain separate pairs. </li><li>File uploads normally use POST with <code>enctype="multipart/form-data"</code>.</li></ul><div class="code-block"><pre><code>&lt;!-- Illustrative search endpoint; not a live CodeBhavya route. --&gt;
+&lt;form action=&quot;/search&quot; method=&quot;get&quot;&gt;
+  &lt;label for=&quot;query&quot;&gt;Search lessons&lt;/label&gt;
+  &lt;input id=&quot;query&quot; name=&quot;q&quot; value=&quot;HTML forms&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+&lt;!-- Expected request target: /search?q=HTML+forms --&gt;</code></pre></div><ul class="wt-content-points"><li>Do not place passwords in GET queries. </li><li>A POST body still needs careful handling, <strong class="wt-content-key">server</strong> <strong class="wt-content-key">validation</strong>, authorization and appropriate protection against unwanted requests.</li></ul><figure class="wt-diagram"><figcaption>The same fields can have different request representations</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>GET · query data</strong><p>Illustration: /workshop-register?student=Asha. Query data is part of the <strong class="wt-content-key">URL</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>POST · request body</strong><p>Illustration: student=Asha in the body with a suitable content type.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Server · independent checks</strong><p>Neither method replaces <strong class="wt-content-key">HTTPS</strong>, <strong class="wt-content-key">authorization</strong> or server validation.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Form Submission Journey</h2><p>Follow the sequence from input to processing. This is a conceptual journey; the lab stops before a real network <strong class="wt-content-key">request</strong>.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="form">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>FORM SUBMISSION TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">⌨️</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Enter or choose control values</h3><p data-trace-description>The learner enters a fictional name and selects the workshop options. Nothing has been sent.</p></div><pre class="trace-code"><code data-trace-code>student = Asha; topic = html; seats = 1</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Enter" aria-pressed="true"><span>01</span><strong>Enter</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Validate" aria-pressed="false"><span>02</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Collect" aria-pressed="false"><span>03</span><strong>Collect</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Represent" aria-pressed="false"><span>04</span><strong>Represent</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Process" aria-pressed="false"><span>05</span><strong>Process</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>The form stores current control values in the page. This visualizer explains a fixed example; the next lab lets you inspect your own changes.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Workshop Form Lab</h2><ul class="wt-content-points"><li>Inspect real browser-generated form pairs. </li><li>Nothing is submitted to a <strong class="wt-content-key">server</strong> or saved by this lab. </li><li>Use fictional data. </li><li>Change the method to compare the same data as a <strong class="wt-content-key">URL</strong> query and a <strong class="wt-content-key">request</strong> body.</li></ul><div class="wt9-demo"><label for="wt9Method">Method to illustrate</label><select id="wt9Method"><option value="post">POST</option><option value="get">GET</option></select><form id="wt9Form" action="/workshop-register" method="post">
+<label for="wt9Student">Learner name (use a fictional name)</label><input id="wt9Student" name="student" value="Asha" required maxlength="60">
+<label for="wt9Email">Practice email</label><input id="wt9Email" name="email" type="email" value="asha@example.com" required>
+<label for="wt9Topic">Topic</label><select id="wt9Topic" name="topic" required><option value="">Choose a topic</option><option value="html" selected>HTML Foundations</option><option value="forms">Forms Practice</option></select>
+<label for="wt9Seats">Seats (1–4)</label><input id="wt9Seats" name="seats" type="number" min="1" max="4" step="1" value="1" required>
+<fieldset><legend>Attendance mode</legend><label class="wt9-choice"><input type="radio" name="mode" value="online" checked>Online</label><label class="wt9-choice"><input type="radio" name="mode" value="campus">Campus</label></fieldset>
+<label class="wt9-choice"><input type="checkbox" name="updates" value="yes">Include workshop updates</label>
+<label for="wt9Course">Course (read-only)</label><input id="wt9Course" name="course" value="Web Technologies" readonly>
+<label for="wt9Draft">Internal note (disabled)</label><input id="wt9Draft" name="internalNote" value="Draft" disabled>
+<label for="wt9Notes">Learning goal</label><textarea id="wt9Notes" name="notes" rows="3">Practise forms.</textarea>
+<div class="wt9-actions"><button class="primary-button" id="wt9Inspect" type="submit" disabled>Inspect submission</button><button class="secondary-button" type="reset">Restore defaults</button></div>
+</form><noscript><p>Enable JavaScript to inspect values locally. The demo does not submit data.</p></noscript><h3>Submission inspection</h3><pre id="wt9Payload" class="wt9-status" aria-live="polite">Press Inspect submission to see which fields contribute.</pre><details><summary>Copyable form structure</summary><div class="code-block"><pre><code>&lt;form id=&quot;wt9Form&quot; action=&quot;/workshop-register&quot; method=&quot;post&quot;&gt;
+&lt;label for=&quot;wt9Student&quot;&gt;Learner name (use a fictional name)&lt;/label&gt;&lt;input id=&quot;wt9Student&quot; name=&quot;student&quot; value=&quot;Asha&quot; required maxlength=&quot;60&quot;&gt;
+&lt;label for=&quot;wt9Email&quot;&gt;Practice email&lt;/label&gt;&lt;input id=&quot;wt9Email&quot; name=&quot;email&quot; type=&quot;email&quot; value=&quot;asha@example.com&quot; required&gt;
+&lt;label for=&quot;wt9Topic&quot;&gt;Topic&lt;/label&gt;&lt;select id=&quot;wt9Topic&quot; name=&quot;topic&quot; required&gt;&lt;option value=&quot;&quot;&gt;Choose a topic&lt;/option&gt;&lt;option value=&quot;html&quot; selected&gt;HTML Foundations&lt;/option&gt;&lt;option value=&quot;forms&quot;&gt;Forms Practice&lt;/option&gt;&lt;/select&gt;
+&lt;label for=&quot;wt9Seats&quot;&gt;Seats (1–4)&lt;/label&gt;&lt;input id=&quot;wt9Seats&quot; name=&quot;seats&quot; type=&quot;number&quot; min=&quot;1&quot; max=&quot;4&quot; step=&quot;1&quot; value=&quot;1&quot; required&gt;
+&lt;fieldset&gt;&lt;legend&gt;Attendance mode&lt;/legend&gt;&lt;label class=&quot;wt9-choice&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;mode&quot; value=&quot;online&quot; checked&gt;Online&lt;/label&gt;&lt;label class=&quot;wt9-choice&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;mode&quot; value=&quot;campus&quot;&gt;Campus&lt;/label&gt;&lt;/fieldset&gt;
+&lt;label class=&quot;wt9-choice&quot;&gt;&lt;input type=&quot;checkbox&quot; name=&quot;updates&quot; value=&quot;yes&quot;&gt;Include workshop updates&lt;/label&gt;
+&lt;label for=&quot;wt9Course&quot;&gt;Course (read-only)&lt;/label&gt;&lt;input id=&quot;wt9Course&quot; name=&quot;course&quot; value=&quot;Web Technologies&quot; readonly&gt;
+&lt;label for=&quot;wt9Draft&quot;&gt;Internal note (disabled)&lt;/label&gt;&lt;input id=&quot;wt9Draft&quot; name=&quot;internalNote&quot; value=&quot;Draft&quot; disabled&gt;
+&lt;label for=&quot;wt9Notes&quot;&gt;Learning goal&lt;/label&gt;&lt;textarea id=&quot;wt9Notes&quot; name=&quot;notes&quot; rows=&quot;3&quot;&gt;Practise forms.&lt;/textarea&gt;
+&lt;div class=&quot;wt9-actions&quot;&gt;&lt;button class=&quot;primary-button&quot; type=&quot;submit&quot;&gt;Inspect submission&lt;/button&gt;&lt;button class=&quot;secondary-button&quot; type=&quot;reset&quot;&gt;Restore defaults&lt;/button&gt;&lt;/div&gt;
+&lt;/form&gt;</code></pre></div></details></div><ul class="wt-content-points"><li>The endpoint shown is illustrative. </li><li>The lab prevents submission even if its script fails to initialize. </li><li>Copied <strong class="wt-content-key">HTML</strong> needs an actual <strong class="wt-content-key">server</strong> endpoint and server-side validation before it becomes a real registration form.</li></ul></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Common Mistakes and How to Diagnose Them</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><h3>Nested list outside its parent item</h3><p>Move the inner ul or ol inside the li it describes. Read the <strong class="wt-content-key">DOM</strong> tree rather than judging only indentation.</p></article><article class="wt8-concept-card"><h3>Headers styled as data cells</h3><p>Use th and appropriate <strong class="wt-content-key">scope</strong>. A bold font alone does not communicate header relationships.</p></article><article class="wt8-concept-card"><h3>Missing name</h3><p>A control can be visible and labelled yet absent from the payload. Check name separately from id.</p></article><article class="wt8-concept-card"><h3>Different radio names</h3><p>Different names allow simultaneous selection. Use one shared name for alternatives in the same group.</p></article><article class="wt8-concept-card"><h3>Disabled value expected in the payload</h3><p>Disabled controls are omitted. If a text value should submit while not being editable, consider readonly where supported.</p></article><article class="wt8-concept-card"><h3>POST described as secure by itself</h3><p>Use <strong class="wt-content-key">HTTPS</strong> and <strong class="wt-content-key">server</strong> checks. Moving data from the query to the body does not encrypt it.</p></article><article class="wt8-concept-card"><h3>Placeholder used as the only label</h3><p>Add a visible label. Hints disappear during typing and do not replace the control’s name for users.</p></article><article class="wt8-concept-card"><h3>Helper button submits unexpectedly</h3><p>Set type="button" on helper buttons inside a form.</p></article></div></section>
+<section class="content-section interview-section" id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Preparation</h2><p>Reveal each answer, then explain it in your own words with an example.</p><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>When should you use ol instead of ul?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>Use ol when sequence or ranking is meaningful; use ul for a related collection without meaningful order.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>How do id and name differ?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>id identifies the element and connects labels or fragments. name supplies the submitted field key.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>Why use th and scope?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>They communicate header relationships in simple data tables. A styled td remains a data cell.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>Does POST encrypt a password?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>No. POST usually places data in the body. HTTPS protects transport; server validation is still needed.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>What happens to an unchecked checkbox?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>It contributes no name/value pair. Server logic must handle an absent field appropriately.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>How are readonly and disabled different?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>A named read-only text field can submit. A disabled field is omitted and does not participate in validation.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>Can HTML validation replace server validation?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>No. Users can bypass browser checks or send requests directly. Validate all submitted data on the server.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip tabindex="0" role="button" aria-pressed="false"><div class="wt8-flip-inner"><div class="wt8-flip-front"><h3>Why use fieldset and legend?</h3><span class="flip-hint">Click or press Enter to reveal →</span></div><div class="wt8-flip-back"><h3>Answer</h3><p>They group related controls and provide a group label, for example attendance radio choices.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>Quick MCQs</h2><p>Choose an answer to see why it is correct. Use Reset quiz to practise again.</p><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="ol expresses a meaningful sequence; ul is unordered and dl associates terms with descriptions."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which list fits ordered deployment steps?</h3><div class="wt8-options"><button type="button" class="wt8-option">ul</button><button type="button" class="wt8-option">ol</button><button type="button" class="wt8-option">dl</button><button type="button" class="wt8-option">table</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The nested list describes an item and belongs inside that item."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Where should a nested list be placed?</h3><div class="wt8-options"><button type="button" class="wt8-option">Inside its parent li</button><button type="button" class="wt8-option">After the closing parent ul</button><button type="button" class="wt8-option">Inside the head</button><button type="button" class="wt8-option">Inside an input</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="caption titles the table. legend labels a fieldset and label labels a control."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which element gives a table its title?</h3><div class="wt8-options"><button type="button" class="wt8-option">legend</button><button type="button" class="wt8-option">label</button><button type="button" class="wt8-option">caption</button><button type="button" class="wt8-option">placeholder</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="th identifies a header and scope=&quot;col&quot; associates it with the column."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which marks a simple column header?</h3><div class="wt8-options"><button type="button" class="wt8-option">td class=&quot;bold&quot;</button><button type="button" class="wt8-option">th scope=&quot;col&quot;</button><button type="button" class="wt8-option">tr scope=&quot;col&quot;</button><button type="button" class="wt8-option">table type=&quot;header&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="name supplies the key. id identifies the document element."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which attribute provides a submitted field key?</h3><div class="wt8-options"><button type="button" class="wt8-option">id</button><button type="button" class="wt8-option">class</button><button type="button" class="wt8-option">placeholder</button><button type="button" class="wt8-option">name</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Disabled controls are omitted; a readonly text value can still submit."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. Which value is omitted from a normal form submission?</h3><div class="wt8-options"><button type="button" class="wt8-option">Enabled named text</button><button type="button" class="wt8-option">Selected named option</button><button type="button" class="wt8-option">Disabled named input</button><button type="button" class="wt8-option">Named readonly text input</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A shared name groups these radio alternatives."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. How should mutually exclusive radios be grouped?</h3><div class="wt8-options"><button type="button" class="wt8-option">Same name within the same form</button><button type="button" class="wt8-option">Same placeholder</button><button type="button" class="wt8-option">Different names</button><button type="button" class="wt8-option">One textarea per choice</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="An unchecked checkbox contributes no pair; absence must be handled by server logic."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. An unchecked updates checkbox has value=&quot;yes&quot;. What does it contribute?</h3><div class="wt8-options"><button type="button" class="wt8-option">updates=yes</button><button type="button" class="wt8-option">updates=no</button><button type="button" class="wt8-option">updates=false</button><button type="button" class="wt8-option">No pair</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="POST commonly submits data in the body. HTTPS and server-side checks remain necessary."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which statement about POST is correct?</h3><div class="wt8-options"><button type="button" class="wt8-option">POST encrypts without HTTPS</button><button type="button" class="wt8-option">POST removes the need for validation</button><button type="button" class="wt8-option">POST usually puts form data in the request body</button><button type="button" class="wt8-option">POST is only for files</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Reset restores initial defaults; a field with an initial value returns to that value."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does type=&quot;reset&quot; do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Deletes server data</button><button type="button" class="wt8-option">Restores initial control defaults</button><button type="button" class="wt8-option">Always empties every field</button><button type="button" class="wt8-option">Submits the form</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="colspan spans columns. rowspan spans rows."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What does colspan=&quot;2&quot; do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Adds two rows</button><button type="button" class="wt8-option">Hides two columns</button><button type="button" class="wt8-option">Makes the cell occupy two columns</button><button type="button" class="wt8-option">Creates two tables</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="type=&quot;button&quot; avoids accidentally submitting or resetting the form."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Which is a suitable helper button inside a form?</h3><div class="wt8-options"><button type="button" class="wt8-option">button type=&quot;button&quot;</button><button type="button" class="wt8-option">button with no type</button><button type="button" class="wt8-option">input type=&quot;submit&quot;</button><button type="button" class="wt8-option">button type=&quot;reset&quot; for opening help</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt9QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><h3>Prerequisite list</h3><ul class="wt-content-points"><li>Create three prerequisites with ul. </li><li>Expected: three sibling li items. </li><li>Reorder them and explain why the meaning remains intact.</li></ul></article><article class="wt8-concept-card"><h3>Continuing a sequence</h3><p>Use ol start="4" with three items. Expected labels: 4, 5, 6. Add value="10" to the second item and predict 4, 10, 11.</p></article><article class="wt8-concept-card"><h3>Nested study plan</h3><p>Create <strong class="wt-content-key">HTML</strong> and <strong class="wt-content-key">CSS</strong> as children of Frontend. Expected: the inner list is contained within the Frontend li.</p></article><article class="wt8-concept-card"><h3>Workshop table</h3><p>Create two workshops with 20 and 15 seats. Expected total: 35. Add a caption and headers with <strong class="wt-content-key">scope</strong>.</p></article><article class="wt8-concept-card"><h3>Grid-span reasoning</h3><p>Make a day header cover two sessions. Expected: the second <strong class="wt-content-key">session</strong> row has no duplicate day cell.</p></article><article class="wt8-concept-card"><h3>Submission boundary cases</h3><p>In the lab, uncheck updates and inspect. Expected: no updates pair. Switch attendance to campus; expected mode=campus.</p></article><article class="wt8-concept-card"><h3>Validation boundaries</h3><ul class="wt-content-points"><li>Try seats 0, 1, 4, 5 and 1.5. </li><li>Expected: only 1 and 4 pass among these values. </li><li>Try an empty topic and a malformed email; <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">validation</strong> blocks inspection.</li></ul></article><article class="wt8-concept-card"><h3>Encoding and reset</h3><ul class="wt-content-points"><li>Use name Asha & Ravi. </li><li>Expected encoding: student=Asha+%26+Ravi. </li><li>Change seats and reset; expected initial seats 1, not an empty field.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📋</span><strong>ul / ol / dl:</strong> Collection / meaningful sequence / terms and descriptions.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌳</span><strong>Nested lists:</strong> Place them inside the parent li.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📊</span><strong>table:</strong> Use caption, rows, headers and data cells for tabular information.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Labels:</strong> Match for to a unique control id.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Submission:</strong> name supplies the key; eligible controls contribute values.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">☑️</span><strong>Choices:</strong> Unchecked checkboxes and radios are omitted.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Methods:</strong> GET commonly uses query data; POST commonly uses body data.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Validation:</strong> Browser convenience plus independent server checks.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term List item"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>List item</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>List item</h4><p>One li within an ordered or unordered list.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Caption"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Caption</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Caption</h4><p>The title of a table.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Header cell"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Header cell</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Header cell</h4><p>A th that identifies row or column context.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Cell span"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Cell span</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Cell span</h4><p>A cell’s extension across multiple rows or columns.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Form control"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Form control</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Form control</h4><p>An input, select, textarea or another interactive form element.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Field name"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Field name</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Field name</h4><p>The key submitted with a control’s value.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Constraint validation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Constraint validation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Constraint validation</h4><p>Browser checks for applicable input requirements.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Encoding"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Encoding</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Encoding</h4><p>A representation of data suitable for transmission.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Payload"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Payload</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Payload</h4><p>The data carried by a request.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Read-only"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Read-only</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Read-only</h4><p>An editing restriction supported by certain control types.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Workshop Resource Page</h2><ul class="wt-content-points"><li>Build a complete <strong class="wt-content-key">HTML</strong> document with a prerequisites list, an ordered preparation plan, a captioned timetable and a labelled registration form. </li><li>Include a topic <strong class="wt-content-key">selector</strong>, radio group, optional updates checkbox and seat count from 1 to 4.</li></ul><ul><li>Use unique IDs, explicit names and button types.</li><li>Make the table readable and identify its headers.</li><li>Explain the expected payload when updates is unchecked.</li><li>Document that the action is illustrative until a server is implemented.</li><li>Test keyboard access, invalid input and reset defaults.</li></ul><p><strong>Success criterion:</strong> explain every submitted field and every omitted field without guessing from its appearance.</p></section>
+
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 09 Complete?</h2><p>Before marking complete, build a list and a simple accessible table, label a form correctly, and predict its submitted pairs. Completion records a local study milestone; it is not an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="html-text-links-media.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">HTML Text, Links and Media</span><span class="nav-action">Review Level 08</span></a></div><div class="topic-nav-side next"><a href="semantic-html-accessibility.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Semantic HTML and Accessibility</span><span class="nav-action">Open Level 10</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="html-lists-tables-forms.js?v=2"></script><script src="web-technologies-mobile-nav.js?v=5" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=1" defer></script>
+</body></html>

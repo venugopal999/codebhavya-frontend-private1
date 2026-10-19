@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn PHP syntax, variables, arrays, functions and defensive form processing with code examples, a visualizer, browser demonstration and MCQs.">
+
+    
+
+    <title>
+        Level 21 — PHP Fundamentals | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/php-fundamentals.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt21-skip-link" href="#wt21Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt21Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 21</div><div class="level-badge">LEVEL 21 · PHP</div><h1>PHP Fundamentals</h1><p class="wt-hero-description">Turn validated form strings into clear calculations and escaped HTML output.</p><div class="wt-hero-meta"><span>🐘 PHP syntax</span><span>📨 Form input</span><span>🛡️ Validation + escaping</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 20 traced requests through a <strong class="wt-content-key">backend</strong>. </li><li><strong class="wt-content-key">PHP</strong> provides a concrete language for writing that side of an application. </li><li>This lesson introduces its syntax, values, arrays, functions and form-processing boundaries, then follows a small study-plan quote from submitted strings to escaped <strong class="wt-content-key">HTML</strong> output.</li></ul><ul class="wt-content-points"><li>Write clear <strong class="wt-content-key">PHP</strong> blocks, distinguish strings from accepted numbers, validate a form independently of <strong class="wt-content-key">browser</strong> controls and explain what PHP sends back to a browser. </li><li>The interactive lab demonstrates a fixed algorithm in <strong class="wt-content-key">JavaScript</strong>; the matching <strong class="wt-content-key">PHP</strong> source can run separately in a PHP-enabled environment.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🐘</span><h3>Syntax</h3><p>Read <strong class="wt-content-key">PHP</strong> tags, dollar-prefixed variables and statements.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Values</h3><p>Use strings, numbers, booleans and arrays deliberately.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Input</h3><p>Check external field shape and type before conversion.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Output</h3><p>Escape data for the intended <strong class="wt-content-key">HTML</strong> context.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🖥️</span>PHP Executes in a Supported Runtime</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">PHP</strong> interpreter evaluates PHP source. </li><li>In a web application, the runtime handles a <strong class="wt-content-key">request</strong> and produces output such as <strong class="wt-content-key">HTML</strong> or JSON. </li><li>The <strong class="wt-content-key">browser</strong> receives the <strong class="wt-content-key">response</strong>; it does not execute the server’s PHP source as browser JavaScript.</li></ul><ul class="wt-content-points"><li>Saving a file with a .<strong class="wt-content-key">php</strong> extension is not enough. </li><li>A host must be configured to execute <strong class="wt-content-key">PHP</strong>, or a separate <strong class="wt-content-key">backend</strong> must provide it. </li><li>Uploading a <strong class="wt-content-key">PHP</strong> file into a static <strong class="wt-content-key">frontend</strong> folder does not add that runtime. </li><li>Keep source and private configuration from being served as public text.</li></ul><ul class="wt-content-points"><li>For learning, <strong class="wt-content-key">PHP</strong> also has a command-line interface. </li><li>You can run a script directly, check its syntax and use the built-in development <strong class="wt-content-key">server</strong>. </li><li>That development <strong class="wt-content-key">server</strong> is intended for local development, not as a public production hosting solution.</li></ul><div class="code-block"><pre><code>php -v
+php -l study-plan.php
+php tests.php
+php -S 127.0.0.1:8000
+# Run these in the folder containing the example files.</code></pre></div><ul class="wt-content-points"><li>With <strong class="wt-content-key">PHP</strong> installed, open <strong class="wt-content-key">http</strong>://127.0.0.1:8000/study-plan.php after starting the local server. </li><li>The downloadable patch contains the example separately from the website upload files. </li><li>It does not require changing your existing <strong class="wt-content-key">frontend</strong> hosting.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>PHP Tags, Statements and Comments</h2><ul class="wt-content-points"><li>The standard opening tag is <code>&lt;?php</code>. </li><li><strong class="wt-content-key">PHP</strong> statements commonly end with a semicolon, while braces delimit blocks such as functions and conditionals. </li><li>Comments explain a decision without becoming output.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">PHP</strong> file can contain <strong class="wt-content-key">HTML</strong> outside PHP blocks, which the runtime sends as output. </li><li>A file containing only <strong class="wt-content-key">PHP</strong> commonly omits the closing tag to avoid accidental trailing output. </li><li>Headers must be sent before <strong class="wt-content-key">response</strong> body output.</li></ul><ul class="wt-content-points"><li>Use full opening tags rather than relying on a short-tag configuration. </li><li>In the examples, the opening tag, variable assignments and echo statements belong to <strong class="wt-content-key">PHP</strong> source; the values emitted by echo belong to the <strong class="wt-content-key">response</strong>.</li></ul><div class="code-block"><pre><code>&lt;?php
+// A complete CLI greeting script.
+$course = &quot;PHP&quot;;
+echo &quot;Learning &quot; . $course . &quot;
+&quot;;
+// No closing tag is needed in this PHP-only file.</code></pre></div><ul class="wt-content-points"><li>Do not confuse a syntax error with a failed form <strong class="wt-content-key">validation</strong>. </li><li>The interpreter must first understand the program. </li><li>A missing semicolon or unmatched brace can prevent the intended handler from running at all.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">💲</span>Variables, Types and Strict Comparisons</h2><ul class="wt-content-points"><li><strong class="wt-content-key">PHP</strong> variables begin with a dollar sign. </li><li>Names are case-sensitive, so $course and $Course are different variables. </li><li>An ordinary assignment stores a value; types include integers, floating-point values, strings, booleans, arrays and <strong class="wt-content-key">null</strong>.</li></ul><ul class="wt-content-points"><li>The strict comparison operators === and !== consider type as well as value. </li><li>Form values arrive as strings in the ordinary scalar form case, so the string "2" is not the same typed value as the integer 2. </li><li>Validate the submitted representation before converting it.</li></ul><ul class="wt-content-points"><li>Declare(strict_types=1) affects scalar type declarations at call boundaries; it does not automatically validate <strong class="wt-content-key">HTTP</strong> input or change every operator into a strict operator. </li><li>A cast can produce a number from an unacceptable string, so casting alone is not the form <strong class="wt-content-key">contract</strong>.</li></ul><div class="code-block"><pre><code>&lt;?php
+$submitted = &quot;2&quot;;
+var_dump($submitted === 2);  // false
+$acceptedDays = (int) $submitted; // after validation
+var_dump($acceptedDays === 2); // true
+$enabled = true;
+$missing = null;</code></pre></div><ul class="wt-content-points"><li>Use strict comparisons where type matters. </li><li>Avoid depending on loose equality to decide whether an external field is valid, and do not use a successful cast as proof that the original input was acceptable.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>Strings, Concatenation and Output</h2><ul class="wt-content-points"><li><strong class="wt-content-key">PHP</strong> uses the dot operator for string concatenation. </li><li>Echo emits output, while returning a value from a <strong class="wt-content-key">function</strong> makes it available to its caller. </li><li>A <strong class="wt-content-key">function</strong> can calculate a value without immediately sending anything to the <strong class="wt-content-key">browser</strong>.</li></ul><ul class="wt-content-points"><li>Double-quoted strings can interpolate variables; single-quoted strings have more limited interpretation. </li><li>Choose whichever makes the intended text clear. </li><li>The plus operator is for arithmetic, not <strong class="wt-content-key">PHP</strong> string concatenation.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">PHP</strong> string is a sequence of bytes. </li><li>Strlen measures bytes, not a universal count of visible letters. </li><li>Our form example uses a UTF-8 regular expression to bound Unicode code points and rejects ASCII control characters; it does not claim to count user-perceived grapheme clusters.</li></ul><div class="code-block"><pre><code>&lt;?php
+$topic = &quot;Forms&quot;;
+echo &quot;Study &quot; . $topic;
+echo &quot;
+Topic: $topic
+&quot;;
+echo &#x27;Literal variable name: $topic&#x27;;</code></pre></div><ul class="wt-content-points"><li>In a web page, raw echo of untrusted text can create <strong class="wt-content-key">HTML</strong> markup. </li><li>Calculating a correct string and inserting it into the correct output context are separate responsibilities. </li><li>The escaping section shows how this lesson handles <strong class="wt-content-key">HTML</strong> text.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>Operators and Bounded Integer Calculations</h2><ul class="wt-content-points"><li>Arithmetic operators include +, -, *, / and %. </li><li>Conditions use comparisons and logical operators. </li><li>Keep a calculation’s units clear: duration in days, unit price in paise and total price in paise are different values.</li></ul><ul class="wt-content-points"><li>Our fictional quote uses integer paise: <strong class="wt-content-key">HTML</strong> 12550, <strong class="wt-content-key">CSS</strong> 15000 and PHP 18000 per day. </li><li>Days is an accepted integer from 1 to 5. </li><li>Multiplication produces totalPaise; integer division and a two-digit remainder format the displayed rupees.</li></ul><ul class="wt-content-points"><li>This bounded exercise avoids introducing a floating-point rounding decision into the price calculation. </li><li>It is not a payment system or a general tax, currency-conversion or financial rounding engine.</li></ul><div class="code-block"><pre><code>&lt;?php
+$unitPaise = 12550;
+$days = 2;
+$totalPaise = $unitPaise * $days; // 25100
+$totalINR = (string) intdiv($totalPaise, 100) . &quot;.&quot; .
+    str_pad((string) ($totalPaise % 100), 2, &quot;0&quot;, STR_PAD_LEFT);
+echo $totalINR; // 251.00</code></pre></div><ul class="wt-content-points"><li>Check the accepted bounds before calculation. </li><li>If your application later supports arbitrary prices or very large quantities, review integer range, input rules and formatting again instead of assuming this small <strong class="wt-content-key">contract</strong> covers every case.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔀</span>Conditions and Loops</h2><ul class="wt-content-points"><li>If/elseif/else selects a branch. </li><li>An early return can stop a handler after a rejected method or invalid input. </li><li>That makes it easier to see why a failure never reaches the calculation.</li></ul><ul class="wt-content-points"><li>For and foreach repeat work. </li><li>Foreach is convenient for traversing an <strong class="wt-content-key">array</strong> of course records or a list of <strong class="wt-content-key">validation</strong> errors. </li><li>Keep output escaping inside the <strong class="wt-content-key">rendering</strong> step rather than assuming <strong class="wt-content-key">array</strong> values are safe.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">PHP</strong> example gathers independent name, course and day errors after confirming that all three fields are scalar strings. </li><li>A missing or array-valued field is rejected earlier because later string functions should not be called on it.</li></ul><div class="code-block"><pre><code>&lt;?php
+$errors = [&quot;Choose a course&quot;, &quot;Choose 1-5 days&quot;];
+foreach ($errors as $error) {
+    echo htmlspecialchars($error, ENT_QUOTES | ENT_SUBSTITUTE, &quot;UTF-8&quot;);
+    echo &quot;
+&quot;;
+}
+for ($day = 1; $day &lt;= 5; $day++) {
+    echo $day . &quot; &quot;;
+}</code></pre></div><ul class="wt-content-points"><li>A <strong class="wt-content-key">loop</strong> in a <strong class="wt-content-key">request</strong> handler completes its work for that request. </li><li>It does not keep a <strong class="wt-content-key">browser</strong> form connected to a changing <strong class="wt-content-key">server</strong> variable after the response is finished. </li><li>A later interaction requires another <strong class="wt-content-key">request</strong> or an explicitly implemented connection.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🗂️</span>Arrays — Indexed and Associative Data</h2><ul class="wt-content-points"><li><strong class="wt-content-key">PHP</strong> arrays map keys to values and preserve order. </li><li>An indexed collection can hold error messages; an associative <strong class="wt-content-key">array</strong> can hold named fields such as title and unitPaise. </li><li>Nested arrays represent small records or tables.</li></ul><ul class="wt-content-points"><li>The example course table uses fixed keys <strong class="wt-content-key">html</strong>, <strong class="wt-content-key">css</strong> and php. </li><li>The submitted course must match one of those keys before its price is read. </li><li>Do not create a new trusted course record from arbitrary client-supplied price data.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Array</strong> access and <strong class="wt-content-key">null</strong> coalescing help handle absent values, but a default does not prove input validity. </li><li>Confirm whether a field exists and whether its value has the expected type before using it.</li></ul><div class="code-block"><pre><code>&lt;?php
+$courses = [
+    &quot;html&quot; =&gt; [&quot;title&quot; =&gt; &quot;HTML&quot;, &quot;unitPaise&quot; =&gt; 12550],
+    &quot;css&quot; =&gt; [&quot;title&quot; =&gt; &quot;CSS&quot;, &quot;unitPaise&quot; =&gt; 15000]
+];
+$selected = &quot;html&quot;;
+if (array_key_exists($selected, $courses)) {
+    echo $courses[$selected][&quot;title&quot;];
+}</code></pre></div><ul class="wt-content-points"><li>Our exact form <strong class="wt-content-key">contract</strong> rejects extra fields. </li><li>A browser-supplied role or price therefore does not silently become part of the accepted record. </li><li>For a real application, document which fields are accepted and which are derived from <strong class="wt-content-key">server</strong> data.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>Functions Separate Processing from Rendering</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">function</strong> can validate a record, calculate a result or escape text. </li><li>Clear parameters and return values make the pieces easier to inspect and test. </li><li>Keep a pure calculation separate from the code that sends headers or renders a page.</li></ul><ul class="wt-content-points"><li>ProcessPlan in the example receives already decoded form fields, a method and a media type. </li><li>It returns a structured result containing status, headers and a body. </li><li>PlanHtml turns that accepted result into an escaped <strong class="wt-content-key">HTML</strong> fragment.</li></ul><ul class="wt-content-points"><li>The dispatch block reads $_POST and $_SERVER, invokes the processor, sends <strong class="wt-content-key">response</strong> metadata and outputs a small page. </li><li>CLI tests can call the processor without pretending that an <strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">request</strong> or browser session exists.</li></ul><div class="code-block"><pre><code>&lt;?php
+function totalPaise(int $unitPaise, int $days): int
+{
+    return $unitPaise * $days;
+}
+$amount = totalPaise(12550, 2);
+echo $amount; // 25100</code></pre></div><ul class="wt-content-points"><li>Type declarations improve the <strong class="wt-content-key">function</strong> interface; they do not replace the processor’s <strong class="wt-content-key">validation</strong> of external values. </li><li>In the form flow, a string is converted to an integer only after its allowed spelling has been accepted.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>GET, POST and PHP Superglobals</h2><p>Superglobals are predefined arrays available in different scopes. $_GET represents <strong class="wt-content-key">URL</strong> query input. $_POST normally contains decoded form data for URL-encoded or multipart POST bodies. $_SERVER provides <strong class="wt-content-key">request</strong> and execution information, including the request method in a web environment.</p><ul class="wt-content-points"><li>A <strong class="wt-content-key">JSON</strong> <strong class="wt-content-key">request</strong> body does not automatically become the same $_POST form array. </li><li>A <strong class="wt-content-key">JSON</strong> handler would read the raw body through <strong class="wt-content-key">php</strong>://input, decode it and validate its own contract. </li><li>This example deliberately accepts only application/x-www-form-urlencoded.</li></ul><ul class="wt-content-points"><li>Scalar form controls usually produce strings, but bracketed field names can produce arrays. </li><li>A crafted days[] input is not the expected scalar duration. </li><li>The processor checks is_string before applying a regular expression or cast.</li></ul><div class="code-block"><pre><code>&lt;?php
+$method = $_SERVER[&quot;REQUEST_METHOD&quot;] ?? &quot;GET&quot;;
+if ($method === &quot;POST&quot;) {
+    $days = $_POST[&quot;days&quot;] ?? null;
+    if (!is_string($days)) {
+        // Reject missing or array-valued input before conversion.
+    }
+}</code></pre></div><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> lab shows a simulated already decoded field <strong class="wt-content-key">object</strong>. </li><li>It is not a <strong class="wt-content-key">PHP</strong> <strong class="wt-content-key">request</strong> parser and does not model duplicate parameter normalization or every possible field-name transformation. </li><li>The separate <strong class="wt-content-key">PHP</strong> runtime handles actual form decoding.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Validate Before Normalizing a Study Plan</h2><ul class="wt-content-points"><li>The exact decoded record is learner, course and days. </li><li>All three must be strings. </li><li>Learner is trimmed with <strong class="wt-content-key">PHP</strong>’s default trim character set, then must contain 2–40 Unicode code points with no ASCII control characters. </li><li>Course must be <strong class="wt-content-key">html</strong>, <strong class="wt-content-key">css</strong> or php. </li><li>Days must be exactly one digit from 1 to 5.</li></ul><ul class="wt-content-points"><li>Only learner is trimmed. </li><li>Days "02", "+2", "2.0", "2e0" and " 2 " are rejected even if a cast could produce an integer. </li><li>Once the representation is accepted, convert days to an integer and derive the price from the fixed course table.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Validation</strong> and normalization are deliberate application rules. </li><li>This short learner label is a demonstration field, not a universal policy for personal names. </li><li>Unicode code points and visible characters can differ when combining marks or joined emoji are used.</li></ul><figure class="wt-diagram"><figcaption>Accept one controlled record</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Shape</strong><p>Exactly three scalar string fields.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Label</strong><p>Trim and check the documented text bound.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Enums and spelling</strong><p>Known course and a single digit 1–5.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧮</span><strong>Derive</strong><p>Convert accepted days and calculate trusted price.</p></div></div></figure><ul class="wt-content-points"><li>Failed <strong class="wt-content-key">validation</strong> returns 400 without calculating a quote. </li><li>GET returns a ready form; unsupported methods return 405 with Allow: GET, POST; an unsupported POST media type returns 415. </li><li>A successful quote uses 200 because nothing is booked, paid or stored.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Escape Values for HTML Output</h2><ul class="wt-content-points"><li>Htmlspecialchars encodes special <strong class="wt-content-key">HTML</strong> characters. </li><li>The example explicitly uses ENT_QUOTES | ENT_SUBSTITUTE and UTF-8 when placing a learner label into <strong class="wt-content-key">HTML</strong> text. </li><li>An accepted label such as Ada &lt;b&gt; should be displayed literally rather than creating a bold element.</li></ul><ul class="wt-content-points"><li>Escaping does not establish that a value meets the input <strong class="wt-content-key">contract</strong>. </li><li>Conversely, validating a name’s length does not make it safe to insert as <strong class="wt-content-key">HTML</strong>. </li><li>Validate at the input boundary and encode for the output context.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">HTML</strong> text escaping is not <strong class="wt-content-key">SQL</strong> protection, JavaScript string encoding or URL validation. </li><li>Use <strong class="wt-content-key">parameterized queries</strong> for <strong class="wt-content-key">database</strong> values and the relevant rules for other destinations. </li><li>The study-plan example has no <strong class="wt-content-key">database</strong> and never evaluates submitted <strong class="wt-content-key">PHP</strong> code.</li></ul><div class="code-block"><pre><code>&lt;?php
+$learner = &quot;Ada &lt;b&gt;&quot;;
+echo &quot;&lt;p&gt;&quot; . htmlspecialchars(
+    $learner, ENT_QUOTES | ENT_SUBSTITUTE, &quot;UTF-8&quot;
+) . &quot;&lt;/p&gt;&quot;;
+// Source: &lt;p&gt;Ada &amp;lt;b&amp;gt;&lt;/p&gt;
+// Visible text: Ada &lt;b&gt;</code></pre></div><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> lab displays both an escaped-source representation and a safe preview built with <strong class="wt-content-key">DOM</strong> text nodes. </li><li>It does not insert user-provided <strong class="wt-content-key">HTML</strong> or execute <strong class="wt-content-key">PHP</strong>. </li><li>Seeing the source and visible text together makes the encoding boundary easier to inspect.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Trace the Form-to-Response Lifecycle</h2><ul class="wt-content-points"><li>A normal form submission encodes its successful controls, sends the selected method to the action <strong class="wt-content-key">URL</strong> and receives a <strong class="wt-content-key">response</strong>. </li><li><strong class="wt-content-key">PHP</strong> interprets the script on the <strong class="wt-content-key">server</strong>, reads the appropriate input arrays and produces the response.</li></ul><ul class="wt-content-points"><li>Our example checks method and media type before the form record. </li><li>It verifies shape and scalar types, validates fields, calculates the quote and renders escaped output. </li><li>A rejected <strong class="wt-content-key">request</strong> stops before calculation; the <strong class="wt-content-key">response</strong> makes the failed stage visible.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">PHP</strong> variables in this handler belong to the current execution. </li><li>They do not create durable records between independent requests. </li><li>Sessions or a <strong class="wt-content-key">database</strong> need their own design and lifecycle, as introduced in Level 20.</li></ul><figure class="wt-diagram"><figcaption>A study-plan request</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Form</strong><p>Submit learner, course and days.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🐘</span><strong>Processor</strong><p>Check the method and decoded fields.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧮</span><strong>Result</strong><p>Calculate from accepted values and a trusted table.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>HTML</strong><p>Escape values and send a deliberate <strong class="wt-content-key">response</strong>.</p></div></div></figure><ul class="wt-content-points"><li>The lab demonstrates this fixed flow locally. </li><li>The real <strong class="wt-content-key">PHP</strong> example receives an actual form when run in a configured PHP environment. </li><li>Neither version collects a payment, makes a reservation or saves the submitted label.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Errors, Headers and Practical Boundaries</h2><ul class="wt-content-points"><li>Keep syntax errors, invalid submissions and operational failures separate. </li><li>A syntax check helps catch malformed source. </li><li><strong class="wt-content-key">Validation</strong> responses help a learner correct an input. </li><li>A deployed <strong class="wt-content-key">server</strong> needs private diagnostic logging and deliberate handling of unexpected failures.</li></ul><ul class="wt-content-points"><li>Header calls and http_response_code belong before body output. </li><li>A stray byte before the <strong class="wt-content-key">PHP</strong> opening tag or unexpected output from an included file can cause a headers-already-sent problem. </li><li>Separating processing from output helps keep this order clear.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Browser</strong> restrictions, request-size limits and runtime configuration still matter. </li><li>A production handler should bound <strong class="wt-content-key">request</strong> bytes before parsing, use an appropriate <strong class="wt-content-key">session</strong> and permission design for protected operations, and keep secrets out of public frontend files.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧾</span><h3>Syntax</h3><p>Check the <strong class="wt-content-key">PHP</strong> file before exercising the form.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Validation</h3><p>Return a useful failure without inventing a quote.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Headers</h3><p>Set <strong class="wt-content-key">response</strong> metadata before writing the body.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Runtime</h3><p>Verify <strong class="wt-content-key">PHP</strong> behavior in its actual environment.</p></article></div><ul class="wt-content-points"><li>The demonstration quote does not change <strong class="wt-content-key">server</strong> data and is not an <strong class="wt-content-key">authentication</strong> system. </li><li>It intentionally leaves persistence, payments and protected application actions for separately implemented features.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Complete PHP Example — A Small Study-Plan Handler</h2><ul class="wt-content-points"><li>Save the following complete source as study-plan.<strong class="wt-content-key">php</strong> in a local PHP example folder. </li><li>It includes reusable processing/<strong class="wt-content-key">rendering</strong> functions and a web dispatch block. </li><li>The supplied tests.<strong class="wt-content-key">php</strong> calls those functions from the command line; PHP CLI execution skips the web output block.</li></ul><ul class="wt-content-points"><li>Run <strong class="wt-content-key">php</strong> -l study-plan.php and php tests.php, then start php -S 127.0.0.1:8000 in that folder and open /study-plan.php. </li><li>The example belongs in a PHP-enabled environment; keep it separate from the <strong class="wt-content-key">frontend</strong> upload patch.</li></ul><ul class="wt-content-points"><li>The code is supplied for inspection and local execution. </li><li>The <strong class="wt-content-key">browser</strong> exercise below is a <strong class="wt-content-key">JavaScript</strong> demonstration of its documented algorithm, not a general PHP interpreter.</li></ul><div class="code-block"><pre><code>&lt;?php
+declare(strict_types=1);
+
+function planEscape(string $text): string
+{
+    return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, &#x27;UTF-8&#x27;);
+}
+
+function processPlan(array $post, string $method, string $mediaType): array
+{
+    $headers = [&#x27;Content-Type&#x27; =&gt; &#x27;text/html; charset=UTF-8&#x27;];
+    if ($method === &#x27;GET&#x27;) {
+        return [&#x27;status&#x27; =&gt; 200, &#x27;headers&#x27; =&gt; $headers,
+            &#x27;body&#x27; =&gt; [&#x27;message&#x27; =&gt; &#x27;Form ready. Submit a fictional study plan.&#x27;]];
+    }
+    if ($method !== &#x27;POST&#x27;) {
+        $headers[&#x27;Allow&#x27;] = &#x27;GET, POST&#x27;;
+        return [&#x27;status&#x27; =&gt; 405, &#x27;headers&#x27; =&gt; $headers,
+            &#x27;body&#x27; =&gt; [&#x27;message&#x27; =&gt; &#x27;Only GET and POST are supported.&#x27;]];
+    }
+    $media = strtolower(trim(explode(&#x27;;&#x27;, $mediaType)[0]));
+    if ($media !== &#x27;application/x-www-form-urlencoded&#x27;) {
+        return [&#x27;status&#x27; =&gt; 415, &#x27;headers&#x27; =&gt; $headers,
+            &#x27;body&#x27; =&gt; [&#x27;message&#x27; =&gt; &#x27;This example accepts URL-encoded form data.&#x27;]];
+    }
+    $keys = array_keys($post);
+    sort($keys);
+    if ($keys !== [&#x27;course&#x27;, &#x27;days&#x27;, &#x27;learner&#x27;]) {
+        return [&#x27;status&#x27; =&gt; 400, &#x27;headers&#x27; =&gt; $headers,
+            &#x27;body&#x27; =&gt; [&#x27;message&#x27; =&gt; &#x27;Expected exactly learner, course and days.&#x27;]];
+    }
+    foreach ([&#x27;learner&#x27;, &#x27;course&#x27;, &#x27;days&#x27;] as $key) {
+        if (!is_string($post[$key])) {
+            return [&#x27;status&#x27; =&gt; 400, &#x27;headers&#x27; =&gt; $headers,
+                &#x27;body&#x27; =&gt; [&#x27;message&#x27; =&gt; &#x27;Each submitted field must be a string.&#x27;]];
+        }
+    }
+    $learner = trim($post[&#x27;learner&#x27;]);
+    $errors = [];
+    if (preg_match(&#x27;/\A.{2,40}\z/u&#x27;, $learner) !== 1 ||
+        preg_match(&#x27;/[\x00-\x1F\x7F]/&#x27;, $learner) === 1) {
+        $errors[] = &#x27;Learner must contain 2-40 Unicode code points after trim, with no ASCII control characters.&#x27;;
+    }
+    $courses = [
+        &#x27;html&#x27; =&gt; [&#x27;title&#x27; =&gt; &#x27;HTML&#x27;, &#x27;unitPaise&#x27; =&gt; 12550],
+        &#x27;css&#x27; =&gt; [&#x27;title&#x27; =&gt; &#x27;CSS&#x27;, &#x27;unitPaise&#x27; =&gt; 15000],
+        &#x27;php&#x27; =&gt; [&#x27;title&#x27; =&gt; &#x27;PHP&#x27;, &#x27;unitPaise&#x27; =&gt; 18000]
+    ];
+    if (!array_key_exists($post[&#x27;course&#x27;], $courses)) {
+        $errors[] = &#x27;Course must be html, css or php.&#x27;;
+    }
+    if (preg_match(&#x27;/\A[1-5]\z/&#x27;, $post[&#x27;days&#x27;]) !== 1) {
+        $errors[] = &#x27;Days must be exactly one digit from 1 to 5.&#x27;;
+    }
+    if ($errors !== []) {
+        return [&#x27;status&#x27; =&gt; 400, &#x27;headers&#x27; =&gt; $headers,
+            &#x27;body&#x27; =&gt; [&#x27;message&#x27; =&gt; &#x27;Form validation failed.&#x27;, &#x27;errors&#x27; =&gt; $errors]];
+    }
+    $days = (int) $post[&#x27;days&#x27;];
+    $course = $courses[$post[&#x27;course&#x27;]];
+    $totalPaise = $course[&#x27;unitPaise&#x27;] * $days;
+    $totalINR = (string) intdiv($totalPaise, 100) . &#x27;.&#x27; .
+        str_pad((string) ($totalPaise % 100), 2, &#x27;0&#x27;, STR_PAD_LEFT);
+    return [&#x27;status&#x27; =&gt; 200, &#x27;headers&#x27; =&gt; $headers, &#x27;body&#x27; =&gt; [
+        &#x27;message&#x27; =&gt; &#x27;Study quote calculated; nothing was booked or saved.&#x27;,
+        &#x27;accepted&#x27; =&gt; [&#x27;learner&#x27; =&gt; $learner, &#x27;course&#x27; =&gt; $course[&#x27;title&#x27;],
+            &#x27;days&#x27; =&gt; $days, &#x27;unitPaise&#x27; =&gt; $course[&#x27;unitPaise&#x27;],
+            &#x27;totalPaise&#x27; =&gt; $totalPaise, &#x27;totalINR&#x27; =&gt; $totalINR]
+    ]];
+}
+
+function planHtml(array $result): string
+{
+    $body = $result[&#x27;body&#x27;];
+    if (!isset($body[&#x27;accepted&#x27;])) {
+        $html = &#x27;&lt;p&gt;&#x27; . planEscape($body[&#x27;message&#x27;]) . &#x27;&lt;/p&gt;&#x27;;
+        foreach ($body[&#x27;errors&#x27;] ?? [] as $error) {
+            $html .= &#x27;&lt;p&gt;&#x27; . planEscape($error) . &#x27;&lt;/p&gt;&#x27;;
+        }
+        return $html;
+    }
+    $plan = $body[&#x27;accepted&#x27;];
+    return &#x27;&lt;h2&gt;Study quote&lt;/h2&gt;&lt;p&gt;Learner: &#x27; . planEscape($plan[&#x27;learner&#x27;]) .
+        &#x27;&lt;/p&gt;&lt;p&gt;Course: &#x27; . planEscape($plan[&#x27;course&#x27;]) .
+        &#x27;&lt;/p&gt;&lt;p&gt;Days: &#x27; . (string) $plan[&#x27;days&#x27;] .
+        &#x27;&lt;/p&gt;&lt;p&gt;Total: INR &#x27; . planEscape($plan[&#x27;totalINR&#x27;]) . &#x27;&lt;/p&gt;&#x27;;
+}
+
+// PHP&#x27;s CLI web server reports &quot;cli-server&quot; here; CLI tests report &quot;cli&quot;.
+if (PHP_SAPI !== &#x27;cli&#x27;) {
+    $method = $_SERVER[&#x27;REQUEST_METHOD&#x27;] ?? &#x27;GET&#x27;;
+    $media = $_SERVER[&#x27;CONTENT_TYPE&#x27;] ?? &#x27;&#x27;;
+    $result = processPlan($_POST, $method, $media);
+    http_response_code($result[&#x27;status&#x27;]);
+    foreach ($result[&#x27;headers&#x27;] as $name =&gt; $value) {
+        header($name . &#x27;: &#x27; . $value);
+    }
+    echo &#x27;&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&#x27;;
+    echo &#x27;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#x27;;
+    echo &#x27;&lt;title&gt;PHP study-plan example&lt;/title&gt;&lt;body&gt;&lt;h1&gt;Study-plan form&lt;/h1&gt;&#x27;;
+    echo &#x27;&lt;p&gt;Learning example only. No payment, reservation or storage.&lt;/p&gt;&#x27;;
+    echo planHtml($result);
+    echo &#x27;&lt;form action=&quot;study-plan.php&quot; method=&quot;post&quot;&gt;&#x27;;
+    echo &#x27;&lt;p&gt;&lt;label&gt;Learner &lt;input name=&quot;learner&quot; required&gt;&lt;/label&gt;&lt;/p&gt;&#x27;;
+    echo &#x27;&lt;p&gt;&lt;label&gt;Course &lt;select name=&quot;course&quot;&gt;&lt;option value=&quot;html&quot;&gt;HTML&lt;/option&gt;&#x27;;
+    echo &#x27;&lt;option value=&quot;css&quot;&gt;CSS&lt;/option&gt;&lt;option value=&quot;php&quot;&gt;PHP&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/p&gt;&#x27;;
+    echo &#x27;&lt;p&gt;&lt;label&gt;Days &lt;select name=&quot;days&quot;&gt;&#x27;;
+    for ($day = 1; $day &lt;= 5; $day++) {
+        echo &#x27;&lt;option value=&quot;&#x27; . $day . &#x27;&quot;&gt;&#x27; . $day . &#x27;&lt;/option&gt;&#x27;;
+    }
+    echo &#x27;&lt;/select&gt;&lt;/label&gt;&lt;/p&gt;&lt;button type=&quot;submit&quot;&gt;Calculate quote&lt;/button&gt;&lt;/form&gt;&#x27;;
+    echo &#x27;&lt;/body&gt;&lt;/html&gt;&#x27;;
+}</code></pre></div></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — PHP Form Processing</h2><p>Follow a fixed successful study plan through receiving strings, validation, conversion, calculation and escaped output. The five-stage visualizer keeps the approved controls and styling. This is a teaching trace rather than live PHP execution.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="php">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>PHP FORM PROCESSING TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📨</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Receive decoded form strings</h3><p data-trace-description>An ordinary URL-encoded POST supplies scalar strings.</p></div><pre class="trace-code"><code data-trace-code>$_POST = [&quot;learner&quot; =&gt; &quot;Ada&quot;, &quot;course&quot; =&gt; &quot;html&quot;, &quot;days&quot; =&gt; &quot;2&quot;]</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Receive" aria-pressed="true"><span>01</span><strong>Receive</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Validate" aria-pressed="false"><span>02</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Convert" aria-pressed="false"><span>03</span><strong>Convert</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Calculate" aria-pressed="false"><span>04</span><strong>Calculate</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Escape" aria-pressed="false"><span>05</span><strong>Escape</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>PHP form input is external data. Check method, media type, exact fields and scalar types.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Study-Plan Form Demonstration</h2><ul class="wt-content-points"><li>This <strong class="wt-content-key">browser</strong> lab is implemented in <strong class="wt-content-key">JavaScript</strong> and mirrors the documented form algorithm. </li><li>It does not execute arbitrary <strong class="wt-content-key">PHP</strong>, send a <strong class="wt-content-key">request</strong> or save a learner label. </li><li>The complete <strong class="wt-content-key">PHP</strong> source above can be run separately in a PHP environment.</li></ul><ul class="wt-content-points"><li>The initial plan is Ada, <strong class="wt-content-key">HTML</strong> and the submitted string "2". </li><li>A valid quote is INR 251.00. </li><li><strong class="wt-content-key">HTML</strong> costs 12550 paise per day, <strong class="wt-content-key">CSS</strong> 15000 and PHP 18000. </li><li>Days must be exactly one digit 1–5; learner is trimmed and checked as described above.</li></ul><ul class="wt-content-points"><li>Inspect the simulated decoded form input, stage trace, normalized result and escaped <strong class="wt-content-key">HTML</strong> source. </li><li>The safe preview uses text nodes. </li><li>Try a missing field, array-valued duration or an extra client price: each must reject before calculation. </li><li>GET displays a ready message and ignores the form fields.</li></ul><div class="wt9-demo wt21-lab"><label for="wt21Method">Simulated request method</label><select id="wt21Method"><option value="POST">POST · process form</option><option value="GET">GET · form ready</option><option value="PUT">PUT · unsupported here</option></select><label for="wt21Type">Simulated POST media type</label><select id="wt21Type"><option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option><option value="application/json">application/json · rejected by this form example</option></select><label for="wt21Learner">Fictional learner label · 2–40 Unicode code points after trim</label><input type="text" id="wt21Learner" value="Ada" maxlength="80" aria-describedby="wt21Help"><label for="wt21Course">Study course</label><select id="wt21Course"><option value="html">HTML · INR 125.50 per day</option><option value="css">CSS · INR 150.00 per day</option><option value="php">PHP · INR 180.00 per day</option></select><label for="wt21Days">Submitted days string · exactly one digit 1–5</label><input type="text" id="wt21Days" value="2" maxlength="12" inputmode="numeric" aria-describedby="wt21Help"><p id="wt21Help">Use a fictional short label. Try "02", "2.0", "2e0" or a space around "2" to observe rejected representations.</p><label for="wt21Variant">Simulated decoded-field shape</label><select id="wt21Variant"><option value="normal">Normal · three string fields</option><option value="missing">Missing days field</option><option value="array">Array-valued days · like a crafted days[] field</option><option value="extra">Extra client price field · not trusted</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt21Process">Process demonstration</button><button type="button" class="secondary-button" id="wt21Reset">Reset demonstration</button></div><p id="wt21Status" role="status">Idle. JavaScript demonstration; PHP is not running in this page.</p><h3>Simulated decoded form input</h3><pre class="wt21-result"><code id="wt21Input">No input processed.</code></pre><h3>Processing stage trace</h3><pre class="wt21-result"><code id="wt21Trace">No trace yet.</code></pre><h3>Result · status, headers and accepted data</h3><pre class="wt21-result"><code id="wt21Result">No result yet.</code></pre><h3>Escaped HTML source · displayed as text</h3><pre class="wt21-result"><code id="wt21HTML">No generated source yet.</code></pre><h3>Safe preview · DOM text nodes, no PHP execution</h3><div id="wt21Preview" class="wt21-preview"><p>No preview yet.</p></div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Separate Syntax, Input and Output</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🐘</span><h3>Runtime</h3><p><strong class="wt-content-key">PHP</strong> source needs PHP execution; a static file upload is not enough.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Shape</h3><p>Check a missing field or <strong class="wt-content-key">array</strong> value before calling string functions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Representation</h3><p>Validate the original days string before a cast.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Output</h3><p>Escape for <strong class="wt-content-key">HTML</strong> text and keep <strong class="wt-content-key">response</strong> headers before the body.</p></article></div><ul class="wt-content-points"><li>If <strong class="wt-content-key">JSON</strong> data appears absent from $_POST, inspect the <strong class="wt-content-key">request</strong> media type and the handler’s parsing contract. </li><li>If days[] produces a type problem, reject non-string values before applying trim, regular expressions or integer conversion.</li></ul><ul class="wt-content-points"><li>If a label appears as markup, inspect the <strong class="wt-content-key">rendering</strong> boundary. </li><li>The <strong class="wt-content-key">HTML</strong> source should contain entities while the visible preview should contain the original literal text. </li><li>If the quote changes after adding a price field, the handler is trusting a field outside its <strong class="wt-content-key">contract</strong>.</li></ul><ul class="wt-content-points"><li>Use the local <strong class="wt-content-key">PHP</strong> syntax check and supplied test script before trying the real form. </li><li><strong class="wt-content-key">JavaScript</strong> tests of the <strong class="wt-content-key">browser</strong> demonstration cannot prove that a PHP runtime, its input decoding or headers behave correctly.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a browser execute PHP source like JavaScript?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a browser execute PHP source like JavaScript?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A supported PHP runtime executes the server source and sends a response to the browser.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does the dot operator do in PHP?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does the dot operator do in PHP?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It concatenates strings. The plus operator is arithmetic rather than PHP string concatenation.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does strict_types validate HTTP input automatically?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does strict_types validate HTTP input automatically?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It concerns scalar type declarations at call boundaries; external fields still need explicit shape, type and value checks.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why reject days[] before casting?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why reject days[] before casting?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It produces an array-shaped value rather than the required scalar string. String validation and conversion should not run on it.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why reject &quot;02&quot; even though it can cast to 2?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why reject &quot;02&quot; even though it can cast to 2?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The example accepts exactly one digit from 1 to 5. Conversion happens only after that representation passes validation.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does $_POST automatically contain a decoded JSON body?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does $_POST automatically contain a decoded JSON body?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. The normal $_POST form parsing covers URL-encoded or multipart form input; a JSON handler needs a separate raw-body decoding contract.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why validate and escape separately?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why validate and escape separately?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Validation checks application meaning. Escaping prepares accepted data for a particular output context, such as HTML text.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why use 200 for an accepted study quote?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why use 200 for an accepted study quote?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It is a successful calculation and display. No booking, payment or persistent resource is created.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Read the PHP Form Contract</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The standard PHP opening tag begins the PHP block."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which opening tag is used in the lesson’s PHP files?</h3><div class="wt8-options"><button type="button" class="wt8-option">&lt;php&gt;</button><button type="button" class="wt8-option">&lt;?php</button><button type="button" class="wt8-option">&lt;script php&gt;</button><button type="button" class="wt8-option">&lt;?javascript</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Variables such as $course use a dollar prefix."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Which prefix begins an ordinary PHP variable?</h3><div class="wt8-options"><button type="button" class="wt8-option">#</button><button type="button" class="wt8-option">@</button><button type="button" class="wt8-option">$</button><button type="button" class="wt8-option">%</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The dot operator connects string values."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which operator concatenates PHP strings?</h3><div class="wt8-options"><button type="button" class="wt8-option">.</button><button type="button" class="wt8-option">+</button><button type="button" class="wt8-option">*</button><button type="button" class="wt8-option">===</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Strict comparison includes type, so a string and integer differ."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What does &quot;2&quot; === 2 evaluate to?</h3><div class="wt8-options"><button type="button" class="wt8-option">true always</button><button type="button" class="wt8-option">The string &quot;2&quot;</button><button type="button" class="wt8-option">A quote total</button><button type="button" class="wt8-option">false</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="PHP strings are byte sequences; the example uses a UTF-8 regex for its code-point bound."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does strlen measure for a PHP string?</h3><div class="wt8-options"><button type="button" class="wt8-option">Visible letters always</button><button type="button" class="wt8-option">Bytes</button><button type="button" class="wt8-option">Grapheme clusters always</button><button type="button" class="wt8-option">Array keys</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The exact accepted spelling is one digit from 1 to 5."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. Which is an accepted days input in this form contract?</h3><div class="wt8-options"><button type="button" class="wt8-option">&quot;02&quot;</button><button type="button" class="wt8-option">&quot;2.0&quot;</button><button type="button" class="wt8-option">&quot;2&quot;</button><button type="button" class="wt8-option">&quot; 2 &quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A cast is normalization after acceptance, not proof of validity."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. When is days converted to an integer?</h3><div class="wt8-options"><button type="button" class="wt8-option">After its string representation passes validation</button><button type="button" class="wt8-option">Before checking its type</button><button type="button" class="wt8-option">Only after payment</button><button type="button" class="wt8-option">Never</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Each decoded field must be a scalar string."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What happens to array-valued days?</h3><div class="wt8-options"><button type="button" class="wt8-option">It becomes 1 silently</button><button type="button" class="wt8-option">It sets the price</button><button type="button" class="wt8-option">It selects an administrator</button><button type="button" class="wt8-option">It is rejected before string validation/conversion</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="12550 paise per day times two is 25100 paise, displayed as INR 251.00."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What is the example’s HTML quote for two days?</h3><div class="wt8-options"><button type="button" class="wt8-option">INR 125.50</button><button type="button" class="wt8-option">INR 251.00</button><button type="button" class="wt8-option">INR 250.00</button><button type="button" class="wt8-option">INR 25100.00</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Output encoding keeps the learner label literal in the HTML text context."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does htmlspecialchars do in this example?</h3><div class="wt8-options"><button type="button" class="wt8-option">Checks booking ownership</button><button type="button" class="wt8-option">Executes PHP in the browser</button><button type="button" class="wt8-option">Encodes special characters for HTML text output</button><button type="button" class="wt8-option">Writes a database record</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Prices are derived from the fixed trusted table, and extra fields are outside the contract."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What happens to an extra client price field?</h3><div class="wt8-options"><button type="button" class="wt8-option">The exact-shape check rejects it</button><button type="button" class="wt8-option">It overrides the course table</button><button type="button" class="wt8-option">It starts a payment</button><button type="button" class="wt8-option">It creates a new course</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The page runs a JavaScript model, not a PHP interpreter."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Does passing the browser demonstration prove PHP runtime behavior?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes, for every server</button><button type="button" class="wt8-option">Yes, because the trace says PHP</button><button type="button" class="wt8-option">Yes, because it uses form names</button><button type="button" class="wt8-option">No; the PHP file needs separate runtime checks</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt21QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict the Form Result</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧮</span><h3>Initial quote</h3><p>Process Ada/<strong class="wt-content-key">HTML</strong>/"2". Expected: 200, numeric days 2, totalPaise 25100 and totalINR "251.00".</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Course table</h3><p>Choose <strong class="wt-content-key">PHP</strong>/"5". Expected: 200 and INR 900.00 from the trusted price.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Wrong spelling</h3><p>Try "02", "2.0", "+2", "2e0", " 2 " and "6". Expected: 400, no accepted quote.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Shape</h3><p>Try missing days, array-valued days and extra price. Expected: 400 before calculation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Learner bound</h3><p>Try a one-code-point label or 41 code points. Expected: 400; a trimmed two-code-point label can pass.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Literal markup</h3><p>Use Ada &lt;b&gt; as learner. Expected: accepted literal text; source contains <code>&amp;lt;b&amp;gt;</code> and preview has no injected bold node.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Method/type</h3><p>GET ignores submitted fields and returns ready 200. PUT gives 405; POST with <strong class="wt-content-key">JSON</strong> media type gives 415.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🐘</span><h3>Real PHP</h3><ul class="wt-content-points"><li>Run <strong class="wt-content-key">php</strong> -l study-plan.php, php tests.php, then the local PHP form. </li><li>Expected: independently check syntax, algorithm and real <strong class="wt-content-key">request</strong> decoding.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🐘</span><strong>Execution:</strong> Use a configured PHP runtime.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Blocks:</strong> Full PHP tags and clear statement boundaries.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">💲</span><strong>Variables:</strong> Dollar prefix and case-sensitive names.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>Strings:</strong> Concatenate with dot; byte length is not visible-character count.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔢</span><strong>Types:</strong> Strict comparison considers type.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Arrays:</strong> Use named records and trusted lookup tables.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Functions:</strong> Separate processing, calculation and rendering.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Input:</strong> Check decoded external fields independently.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Normalize:</strong> Convert only after the representation passes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Encode:</strong> Prepare values for the output context.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term PHP runtime"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>PHP runtime</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>PHP runtime</h4><p>The environment that interprets and executes PHP source.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Superglobal"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Superglobal</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Superglobal</h4><p>A predefined PHP variable available across scopes, such as $_POST.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Scalar form field"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Scalar form field</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Scalar form field</h4><p>A single string value expected from an ordinary form control, rather than an array.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Associative array"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Associative array</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Associative array</h4><p>A PHP array using named keys to organize values.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Concatenation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Concatenation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Concatenation</h4><p>Combining strings using the PHP dot operator.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Strict comparison"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Strict comparison</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Strict comparison</h4><p>A comparison that includes value and type, such as ===.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Normalization"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Normalization</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Normalization</h4><p>A deliberate conversion of already accepted input into an application representation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Output encoding"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Output encoding</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Output encoding</h4><p>Preparing data for a particular destination context, such as HTML text.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Unicode code point"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Unicode code point</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Unicode code point</h4><p>A Unicode value; it is not always the same as one visible character.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Request dispatch"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Request dispatch</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Request dispatch</h4><p>Reading request information, invoking processing and sending a response.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Implement and Inspect a PHP Form</h2><ul class="wt-content-points"><li>Run the supplied study-plan.<strong class="wt-content-key">php</strong> in a local PHP environment. </li><li>Keep the exact scalar field <strong class="wt-content-key">contract</strong> and trusted course table. </li><li>Validate method, media type, shape and values before converting days or calculating a quote. </li><li>Escape the accepted learner label when generating <strong class="wt-content-key">HTML</strong> text.</li></ul><ul class="wt-content-points"><li>Reproduce the valid quote, invalid days spellings, wrong-shaped fields and literal markup case. </li><li>Compare the <strong class="wt-content-key">browser</strong> demonstration with <strong class="wt-content-key">PHP</strong> execution without assuming that one test proves the other runtime. </li><li>Add real-request checks for GET, POST and an unsupported method.</li></ul><ul class="wt-content-points"><li>Explain the differences between returned values and emitted output, scalar strings and integers, <strong class="wt-content-key">validation</strong> and escaping, and a calculated quote and a persistent booking. </li><li>Keep the example separate from the static <strong class="wt-content-key">frontend</strong> <strong class="wt-content-key">deployment</strong>.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> trace accepted external strings into a deliberate <strong class="wt-content-key">PHP</strong> <strong class="wt-content-key">response</strong> and explain each rejected boundary. </li><li>Level 22 introduces <strong class="wt-content-key">Java</strong> Web Technologies.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 21 Complete?</h2><p>Before marking complete, read the PHP example, explain one valid quote and reproduce type, shape, value and escaping outcomes in the demonstration. Run the separate PHP checks when a PHP environment is available. Completion remains a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="server-side-web-programming.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Server-Side Web Programming</span><span class="nav-action">Review Level 20</span></a></div><div class="topic-nav-side next"><a href="java-web-technologies.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Java Web Technologies</span><span class="nav-action">Open Level 22</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="php-fundamentals.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=16" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=13" defer></script>
+</body></html>

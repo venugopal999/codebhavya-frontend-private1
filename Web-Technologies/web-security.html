@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn authentication, authorization, sessions, CSRF, XSS and injection defenses through diagrams, a security policy lab and MCQs.">
+
+    
+
+    <title>
+        Level 28 — Web Security | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/web-security.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt28-skip-link" href="#wt28Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt28Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 28</div><div class="level-badge">LEVEL 28 · WEB SECURITY</div><h1>Web Security</h1><p class="wt-hero-description">Protect identity, permissions, state changes and browser output at their correct boundaries.</p><div class="wt-hero-meta"><span>🛡️ Trust boundaries</span><span>🔑 Identity + access</span><span>🎟️ Protected writes</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Distinguish <strong class="wt-content-key">authentication</strong> from <strong class="wt-content-key">authorization</strong>, locate trust boundaries, and explain session, CSRF, XSS and injection defenses. </li><li>Predict why a <strong class="wt-content-key">request</strong> is rejected before state changes.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Boundary</h3><p>Controls belong where untrusted data reaches a protected operation.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🗺️</span>Trust Boundaries and Threat Models</h2><ul class="wt-content-points"><li>List assets, callers, entry points and allowed actions before choosing controls. </li><li><strong class="wt-content-key">Browser</strong> inputs, hidden fields and client-side checks are untrusted. </li><li>A trusted <strong class="wt-content-key">backend</strong> enforces decisions even when the UI is bypassed.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Model</h3><p><strong class="wt-content-key">Browser</strong> → <strong class="wt-content-key">server</strong> → data store: each arrow needs a defined contract.</p></article></div><div class="code-block"><pre><code>asset: private note
+caller: anonymous / owner / other user
+actions: read / update
+expected denial: no private note returned</code></pre></div><ul class="wt-content-points"><li><strong>Threat-model worksheet:</strong> Write expected outcomes first. </li><li>If an <strong class="wt-content-key">API</strong> exposes several operations, build the matrix for each operation rather than testing only its page button.</li></ul><figure class="wt-diagram"><figcaption>Follow a trust boundary</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧑</span><strong>Caller</strong><p>Supplies untrusted input</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Backend</strong><p>Enforces identity and permission</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗄️</span><strong>Store</strong><p>Persists only accepted changes</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🔑</span>Authentication — Establish Identity</h2><ul class="wt-content-points"><li>Use a maintained <strong class="wt-content-key">authentication</strong> system. </li><li>Store passwords with a suitable adaptive password hash such as Argon2id through a maintained library, with its salt handling. </li><li>Plaintext, reversible encryption and fast general-purpose hashes are unsuitable defaults. </li><li>Protect reset flows, add MFA where appropriate and limit guessing without leaking account existence.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪪</span><h3>Identity</h3><p>Successful identity verification supplies trusted server-side identity.</p></article></div><div class="code-block"><pre><code>identity = authentication_service.verify(credentials)
+session = session_service.create(identity)
+# Use maintained libraries; do not invent a password hash.</code></pre></div><ul class="wt-content-points"><li><strong>Authentication flow — conceptual pseudocode:</strong> Keep credential verification separate from later <strong class="wt-content-key">object</strong> permissions. </li><li>A valid password cannot decide which note an account owns.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Authorization — Check Every Object</h2><ul class="wt-content-points"><li>Deny by default and check the requested action and <strong class="wt-content-key">object</strong> on every <strong class="wt-content-key">request</strong>. </li><li>A signed-in user is not allowed to read all notes. </li><li>Query and update within the permitted <strong class="wt-content-key">ownership</strong> <strong class="wt-content-key">scope</strong>; never accept a submitted owner or role as authority.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📓</span><h3>Ownership</h3><p>User A → A note allowed; user A → B note denied.</p></article></div><div class="code-block"><pre><code>SELECT id, text FROM notes
+WHERE id = :note_id AND owner_id = :trusted_user_id;</code></pre></div><ul class="wt-content-points"><li><strong>Ownership scope — conceptual database fragment:</strong> Bind both values using the actual driver. </li><li>Obtain trusted_user_id from validated <strong class="wt-content-key">server</strong> identity, not submitted <strong class="wt-content-key">JSON</strong>. </li><li><strong class="wt-content-key">Scope</strong> writes similarly and check affected rows.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🍪</span>Sessions and Cookies</h2><ul class="wt-content-points"><li>Use unpredictable <strong class="wt-content-key">session</strong> identifiers, regenerate on login and relevant privilege changes, and expire sessions server-side on logout and time limits. </li><li>For <strong class="wt-content-key">cookie</strong> sessions configure Secure, <strong class="wt-content-key">HttpOnly</strong> and suitable SameSite and scope. </li><li><strong class="wt-content-key">HttpOnly</strong> restricts script access to <strong class="wt-content-key">cookies</strong>; it does not make XSS harmless. </li><li>Avoid <strong class="wt-content-key">session</strong> identifiers in URLs.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏳</span><h3>Lifecycle</h3><p>Create → rotate → expire; a stale <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">cookie</strong> cannot revive an invalid session.</p></article></div><div class="code-block"><pre><code>Set-Cookie: session=&lt;opaque-id&gt;; Path=/; Secure; HttpOnly; SameSite=Lax</code></pre></div><ul class="wt-content-points"><li><strong>Cookie attribute illustration:</strong> This header illustrates attributes, not a complete <strong class="wt-content-key">session</strong> implementation. </li><li>Choose <strong class="wt-content-key">SameSite</strong> for the actual cross-site login and navigation requirements; invalidate sessions on the <strong class="wt-content-key">backend</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🎟️</span>CSRF — Protect State-Changing Requests</h2><ul class="wt-content-points"><li>Browsers can attach <strong class="wt-content-key">cookies</strong> automatically. </li><li>Use framework <strong class="wt-content-key">CSRF</strong> protection, a token tied to the <strong class="wt-content-key">session</strong> and checked by the backend, and appropriate origin verification. </li><li><strong class="wt-content-key">SameSite</strong> is defense in depth. </li><li>Avoid state changes on GET; do not place <strong class="wt-content-key">CSRF</strong> tokens in URLs or logs. </li><li><strong class="wt-content-key">XSS</strong> can defeat these defenses, so output protection remains necessary.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔗</span><h3>Write gate</h3><p>Authenticated <strong class="wt-content-key">session</strong> + <strong class="wt-content-key">authorization</strong> + CSRF checks precede mutation.</p></article></div><div class="code-block"><pre><code>resolve_active_session()
+authorize_requested_note()
+verify_framework_csrf_protection()
+validate_writable_fields()
+apply_authorized_update()</code></pre></div><ul class="wt-content-points"><li><strong>Protected write — conceptual middleware order:</strong> Middleware order depends on the framework, but every required protection must precede mutation. </li><li>Never treat a valid <strong class="wt-content-key">CSRF</strong> token as a permission grant.</li></ul><figure class="wt-diagram"><figcaption>A write requires every gate</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Session</strong><p>Active trusted identity</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📓</span><strong>Ownership</strong><p>Allowed <strong class="wt-content-key">object</strong> and action</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎟️</span><strong>CSRF</strong><p>Accepted protected <strong class="wt-content-key">request</strong></p></div></div></figure></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🪟</span>XSS — Render for the Correct Context</h2><ul class="wt-content-points"><li>For plain text, use <strong class="wt-content-key">textContent</strong> and fixed <strong class="wt-content-key">DOM</strong> elements. </li><li><strong class="wt-content-key">HTML</strong>, attributes, <strong class="wt-content-key">JavaScript</strong> and URLs have different rules; a single escape function is not universal protection. </li><li>If rich <strong class="wt-content-key">HTML</strong> is required, use a maintained sanitizer with an appropriate policy. </li><li>Avoid inserting untrusted strings into executable markup.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Text</h3><p>Markup-looking note text stays visible text in the local preview.</p></article></div><div class="code-block"><pre><code>const paragraph = document.createElement(&quot;p&quot;);
+paragraph.textContent = note.text;
+preview.replaceChildren(paragraph);</code></pre></div><ul class="wt-content-points"><li><strong>Plain text sink:</strong> For a note containing &lt;Demo&gt; & notes, the angle brackets remain visible. </li><li>This fragment supports plain text; rich <strong class="wt-content-key">HTML</strong> needs a different, deliberate sanitized pipeline.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🗄️</span>Injection — Separate Values from Instructions</h2><ul class="wt-content-points"><li>Bind <strong class="wt-content-key">SQL</strong> values with <strong class="wt-content-key">parameterized queries</strong>. </li><li>Placeholder syntax depends on the <strong class="wt-content-key">database</strong> driver. </li><li>Parameters do not substitute arbitrary table names or <strong class="wt-content-key">SQL</strong> keywords; dynamic identifiers require strict allowlists. </li><li>Avoid shell concatenation and prefer safe APIs with fixed command structure. </li><li><strong class="wt-content-key">Validation</strong> alone does not make concatenated <strong class="wt-content-key">SQL</strong> safe.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Query boundary</h3><p>Fixed query structure + separately bound values.</p></article></div><div class="code-block"><pre><code>UPDATE notes SET text = :text
+WHERE id = :id AND owner_id = :trusted_user;</code></pre></div><ul class="wt-content-points"><li><strong>Parameterized update — conceptual SQL:</strong> This is a driver-neutral illustration. </li><li>Use real <strong class="wt-content-key">bound parameters</strong>, enforce affected-row behavior and <strong class="wt-content-key">transaction</strong> requirements, and do not splice text into this SQL string.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Validation and Writable Fields</h2><ul class="wt-content-points"><li>Bound input size before expensive parsing. </li><li>Check syntax, expected <strong class="wt-content-key">object</strong> shape, types, lengths and domain rules. </li><li>Accept only writable fields to prevent mass assignment of owner or role. </li><li><strong class="wt-content-key">Validation</strong> is separate from <strong class="wt-content-key">authorization</strong>, safe query construction and contextual output handling.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Exact shape</h3><p>The note lab accepts exactly one text field.</p></article></div><div class="code-block"><pre><code>{&quot;text&quot;:&quot;Review trust boundaries&quot;}
+
+Reject: {&quot;text&quot;:&quot;New note&quot;,&quot;owner&quot;:&quot;B&quot;,&quot;role&quot;:&quot;admin&quot;}</code></pre></div><ul class="wt-content-points"><li><strong>Writable JSON contract:</strong> The lab rejects extra fields even when text is valid. </li><li>In a real endpoint, parse only explicitly writable fields and apply domain rules after <strong class="wt-content-key">authentication</strong> and <strong class="wt-content-key">authorization</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🌐</span>TLS and Browser Policy</h2><ul class="wt-content-points"><li>Use <strong class="wt-content-key">HTTPS</strong> and secure transport throughout the <strong class="wt-content-key">deployment</strong>. </li><li><strong class="wt-content-key">CORS</strong> controls <strong class="wt-content-key">browser</strong> cross-origin response access; it does not authenticate callers. </li><li>A carefully tested Content Security Policy can limit script execution as an additional layer. </li><li>Use frame-ancestors for a deliberate embedding policy. </li><li>Develop <strong class="wt-content-key">CSP</strong> for the actual site and test reports rather than pasting a policy that breaks legitimate scripts.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧱</span><h3>Layers</h3><p>TLS, <strong class="wt-content-key">CSP</strong> and <strong class="wt-content-key">CORS</strong> solve different boundary problems.</p></article></div><div class="code-block"><pre><code>TLS: is every protected request encrypted?
+CORS: which browser origins may read responses?
+CSP: which scripts may execute?
+Authorization: may this caller access this object?</code></pre></div><ul class="wt-content-points"><li><strong>Policy questions:</strong> Answer each question separately. </li><li>Restrictive <strong class="wt-content-key">CORS</strong> cannot stop a non-browser client from sending requests to an inadequately protected <strong class="wt-content-key">backend</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔒</span>Secrets, Dependencies and Configuration</h2><ul class="wt-content-points"><li>Keep private keys and <strong class="wt-content-key">backend</strong> secrets out of <strong class="wt-content-key">frontend</strong> bundles and repositories. </li><li>Use scoped secrets and rotate exposed credentials. </li><li>Review dependencies and update vulnerable packages. </li><li>Disable unnecessary services and debug endpoints; development settings are not automatically safe for production.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗝️</span><h3>Secret location</h3><p>Anything shipped to a <strong class="wt-content-key">browser</strong> is accessible to its user.</p></article></div><div class="code-block"><pre><code>browser: public API URL, display options
+backend: scoped database credential, signing secret
+operations: secret rotation and dependency update process</code></pre></div><ul class="wt-content-points"><li><strong>Configuration separation:</strong> A variable called SECRET in client <strong class="wt-content-key">JavaScript</strong> remains public. </li><li>Restrict secret access and provide an operational rotation path.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">📁</span>Uploads, URLs and Server Fetches</h2><ul class="wt-content-points"><li>For uploads combine size limits, allowed types, content inspection, safe generated names, controlled storage and <strong class="wt-content-key">authorization</strong>. </li><li>A claimed MIME type is untrusted. </li><li>For <strong class="wt-content-key">server</strong> <strong class="wt-content-key">URL</strong> fetching prevent access to internal addresses and constrain redirects; use a maintained SSRF protection approach. </li><li>Validate redirects against an explicit destination policy.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚧</span><h3>Indirect access</h3><p>A <strong class="wt-content-key">backend</strong> <strong class="wt-content-key">fetch</strong> can reach resources the browser cannot.</p></article></div><div class="code-block"><pre><code>allowed extension + verified content
+size limit + generated storage name
+controlled storage + authorized retrieval</code></pre></div><ul class="wt-content-points"><li><strong>Upload review checklist:</strong> No single check is enough. </li><li>A filename, extension or client-supplied MIME label cannot establish that a file is harmless or authorized for public serving.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">⏱️</span>Abuse and Resource Limits</h2><ul class="wt-content-points"><li>Limit attempts and resource use at relevant boundaries. </li><li>Consider account, caller and operation <strong class="wt-content-key">scope</strong>, expensive requests, concurrency and storage limits. </li><li>A <strong class="wt-content-key">frontend</strong> maxlength is convenience; the <strong class="wt-content-key">server</strong> must enforce its own bounds. </li><li>Avoid trusting arbitrary forwarding headers when determining callers.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📏</span><h3>Budget</h3><p>Bound bytes, work, frequency and stored results.</p></article></div><div class="code-block"><pre><code>input bytes: bounded at server boundary
+request work: bounded per operation
+attempt frequency: appropriate caller/account scope
+concurrent work: controlled upstream and backend</code></pre></div><ul class="wt-content-points"><li><strong>Resource budget worksheet:</strong> Test the outcome when each budget is exhausted. </li><li>The visible textarea limit does not prevent a caller from crafting a larger direct <strong class="wt-content-key">request</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">📝</span>Logs, Errors and Privacy</h2><ul class="wt-content-points"><li>Use stable public errors and protected operational logs. </li><li>Do not log passwords, <strong class="wt-content-key">session</strong> tokens or <strong class="wt-content-key">CSRF</strong> tokens. </li><li>Avoid revealing whether another user’s private <strong class="wt-content-key">object</strong> exists. </li><li>Retain only necessary data and protect log access. </li><li>The lab state panel exposes fictional teaching data; it is not a pattern for a production debug endpoint.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>Observability</h3><p>Public message and private diagnostic detail have different audiences.</p></article></div><div class="code-block"><pre><code>public: This note is not available to this caller.
+protected log: operation + correlation ID + permitted diagnostic
+never: password, session token, CSRF token</code></pre></div><ul class="wt-content-points"><li><strong>Public versus protected diagnostic:</strong> The lab deliberately uses the same public access message for a missing note and another owner’s note. </li><li>Its fictional state panel is teaching instrumentation only.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Verify the Security Boundary</h2><ul class="wt-content-points"><li>Test anonymous, expired and valid sessions, different owners, missing or stale tokens and malformed bodies. </li><li>Confirm rejection leaves data unchanged. </li><li>Test actual <strong class="wt-content-key">backend</strong> <strong class="wt-content-key">authorization</strong>, cookies, HTTPS, CSRF middleware and database operations independently. </li><li>Successful local tests cannot certify a deployed application.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔍</span><h3>Negative tests</h3><p>Try the <strong class="wt-content-key">request</strong> a caller should not be permitted to perform.</p></article></div><div class="code-block"><pre><code>anonymous read → deny
+owner read → allow
+other-owner write → deny
+owner write + stale token → deny
+owner write + valid gates → allow</code></pre></div><ul class="wt-content-points"><li><strong>Negative-case matrix:</strong> For every denied case snapshot stored state before and after. </li><li>Add real integration checks for framework <strong class="wt-content-key">session</strong> <strong class="wt-content-key">cookies</strong>, CSRF middleware, database scope and concurrent writes.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — A Protected Note Update</h2><p>Follow an owned-note update through trusted session lookup, object authorization, CSRF checks, validation and safe presentation. This player models policy decisions without a server.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="security">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>WEB SECURITY POLICY TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🔑</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Resolve trusted session identity</h3><p data-trace-description>An active server-side session identifies user A.</p></div><pre class="trace-code"><code data-trace-code>session → user A</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Session" aria-pressed="true"><span>01</span><strong>Session</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Ownership" aria-pressed="false"><span>02</span><strong>Ownership</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: CSRF" aria-pressed="false"><span>03</span><strong>CSRF</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Validate" aria-pressed="false"><span>04</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Present" aria-pressed="false"><span>05</span><strong>Present</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>A request body cannot choose its own trusted identity.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Protected Note Policy</h2><ul class="wt-content-points"><li>This local model has fictional notes owned by A and B. </li><li>Select a trusted <strong class="wt-content-key">session</strong> fixture to simulate server-side identity: the <strong class="wt-content-key">selector</strong> itself is not real authentication. </li><li>GET reads an owned note; POST updates it. </li><li>DELETE is unsupported. </li><li>Unknown and non-owned notes share one public access-denied message.</li></ul><ul class="wt-content-points"><li>POST requires exact expected origin <strong class="wt-content-key">https</strong>://learn.example and the selected active <strong class="wt-content-key">session</strong>’s current CSRF token. </li><li>The visible predictable demo tokens teach matching and rotation only; production tokens must use the framework’s secure generation and verification. </li><li>GET ignores origin, token and body and never mutates.</li></ul><ul class="wt-content-points"><li>POST accepts raw <strong class="wt-content-key">JSON</strong> up to 1,000 <strong class="wt-content-key">JavaScript</strong> code units, exactly text as a string trimmed to 1–120 Unicode code points without C0/C1 controls or lone surrogates. </li><li><strong class="wt-content-key">JSON</strong>.parse uses the last duplicate key; this model does not detect duplicate JSON keys. </li><li>Rotate/expire clear previous results; reset restores all fixtures. </li><li>No network, <strong class="wt-content-key">cookies</strong>, passwords or real accounts are used.</li></ul><div class="wt9-demo wt28-lab"><label for="wt28Method">Operation</label><select id="wt28Method"><option>GET</option><option>POST</option><option>DELETE</option></select><label for="wt28Path">Protected note</label><select id="wt28Path"><option>/notes/1</option><option>/notes/2</option><option>/notes/99</option><option>/missing</option></select><label for="wt28Session">Trusted session fixture</label><select id="wt28Session"><option>demo-A</option><option>demo-B</option><option>anonymous</option><option>expired-A</option></select><label for="wt28Origin">Write Origin</label><select id="wt28Origin"><option>https://learn.example</option><option>https://other.example</option><option value="">Missing</option></select><label for="wt28Token">Write CSRF token · copy current fixture token</label><input id="wt28Token" type="text" value="demo-A-1" maxlength="80"><label for="wt28Body">Raw write JSON</label><textarea id="wt28Body" rows="5" maxlength="1200">{"text":"Review trust boundaries"}</textarea><div class="wt9-actions"><button type="button" class="primary-button" id="wt28Process">Check protected request</button><button type="button" class="secondary-button" id="wt28Rotate">Rotate selected demo token</button><button type="button" class="secondary-button" id="wt28Expire">Expire selected session</button><button type="button" class="secondary-button" id="wt28Reset">Reset fixtures</button></div><p role="status" id="wt28Status">Idle. Fictional policy model.</p><h3>Teaching state · never expose real session secrets this way</h3><pre class="wt28-result"><code id="wt28State"></code></pre><h3>Simulated input</h3><pre class="wt28-result"><code id="wt28Request">No request yet.</code></pre><h3>Decision trace</h3><pre class="wt28-result"><code id="wt28Trace">No trace yet.</code></pre><h3>Public decision · policy outcome, not HTTP status</h3><pre class="wt28-result"><code id="wt28Response">No response yet.</code></pre><h3>Returned note · literal JSON</h3><pre class="wt28-result"><code id="wt28Source">No returned note.</code></pre><h3>Safe note preview</h3><div class="wt28-preview" id="wt28Preview">No result yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Find the First Failed Gate</h2><ul class="wt-content-points"><li>Check route and method, then <strong class="wt-content-key">session</strong> validity, <strong class="wt-content-key">object</strong> ownership, write origin/token and input contract. </li><li>A valid token never grants access to another owner’s note. </li><li>Fix the rejected boundary rather than removing the protection.</li></ul><ul class="wt-content-points"><li>After token rotation, copy the new token from the fictional state panel; an old token must fail. </li><li>Expiration invalidates the fixture even if a token still appears in the input. </li><li>An error must clear the previous note preview.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Authentication versus authorization?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Authentication versus authorization?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Identity verification establishes who; authorization decides which action on which object is allowed.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why check ownership on GET?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why check ownership on GET?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Private data must be protected on reads as well as writes.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does CORS authenticate callers?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does CORS authenticate callers?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Backend identity and permission checks remain necessary.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is SameSite the whole CSRF defense?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is SameSite the whole CSRF defense?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Use the framework’s CSRF defenses and suitable additional origin/cookie controls.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does HttpOnly eliminate XSS?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does HttpOnly eliminate XSS?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Script may still act within the page even without reading the cookie.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why not concatenate SQL?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why not concatenate SQL?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Untrusted values can alter query structure; use the driver’s bound parameters.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does validation replace output handling?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does validation replace output handling?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Accepted data still needs handling appropriate to its destination context.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What do these passing local tests prove?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What do these passing local tests prove?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The specified local decision behavior; they do not verify a deployed backend or real session system.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain Security Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Resolve identity through trusted authentication/session infrastructure."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Who supplies trusted identity?</h3><div class="wt8-options"><button type="button" class="wt8-option">Submitted owner field</button><button type="button" class="wt8-option">Validated server-side session</button><button type="button" class="wt8-option">CSS class</button><button type="button" class="wt8-option">URL title</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Authenticate and authorize the requested object separately."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. A signed-in A requests B’s private note. What happens?</h3><div class="wt8-options"><button type="button" class="wt8-option">Allow by default</button><button type="button" class="wt8-option">Ignore ownership</button><button type="button" class="wt8-option">Deny access</button><button type="button" class="wt8-option">Change owner</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Do not use GET to change protected state."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which operation should be read-only?</h3><div class="wt8-options"><button type="button" class="wt8-option">GET</button><button type="button" class="wt8-option">POST update</button><button type="button" class="wt8-option">Password reset</button><button type="button" class="wt8-option">Role change</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Use the maintained framework’s generation and verification."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What is a CSRF token in production?</h3><div class="wt8-options"><button type="button" class="wt8-option">Public constant</button><button type="button" class="wt8-option">Account password</button><button type="button" class="wt8-option">CSS ID</button><button type="button" class="wt8-option">Secure session-bound value checked server-side</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Injected script can act in the trusted origin."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which layer can undermine CSRF defenses?</h3><div class="wt8-options"><button type="button" class="wt8-option">Line spacing</button><button type="button" class="wt8-option">XSS</button><button type="button" class="wt8-option">Favicon</button><button type="button" class="wt8-option">Glossary</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Use a text sink for plain text."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. How should plain note text be rendered?</h3><div class="wt8-options"><button type="button" class="wt8-option">innerHTML always</button><button type="button" class="wt8-option">eval</button><button type="button" class="wt8-option">textContent on fixed nodes</button><button type="button" class="wt8-option">As a script</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Use the database driver’s binding support."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. Which SQL pattern separates values?</h3><div class="wt8-options"><button type="button" class="wt8-option">Parameterized query</button><button type="button" class="wt8-option">String concatenation</button><button type="button" class="wt8-option">Client validation only</button><button type="button" class="wt8-option">Hidden field</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The writable contract accepts only text."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. An extra owner field is submitted. What happens here?</h3><div class="wt8-options"><button type="button" class="wt8-option">Transfer note</button><button type="button" class="wt8-option">Promote role</button><button type="button" class="wt8-option">Ignore all gates</button><button type="button" class="wt8-option">Reject exact-shape violation</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="It is useful but does not eliminate XSS."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What does HttpOnly restrict?</h3><div class="wt8-options"><button type="button" class="wt8-option">Database joins</button><button type="button" class="wt8-option">Script reading the cookie</button><button type="button" class="wt8-option">Every attack</button><button type="button" class="wt8-option">Origin headers</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A token cannot revive an invalid session."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Expired session plus correct old token means?</h3><div class="wt8-options"><button type="button" class="wt8-option">Allow write</button><button type="button" class="wt8-option">Reset account</button><button type="button" class="wt8-option">Deny at session gate</button><button type="button" class="wt8-option">Create owner</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="All gates precede mutation."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What must a rejected update do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Preserve note state</button><button type="button" class="wt8-option">Partially change text</button><button type="button" class="wt8-option">Change owner</button><button type="button" class="wt8-option">Allocate secret</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Real transport, cookies, authorization and persistence require separate checks."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Does this lab certify website security?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only for notes</button><button type="button" class="wt8-option">Only after reset</button><button type="button" class="wt8-option">No</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt28QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict the Security Decision</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📓</span><h3>Owned read</h3><p>A reads note1: allow; no mutation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Other owner</h3><p>A requests note2: access denied, no note returned.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔑</span><h3>Anonymous</h3><p>Anonymous note1: <strong class="wt-content-key">session</strong> rejection.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏳</span><h3>Expired</h3><p>Expire A then read: <strong class="wt-content-key">session</strong> rejection.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌐</span><h3>Wrong origin</h3><p>Owned POST with another origin: deny, unchanged note.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎟️</span><h3>Stale token</h3><p>Rotate A; old token denied; current token may pass remaining checks.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Extra field</h3><p>Add owner or role to valid <strong class="wt-content-key">JSON</strong>: reject, unchanged note.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Literal text</h3><p>Write &lt;Demo&gt; &amp; notes: allowed text stays literal. Reset restores fixtures.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Identity:</strong> Trusted authentication.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Permission:</strong> Per-action and per-object.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⏳</span><strong>Session:</strong> Rotate and expire server-side.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎟️</span><strong>CSRF:</strong> Protect state changes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>XSS:</strong> Context-appropriate safe output.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗄️</span><strong>Injection:</strong> Separate data from instructions.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Validation:</strong> Bound shape, type and size.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>Browser policy:</strong> Additional tested layers.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📝</span><strong>Logs:</strong> Protect sensitive information.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Verification:</strong> Test denial and unchanged state.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Authentication"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Authentication</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Authentication</h4><p>Verifying a claimed identity.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Authorization"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Authorization</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Authorization</h4><p>Deciding whether an action on a resource is permitted.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Session"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Session</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Session</h4><p>State connecting subsequent requests to a verified identity.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term CSRF"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>CSRF</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>CSRF</h4><p>An unwanted authenticated action induced through browser request behavior.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term XSS"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>XSS</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>XSS</h4><p>Untrusted executable content running in a page’s security context.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Injection"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Injection</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Injection</h4><p>Untrusted input altering an interpreted instruction’s structure.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Mass assignment"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Mass assignment</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Mass assignment</h4><p>Unintended modification of fields through broad input mapping.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Least privilege"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Least privilege</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Least privilege</h4><p>Granting only the permissions necessary for an intended task.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Trust boundary"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Trust boundary</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Trust boundary</h4><p>A point where data or control moves between different trust levels.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Defense in depth"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Defense in depth</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Defense in depth</h4><p>Complementary protections across multiple boundaries.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Protect a Private Note Feature</h2><ul class="wt-content-points"><li>Specify identity, <strong class="wt-content-key">ownership</strong> and writable fields for read and update. </li><li>Use maintained <strong class="wt-content-key">session</strong> and <strong class="wt-content-key">CSRF</strong> infrastructure, bind database values, and render plain text safely. </li><li>Keep logs and public errors appropriate to their audiences.</li></ul><ul class="wt-content-points"><li>Write negative tests for anonymous, expired, other-owner, wrong-origin, stale-token and invalid-body requests. </li><li>Assert both denial and unchanged stored data. </li><li>Implement <strong class="wt-content-key">authorization</strong> and mutation within the appropriate <strong class="wt-content-key">backend</strong> transaction or atomic operation.</li></ul><ul class="wt-content-points"><li>Verify actual <strong class="wt-content-key">cookies</strong>, <strong class="wt-content-key">HTTPS</strong>, origin handling, backend queries and deployment policy independently. </li><li>Success means explaining which boundary each defense protects. </li><li>Next: Level29 — Web <strong class="wt-content-key">Performance</strong> and <strong class="wt-content-key">Deployment</strong>.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 28 Complete?</h2><p>Explain identity versus permission, reproduce rejected requests with unchanged notes, and describe safe output and bound query values. Identify why the fictional lab is not production authentication. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="web-apis-rest.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Web APIs and REST</span><span class="nav-action">Review Level 27</span></a></div><div class="topic-nav-side next"><a href="web-performance-deployment.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Web Performance and Deployment</span><span class="nav-action">Open Level 29</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="web-security.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=23" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=20" defer></script>
+</body></html>

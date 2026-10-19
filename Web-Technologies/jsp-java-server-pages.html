@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn JSP directives, Expression Language, core tags, scoped models and MVC rendering with diagrams, a visualizer, view lab and MCQs.">
+
+    
+
+    <title>
+        Level 24 — JSP — JavaServer Pages | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/jsp-java-server-pages.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt24-skip-link" href="#wt24Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt24Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 24</div><div class="level-badge">LEVEL 24 · JSP</div><h1>JSP — JavaServer Pages</h1><p class="wt-hero-description">Turn accepted controller models into readable server-side views.</p><div class="wt-hero-meta"><span>☕ Java web</span><span>📄 Server views</span><span>🧩 EL + Tags</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JSP</strong>, now specified as Jakarta Pages, builds <strong class="wt-content-key">response</strong> content on the server. </li><li>This lesson connects a controller’s accepted model to a readable view using directives, Expression Language and tag actions. </li><li>You will distinguish <strong class="wt-content-key">server</strong> execution from <strong class="wt-content-key">browser</strong> execution and choose an explicit model scope.</li></ul><ul class="wt-content-points"><li>Our example is a fictional study report. </li><li>The controller supplies a learner and a bounded list of courses; the view displays a summary, completion labels or an empty result. </li><li>The lab is a <strong class="wt-content-key">JavaScript</strong> model, not a <strong class="wt-content-key">JSP</strong> engine, compiler or servlet container.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Page structure</h3><p>Identify template text, directives and actions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>EL</h3><p>Read accepted model properties and explicit scopes.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔁</span><h3>Tags</h3><p>Render lists and branches without business scriptlets.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Output</h3><p>Keep untrusted text literal in an <strong class="wt-content-key">HTML</strong> view.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🖥️</span>JSP Executes on the Server</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">browser</strong> requests an application <strong class="wt-content-key">URL</strong>. </li><li>A controller can prepare data and forward internally to a <strong class="wt-content-key">JSP</strong> view. </li><li>The <strong class="wt-content-key">server</strong> evaluates that view and sends generated <strong class="wt-content-key">response</strong> content; the browser receives the result rather than executing JSP directives or Java code.</li></ul><ul class="wt-content-points"><li>The generated <strong class="wt-content-key">HTML</strong> may load <strong class="wt-content-key">CSS</strong> and JavaScript, which the browser then handles normally. </li><li><strong class="wt-content-key">JSP</strong> and <strong class="wt-content-key">browser</strong> JavaScript therefore act at different stages. </li><li>A <strong class="wt-content-key">JavaScript</strong> click handler cannot directly call a <strong class="wt-content-key">Java</strong> method embedded in a JSP without a separate server interaction.</li></ul><ul class="wt-content-points"><li>Uploading a .<strong class="wt-content-key">jsp</strong> file to a static <strong class="wt-content-key">frontend</strong> does not make it dynamic. </li><li>A matched <strong class="wt-content-key">Java</strong> toolchain, JSP-capable web runtime and application dependencies are required. </li><li>This website lesson publishes teaching <strong class="wt-content-key">HTML</strong> and a local demonstration only.</li></ul><figure class="wt-diagram"><figcaption>Separate rendering stages</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Controller</strong><p>Validate and prepare a model.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>JSP view</strong><p>Generate <strong class="wt-content-key">response</strong> content on the <strong class="wt-content-key">server</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>HTTP result</strong><p>Send <strong class="wt-content-key">HTML</strong> and <strong class="wt-content-key">response</strong> metadata.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Browser</strong><p>Render <strong class="wt-content-key">HTML</strong>; execute <strong class="wt-content-key">browser</strong> scripts.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">⚙️</span>Translation, Compilation and Request Processing</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">JSP</strong> processor translates a page into a servlet-style implementation and compiles it for execution. </li><li>Translation can happen ahead of requests or when required by the runtime. </li><li>It is not accurate to assume the source is translated anew for every visit.</li></ul><ul class="wt-content-points"><li>The generated component has initialization and destruction hooks, while the processor generates request-service logic. </li><li>Page authors should not define their own _jspService implementation in a <strong class="wt-content-key">JSP</strong> page. </li><li>Keep application initialization and resource <strong class="wt-content-key">ownership</strong> in suitable managed components.</li></ul><ul class="wt-content-points"><li>A directive or unknown tag can fail during translation, while data access or property evaluation can fail during a <strong class="wt-content-key">request</strong>. </li><li>Those are different boundaries; a <strong class="wt-content-key">browser</strong> preview of an <strong class="wt-content-key">HTML</strong> fragment does not prove the JSP source compiles.</li></ul><figure class="wt-diagram"><figcaption>Two kinds of failure</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>Page source</strong><p>Directives, tags and expressions.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧰</span><strong>Translation</strong><p>Generate and compile implementation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Request execution</strong><p>Evaluate the page with current data.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Response</strong><p>Send the chosen representation.</p></div></div></figure><ul class="wt-content-points"><li>The lab intentionally skips translation and compilation. </li><li>Its fixed <strong class="wt-content-key">HTML</strong> renderer demonstrates output decisions and rejects an unacceptable model. </li><li>It is not a general <strong class="wt-content-key">JSP</strong> or EL interpreter.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🏗️</span>Anatomy of a JSP Page</h2><ul class="wt-content-points"><li>Template text contributes ordinary <strong class="wt-content-key">response</strong> markup. </li><li>A page directive declares page-level settings. </li><li>A taglib directive associates a prefix with a tag library. </li><li>Expression Language reads model values, and actions can render conditional or repeated content.</li></ul><ul class="wt-content-points"><li>The following small page assumes the controller has set a <strong class="wt-content-key">request</strong> attribute named lessonReport. </li><li>It declares source and <strong class="wt-content-key">response</strong> encodings explicitly and uses c:out for the learner in <strong class="wt-content-key">HTML</strong> text. </li><li>The tag library URI identifies a library; it is not a <strong class="wt-content-key">browser</strong> script download.</li></ul><ul class="wt-content-points"><li>The Jakarta Tags implementation must be available to the application. </li><li>A <strong class="wt-content-key">Servlet</strong>/<strong class="wt-content-key">JSP</strong> container does not by itself guarantee that every external tag library is installed.</li></ul><div class="code-block"><pre><code>&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot;
+         pageEncoding=&quot;UTF-8&quot; session=&quot;false&quot; %&gt;
+&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;jakarta.tags.core&quot; %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Study report&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Study report&lt;/h1&gt;
+  &lt;p&gt;Learner: &lt;c:out value=&quot;${requestScope.lessonReport.learner}&quot; /&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><ul class="wt-content-points"><li><strong class="wt-content-key">session</strong>="false" is suitable for this request-only view when it does not need a session. </li><li>The scope-collision lab separately models a session-scoped attribute to teach name lookup; it does not imply this request-only page enables <strong class="wt-content-key">session</strong> access.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">📜</span>Directives and Character Encodings</h2><ul class="wt-content-points"><li>The page directive controls settings such as pageEncoding and contentType. </li><li>Source encoding determines how the processor reads the <strong class="wt-content-key">JSP</strong> file; <strong class="wt-content-key">response</strong> encoding determines how the output bytes represent characters. </li><li>A meta charset in <strong class="wt-content-key">HTML</strong> helps the <strong class="wt-content-key">browser</strong> but cannot repair source bytes decoded incorrectly on the server.</li></ul><ul class="wt-content-points"><li>The taglib directive introduces a prefix such as c for Jakarta Tags core actions. </li><li>The include directive combines another resource’s source at translation time. </li><li>These directives configure processing rather than directly <strong class="wt-content-key">rendering</strong> a visible control.</li></ul><ul class="wt-content-points"><li>Modern Jakarta examples and older <strong class="wt-content-key">Java</strong> EE/JSTL examples have compatibility differences. </li><li>Match the page syntax, tag-library implementation, <strong class="wt-content-key">API</strong> namespace, <strong class="wt-content-key">Java</strong> version and container. </li><li>Do not fix a missing library by mechanically renaming every package or URI.</li></ul><div class="code-block"><pre><code>&lt;%@ page pageEncoding=&quot;UTF-8&quot;
+         contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
+&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;jakarta.tags.core&quot; %&gt;
+&lt;%@ include file=&quot;fragments/banner.jspf&quot; %&gt;</code></pre></div><ul class="wt-content-points"><li>The include fragment is an illustrative dependency, not a file added to this <strong class="wt-content-key">frontend</strong> patch. </li><li>In a real project it must exist and be compatible with the translation unit. </li><li>Keep directive settings consistent across included source.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>Expressions, Scriptlets and Declarations</h2><ul class="wt-content-points"><li>Older <strong class="wt-content-key">JSP</strong> code can contain a <strong class="wt-content-key">Java</strong> expression that writes its result, a scriptlet containing request-time Java statements, and a declaration that adds members to the generated class. </li><li>Recognizing these forms helps you read legacy pages without treating them as the preferred place for application logic.</li></ul><ul class="wt-content-points"><li>A declaration can create shared instance state. </li><li>A mutable current learner field has the same concurrency danger explained in Level 23. </li><li><strong class="wt-content-key">SQL</strong>, <strong class="wt-content-key">authentication</strong> and business mutation should not be scattered through page scriptlets.</li></ul><ul class="wt-content-points"><li>Prefer a controller and service that prepare an accepted model, with EL and tags for presentation. </li><li><strong class="wt-content-key">JSP</strong> syntax does not automatically validate incoming values or encode <strong class="wt-content-key">Java</strong> expression output safely for HTML.</li></ul><div class="code-block"><pre><code>&lt;%-- Syntax recognition only; avoid business logic in the page. --%&gt;
+&lt;%= 2 + 3 %&gt;                &lt;%-- Java expression output --%&gt;
+&lt;% int localCount = 3; %&gt;   &lt;%-- Scriptlet statement --%&gt;
+&lt;%! private int count; %&gt;   &lt;%-- Shared member: concurrency concern --%&gt;
+
+&lt;%-- Preferred presentation of an accepted model value: --%&gt;
+&lt;c:out value=&quot;${requestScope.lessonReport.learner}&quot; /&gt;</code></pre></div><ul class="wt-content-points"><li>The declaration is shown as a warning example, not an implementation recommendation. </li><li>The lab never executes these scripting elements.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>Expression Language and Model Properties</h2><ul class="wt-content-points"><li>An EL expression such as ${requestScope.lessonReport.learner} reads a property from a scoped model. </li><li>For a conventional JavaBean, a learner property can be exposed by a public getLearner method. </li><li>Map keys can also be accessed through EL; the backing <strong class="wt-content-key">object</strong>’s type matters.</li></ul><ul class="wt-content-points"><li>EL is not <strong class="wt-content-key">JavaScript</strong>. </li><li>Do not assume <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">object</strong> semantics, arbitrary Java statements or DOM operations work inside an EL expression. </li><li>In template text, displaying a value through EL alone is not automatic <strong class="wt-content-key">HTML</strong> escaping.</li></ul><ul class="wt-content-points"><li>Give the view a stable <strong class="wt-content-key">contract</strong> rather than making it guess between raw parameters, missing fields and <strong class="wt-content-key">database</strong> rows. </li><li>The study report <strong class="wt-content-key">contract</strong> supplies a learner string and a list of courses with title and completed properties.</li></ul><div class="code-block"><pre><code>// Illustrative JavaBean getter within a report model class:
+public String getLearner() {
+    return learner;
+}
+
+// Controller fragment after validation and service work:
+request.setAttribute(&quot;lessonReport&quot;, acceptedReport);
+
+// In the view:
+// ${requestScope.lessonReport.learner}</code></pre></div><ul class="wt-content-points"><li>The getter and controller lines are fragments that need their surrounding <strong class="wt-content-key">Java</strong> classes and handler. </li><li>The <strong class="wt-content-key">JavaScript</strong> lab uses plain objects to simulate an accepted model; it does not verify JavaBean resolution in a real <strong class="wt-content-key">JSP</strong> engine.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Scopes and Name Collisions</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JSP</strong> scoped attributes can live in page, <strong class="wt-content-key">request</strong>, session or application scope. </li><li>For an ordinary unqualified scoped attribute name, lookup searches page, <strong class="wt-content-key">request</strong>, <strong class="wt-content-key">session</strong> and application in that order. </li><li>An explicit requestScope lookup states which <strong class="wt-content-key">scope</strong> the view expects.</li></ul><ul class="wt-content-points"><li>If the controller forgets the <strong class="wt-content-key">request</strong> attribute, an unqualified lessonReport might resolve to a <strong class="wt-content-key">session</strong> attribute with the same name. </li><li>A page-scoped attribute can also shadow the intended <strong class="wt-content-key">request</strong> model. </li><li>This can produce plausible but wrong output instead of an obvious missing-model failure.</li></ul><ul class="wt-content-points"><li>The lab contrasts one exact qualified lookup with one exact unqualified attribute lookup. </li><li>It does not implement all EL identifiers, implicit objects, nested expressions or coercion rules. </li><li>Its <strong class="wt-content-key">session</strong> model is fixed teaching data, not a real session.</li></ul><figure class="wt-diagram"><figcaption>Scoped attribute lookup</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>Page</strong><p>First unqualified candidate.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Request</strong><p>Controller’s per-request model.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Session</strong><p>Longer-lived client-associated data.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌐</span><strong>Application</strong><p>Shared application attributes.</p></div></div></figure><ul class="wt-content-points"><li>The default request-qualified mode ignores the page collision and <strong class="wt-content-key">session</strong> fallback. </li><li>If its <strong class="wt-content-key">request</strong> model is missing, the lab returns a simulated 500 before <strong class="wt-content-key">rendering</strong>. </li><li>A real <strong class="wt-content-key">JSP</strong> may display an empty value for a missing expression; this guard is an application <strong class="wt-content-key">contract</strong> in the model, not a guarantee supplied by EL.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">JSP</strong> also provides implicit objects for scripting contexts, including <strong class="wt-content-key">request</strong>, response, out, pageContext, application and config. </li><li>The <strong class="wt-content-key">session</strong> <strong class="wt-content-key">object</strong> depends on session support; exception is available for an error page configured appropriately. </li><li>EL has its own implicit names such as requestScope, param and paramValues, so do not treat the two sets as identical.</li></ul><ul class="wt-content-points"><li>param contains incoming <strong class="wt-content-key">request</strong> values and paramValues exposes repeated values. </li><li>They are input, not the controller’s accepted report model. </li><li>A submitted name or <strong class="wt-content-key">cookie</strong> is not proof of permission; validate input and authorize protected operations before choosing view data.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🔁</span>Core Tags: Loop Through Accepted Data</h2><ul class="wt-content-points"><li>c:forEach repeats a body for items in a collection. </li><li>Keep each row’s presentation simple: render the title and a controlled completion label. </li><li>The collection should already meet the application’s model <strong class="wt-content-key">contract</strong> before the view receives it.</li></ul><ul class="wt-content-points"><li>c:out escapes XML-sensitive characters by default and is appropriate here for plain <strong class="wt-content-key">HTML</strong> text. </li><li>It is not a universal encoder for <strong class="wt-content-key">JavaScript</strong> strings, <strong class="wt-content-key">CSS</strong> or arbitrary URLs. </li><li>Choosing the destination context remains part of correct output handling.</li></ul><ul class="wt-content-points"><li>The following fragment reads explicitly from <strong class="wt-content-key">request</strong> <strong class="wt-content-key">scope</strong>. </li><li>Its row variable is local to the iteration flow; it is not the same as a permanent learner field on a <strong class="wt-content-key">servlet</strong>.</li></ul><div class="code-block"><pre><code>&lt;ul&gt;
+  &lt;c:forEach var=&quot;course&quot; items=&quot;${requestScope.lessonReport.courses}&quot;&gt;
+    &lt;li&gt;
+      &lt;c:out value=&quot;${course.title}&quot; /&gt;
+      &lt;c:choose&gt;
+        &lt;c:when test=&quot;${course.completed}&quot;&gt; — Complete&lt;/c:when&gt;
+        &lt;c:otherwise&gt; — Pending&lt;/c:otherwise&gt;
+      &lt;/c:choose&gt;
+    &lt;/li&gt;
+  &lt;/c:forEach&gt;
+&lt;/ul&gt;</code></pre></div><ul class="wt-content-points"><li>The lab’s normal rows are <strong class="wt-content-key">Java</strong> Servlets (complete), <strong class="wt-content-key">JSP</strong> &lt;Views&gt; (pending) and JDBC &amp; SQL (pending). </li><li>The source escapes the special characters while the safe preview shows the titles literally.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🌿</span>Conditions and Empty States</h2><ul class="wt-content-points"><li>c:if conditionally includes its body. c:choose with c:when and c:otherwise selects a branch. </li><li>These tags suit presentation decisions such as an empty list message or a completed/pending label; they should not replace <strong class="wt-content-key">backend</strong> <strong class="wt-content-key">authorization</strong>.</li></ul><ul class="wt-content-points"><li>An empty collection can be accepted data. </li><li>A view should complete with a clear message instead of showing a permanently loading box. </li><li>A missing controller model and an accepted empty model are different outcomes.</li></ul><ul class="wt-content-points"><li>The lab renders an accepted empty report with 200 and a zero-course summary. </li><li>A malformed report returns 500 with no accepted model or course preview. </li><li>The application decides these outcomes; <strong class="wt-content-key">JSP</strong> does not automatically impose them.</li></ul><div class="code-block"><pre><code>&lt;c:choose&gt;
+  &lt;c:when test=&quot;${empty requestScope.lessonReport.courses}&quot;&gt;
+    &lt;p&gt;No courses in this report.&lt;/p&gt;
+  &lt;/c:when&gt;
+  &lt;c:otherwise&gt;
+    &lt;%-- Render the accepted list with c:forEach here. --%&gt;
+  &lt;/c:otherwise&gt;
+&lt;/c:choose&gt;</code></pre></div><ul class="wt-content-points"><li>Validate that the model exists separately. </li><li>The empty operator is useful for presentation, but it should not silently make an absent model look like a legitimate zero-result report when the controller <strong class="wt-content-key">contract</strong> requires one.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>Includes, Fragments and Reusable Views</h2><ul class="wt-content-points"><li>The include directive inserts source during translation. </li><li>The <strong class="wt-content-key">jsp</strong>:include action includes the output of another resource at <strong class="wt-content-key">request</strong> time. </li><li>One combines source into a translation unit; the other dispatches for output while handling the current <strong class="wt-content-key">request</strong>.</li></ul><ul class="wt-content-points"><li>Use a fragment for genuinely shared view markup and keep its assumptions documented. </li><li>A source include can bring declarations and directives into the same unit, so it is not simply a runtime <strong class="wt-content-key">request</strong> to a separate page.</li></ul><ul class="wt-content-points"><li>A dynamic include is still server-side processing. </li><li>It does not mean the <strong class="wt-content-key">browser</strong> fetches an iframe or imports a <strong class="wt-content-key">JavaScript</strong> module. </li><li>Do not use a fragment to bypass <strong class="wt-content-key">validation</strong> or access-control boundaries.</li></ul><div class="code-block"><pre><code>&lt;%-- Translation-time source inclusion: --%&gt;
+&lt;%@ include file=&quot;fragments/banner.jspf&quot; %&gt;
+
+&lt;%-- Request-time output inclusion: --%&gt;
+&lt;jsp:include page=&quot;/WEB-INF/views/fragments/help.jsp&quot; /&gt;</code></pre></div><ul class="wt-content-points"><li>These paths are illustrative dependencies for a real application. </li><li>This static lesson patch adds neither a <strong class="wt-content-key">JSP</strong> <strong class="wt-content-key">server</strong> nor those fragment files. </li><li>The global header/footer on this lesson remain the existing CodeBhavya <strong class="wt-content-key">frontend</strong> components.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>MVC: Let the Controller Prepare the View</h2><ul class="wt-content-points"><li>A controller reads and validates <strong class="wt-content-key">request</strong> input, a service prepares application data, and the view renders an accepted report. </li><li>This keeps persistence, permission and mutation logic out of the template and makes missing-model failures easier to locate.</li></ul><ul class="wt-content-points"><li>An internal forward retains the same <strong class="wt-content-key">request</strong> and its attributes. </li><li>Keeping the <strong class="wt-content-key">JSP</strong> under WEB-INF makes the controller the intended entry point because the view is not served as an ordinary direct resource. </li><li>This arrangement does not replace <strong class="wt-content-key">authorization</strong> for protected operations.</li></ul><ul class="wt-content-points"><li>A redirect creates a new client <strong class="wt-content-key">request</strong>; it does not automatically carry the previous request attributes. </li><li>Use a deliberate read endpoint or other state mechanism rather than assuming an accepted model appears after any navigation.</li></ul><div class="code-block"><pre><code>// Illustrative controller fragment; acceptedReport is prepared first.
+request.setAttribute(&quot;lessonReport&quot;, acceptedReport);
+request.getRequestDispatcher(&quot;/WEB-INF/views/study-report.jsp&quot;)
+       .forward(request, response);
+// Forward before committing response output.</code></pre></div><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Controller</h3><p>Validate and choose the outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Service</h3><p>Prepare a bounded report model.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>View</h3><p>Render accepted presentation data.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗃️</span><h3>Repository</h3><p>Keep data access behind a boundary.</p></article></div></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Literal Text and Output Contexts</h2><ul class="wt-content-points"><li>Treat learner labels and course titles as data. </li><li><strong class="wt-content-key">HTML</strong> text such as &lt;Demo&gt; must remain literal, even if it resembles a tag. </li><li>Encoding in the <strong class="wt-content-key">response</strong> source and safe <strong class="wt-content-key">DOM</strong> rendering in the browser are separate checks.</li></ul><ul class="wt-content-points"><li>The lab’s renderer escapes ampersands, angle brackets and quotes in text output. </li><li>Its preview independently constructs fixed elements and sets <strong class="wt-content-key">textContent</strong>. </li><li>It never inserts generated <strong class="wt-content-key">HTML</strong> with innerHTML or evaluates a submitted expression.</li></ul><ul class="wt-content-points"><li>The fixed report has no dynamic link URLs, inline scripts or style values. </li><li>If a real view introduces those contexts, it needs the appropriate <strong class="wt-content-key">validation</strong> and encoding rather than assuming c:out solves every destination.</li></ul><div class="code-block"><pre><code>&lt;p&gt;Learner: &lt;c:out value=&quot;${requestScope.lessonReport.learner}&quot; /&gt;&lt;/p&gt;
+
+&lt;%-- JSP comments are not ordinary response HTML comments. --%&gt;
+&lt;%-- Keep credentials and private diagnostics out of the source anyway. --%&gt;
+
+&lt;!-- HTML comments can be present in the generated response. --&gt;</code></pre></div><ul class="wt-content-points"><li>Do not turn untrusted input into <strong class="wt-content-key">JSP</strong> source or an EL expression to evaluate. </li><li>Parameter <strong class="wt-content-key">validation</strong> controls the accepted data <strong class="wt-content-key">contract</strong>; output encoding controls how that accepted data appears in a specific destination.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Translation Errors, Data Errors and Stale Views</h2><ul class="wt-content-points"><li>A missing tag-library implementation, unknown action or invalid directive can stop translation. </li><li>A property mismatch or failed service can stop <strong class="wt-content-key">request</strong> processing. </li><li>Investigate the actual <strong class="wt-content-key">server</strong> logs and the first failing boundary rather than changing <strong class="wt-content-key">browser</strong> CSS for a server error.</li></ul><ul class="wt-content-points"><li>If a learner disappears, compare the controller’s attribute name and <strong class="wt-content-key">scope</strong> with the expression in the page. </li><li>If the wrong report appears, inspect page/<strong class="wt-content-key">session</strong> name collisions before assuming the repository returned another person’s data.</li></ul><ul class="wt-content-points"><li>On an error, clear the previously accepted <strong class="wt-content-key">browser</strong> result. </li><li>A failed run should not leave older course cards looking like its successful output. </li><li>The lab displays a stable error and removes earlier rows.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Library</h3><p>Check Jakarta Tags dependency and URI compatibility.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Property</h3><p>Match bean getters or map keys to the view <strong class="wt-content-key">contract</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Scope</h3><p>Use the controller’s intended <strong class="wt-content-key">request</strong> attribute.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Outcome</h3><p>Distinguish accepted empty output from missing/bad data.</p></article></div><ul class="wt-content-points"><li>The model <strong class="wt-content-key">validator</strong> rejects non-array course lists, sparse arrays, extra fields, non-boolean completion values and overlong or invalid strings. </li><li>This is its explicit application guard, not a description of automatic <strong class="wt-content-key">JSP</strong> <strong class="wt-content-key">validation</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Verify a JSP Application in Its Runtime</h2><ul class="wt-content-points"><li>Validate and test the controller model independently, then compile and run the actual <strong class="wt-content-key">JSP</strong> in a matched container. </li><li>Check tag-library resolution, EL property access, UTF-8 source/output, internal forwarding and the content returned over <strong class="wt-content-key">HTTP</strong>.</li></ul><ul class="wt-content-points"><li>Use special-character labels and accepted empty lists alongside missing and malformed models. </li><li>Compare the <strong class="wt-content-key">response</strong> source with the <strong class="wt-content-key">browser</strong> display. </li><li>Confirm that a qualified <strong class="wt-content-key">request</strong> model does not accidentally pick up a <strong class="wt-content-key">session</strong> report with the same name.</li></ul><ul class="wt-content-points"><li>The local lab tests its own <strong class="wt-content-key">scope</strong> lookup and renderer, including model copying and stale-output clearing. </li><li>It cannot verify <strong class="wt-content-key">JSP</strong> translation, generated <strong class="wt-content-key">servlet</strong> behavior, JavaBean resolution, cookie/session handling or server concurrency.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Model</h3><p>Bounded data and deterministic summaries.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>JSP integration</h3><p>Compile directives, tags and expressions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>HTTP output</h3><p>Check encoding, status and actual content.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪟</span><h3>Browser</h3><p>Verify readability, <strong class="wt-content-key">keyboard</strong> use and literal text.</p></article></div><ul class="wt-content-points"><li>Level 25 continues with <strong class="wt-content-key">JDBC</strong> and <strong class="wt-content-key">Database</strong> Connectivity. </li><li>Keep <strong class="wt-content-key">database</strong> operations in the <strong class="wt-content-key">backend</strong> data-access layer rather than adding SQL to the JSP view.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — From Controller Model to JSP View</h2><p>Follow an accepted report request through validation, model preparation, internal forwarding, JSP presentation and HTML output. This approved five-stage player explains the architecture without executing Java or JSP.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="jsp">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>JSP MODEL TO VIEW TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📨</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Accept the report request</h3><p data-trace-description>Validate the incoming learner before preparing data.</p></div><pre class="trace-code"><code data-trace-code>GET /report?learner=Demo</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Request" aria-pressed="true"><span>01</span><strong>Request</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Model" aria-pressed="false"><span>02</span><strong>Model</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Forward" aria-pressed="false"><span>03</span><strong>Forward</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: View" aria-pressed="false"><span>04</span><strong>View</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: HTML" aria-pressed="false"><span>05</span><strong>HTML</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>The controller handles input; the JSP view is not a substitute for validation.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Model to JSP-Style View</h2><ul class="wt-content-points"><li>This local <strong class="wt-content-key">JavaScript</strong> model accepts GET /report with exactly one learner query string. </li><li>The learner must trim to 2–40 Unicode code points, with no C0/C1 controls or lone surrogates. </li><li>No <strong class="wt-content-key">Java</strong>, <strong class="wt-content-key">JSP</strong>, EL engine, HTTP request or actual session runs here.</li></ul><ul class="wt-content-points"><li>Compare requestScope.lessonReport with unqualified lessonReport. </li><li>The modeled lookup searches page, <strong class="wt-content-key">request</strong>, <strong class="wt-content-key">session</strong> and application for the unqualified name. </li><li>A page collision can shadow <strong class="wt-content-key">request</strong> data; a missing request model can fall back to a fixed <strong class="wt-content-key">session</strong> or application report. </li><li>The default qualified lookup never falls back.</li></ul><ul class="wt-content-points"><li>The accepted model requires exactly learner and courses; at most eight dense rows, each exactly title and completed. </li><li>Learner uses the same bounded text rule; titles are trimmed 1–80 Unicode code points with no controls/lone surrogates; completed is boolean. </li><li>A derived summary counts completed and pending rows. </li><li>Model failure returns simulated 500 before <strong class="wt-content-key">rendering</strong>.</li></ul><ul class="wt-content-points"><li>The template panel is explanatory <strong class="wt-content-key">JSP</strong> source. </li><li>The generated <strong class="wt-content-key">HTML</strong> is a fixed <strong class="wt-content-key">JavaScript</strong> renderer, not evaluation of that template. </li><li>The safe preview separately builds text nodes. </li><li>The <strong class="wt-content-key">scope</strong> fixtures are public teaching values, not private user sessions.</li></ul><div class="wt9-demo wt24-lab"><label for="wt24Method">Simulated method</label><select id="wt24Method"><option>GET</option><option>POST</option><option>DELETE</option></select><label for="wt24Path">Application-relative path</label><select id="wt24Path"><option>/report</option><option>/missing</option></select><label for="wt24Learner">Fictional learner · 2–40 Unicode code points</label><input type="text" id="wt24Learner" value="Demo learner" maxlength="160"><label for="wt24Variant">Decoded query shape</label><select id="wt24Variant"><option value="normal">One learner string</option><option value="missing">Missing learner</option><option value="array">Repeated learner value shape</option><option value="extra">Extra query field</option></select><label for="wt24Fixture">Controller request model</label><select id="wt24Fixture"><option value="normal">Three accepted courses</option><option value="empty">Accepted empty report</option><option value="missing">Forgotten request attribute</option><option value="invalid">Invalid completed value</option></select><label for="wt24Expression">Model lookup</label><select id="wt24Expression"><option value="qualified">requestScope.lessonReport · explicit</option><option value="unqualified">lessonReport · page → request → session → application</option></select><label for="wt24Page">Page-scope collision fixture</label><select id="wt24Page"><option value="none">None</option><option value="normal">Valid page report · shadows unqualified name</option><option value="invalid">Malformed page report · no fallback after selection</option></select><label for="wt24Session">Session-scope fixture · no real session</label><select id="wt24Session"><option value="normal">Fixed session report</option><option value="none">None · application fixture is last fallback</option></select><div class="wt9-actions"><button class="primary-button" id="wt24Process" type="button">Render report demonstration</button><button class="secondary-button" id="wt24Reset" type="button">Reset demonstration</button></div><p id="wt24Status" role="status">Idle. JavaScript model; no JSP engine is running.</p><h3>Lookup trace</h3><pre class="wt24-result"><code id="wt24Trace">No trace yet.</code></pre><h3>Scope fixtures · public teaching data</h3><pre class="wt24-result"><code id="wt24Scopes">No scope lookup yet.</code></pre><h3>Accepted view model and derived summary</h3><pre class="wt24-result"><code id="wt24Model">No accepted model.</code></pre><h3>Illustrative JSP template · not executed here</h3><pre class="wt24-result"><code id="wt24Template"></code></pre><h3>Response metadata</h3><pre class="wt24-result"><code id="wt24Response">No response yet.</code></pre><h3>Generated HTML source · displayed literally</h3><pre class="wt24-result"><code id="wt24Source">No response body yet.</code></pre><h3>Safe text-node preview</h3><div class="wt24-preview" id="wt24Preview">No preview yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Check the Model Before the Markup</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Attribute</h3><p>Confirm the controller sets lessonReport in <strong class="wt-content-key">request</strong> <strong class="wt-content-key">scope</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Shape</h3><p>Check learner, course list and boolean completion values.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Tags</h3><p>Verify the actual library and compatible URI.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Output</h3><p>Compare encoded source with literal visible text.</p></article></div><ul class="wt-content-points"><li>If qualified lookup reports a missing model, inspect the controller and dispatch rather than choosing unqualified lookup simply to suppress the error. </li><li>A <strong class="wt-content-key">session</strong> fallback can display a different learner’s teaching fixture and hide the missing <strong class="wt-content-key">request</strong> attribute.</li></ul><ul class="wt-content-points"><li>If a page collision is malformed, the unqualified lookup selects that value and the application model guard fails. </li><li>It does not continue searching for a later valid <strong class="wt-content-key">object</strong>. </li><li>If an empty report is accepted, render the explicit zero-course message.</li></ul><ul class="wt-content-points"><li>A successful local preview proves neither <strong class="wt-content-key">JSP</strong> compilation nor JavaBean getters. </li><li>Run the actual view in its matched environment and verify what the <strong class="wt-content-key">server</strong> sends.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does the browser execute JSP directives?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does the browser execute JSP directives?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A JSP-capable server processes the page and sends generated response content.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is JSP translation required for every request?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is JSP translation required for every request?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Translation/compilation may be performed ahead of time or when needed; request processing uses the resulting implementation.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How does a JavaBean expose an EL learner property?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How does a JavaBean expose an EL learner property?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Conventionally through a public getLearner method; map-backed models resolve keys instead.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why use requestScope.lessonReport explicitly?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why use requestScope.lessonReport explicitly?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It identifies the intended per-request model and avoids page/session/application name fallback.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What happens when a page attribute shadows an unqualified name?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What happens when a page attribute shadows an unqualified name?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The page value is selected first. A later scope is not chosen merely because the selected value is malformed.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do the two include mechanisms differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do the two include mechanisms differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The include directive combines source at translation time; jsp:include includes another resource’s output at request time.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does c:out encode every possible output context?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does c:out encode every possible output context?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Its default XML escaping suits this plain HTML text example; scripts, CSS and URLs need context-specific handling.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a local JSP-style renderer verify a real JSP application?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a local JSP-style renderer verify a real JSP application?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Actual translation, tag libraries, EL properties, forwarding and HTTP output require runtime integration tests.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain JSP View Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The browser receives the generated response, not executable JSP source."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Where is a JSP processed?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only in CSS</button><button type="button" class="wt8-option">On a compatible server runtime</button><button type="button" class="wt8-option">By the sitemap</button><button type="button" class="wt8-option">By browser Java imports</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The corresponding tag-library implementation must be available to the application."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What does a taglib directive do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Creates a database</button><button type="button" class="wt8-option">Logs in a learner</button><button type="button" class="wt8-option">Associates a prefix with a tag library</button><button type="button" class="wt8-option">Installs a browser script</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Source encoding and response encoding address different processing stages."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which encoding setting describes the JSP source file?</h3><div class="wt8-options"><button type="button" class="wt8-option">pageEncoding</button><button type="button" class="wt8-option">font-size</button><button type="button" class="wt8-option">getSession</button><button type="button" class="wt8-option">aria-label</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The ordinary scoped-attribute order is page, request, session, application."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which unqualified scoped attribute is searched first?</h3><div class="wt8-options"><button type="button" class="wt8-option">Application</button><button type="button" class="wt8-option">Session</button><button type="button" class="wt8-option">Request</button><button type="button" class="wt8-option">Page</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="It avoids ordinary unqualified scope fallback."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which expression explicitly selects the controller request model?</h3><div class="wt8-options"><button type="button" class="wt8-option">sessionScope.lessonReport</button><button type="button" class="wt8-option">requestScope.lessonReport</button><button type="button" class="wt8-option">applicationScope.lessonReport</button><button type="button" class="wt8-option">A submitted role field</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="It renders rows from the already accepted model."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What does c:forEach do in the report view?</h3><div class="wt8-options"><button type="button" class="wt8-option">Executes a JDBC insert</button><button type="button" class="wt8-option">Authenticates the user</button><button type="button" class="wt8-option">Repeats presentation for the accepted course list</button><button type="button" class="wt8-option">Starts a browser timer</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="An empty list is valid data; it is distinct from a missing model."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. How is an accepted empty report handled in the lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">200 with a zero-course message</button><button type="button" class="wt8-option">A permanent loading state</button><button type="button" class="wt8-option">A forced session creation</button><button type="button" class="wt8-option">A database exception always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The include directive acts on source; jsp:include includes output during a request."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. How does a translation-time include work?</h3><div class="wt8-options"><button type="button" class="wt8-option">Fetches an iframe</button><button type="button" class="wt8-option">Runs browser eval</button><button type="button" class="wt8-option">Creates a session</button><button type="button" class="wt8-option">Combines resource source into the translation unit</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The view should focus on accepted presentation data."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Where should business validation and JDBC access be organized?</h3><div class="wt8-options"><button type="button" class="wt8-option">In arbitrary JSP scriptlets</button><button type="button" class="wt8-option">In the controller/service/data-access layers</button><button type="button" class="wt8-option">In the favicon</button><button type="button" class="wt8-option">In HTML comments</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A redirect causes a new request, unlike an internal forward."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What happens to request attributes after a redirect automatically?</h3><div class="wt8-options"><button type="button" class="wt8-option">They become cookies</button><button type="button" class="wt8-option">They become application attributes</button><button type="button" class="wt8-option">They are not automatically copied to the new request</button><button type="button" class="wt8-option">They become SQL</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The lab uses text nodes and independently encoded HTML source."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Which preview technique keeps a learner label literal?</h3><div class="wt8-options"><button type="button" class="wt8-option">Fixed elements with textContent</button><button type="button" class="wt8-option">Inserting every label with innerHTML</button><button type="button" class="wt8-option">Evaluating the label as EL</button><button type="button" class="wt8-option">Trusting angle brackets</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Real JSP translation and EL evaluation need separate runtime checks."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Does the lab evaluate arbitrary JSP or EL source?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only after reset</button><button type="button" class="wt8-option">Only in unqualified mode</button><button type="button" class="wt8-option">No; it implements fixed model lookups and a renderer</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt24QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Compare View Outcomes</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Normal report</h3><p>Default run: <strong class="wt-content-key">request</strong> model, three courses, one complete and two pending. Expect 200.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Empty model</h3><p>Choose accepted empty. Expect 200, zero counts and a clear no-course message.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Missing model</h3><p>Choose missing with qualified lookup. Expect 500 and no old course preview.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Scope fallback</h3><p>Missing + unqualified + no page collision: <strong class="wt-content-key">session</strong> fixture wins. Remove session fixture: application wins.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Page shadow</h3><p>Normal <strong class="wt-content-key">request</strong> + valid page collision + unqualified: page report wins. Qualified lookup still uses request.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Malformed shadow</h3><p>Invalid page collision + unqualified: 500. A later valid <strong class="wt-content-key">request</strong> model is not substituted.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Literal learner</h3><p>Use &lt;Demo&gt; &amp; friends. Expect escaped <strong class="wt-content-key">HTML</strong> source, literal text and no injected element.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Rejected query</h3><p>Try one-character learner or missing/repeated/extra query shape. Expect 400 before <strong class="wt-content-key">scope</strong> lookup; source/preview clear.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>Server view:</strong> JSP generates response content.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚙️</span><strong>Translation:</strong> Source becomes an executable implementation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📜</span><strong>Directives:</strong> Configure processing and libraries.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>EL:</strong> Resolve model values, not browser scripts.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Explicit scope:</strong> Read the intended request attribute.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔁</span><strong>Loops:</strong> Render accepted course rows.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🌿</span><strong>Branches:</strong> Separate empty and nonempty output.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Encoding:</strong> Match the actual destination context.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>MVC:</strong> Keep business/data logic outside the view.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Integration:</strong> Verify the real JSP runtime separately.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JSP / Jakarta Pages"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JSP / Jakarta Pages</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JSP / Jakarta Pages</h4><p>A server-side page technology for generating response content.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Template text"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Template text</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Template text</h4><p>Literal page content contributed to the generated response.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Page directive"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Page directive</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Page directive</h4><p>Page-level processing configuration such as encodings.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Taglib directive"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Taglib directive</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Taglib directive</h4><p>A declaration connecting a prefix to a tag library.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Expression Language"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Expression Language</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Expression Language</h4><p>A language for evaluating model values and expressions in supported contexts.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Scoped attribute"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Scoped attribute</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Scoped attribute</h4><p>An application value associated with page, request, session or application scope.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JavaBean property"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JavaBean property</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JavaBean property</h4><p>A conventional property exposed through suitable getter/setter methods.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Translation unit"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Translation unit</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Translation unit</h4><p>The JSP source and source inclusions processed together for translation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Core tag action"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Core tag action</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Core tag action</h4><p>A tag-library action for operations such as output, iteration or conditional presentation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term MVC view"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>MVC view</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>MVC view</h4><p>The presentation component that renders a prepared application model.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Specify an Explicit JSP Report</h2><ul class="wt-content-points"><li>Design a controller that validates the learner, obtains bounded course data and attaches lessonReport to <strong class="wt-content-key">request</strong> <strong class="wt-content-key">scope</strong>. </li><li>Forward before committing output to a <strong class="wt-content-key">JSP</strong> under WEB-INF. </li><li>The view should state its source/output encoding and compatible core tag library.</li></ul><ul class="wt-content-points"><li>Use explicit request-scope expressions, a <strong class="wt-content-key">loop</strong> for course rows and an empty-state branch. </li><li>Render learner labels and titles as <strong class="wt-content-key">HTML</strong> text with appropriate encoding. </li><li>Derive counts from the accepted model instead of accepting arbitrary client totals.</li></ul><ul class="wt-content-points"><li>Test missing, empty and malformed models, a same-name <strong class="wt-content-key">session</strong>/page collision and special-character text. </li><li>Separate local model checks from actual <strong class="wt-content-key">JSP</strong> compilation, EL/JavaBean lookup, tag-library resolution and <strong class="wt-content-key">HTTP</strong> response checks.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain which <strong class="wt-content-key">scope</strong> produced the report and why the generated source and visible text are both correct. </li><li>Next: Level 25 — <strong class="wt-content-key">JDBC</strong> and <strong class="wt-content-key">Database</strong> Connectivity.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 24 Complete?</h2><p>Explain JSP’s server-side role, directives, EL and core tags; reproduce qualified/unqualified lookup differences and distinguish empty from missing/bad models. Identify the real-runtime checks this browser lab cannot perform. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="java-servlets.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Java Servlets</span><span class="nav-action">Review Level 23</span></a></div><div class="topic-nav-side next"><a href="jdbc-database-connectivity.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">JDBC and Database Connectivity</span><span class="nav-action">Open Level 25</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="jsp-java-server-pages.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=19" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=16" defer></script>
+</body></html>

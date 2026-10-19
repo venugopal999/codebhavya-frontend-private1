@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn JavaScript values, types, conversion, comparisons, control flow and functions with diagrams, a visualizer, interactive lab and MCQs.">
+
+    
+
+    <title>
+        Level 14 — JavaScript Fundamentals | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/javascript-fundamentals.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt14-skip-link" href="#wt14Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt14Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 14</div><div class="level-badge">LEVEL 14 · JAVASCRIPT</div><h1>JavaScript Fundamentals</h1><p class="wt-hero-description">Understand values, predict expressions and turn validated input into useful results.</p><div class="wt-hero-meta"><span>📦 Values + types</span><span>🧮 Expressions</span><span>🧭 Logic + functions</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 13 arranged content with <strong class="wt-content-key">CSS</strong>. </li><li>This lesson adds decisions and calculations with <strong class="wt-content-key">JavaScript</strong>. </li><li>You will declare variables, identify value types, evaluate expressions, convert text deliberately, compare values, and write small conditions, loops and functions.</li></ul><ul class="wt-content-points"><li>Our running task is a workshop seat check: read the available seats and reserved seats, validate the input and calculate the remaining places. </li><li>The important skill is explaining each step, including why text from a form cannot simply be treated as an already validated number.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Values</h3><p>Distinguish a binding from the value it currently holds.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧮</span><h3>Expressions</h3><p>Predict an operation from the operand types.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Logic</h3><p>Choose a branch and stop a bounded <strong class="wt-content-key">loop</strong> correctly.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Checks</h3><p>Test ordinary, zero, blank and invalid input deliberately.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>HTML, CSS and JavaScript — Three Roles</h2><ul class="wt-content-points"><li><strong class="wt-content-key">HTML</strong> gives the workshop page meaningful structure. </li><li><strong class="wt-content-key">CSS</strong> arranges and styles its cards. </li><li><strong class="wt-content-key">JavaScript</strong> can calculate remaining seats, react to an action and update feedback. </li><li>These roles cooperate: <strong class="wt-content-key">JavaScript</strong> does not replace a native button or make an unclear page understandable by itself.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">JavaScript</strong> and <strong class="wt-content-key">Java</strong> are different languages. </li><li>The similar names do not mean the same syntax, runtime or type system. </li><li>This lesson uses <strong class="wt-content-key">JavaScript</strong> in a <strong class="wt-content-key">browser</strong>; some of the same language features also run in environments such as Node.js.</li></ul><ul class="wt-content-points"><li>Keep useful learning content in the document even when scripting is unavailable. </li><li>Add behavior to meaningful controls rather than making a styled paragraph pretend to be a button.</li></ul><figure class="wt-diagram"><figcaption>Workshop page responsibilities</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>HTML</strong><p>Heading, labeled inputs, button and result region.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎨</span><strong>CSS</strong><p>Readable layout, spacing and visible focus.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⚙️</span><strong>JavaScript</strong><p>Validate values, calculate and report a result.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🌐</span>Language and Runtime — Know Where Code Runs</h2><ul class="wt-content-points"><li>The <strong class="wt-content-key">JavaScript</strong> language defines values, expressions, functions and control flow. </li><li>A <strong class="wt-content-key">browser</strong> supplies additional facilities such as document, <strong class="wt-content-key">event</strong> handling and developer tools. </li><li>Console is supplied by common runtimes rather than being an ECMAScript language keyword.</li></ul><ul class="wt-content-points"><li>A page script normally runs with the page’s environment. </li><li>Node.js supplies a different environment and does not provide a page document by default. </li><li>If a <strong class="wt-content-key">browser</strong> example uses document.getElementById, copying it into a plain Node program is not enough to create a webpage.</li></ul><ul class="wt-content-points"><li>Use the <strong class="wt-content-key">browser</strong> console for small trusted experiments. </li><li>A console log is a diagnostic output, not automatically visible lesson content. </li><li>A real user-facing result should appear in an appropriate page element.</li></ul><div class="code-block"><pre><code>const seats = 30;
+const reserved = 12;
+console.log(seats - reserved); // 18</code></pre></div><ul class="wt-content-points"><li>This pure calculation does not need document. </li><li>The later <strong class="wt-content-key">DOM</strong> lesson will develop element selection and events in detail; here we concentrate on the values and logic behind the result.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">📜</span>Load a Script Deliberately</h2><ul class="wt-content-points"><li>For a classic external script that needs the parsed <strong class="wt-content-key">HTML</strong>, <strong class="wt-content-key">defer</strong> is a useful loading choice. </li><li>The <strong class="wt-content-key">browser</strong> can <strong class="wt-content-key">fetch</strong> the file while parsing, then execute deferred classic scripts after parsing and before DOMContentLoaded. </li><li>Deferred classic scripts execute in document order.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Async</strong> serves a different purpose: it does not <strong class="wt-content-key">promise</strong> document order or wait for parsing in the same way. </li><li>Avoid choosing it for two dependent page scripts simply because the word sounds faster. </li><li>Module scripts have their own rules and are deferred by default; modules are beyond this introduction.</li></ul><div class="code-block"><pre><code>&lt;script src=&quot;workshop.js&quot; defer&gt;&lt;/script&gt;</code></pre></div><ul class="wt-content-points"><li>Put this element in the page head and keep the file path correct. </li><li>If the behavior is absent, inspect the Network panel for a failed <strong class="wt-content-key">request</strong> and the Console for an error. </li><li>The <strong class="wt-content-key">defer</strong> attribute is intended for external classic scripts; it is not a repair for inline code placed before the elements it uses.</li></ul><ul class="wt-content-points"><li>Do not paste unfamiliar code into a console or run downloaded scripts merely to test a tutorial. </li><li>All examples in this lesson are small and explained.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">✍️</span>Statements, Expressions and Comments</h2><ul class="wt-content-points"><li>An expression produces a value, such as seats - reserved. </li><li>A statement performs an action or controls execution, such as a declaration or an if statement. </li><li>A declaration can contain an expression that supplies its initial value.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">JavaScript</strong> is case-sensitive: remaining and Remaining are different names. </li><li>Choose names that explain the role of a value. </li><li>Comments explain intent; they should not contradict what the code actually does.</li></ul><ul class="wt-content-points"><li>This lesson writes semicolons explicitly. </li><li>Automatic semicolon insertion exists, but it is not a reason to put a return value on a new line and assume the result is unchanged.</li></ul><div class="code-block"><pre><code>const seats = 30; // total workshop capacity
+let reserved = 12;
+reserved = reserved + 3;
+const remaining = seats - reserved;
+console.log(remaining); // 15</code></pre></div><ul class="wt-content-points"><li>Trace in order: reserved begins as 12, is reassigned to 15, then remaining receives 30 - 15. </li><li>Reassigning reserved after that calculation would not automatically recalculate remaining. </li><li>A stored result is not a spreadsheet formula linked to the other bindings.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>let and const — Binding Rules</h2><ul class="wt-content-points"><li>Use const when the binding should not be reassigned. </li><li>Use let when a later assignment is part of the intended algorithm. </li><li>Both are block-scoped. </li><li>A const declaration needs an initializer; a let binding declared without one starts with undefined after its declaration executes.</li></ul><ul class="wt-content-points"><li>Const does not freeze an <strong class="wt-content-key">object</strong> or an <strong class="wt-content-key">array</strong>. </li><li>It prevents assigning a different value to the binding. </li><li>Changing an allowed property of the <strong class="wt-content-key">object</strong> is a separate operation. </li><li>Var has older function-scoping behavior and is useful to recognize, but our new examples use let and const.</li></ul><ul class="wt-content-points"><li>A let or const binding cannot be safely read before its declaration executes in its <strong class="wt-content-key">scope</strong>. </li><li>The interval before initialization is often called the temporal dead zone; an early access throws ReferenceError. </li><li>Do not describe it as automatically yielding undefined.</li></ul><div class="code-block"><pre><code>const workshop = { seats: 30 };
+workshop.seats = 32; // allowed property update
+// workshop = { seats: 40 }; // TypeError if executed
+
+let reserved = 12;
+reserved = 15; // allowed reassignment</code></pre></div><p>Keep reassignment and mutation separate when explaining this example. <strong class="wt-content-key">Object</strong> handling will be developed in Level 15.</p></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Values Have Types</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JavaScript</strong> is dynamically typed: a let binding can hold values of different types over time. </li><li>Each value still has a type that affects an operation. </li><li>The string "12" is different from the number 12 even when both look similar on a screen.</li></ul><ul class="wt-content-points"><li>Primitive types include string, number, boolean, undefined, <strong class="wt-content-key">null</strong>, bigint and symbol. </li><li>Objects form another major category; arrays and functions are objects with specialized behavior. </li><li>This lesson focuses on ordinary strings, numbers, booleans and missing-value cases.</li></ul><ul class="wt-content-points"><li>Number commonly represents both integer and fractional numeric values. </li><li>It uses binary floating-point, so not every decimal fraction is represented exactly. </li><li>BigInt handles integers differently and is not interchangeable with Number in every operation.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>String</h3><p>"12" is text; quotes are part of the code notation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Number</h3><p>12 and 12.5 are Number values.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Boolean</h3><p>true and false express a logical result.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Missing values</h3><p>undefined often represents an absent value; <strong class="wt-content-key">null</strong> can represent an intentional empty value.</p></article></div><div class="code-block"><pre><code>const label = &quot;Workshop&quot;;
+const seats = 30;
+const full = false;
+let note; // undefined
+const selectedSession = null;</code></pre></div></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>typeof — Useful, with Limits</h2><ul class="wt-content-points"><li>Typeof produces a string describing the operand’s type category. </li><li>It helps explain an unexpected expression, but it is not a complete <strong class="wt-content-key">validation</strong> <strong class="wt-content-key">function</strong>. </li><li>Typeof NaN is "number" even though NaN is not a usable finite result for the seat calculation.</li></ul><ul class="wt-content-points"><li>Typeof <strong class="wt-content-key">null</strong> is historically "<strong class="wt-content-key">object</strong>". </li><li>That result does not make <strong class="wt-content-key">null</strong> an ordinary <strong class="wt-content-key">object</strong> you can safely read properties from. </li><li>Arrays also report "<strong class="wt-content-key">object</strong>"; use <strong class="wt-content-key">Array</strong>.isArray when an actual array test is needed. </li><li>Functions report "<strong class="wt-content-key">function</strong>".</li></ul><div class="code-block"><pre><code>typeof &quot;12&quot;;       // &quot;string&quot;
+typeof 12;         // &quot;number&quot;
+typeof false;      // &quot;boolean&quot;
+typeof undefined;  // &quot;undefined&quot;
+typeof null;       // &quot;object&quot;
+typeof NaN;        // &quot;number&quot;</code></pre></div><ul class="wt-content-points"><li>For a value expected to be a finite Number, Number.isFinite checks both the type and finiteness without first converting a string. </li><li>Number.isFinite("12") is false. </li><li>Explicit conversion and <strong class="wt-content-key">validation</strong> are separate decisions.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>Arithmetic and Evaluation Order</h2><ul class="wt-content-points"><li>Arithmetic operators include +, -, *, /, ** and %. </li><li>The percent operator computes a remainder; calling it mathematical modulo can be misleading for negative operands. </li><li>Use parentheses when grouping is part of the meaning you want to communicate.</li></ul><ul class="wt-content-points"><li>Multiplication has higher precedence than addition. </li><li>Assignment stores the evaluated result in a binding. </li><li>Increment and decrement change a binding; prefix and postfix forms produce different expression values, so begin with clear standalone updates.</li></ul><ul class="wt-content-points"><li>The + operator can concatenate strings as well as add numbers. </li><li>Most other basic arithmetic operators can also convert operands, but relying on surprise conversions makes input handling harder to explain.</li></ul><div class="code-block"><pre><code>2 + 3 * 4;     // 14
+(2 + 3) * 4;   // 20
+17 % 5;        // 2
+-17 % 5;       // -2
+2 ** 3;        // 8
+
+let reserved = 12;
+reserved += 3; // 15</code></pre></div><ul class="wt-content-points"><li>For approximate measurements, a tiny floating-point difference may be expected: 0.1 + 0.2 is not exactly 0.3. </li><li>Our seat count is restricted to small integers; currency or scientific computations require a deliberate representation and rounding policy.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🔤</span>Strings, Concatenation and Templates</h2><ul class="wt-content-points"><li>A string stores text. </li><li>Single quotes, double quotes and backticks offer different literal syntax. </li><li>Template literals use backticks and interpolate expressions inside ${...}; they are convenient for a readable message.</li></ul><ul class="wt-content-points"><li>If one operand is a string after the relevant conversion steps, + concatenates instead of doing ordinary numeric addition. </li><li>"30" + "12" produces "3012". </li><li>Converting after the concatenation cannot reconstruct the sum you intended.</li></ul><div class="code-block"><pre><code>const seatsText = &quot;30&quot;;
+const reservedText = &quot;12&quot;;
+console.log(seatsText + reservedText); // &quot;3012&quot;
+
+const remaining = 18;
+const message = `Remaining seats: ${remaining}`;
+console.log(message); // Remaining seats: 18</code></pre></div><ul class="wt-content-points"><li>String length counts UTF-16 code units, so it is not always the number of user-perceived characters. </li><li>For this lesson’s numeric input, the important distinction is text versus Number, not an advanced character-counting algorithm.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Conversion and Validation Are Different</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">HTML</strong> input’s value is a string. </li><li>Number converts a whole string according to numeric conversion rules. </li><li>Number("12") becomes 12, while Number("12 seats") becomes NaN. </li><li>Number("") and Number("   ") become 0, so conversion alone does not prove that a learner entered a value.</li></ul><ul class="wt-content-points"><li>ParseInt can read an initial integer part: parseInt("12 seats", 10) produces 12. </li><li>That behavior can be useful in another task but is unsuitable if the whole seat-count field must be valid. </li><li>Decide which format is acceptable before choosing a parser.</li></ul><ul class="wt-content-points"><li>For this workshop, accept decimal digits only, convert them, require a safe integer in the range 0–1000, and require reserved not to exceed capacity. </li><li>The range is a teaching policy, not a <strong class="wt-content-key">JavaScript</strong> language limit. </li><li>Zero is a valid entry; blank text is not.</li></ul><div class="code-block"><pre><code>function readSeatCount(text) {
+  const trimmed = text.trim();
+  if (!/^\d+$/.test(trimmed)) return null;
+  const value = Number(trimmed);
+  if (!Number.isSafeInteger(value) || value &gt; 1000) return null;
+  return value;
+}</code></pre></div><ul class="wt-content-points"><li><strong class="wt-content-key">Null</strong> here means invalid under our <strong class="wt-content-key">function</strong>’s contract. </li><li>The caller must check it explicitly. </li><li>Do not use if (!value) to reject a seat count, because that would also reject the valid Number 0.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">⚖️</span>Assignment, Strict Equality and Loose Equality</h2><ul class="wt-content-points"><li>The single equals sign assigns. </li><li>Strict equality, ===, compares without converting different operand types to match. </li><li>Loose equality, ==, follows coercion rules that can match differently typed values. </li><li>Use strict equality in new beginner examples when you want the type distinction to remain visible.</li></ul><ul class="wt-content-points"><li>Both strict equality and loose equality have rules beyond a simple slogan. </li><li>NaN is not equal to itself using either operator. </li><li>Objects are compared by identity rather than by automatically comparing all properties. </li><li>A complete sameness discussion belongs after these basics.</li></ul><div class="code-block"><pre><code>&quot;12&quot; === 12; // false: different types
+&quot;12&quot; == 12;  // true: coercion in this case
+12 === 12;   // true
+NaN === NaN; // false
+
+let remaining = 18;
+remaining = 0; // assignment, not a comparison</code></pre></div><ul class="wt-content-points"><li>In an if condition, an accidental assignment can change data and then test the assigned value. </li><li>Inspect the operator carefully when a branch behaves unexpectedly. </li><li>For NaN checks, use Number.isNaN on an already converted Number.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">💡</span>Truthiness and Logical Operators</h2><ul class="wt-content-points"><li>Conditions can convert a value to boolean. </li><li>Falsy values include false, 0, -0, 0n, the empty string, <strong class="wt-content-key">null</strong>, undefined and NaN. </li><li>An ordinary non-empty string such as "0" or "false" is truthy. </li><li>The string’s spelling does not make it the corresponding boolean value.</li></ul><ul class="wt-content-points"><li>The && and || operators short-circuit and return one of their operands; they do not always produce a boolean. </li><li>The ! operator produces a boolean negation. </li><li>The ?? operator uses its fallback only for <strong class="wt-content-key">null</strong> or undefined, so it can preserve a useful zero.</li></ul><div class="code-block"><pre><code>Boolean(&quot;0&quot;); // true
+Boolean(0);   // false
+
+const remaining = 0;
+remaining || 10; // 10: zero is falsy
+remaining ?? 10; // 0: zero is not null or undefined</code></pre></div><ul class="wt-content-points"><li>A default of ten remaining seats would be wrong when the real result is zero. </li><li>Match the fallback operator to the missing-value policy. </li><li>For a numeric range check, compare the numeric value explicitly rather than relying only on truthiness.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Control Flow — Conditions and Bounded Loops</h2><ul class="wt-content-points"><li>An if/else statement selects a branch from a condition. </li><li>Check invalid values before the main calculation. </li><li>Keep mutually exclusive outcomes clear: invalid input, overbooked capacity, full workshop, or available seats.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">loop</strong> repeats a body while its control rules permit another iteration. </li><li>A for <strong class="wt-content-key">loop</strong> states its initialization, condition and update together. </li><li>Think about the first value, final accepted value and what changes each time. </li><li>A <strong class="wt-content-key">loop</strong> whose condition never becomes false can freeze the page.</li></ul><div class="code-block"><pre><code>const remaining = 3;
+if (remaining === 0) {
+  console.log(&quot;Workshop full&quot;);
+} else {
+  console.log(`${remaining} seats available`);
+}
+
+for (let seat = 1; seat &lt;= 3; seat += 1) {
+  console.log(`Seat ${seat}`);
+} // Seat 1, Seat 2, Seat 3</code></pre></div><ul class="wt-content-points"><li>For this <strong class="wt-content-key">loop</strong>, seat begins at 1, the condition permits 1, 2 and 3, and the next update makes it 4 so the body stops. </li><li>Changing <= to < would omit Seat 3. </li><li>Start with a small bounded count before using a user-provided <strong class="wt-content-key">loop</strong> limit.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Functions — Inputs, Return Values and Scope</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">function</strong> packages a task. </li><li>Parameters name incoming values; arguments are the actual values supplied at a call. </li><li>Return gives a result to the caller and ends that <strong class="wt-content-key">function</strong> invocation. </li><li>Console.log prints a diagnostic message and is not a substitute for returning the result.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">function</strong> that reaches its end without an explicit returned value yields undefined. </li><li>Put the return expression on the same line as return in these beginner examples. </li><li>A local binding belongs to its applicable <strong class="wt-content-key">scope</strong> rather than automatically becoming a global page variable.</li></ul><div class="code-block"><pre><code>function remainingSeats(capacity, reserved) {
+  return capacity - reserved;
+}
+const result = remainingSeats(30, 12);
+console.log(result); // 18</code></pre></div><ul class="wt-content-points"><li>This <strong class="wt-content-key">function</strong> assumes already validated numeric arguments. </li><li>It does not read or validate an <strong class="wt-content-key">HTML</strong> input by itself. </li><li>Keep those assumptions visible rather than claiming a two-line subtraction <strong class="wt-content-key">function</strong> handles every user entry.</li></ul><ul class="wt-content-points"><li>Arrow functions offer another <strong class="wt-content-key">function</strong> syntax, such as const double = value => value * 2. </li><li>Learn the task and return behavior first; different syntaxes also have differences such as their handling of this, which later lessons will cover.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — From Text to a Result</h2><p>Follow a fixed workshop example through reading, validation, conversion, calculation and reporting. Use the familiar numbered timeline and playback controls. Explain why each stage is needed instead of jumping directly from a string to an assumed answer.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="javascript">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>JAVASCRIPT VALUE TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🔤</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Begin with text input</h3><p data-trace-description>The fixed teaching values are the strings &quot;30&quot; and &quot;12&quot;.</p></div><pre class="trace-code"><code data-trace-code>capacityText = &quot;30&quot;
+reservedText = &quot;12&quot;</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Read" aria-pressed="true"><span>01</span><strong>Read</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Check" aria-pressed="false"><span>02</span><strong>Check</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Convert" aria-pressed="false"><span>03</span><strong>Convert</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Calculate" aria-pressed="false"><span>04</span><strong>Calculate</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Report" aria-pressed="false"><span>05</span><strong>Report</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Input.value provides text. Similar-looking text and numbers can behave differently.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Values and Seat-Count Lab</h2><ul class="wt-content-points"><li>Choose one of six explained operations and supply two text values. </li><li>The lab uses real, fixed <strong class="wt-content-key">JavaScript</strong> operations; it does not execute arbitrary pasted code. </li><li>The expression and result are displayed as text. </li><li>A and B start as strings, just as values read from ordinary inputs do.</li></ul><ul class="wt-content-points"><li>Compare string concatenation with explicit numeric addition. </li><li>The equality examples compare string A with Number(B), which makes the type distinction visible. </li><li>The truthiness example uses A only. </li><li>The final scenario validates decimal seat counts and reports the remaining capacity.</li></ul><ul class="wt-content-points"><li>Blank text is useful for the conversion experiment: Number("") is 0. </li><li>In the seat-count scenario, blank text is rejected. </li><li>General numeric addition requires finite converted values; the seat scenario has the stricter integer, range and relationship rules explained above.</li></ul><div class="wt9-demo"><label for="wt14Mode">Operation</label><select id="wt14Mode"><option value="concat">String concatenation: A + B</option><option value="add">Numeric addition: Number(A) + Number(B)</option><option value="strict">Strict equality: A === Number(B)</option><option value="loose">Loose equality: A == Number(B)</option><option value="truthy">Truthiness: Boolean(A)</option><option value="seats" selected>Validated seat count: capacity A, reserved B</option></select><label for="wt14A">Text A / capacity</label><input type="text" id="wt14A" value="30" maxlength="64" autocomplete="off"><label for="wt14B">Text B / reserved</label><input type="text" id="wt14B" value="12" maxlength="64" autocomplete="off"><div class="wt9-actions"><button type="button" class="primary-button" id="wt14Run">Run example</button><button type="button" class="secondary-button" id="wt14Reset">Reset lab</button></div><p id="wt14Status" role="status">Ready to check 30 capacity and 12 reserved.</p><h3>Operation and inputs</h3><pre class="trace-code"><code id="wt14Code"></code></pre><h3>Result and value type</h3><pre class="wt14-result"><code id="wt14Result"></code></pre><p id="wt14Explanation"></p></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Find the First Wrong Assumption</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📜</span><h3>Load</h3><p>Check the external script path and the first console error.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Type</h3><p>Inspect the value and typeof before an unexpected operation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Input</h3><p>Distinguish blank, invalid, converted and accepted input.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Flow</h3><p>Check the selected branch, <strong class="wt-content-key">loop</strong> boundary and returned value.</p></article></div><ul class="wt-content-points"><li>A SyntaxError indicates a parsing problem, such as an unmatched bracket. </li><li>A ReferenceError can indicate an unknown identifier or a binding accessed too early. </li><li>A TypeError can arise from an operation inappropriate for the value, such as reading a property from <strong class="wt-content-key">null</strong>. </li><li>Read the first relevant message and its location before editing unrelated <strong class="wt-content-key">CSS</strong>.</li></ul><ul class="wt-content-points"><li>If addition creates 3012, check whether both operands are strings. </li><li>If a zero count is rejected, look for a truthiness check that treats zero as missing. </li><li>If a <strong class="wt-content-key">function</strong> call returns undefined, inspect its return path rather than assuming the console output was returned.</li></ul><ul class="wt-content-points"><li>After a correction, repeat the case that failed and one neighboring case. </li><li>For the workshop, capacity 30/reserved 12 should give 18; capacity 30/reserved 30 should report full; capacity 30/reserved 31 should be rejected.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does dynamically typed mean?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does dynamically typed mean?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Bindings can hold values of different types over time. The values still have types that affect operations.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does const make an object immutable?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does const make an object immutable?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It prevents reassignment of that binding; allowed properties of the referenced object can still change.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why can &quot;30&quot; + &quot;12&quot; produce &quot;3012&quot;?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why can &quot;30&quot; + &quot;12&quot; produce &quot;3012&quot;?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The operands are strings, so + concatenates them. Convert deliberately before numeric addition.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is Number conversion enough to validate a seat count?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is Number conversion enough to validate a seat count?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Blank text converts to zero, and other results still need format, integer, range and relationship checks.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do === and == differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do === and == differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Strict equality does not coerce different types to match. Loose equality applies coercion rules, which can match a string and number.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why is &quot;0&quot; truthy while 0 is falsy?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why is &quot;0&quot; truthy while 0 is falsy?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The first is a non-empty string; the second is numeric zero. Truthiness depends on the actual value.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between returning and logging?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between returning and logging?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Return supplies a result to the function caller and ends the invocation. Logging prints a diagnostic output.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why can &lt;= and &lt; change a loop result?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why can &lt;= and &lt; change a loop result?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>They include or exclude the boundary value. Trace initialization, condition, update and the intended final iteration.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Predict Before Running</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Let permits reassignment; const does not."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which binding should you use when reassignment is intended?</h3><div class="wt8-options"><button type="button" class="wt8-option">const</button><button type="button" class="wt8-option">let</button><button type="button" class="wt8-option">typeof</button><button type="button" class="wt8-option">return</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Const controls the binding, not the deep mutability of its value."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. What does const prevent?</h3><div class="wt8-options"><button type="button" class="wt8-option">All object property changes</button><button type="button" class="wt8-option">All function calls</button><button type="button" class="wt8-option">Reassignment of the binding</button><button type="button" class="wt8-option">Every loop</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Both operands are strings, so + concatenates them."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What is the result of &quot;3&quot; + &quot;4&quot;?</h3><div class="wt8-options"><button type="button" class="wt8-option">&quot;34&quot;</button><button type="button" class="wt8-option">7</button><button type="button" class="wt8-option">12</button><button type="button" class="wt8-option">NaN</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Empty text converts to zero, so required input needs a separate blank check."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What does Number(&quot;&quot;) produce?</h3><div class="wt8-options"><button type="button" class="wt8-option">NaN</button><button type="button" class="wt8-option">undefined</button><button type="button" class="wt8-option">An error</button><button type="button" class="wt8-option">0</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="This historical result does not make null a usable ordinary object."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does typeof null produce?</h3><div class="wt8-options"><button type="button" class="wt8-option">&quot;null&quot;</button><button type="button" class="wt8-option">&quot;object&quot;</button><button type="button" class="wt8-option">&quot;undefined&quot;</button><button type="button" class="wt8-option">&quot;boolean&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Strict equality does not coerce the string and number to match."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What is the result of &quot;12&quot; === 12?</h3><div class="wt8-options"><button type="button" class="wt8-option">true</button><button type="button" class="wt8-option">12</button><button type="button" class="wt8-option">false</button><button type="button" class="wt8-option">undefined</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A non-empty string is truthy even if its contents spell zero."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. Which ordinary value is truthy?</h3><div class="wt8-options"><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">&quot;&quot;</button><button type="button" class="wt8-option">null</button><button type="button" class="wt8-option">&quot;0&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Nullish fallback preserves zero because it is neither null nor undefined."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What does 0 ?? 10 produce?</h3><div class="wt8-options"><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">10</button><button type="button" class="wt8-option">null</button><button type="button" class="wt8-option">false</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Multiplication is evaluated before addition in this expression."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What does 2 + 3 * 4 produce?</h3><div class="wt8-options"><button type="button" class="wt8-option">20</button><button type="button" class="wt8-option">14</button><button type="button" class="wt8-option">24</button><button type="button" class="wt8-option">9</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The condition permits i values 1, 2 and 3, then rejects 4."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. How many body executions occur for i = 1; i &lt;= 3; i += 1?</h3><div class="wt8-options"><button type="button" class="wt8-option">Two</button><button type="button" class="wt8-option">Four</button><button type="button" class="wt8-option">Three</button><button type="button" class="wt8-option">Zero</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Logging is not a returned result; an implicit return yields undefined."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What does a function return when it ends without a returned value?</h3><div class="wt8-options"><button type="button" class="wt8-option">The last console message</button><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">null</button><button type="button" class="wt8-option">undefined</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Reserved must not exceed capacity; the negative difference is not an accepted availability result."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Under this lesson’s seat policy, capacity 30 and reserved 31 should be…</h3><div class="wt8-options"><button type="button" class="wt8-option">Rejected before reporting availability</button><button type="button" class="wt8-option">Accepted as 1 remaining</button><button type="button" class="wt8-option">Accepted as full</button><button type="button" class="wt8-option">Concatenated into 3031</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt14QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Specific Inputs and Expected Results</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Text addition</h3><p>Use A="3", B="4" in concatenation. Expected: string "34". Switch to numeric addition: number 7.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Blank input</h3><p>Use A="", B="4" in numeric addition. Expected: 4 after conversion. Seat <strong class="wt-content-key">validation</strong> must reject the blank capacity.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚖️</span><h3>Equality</h3><p>Use A="12", B="12". Expected: strict comparison against Number(B) is false; loose comparison is true.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💡</span><h3>Zero text</h3><p>Use A="0" in Boolean(A). Expected: true. Compare Boolean(0) in your own small script: false.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪑</span><h3>Available seats</h3><p>Use capacity 30 and reserved 12. Expected: 18 available.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚫</span><h3>Invalid reservation</h3><p>Use capacity 30 and reserved 31. Expected: relationship error; do not report a negative availability.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Loop boundary</h3><p>Print seat numbers 1–3 with <=. Expected: three lines. Switch to <: two lines.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛠️</span><h3>Function return</h3><p>Write a pure subtraction <strong class="wt-content-key">function</strong> with validated numeric arguments 10 and 4. Expected returned Number: 6.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>Binding:</strong> Use const by default and let for intended reassignment.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Types:</strong> A text numeral and a Number are different values.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Inspection:</strong> typeof is useful but not complete validation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧮</span><strong>Operators:</strong> Read operand types and precedence before predicting.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔤</span><strong>Strings:</strong> + may concatenate; templates build clear messages.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>Conversion:</strong> Convert deliberately and validate the required format.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚖️</span><strong>Comparison:</strong> Distinguish assignment, strict equality and coercion.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">💡</span><strong>Truthiness:</strong> Zero and missing input are not interchangeable.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Control flow:</strong> Trace branches and loop boundaries explicitly.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛠️</span><strong>Functions:</strong> Separate inputs, local logic and returned results.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Binding"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Binding</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Binding</h4><p>A name associated with a value in an applicable scope.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Expression"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Expression</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Expression</h4><p>Code evaluated to produce a value.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Statement"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Statement</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Statement</h4><p>A unit of code that performs an action or controls execution.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Primitive"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Primitive</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Primitive</h4><p>A value in a primitive type category, such as string, number or boolean.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Coercion"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Coercion</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Coercion</h4><p>An implicit type conversion performed according to an operation’s rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Validation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Validation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Validation</h4><p>Checking whether input meets the task’s stated acceptance rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Truthy"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Truthy</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Truthy</h4><p>A value that converts to true in a boolean context.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Scope"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Scope</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Scope</h4><p>The region of code in which a binding is available under its rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Parameter"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Parameter</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Parameter</h4><p>A named input in a function definition.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Return value"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Return value</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Return value</h4><p>The result supplied by a function invocation to its caller.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Explain a Workshop Seat Check</h2><ul class="wt-content-points"><li>Write a small program that accepts two text values under the lesson’s decimal-digit policy. </li><li>Return a clear error for blank or malformed input, values above 1000, or reserved seats exceeding capacity. </li><li>Otherwise calculate the remaining count and select either “Workshop full” or a message with the available count.</li></ul><ul class="wt-content-points"><li>Separate a readSeatCount helper from the arithmetic and reporting decisions. </li><li>Check <strong class="wt-content-key">null</strong> explicitly so the valid zero survives. </li><li>Use const where a binding is not reassigned, strict equality for the full check and a template literal for the available message.</li></ul><ul class="wt-content-points"><li>Test 30/12 → 18 available, 30/30 → full, 0/0 → full, blank/0 → rejected, 30/31 → rejected, 30/2.5 → rejected and 1001/0 → rejected. </li><li>Explain the rejection stage, not just the final printed word.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> predict the value and type at each stage, demonstrate a meaningful return value, preserve zero correctly and explain a <strong class="wt-content-key">loop</strong> boundary. </li><li>Level 15 will extend these foundations to arrays, objects and practical data logic.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 14 Complete?</h2><p>Before marking complete, explain one concatenation surprise, one strict comparison, one zero-versus-blank check, a bounded loop and a returned function value. Completion records a local learning milestone; it is not an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="flexbox-grid-responsive-design.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Flexbox, Grid and Responsive Design</span><span class="nav-action">Review Level 13</span></a></div><div class="topic-nav-side next"><a href="javascript-arrays-objects-logic.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">JavaScript Arrays, Objects and Logic</span><span class="nav-action">Open Level 15</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="javascript-fundamentals.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=9" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=6" defer></script>
+</body></html>

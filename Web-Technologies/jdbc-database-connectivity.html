@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn JDBC drivers, prepared statements, result sets, transactions and resource ownership with diagrams, a visualizer, transaction lab and MCQs.">
+
+    
+
+    <title>
+        Level 25 — JDBC and Database Connectivity | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/jdbc-database-connectivity.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt25-skip-link" href="#wt25Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt25Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 25</div><div class="level-badge">LEVEL 25 · JDBC</div><h1>JDBC and Database Connectivity</h1><p class="wt-hero-description">Bind values, map results and resolve database operations deliberately.</p><div class="wt-hero-meta"><span>☕ Java web</span><span>🔑 Bound statements</span><span>🔄 Transactions</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JDBC</strong> is the <strong class="wt-content-key">Java</strong> API boundary for database access. </li><li>You will connect a matched driver and configured data source to prepared statements, result sets, update counts and <strong class="wt-content-key">transaction</strong> decisions. </li><li>The examples are <strong class="wt-content-key">backend</strong> <strong class="wt-content-key">Java</strong> fragments; uploading them to a static frontend does not execute SQL.</li></ul><ul class="wt-content-points"><li>The lab transfers fictional practice tokens between two local learners. </li><li>It compares one <strong class="wt-content-key">transaction</strong> with statement-by-statement auto-commit and shows a failure after the debit. </li><li>This synchronous <strong class="wt-content-key">JavaScript</strong> model runs no <strong class="wt-content-key">Java</strong>, database, driver or network connection.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔌</span><h3>Connect</h3><p>Separate <strong class="wt-content-key">API</strong>, driver, data source and <strong class="wt-content-key">database</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔑</span><h3>Bind</h3><p>Keep values separate from <strong class="wt-content-key">SQL</strong> structure.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>Read</h3><p>Map result rows and check update counts.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Transact</h3><p>Explain commit, <strong class="wt-content-key">rollback</strong> and owned resources.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🔌</span>API, Driver and Database Have Different Jobs</h2><ul class="wt-content-points"><li><strong class="wt-content-key">JDBC</strong> defines <strong class="wt-content-key">Java</strong> interfaces such as Connection, PreparedStatement and ResultSet. </li><li>A compatible <strong class="wt-content-key">JDBC</strong> driver implements the database-specific communication. </li><li>The <strong class="wt-content-key">database</strong> stores data and executes supported <strong class="wt-content-key">SQL</strong>; JDBC is not itself a database engine.</li></ul><ul class="wt-content-points"><li>A project needs the driver dependency, a reachable <strong class="wt-content-key">database</strong> and correct <strong class="wt-content-key">server</strong> configuration. </li><li>A <strong class="wt-content-key">java</strong>.<strong class="wt-content-key">sql</strong> import does not install a driver or create a schema. </li><li>A <strong class="wt-content-key">JDBC</strong> <strong class="wt-content-key">URL</strong> format and supported features depend on the chosen database and driver.</li></ul><ul class="wt-content-points"><li>Modern drivers can be discovered through service-provider loading when installed correctly. </li><li>Older examples may explicitly load a driver class. </li><li>Follow the actual driver’s setup rather than assuming one class name works for every product.</li></ul><figure class="wt-diagram"><figcaption>Database access boundary</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">☕</span><strong>Application</strong><p>Uses <strong class="wt-content-key">Java</strong> <strong class="wt-content-key">database</strong> interfaces.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔌</span><strong>JDBC driver</strong><p>Communicates with the chosen <strong class="wt-content-key">database</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Database</strong><p>Executes <strong class="wt-content-key">SQL</strong> and enforces constraints.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📋</span><strong>Java model</strong><p>Receives checked application values.</p></div></div></figure><p>This lesson adds <strong class="wt-content-key">frontend</strong> teaching files only. No <strong class="wt-content-key">backend</strong> database or credential is created by the patch.</p></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🧰</span>DriverManager and DataSource</h2><ul class="wt-content-points"><li>DriverManager can open a connection using a suitable <strong class="wt-content-key">JDBC</strong> <strong class="wt-content-key">URL</strong> and connection properties. </li><li>DataSource provides a connection-factory abstraction that application configuration can supply, including pool-backed implementations. </li><li>They are different entry points into the same <strong class="wt-content-key">JDBC</strong> work.</li></ul><ul class="wt-content-points"><li>In a web application, a configured data source keeps connection setup separate from controller and repository logic. </li><li>Store credentials in protected <strong class="wt-content-key">backend</strong> configuration, not <strong class="wt-content-key">browser</strong> JavaScript, a public ZIP, source comments or a JSP page.</li></ul><ul class="wt-content-points"><li>javax.<strong class="wt-content-key">sql</strong>.DataSource remains a <strong class="wt-content-key">Java</strong> platform API. </li><li>Modern jakarta.<strong class="wt-content-key">servlet</strong> imports do not require mechanically renaming it to jakarta.<strong class="wt-content-key">sql</strong>. </li><li>A data source abstraction does not guarantee that pooling has been configured.</li></ul><div class="code-block"><pre><code>import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+// dataSource is supplied by protected backend configuration.
+try (Connection con = dataSource.getConnection()) {
+    // Prepare and execute database work here.
+}</code></pre></div><ul class="wt-content-points"><li>A pooled connection close normally releases the logical connection back to its pool. </li><li>Check the pool’s <strong class="wt-content-key">contract</strong> for <strong class="wt-content-key">validation</strong>, reset and failure disposal; do not assume every DataSource has identical behavior.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Connection Ownership and Resource Lifetimes</h2><ul class="wt-content-points"><li>A Connection represents a <strong class="wt-content-key">database</strong> <strong class="wt-content-key">session</strong>. </li><li>Statements and result sets are associated with it and have their own resource lifetimes. </li><li>Close the resources your code owns instead of depending on garbage collection or a final <strong class="wt-content-key">servlet</strong> shutdown callback.</li></ul><ul class="wt-content-points"><li>Try-with-resources closes resources in reverse declaration order and records additional closing failures as suppressed exceptions. </li><li>Nest a result set inside the statement and connection lifetime so the mapper cannot read rows from an already closed resource.</li></ul><ul class="wt-content-points"><li>Do not keep one mutable Connection as a shared <strong class="wt-content-key">servlet</strong> field for all callers. </li><li><strong class="wt-content-key">Request</strong> handling, <strong class="wt-content-key">transaction</strong> ownership and thread safety require deliberate boundaries. </li><li>A repository receiving a caller-owned connection should not close it unexpectedly.</li></ul><figure class="wt-diagram"><figcaption>Close owned resources</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔌</span><strong>Connection</strong><p>Owns the <strong class="wt-content-key">database</strong> <strong class="wt-content-key">session</strong> boundary.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Statement</strong><p>Owns <strong class="wt-content-key">SQL</strong> execution resources.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📋</span><strong>Result set</strong><p>Owns a row cursor/result resource.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧹</span><strong>Cleanup</strong><p>Close result, statement, then connection.</p></div></div></figure><ul class="wt-content-points"><li>The lab exposes mock opened/closed counts. </li><li>These are teaching counters, not <strong class="wt-content-key">evidence</strong> of real connection-pool, driver or cleanup behavior.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🔑</span>Prepared Statements Bind Values</h2><ul class="wt-content-points"><li>Create a prepared statement with a fixed <strong class="wt-content-key">SQL</strong> structure and bind values to question-mark placeholders. </li><li><strong class="wt-content-key">JDBC</strong> parameter positions start at one. </li><li>Choose suitable setters for the <strong class="wt-content-key">database</strong>/application type and bind every required parameter.</li></ul><ul class="wt-content-points"><li>A bound value remains a value. </li><li>It does not become a table name, column name, sort direction or arbitrary <strong class="wt-content-key">SQL</strong> fragment. </li><li>If a query supports dynamic structure, choose that structure from an application-controlled allowlist rather than treating a placeholder as an identifier.</li></ul><ul class="wt-content-points"><li>Prepared statements address separation of values from <strong class="wt-content-key">SQL</strong> syntax. </li><li>They do not replace input <strong class="wt-content-key">validation</strong>, <strong class="wt-content-key">authorization</strong>, transaction rules or safe output rendering.</li></ul><div class="code-block"><pre><code>String sql = &quot;SELECT learner_id, tokens FROM practice_tokens &quot;
+           + &quot;WHERE learner_id = ?&quot;;
+try (java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+    ps.setString(1, acceptedLearnerId);
+    try (java.sql.ResultSet rs = ps.executeQuery()) {
+        // Map accepted rows here.
+    }
+}</code></pre></div><ul class="wt-content-points"><li>The snippet assumes an open caller-owned con and a validated identifier. </li><li>It is not a complete repository or <strong class="wt-content-key">database</strong> schema. </li><li>The lab shows fixed <strong class="wt-content-key">SQL</strong> plus a separate binding panel; it never interpolates submitted text into executable SQL.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">📤</span>Choose the Execution Method</h2><p>executeQuery is used when the statement produces a result set. executeUpdate returns an update count for relevant data-changing statements; an operation that changes no matching row can legitimately return zero. execute handles cases where the result kind needs to be inspected.</p><ul class="wt-content-points"><li>Do not read executeUpdate’s return value as an automatically generated row ID. </li><li>Generated keys use their own statement configuration and result retrieval, with driver/<strong class="wt-content-key">database</strong> support. </li><li>Multiple results and batches have additional <strong class="wt-content-key">API</strong> contracts.</li></ul><ul class="wt-content-points"><li>For the token transfer, a conditional debit must affect exactly one row. </li><li>A zero debit count means this operation was not accepted, such as insufficient tokens or a missing source; the credit must not run.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>executeQuery</h3><p>Read a ResultSet for a query.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✏️</span><h3>executeUpdate</h3><p>Inspect the affected-row count.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>execute</h3><p>Inspect the returned result kind.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Generated keys</h3><p>Use the appropriate separate <strong class="wt-content-key">API</strong>.</p></article></div><div class="code-block"><pre><code>int changed = debit.executeUpdate();
+if (changed != 1) {
+    throw new java.sql.SQLException(&quot;Debit was not accepted&quot;);
+}
+// Only then attempt the paired credit.</code></pre></div><ul class="wt-content-points"><li>This application expects one affected row. </li><li>Other operations need their own deliberate count <strong class="wt-content-key">contract</strong> rather than assuming every successful update returns one.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">📋</span>ResultSet Cursors and Row Mapping</h2><ul class="wt-content-points"><li>A ResultSet cursor begins before the first row. </li><li>Call next to advance and test whether a row exists before reading columns. </li><li>A forward-only result is not a collection that you can randomly index or repeatedly rewind.</li></ul><ul class="wt-content-points"><li>Read columns by an intentional label or index and map them into an application model. </li><li>Validate the required shape, ranges and nullability. </li><li>Do not pass a live result set to the <strong class="wt-content-key">JSP</strong> and let the view depend on a <strong class="wt-content-key">database</strong> cursor remaining open.</li></ul><ul class="wt-content-points"><li>Primitive getters need attention to <strong class="wt-content-key">SQL</strong> <strong class="wt-content-key">NULL</strong>: getInt can return zero for null and wasNull can distinguish it immediately after the read. </li><li>A zero count and an absent <strong class="wt-content-key">database</strong> value may have different meanings.</li></ul><div class="code-block"><pre><code>try (java.sql.ResultSet rs = ps.executeQuery()) {
+    while (rs.next()) {
+        String id = rs.getString(&quot;learner_id&quot;);
+        int tokens = rs.getInt(&quot;tokens&quot;);
+        if (rs.wasNull()) {
+            throw new java.sql.SQLException(&quot;Missing required tokens&quot;);
+        }
+        // Check id and tokens, then create an application value.
+    }
+}</code></pre></div><ul class="wt-content-points"><li>Use a nullable <strong class="wt-content-key">Java</strong> representation when <strong class="wt-content-key">null</strong> is allowed by the contract. </li><li>For exact monetary decimal values, choose a suitable decimal <strong class="wt-content-key">database</strong>/<strong class="wt-content-key">Java</strong> type rather than assuming binary floating-point is exact. </li><li>The lab uses bounded integer practice tokens, not money.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>Repository Boundaries and Schema Assumptions</h2><ul class="wt-content-points"><li>A repository or DAO contains <strong class="wt-content-key">SQL</strong> details and row mapping behind an application boundary. </li><li>A service coordinates operations, and a controller validates <strong class="wt-content-key">request</strong> values and chooses the <strong class="wt-content-key">response</strong>. </li><li>A <strong class="wt-content-key">JSP</strong> should render the accepted model rather than run <strong class="wt-content-key">SQL</strong> or own transaction cleanup.</li></ul><ul class="wt-content-points"><li>The transfer illustration assumes a practice_tokens table with a unique learner_id and non-negative integer tokens. </li><li><strong class="wt-content-key">Database</strong> constraints, <strong class="wt-content-key">authorization</strong> and transaction support must exist in the real implementation; the local model does not create those protections on a server.</li></ul><ul class="wt-content-points"><li>The toy fixture starts with A = 12 and B = 4. </li><li>Learner identifiers are exactly A or B. </li><li>Amount is a canonical integer string from 1 to 9, and source must differ from destination. </li><li>These are teaching rules for a tiny model.</li></ul><div class="code-block"><pre><code>Illustrative SQL schema assumptions:
+practice_tokens(learner_id PRIMARY KEY, tokens NOT NULL)
+tokens must remain non-negative
+
+Application operation:
+validate → acquire owned connection → debit → credit
+→ commit/rollback → close → choose response</code></pre></div><ul class="wt-content-points"><li>DDL syntax and constraint enforcement depend on the <strong class="wt-content-key">database</strong>. </li><li>Level 26 develops <strong class="wt-content-key">database</strong> design and <strong class="wt-content-key">SQL</strong> further; this lesson focuses on the Java access boundary.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">⚡</span>Auto-Commit and Partial Operations</h2><ul class="wt-content-points"><li>A newly created <strong class="wt-content-key">JDBC</strong> connection defaults to auto-commit. </li><li>In that mode, statement completion commits its <strong class="wt-content-key">transaction</strong>; completion rules depend on the statement/result type. </li><li>Two successful updates are not automatically one atomic application operation.</li></ul><ul class="wt-content-points"><li>If a debit commits and the following credit fails, the earlier committed debit is not undone by rolling back a later <strong class="wt-content-key">transaction</strong>. </li><li>The caller has a partial outcome and needs a deliberate recovery strategy; retrying blindly can make the situation worse.</li></ul><ul class="wt-content-points"><li>The lab’s auto-commit mode publishes the debit immediately. </li><li>A simulated credit error or zero-row credit then returns 500 while keeping the partial debit visible. </li><li>The earlier committed snapshot is not silently restored.</li></ul><figure class="wt-diagram"><figcaption>One operation, different boundaries</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">➖</span><strong>Debit</strong><p>Change the source tokens.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⚡</span><strong>Auto-commit</strong><p>Debit is already published.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⚠️</span><strong>Credit failure</strong><p>The paired update does not finish.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📉</span><strong>Partial result</strong><p>Earlier debit remains committed.</p></div></div></figure><ul class="wt-content-points"><li>The model simplifies two update statements and their outcomes. </li><li>It does not represent all <strong class="wt-content-key">JDBC</strong> result-completion rules or distributed failures.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>One Transaction: Commit or Roll Back</h2><ul class="wt-content-points"><li>Disable auto-commit deliberately when one application operation needs multiple statements in a <strong class="wt-content-key">transaction</strong>. </li><li>Execute both updates on the same owned connection and call commit only after both satisfy the application’s update-count <strong class="wt-content-key">contract</strong>.</li></ul><ul class="wt-content-points"><li>On a failure before commit, attempt <strong class="wt-content-key">rollback</strong> and propagate the failure. </li><li><strong class="wt-content-key">Rollback</strong> can itself fail. </li><li>Preserve the original error and record the cleanup failure instead of pretending the operation is known to be undone.</li></ul><ul class="wt-content-points"><li>The lab’s manual <strong class="wt-content-key">transaction</strong> holds a separate working copy. </li><li>A successful credit publishes both updates together; a known simulated credit failure discards the working copy and leaves the prior committed snapshot unchanged.</li></ul><div class="code-block"><pre><code>// Illustrative owned-connection transaction fragment.
+// Inputs were validated; dataSource and statement helper are supplied.
+try (java.sql.Connection con = dataSource.getConnection()) {
+    con.setAutoCommit(false);
+    try {
+        // Execute debit and credit on THIS connection.
+        // Require the expected affected-row count for each.
+        performTransferStatements(con, fromId, toId, amount);
+        con.commit();
+    } catch (java.sql.SQLException | RuntimeException failure) {
+        try {
+            con.rollback();
+        } catch (java.sql.SQLException rollbackFailure) {
+            failure.addSuppressed(rollbackFailure);
+        }
+        throw failure;
+    }
+}</code></pre></div><ul class="wt-content-points"><li>The helper is defined by the surrounding repository; this is a fragment, not a complete compilable application. </li><li>It owns the acquired connection and closes it after resolution. </li><li>Pool state reset/disposal belongs to the configured connection <strong class="wt-content-key">contract</strong>. </li><li>Do not re-enable auto-commit to hide an unresolved <strong class="wt-content-key">transaction</strong>: changing that mode can commit outstanding work.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🧮</span>Conditional Updates and Count Checks</h2><ul class="wt-content-points"><li>The debit statement can require both a matching source identifier and enough tokens in its WHERE clause. </li><li>That avoids a simplistic read-then-write check in application code, but real concurrency, isolation and <strong class="wt-content-key">database</strong> behavior still need testing.</li></ul><ul class="wt-content-points"><li>Bind the amount twice in the debit: once for subtraction and once for the minimum check. </li><li>Then bind the credit amount and destination separately. </li><li>Only an accepted debit allows the credit to proceed.</li></ul><ul class="wt-content-points"><li>A credit affecting zero rows is not a successful paired transfer in this <strong class="wt-content-key">contract</strong>. </li><li>In a manual <strong class="wt-content-key">transaction</strong>, treat it as a failure and roll back the debit. </li><li>In auto-commit, the already committed debit remains partial.</li></ul><div class="code-block"><pre><code>UPDATE practice_tokens
+SET tokens = tokens - ?
+WHERE learner_id = ? AND tokens &gt;= ?
+
+Debit bindings: 1 = amount, 2 = fromId, 3 = amount
+
+UPDATE practice_tokens
+SET tokens = tokens + ?
+WHERE learner_id = ?
+
+Credit bindings: 1 = amount, 2 = toId</code></pre></div><ul class="wt-content-points"><li>The local model checks these decisions synchronously against its own integers. </li><li>It does not prove atomic <strong class="wt-content-key">SQL</strong> predicates, lock behavior or concurrent transfers in a real <strong class="wt-content-key">database</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🧵</span>Isolation, Savepoints and Concurrent Work</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">transaction</strong> boundary and a transaction isolation level solve related but different problems. </li><li>Isolation controls which effects of concurrent work can be observed. </li><li>Supported levels and behavior vary with the driver/<strong class="wt-content-key">database</strong>; do not infer them from a synchronous <strong class="wt-content-key">browser</strong> demonstration.</li></ul><ul class="wt-content-points"><li>Some drivers/databases support savepoints for partial <strong class="wt-content-key">rollback</strong> within a <strong class="wt-content-key">transaction</strong>. </li><li>A savepoint is not a separate permanent commit and is not a universal substitute for rolling back an operation whose invariants failed.</li></ul><ul class="wt-content-points"><li>Keep transactions short and avoid waiting for user interaction while holding <strong class="wt-content-key">database</strong> resources. </li><li>Design a consistent update order and a deliberate retry policy for recognized transient conflicts. </li><li>A retry must consider whether an earlier attempt actually committed.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Atomicity</h3><p>Treat paired statements as one accepted unit.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Isolation</h3><p>Account for simultaneous <strong class="wt-content-key">database</strong> work.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📍</span><h3>Savepoint</h3><p>A supported <strong class="wt-content-key">rollback</strong> position within a <strong class="wt-content-key">transaction</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⏱️</span><h3>Timeout/retry</h3><p>Use driver/database-aware bounded policies.</p></article></div><p>The lab has no locks, threads, savepoints, deadlocks or retries. Those runtime behaviors remain separate integration checks.</p></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">⚠️</span>Errors and Uncertain Outcomes</h2><ul class="wt-content-points"><li>SQLException provides <strong class="wt-content-key">database</strong> failure information, including SQLState, a vendor code and chained exceptions. </li><li><strong class="wt-content-key">Backend</strong> diagnostics can retain those details; public responses should avoid leaking credentials, <strong class="wt-content-key">SQL</strong> internals or production stack traces.</li></ul><ul class="wt-content-points"><li>Distinguish <strong class="wt-content-key">validation</strong> rejection, unavailable connection, unacceptable update count and execution failure. </li><li>A stable error <strong class="wt-content-key">response</strong> should not claim success merely because the first statement ran. </li><li>In this lab an insufficient debit returns 409, an unavailable fixture 503 and a failed credit 500.</li></ul><ul class="wt-content-points"><li>A connection loss or timeout around commit can leave the client unsure whether the <strong class="wt-content-key">database</strong> committed. </li><li>Do not claim <strong class="wt-content-key">rollback</strong> always proves nothing happened. </li><li>A real system needs a recovery/<strong class="wt-content-key">idempotency</strong> strategy appropriate to its operation.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Invalid input</h3><p>Reject before acquiring a connection.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔌</span><h3>Unavailable</h3><p>No mock connection is opened.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">➖</span><h3>Zero debit</h3><p>Do not execute the credit.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Commit uncertainty</h3><p>Verify/recover instead of blindly retrying.</p></article></div><ul class="wt-content-points"><li>The lab deliberately models only known outcomes before commit. </li><li>Its failure fixture always knows the credit did not apply. </li><li>It does not simulate commit ambiguity or <strong class="wt-content-key">rollback</strong> failure.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>Pools, Configuration and Deployment</h2><ul class="wt-content-points"><li>Configure a driver and data source on the <strong class="wt-content-key">backend</strong>, with appropriate credentials, network access, limits and connection <strong class="wt-content-key">validation</strong>. </li><li>A pool can reuse physical connections, but exhausted pools, stale sessions and leaked resources still need monitoring.</li></ul><ul class="wt-content-points"><li>Borrow a connection for its intended operation and resolve the <strong class="wt-content-key">transaction</strong> before returning it. </li><li>The pool must have a deliberate reset/disposal strategy so a later borrower does not inherit unexpected <strong class="wt-content-key">transaction</strong> state.</li></ul><ul class="wt-content-points"><li>Do not copy a local <strong class="wt-content-key">database</strong> <strong class="wt-content-key">URL</strong> or password into the public frontend to make browser JDBC work. </li><li><strong class="wt-content-key">Browser</strong> code calls an authorized <strong class="wt-content-key">backend</strong> API; that backend owns JDBC work and decides what accepted model to expose.</li></ul><figure class="wt-diagram"><figcaption>Keep credentials on the backend</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Frontend</strong><p>Sends an allowed application <strong class="wt-content-key">request</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛂</span><strong>Controller/service</strong><p>Validates and authorizes.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Repository</strong><p>Owns <strong class="wt-content-key">JDBC</strong> operations.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔌</span><strong>Configured data source</strong><p>Supplies <strong class="wt-content-key">backend</strong> connections.</p></div></div></figure><p>This course patch does not modify the Render tracers or add a <strong class="wt-content-key">JDBC</strong> <strong class="wt-content-key">backend</strong>. Its resource counters are local model data only.</p></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Test Logic and Real JDBC Separately</h2><ul class="wt-content-points"><li>Test input normalization, update-count decisions, <strong class="wt-content-key">transaction</strong> outcome and resource <strong class="wt-content-key">ownership</strong> with controlled fixtures. </li><li>Then test the actual <strong class="wt-content-key">Java</strong> component with the chosen <strong class="wt-content-key">database</strong>/driver, schema constraints, transaction support, isolation and error handling.</li></ul><ul class="wt-content-points"><li>For paired transfers, test successful commit, insufficient source, zero-row credit and an execution failure after the debit. </li><li>Check the persisted <strong class="wt-content-key">database</strong> state after each case rather than trusting a success message or log line alone.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">JavaScript</strong> token model can verify its own snapshots, invariants and reset behavior. </li><li>It cannot compile <strong class="wt-content-key">Java</strong>, validate a driver, open <strong class="wt-content-key">JDBC</strong> connections or demonstrate real rollback, concurrency and pool cleanup.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Success</h3><p>Paired transfer preserves the operation’s token total.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↩️</span><h3>Known failure</h3><p>Manual mode retains the earlier committed snapshot.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📉</span><h3>Partial outcome</h3><p>Auto-commit reveals the committed debit.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Integration</h3><p>Check actual <strong class="wt-content-key">database</strong> state and resource behavior.</p></article></div><ul class="wt-content-points"><li>Use the visualizer for an accepted manual <strong class="wt-content-key">transaction</strong>, then change the lab’s mode and credit outcome to predict the difference. </li><li>Level 26 continues with Databases and <strong class="wt-content-key">SQL</strong> for Web Applications.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — An Accepted JDBC Transaction</h2><p>Trace a fictional token transfer through validation, connection acquisition, bound debit/credit updates, commit and cleanup. This approved five-stage player explains one accepted manual transaction without running Java or SQL.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="jdbc">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>JDBC TRANSACTION TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📨</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Accept the transfer operation</h3><p data-trace-description>Validate distinct learner IDs and a bounded canonical integer amount.</p></div><pre class="trace-code"><code data-trace-code>A → B · amount 3</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Validate" aria-pressed="true"><span>01</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Connect" aria-pressed="false"><span>02</span><strong>Connect</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Debit" aria-pressed="false"><span>03</span><strong>Debit</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Credit" aria-pressed="false"><span>04</span><strong>Credit</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Resolve" aria-pressed="false"><span>05</span><strong>Resolve</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Rejected input stops before connection acquisition.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Commit, Rollback and Partial Transfer</h2><ul class="wt-content-points"><li>Transfer fictional integer practice tokens between A and B. </li><li>Initially A has 12 and B has 4. </li><li>This is a synchronous <strong class="wt-content-key">JavaScript</strong> model, not <strong class="wt-content-key">Java</strong>, JDBC, SQL execution, a database or a financial account. </li><li>Results persist only in this tab’s in-memory fixture until Reset.</li></ul><ul class="wt-content-points"><li>POST /transfer accepts exactly from, to and amount as scalar strings. </li><li>IDs must be A/B and distinct; amount must be exactly one canonical digit 1–9. </li><li>Rejection occurs before mock connection acquisition. </li><li>The fixed <strong class="wt-content-key">SQL</strong> and bindings are displayed separately.</li></ul><ul class="wt-content-points"><li>Manual <strong class="wt-content-key">transaction</strong>: stage debit and credit, then publish both together. </li><li>A known credit error or zero-row credit rolls back the staged debit. </li><li>Auto-commit: publish each statement; a failed credit leaves the earlier debit committed. </li><li>Insufficient source returns 409 and no credit runs. </li><li>The unavailable fixture returns 503 before opening resources.</li></ul><ul class="wt-content-points"><li>Opened/closed resource counts belong to the current demonstration run, not a real driver or pool. </li><li>The working snapshot shows attempted changes, while committed state shows what remains afterward. </li><li>No concurrency, <strong class="wt-content-key">rollback</strong> failure or uncertain commit is simulated.</li></ul><div class="wt9-demo wt25-lab"><label for="wt25Method">Simulated method</label><select id="wt25Method"><option>POST</option><option>GET</option><option>DELETE</option></select><label for="wt25Path">Application-relative path</label><select id="wt25Path"><option>/transfer</option><option>/missing</option></select><label for="wt25From">Source learner</label><select id="wt25From"><option>A</option><option>B</option></select><label for="wt25To">Destination learner</label><select id="wt25To"><option>B</option><option>A</option></select><label for="wt25Amount">Amount · exactly one digit 1–9</label><input type="text" id="wt25Amount" value="3" maxlength="8" inputmode="numeric"><label for="wt25Mode">Mock transaction mode</label><select id="wt25Mode"><option value="manual">Manual · one transaction</option><option value="auto">Auto-commit · separate statements</option></select><label for="wt25Failure">Mock database outcome</label><select id="wt25Failure"><option value="none">Both statements succeed</option><option value="creditError">Credit execution error after debit</option><option value="creditZero">Credit affects zero rows after debit</option><option value="offline">Unavailable before connection acquisition</option></select><label for="wt25Variant">Decoded submission shape</label><select id="wt25Variant"><option value="normal">Three scalar strings</option><option value="missing">Missing amount</option><option value="array">Repeated amount value shape</option><option value="extra">Extra submitted field</option></select><div class="wt9-actions"><button class="primary-button" type="button" id="wt25Process">Run transfer demonstration</button><button class="secondary-button" type="button" id="wt25Reset">Reset tokens and demonstration</button></div><p id="wt25Status" role="status">Idle. JavaScript model; no database is connected.</p><h3>Current committed mock balances</h3><pre class="wt25-result"><code id="wt25Balances"></code></pre><h3>Fixed statement structure and separate bindings</h3><pre class="wt25-result"><code id="wt25Bindings">No accepted bindings yet.</code></pre><h3>Operation trace and mock cleanup</h3><pre class="wt25-result"><code id="wt25Trace">No operation yet.</code></pre><h3>Before, attempted working state and committed after</h3><pre class="wt25-result"><code id="wt25Snapshots">No transfer attempted.</code></pre><h3>Current run resource counts and affected rows</h3><pre class="wt25-result"><code id="wt25Resources">No resources opened.</code></pre><h3>Simulated response</h3><pre class="wt25-result"><code id="wt25Response">No response yet.</code></pre><h3>Outcome summary · safe text</h3><div class="wt25-preview" id="wt25Preview">No result yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Check Counts, State and Ownership</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔑</span><h3>Bindings</h3><p>Match every one-based placeholder and setter type.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>Result cursor</h3><p>Call next before reading; distinguish <strong class="wt-content-key">null</strong> from zero.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Transaction</h3><p>Check the same connection owns both updates.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Resources</h3><p>Resolve the operation and close owned resources.</p></article></div><ul class="wt-content-points"><li>If the debit succeeds but tokens disappear on a credit failure, check whether auto-commit published it independently. </li><li>If a missing destination still reports success, inspect the credit update count. </li><li>If no source was affected, stop before executing the paired credit.</li></ul><ul class="wt-content-points"><li>If <strong class="wt-content-key">database</strong> connections run out, inspect borrowed connections, unclosed statements/results, long transactions and pool settings. </li><li>A <strong class="wt-content-key">browser</strong> teaching counter cannot diagnose a real leak.</li></ul><ul class="wt-content-points"><li>If a timeout occurs around commit, report the uncertainty and use a deliberate verification/recovery policy. </li><li>Do not infer that the <strong class="wt-content-key">database</strong> rolled back simply because the client received an exception.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is JDBC itself a database engine?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is JDBC itself a database engine?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. JDBC defines Java database-access APIs; a driver communicates with the actual database.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does every DataSource provide pooling?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does every DataSource provide pooling?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. DataSource is an abstraction; the configured implementation and environment determine pooling behavior.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why bind values in a prepared statement?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why bind values in a prepared statement?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>To keep supplied values separate from fixed SQL structure. Validation and authorization remain necessary.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can a question-mark parameter represent a table name?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can a question-mark parameter represent a table name?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Bound values are not arbitrary SQL identifiers or syntax; dynamic structure needs an application-controlled choice.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Where is a new ResultSet cursor initially?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Where is a new ResultSet cursor initially?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Before the first row. Call next and verify a row exists before reading values.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why inspect affected-row counts for both updates?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why inspect affected-row counts for both updates?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A zero or unexpected count does not satisfy this paired-transfer contract; do not silently treat it as success.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can rollback undo an earlier auto-committed debit?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can rollback undo an earlier auto-committed debit?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. That statement has already committed; rolling back later work does not restore it.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a commit exception always prove nothing persisted?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a commit exception always prove nothing persisted?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Some failures can leave the outcome uncertain; a real operation needs verification and recovery rules.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain JDBC Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The application uses JDBC APIs while the driver communicates with the database."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. What implements database-specific JDBC communication?</h3><div class="wt8-options"><button type="button" class="wt8-option">CSS</button><button type="button" class="wt8-option">A compatible JDBC driver</button><button type="button" class="wt8-option">The sitemap</button><button type="button" class="wt8-option">A JSP heading</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The frontend should call an authorized backend rather than receive database credentials."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Where should database credentials be configured?</h3><div class="wt8-options"><button type="button" class="wt8-option">Public browser JavaScript</button><button type="button" class="wt8-option">HTML comments</button><button type="button" class="wt8-option">Protected backend configuration</button><button type="button" class="wt8-option">The favicon</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Prepared-statement setters use one-based parameter positions."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What is the first JDBC parameter index?</h3><div class="wt8-options"><button type="button" class="wt8-option">1</button><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">-1</button><button type="button" class="wt8-option">It is always a name</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="executeQuery is the query method for a statement producing one result set."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which method returns a ResultSet for an appropriate query?</h3><div class="wt8-options"><button type="button" class="wt8-option">executeUpdate</button><button type="button" class="wt8-option">getSession</button><button type="button" class="wt8-option">commit</button><button type="button" class="wt8-option">executeQuery</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The application must inspect whether the count satisfies its operation contract."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What can executeUpdate return for no matching row?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always a generated key</button><button type="button" class="wt8-option">Zero</button><button type="button" class="wt8-option">An HTML page</button><button type="button" class="wt8-option">A session token</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The cursor begins before the first row."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What must occur before reading a ResultSet row?</h3><div class="wt8-options"><button type="button" class="wt8-option">Close the connection</button><button type="button" class="wt8-option">Commit a JSP</button><button type="button" class="wt8-option">Call next and confirm a row exists</button><button type="button" class="wt8-option">Rename the driver</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Primitive zero may represent a real value; wasNull reports the preceding getter’s null status."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. How can a primitive getter distinguish SQL NULL afterward?</h3><div class="wt8-options"><button type="button" class="wt8-option">Check wasNull immediately after the read</button><button type="button" class="wt8-option">Assume zero means null always</button><button type="button" class="wt8-option">Read browser storage</button><button type="button" class="wt8-option">Use CSS</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Both accepted updates are staged and published together."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which mode groups the paired updates in this lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">Separate auto-commits</button><button type="button" class="wt8-option">A browser cookie</button><button type="button" class="wt8-option">A session attribute</button><button type="button" class="wt8-option">Manual transaction on one modeled connection</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="This toy model knows the failure occurred before commit and restores the earlier committed snapshot."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What happens on a known credit failure in manual mode?</h3><div class="wt8-options"><button type="button" class="wt8-option">The debit always persists</button><button type="button" class="wt8-option">The staged debit is rolled back</button><button type="button" class="wt8-option">The next learner is logged in</button><button type="button" class="wt8-option">A new SQL table appears</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="An already committed statement is not undone by rolling back later work."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What happens on the same failure in auto-commit mode?</h3><div class="wt8-options"><button type="button" class="wt8-option">The earlier debit always vanishes</button><button type="button" class="wt8-option">All counts reset automatically</button><button type="button" class="wt8-option">The committed debit remains partial</button><button type="button" class="wt8-option">The credit is automatically retried</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Dynamic SQL structure requires controlled construction; values use bindings."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What is a question-mark placeholder appropriate for?</h3><div class="wt8-options"><button type="button" class="wt8-option">A bound data value</button><button type="button" class="wt8-option">An arbitrary table name</button><button type="button" class="wt8-option">An unrestricted SQL fragment</button><button type="button" class="wt8-option">A browser script</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Real driver, pool, resource and transaction behavior require integration tests."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Do model cleanup counters prove a real connection pool is healthy?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only on mobile</button><button type="button" class="wt8-option">Only after a commit</button><button type="button" class="wt8-option">No</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt25QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict Persisted State</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Manual success</h3><p>Reset, A → B, amount 3, manual/none. Expect A9/B7, 200 and committed outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">↩️</span><h3>Manual rollback</h3><p>Reset, A → B, 3, manual/credit error. Expect A12/B4, 500 and rolled-back outcome.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📉</span><h3>Partial auto-commit</h3><p>Reset, A → B, 3, auto/credit error. Expect A9/B4, 500 and partial debit.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔢</span><h3>Zero credit</h3><p>Repeat with creditZero. Manual retains A12/B4; auto leaves A9/B4. Both reject the count.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">➖</span><h3>Insufficient source</h3><p>Reset, B → A, amount 5. Expect 409, zero debit rows, no credit statement and unchanged tokens.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Invalid input</h3><p>Try 03, 3.0, spaces, 0, same source/destination or repeated amount shape. Expect 400, zero resources opened.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔌</span><h3>Unavailable fixture</h3><p>Choose offline with valid input. Expect 503, unchanged balances and zero opened resources.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Repeated runs</h3><p>Two successful A → B transfers of 3 produce A6/B10. Reset restores A12/B4, counters and outputs.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔌</span><strong>Driver:</strong> Database-specific JDBC implementation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧰</span><strong>DataSource:</strong> Configured connection factory.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔑</span><strong>Prepared statement:</strong> Fixed SQL plus bound values.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📋</span><strong>ResultSet:</strong> Advance cursor before reading.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔢</span><strong>Update count:</strong> Check the operation’s expected effect.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚡</span><strong>Auto-commit:</strong> Separate statements can leave partial work.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>Transaction:</strong> Resolve paired work on one connection.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">↩️</span><strong>Rollback:</strong> Handle known failures before commit.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧹</span><strong>Ownership:</strong> Close the resources you own.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Integration:</strong> Verify real database and driver behavior.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JDBC"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JDBC</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JDBC</h4><p>Java APIs for connecting to databases and executing database operations.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term JDBC driver"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>JDBC driver</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>JDBC driver</h4><p>An implementation that communicates with a particular database.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term DataSource"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>DataSource</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>DataSource</h4><p>A configured connection-factory abstraction.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Connection"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Connection</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Connection</h4><p>A database session used for statements and transaction control.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term PreparedStatement"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>PreparedStatement</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>PreparedStatement</h4><p>A statement with fixed SQL structure and separately bound parameter values.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term ResultSet"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>ResultSet</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>ResultSet</h4><p>A cursor-based result object returned by a query.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Affected-row count"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Affected-row count</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Affected-row count</h4><p>A result indicating how many rows an update operation affected.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Auto-commit"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Auto-commit</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Auto-commit</h4><p>A mode in which each completed statement commits its transaction.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Rollback"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Rollback</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Rollback</h4><p>An attempt to undo uncommitted work in the current transaction.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Transaction isolation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Transaction isolation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Transaction isolation</h4><p>Rules governing visibility of concurrent database work.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Specify an Owned JDBC Operation</h2><ul class="wt-content-points"><li>Design a <strong class="wt-content-key">backend</strong> operation that validates a source, destination and bounded integer amount, acquires an owned connection and executes two prepared updates. </li><li>Require the expected affected-row count for each before committing. </li><li>Keep identifiers and values separate from <strong class="wt-content-key">SQL</strong> structure.</li></ul><ul class="wt-content-points"><li>Define the <strong class="wt-content-key">transaction</strong> boundary, <strong class="wt-content-key">rollback</strong>/error propagation and resource ownership. </li><li>Preserve the original failure if <strong class="wt-content-key">rollback</strong> or close also fails. </li><li>Explain why auto-commit cannot make two independent updates one atomic operation.</li></ul><ul class="wt-content-points"><li>Test actual persisted state for success, zero debit, zero credit and a known execution failure. </li><li>Specify separate handling for uncertain commit outcomes and real concurrency. </li><li>A <strong class="wt-content-key">JSP</strong> renders accepted results; it does not own <strong class="wt-content-key">SQL</strong> or credentials.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> trace the bindings, row counts, committed state and cleanup for every outcome. </li><li>Next: Level 26 — Databases and <strong class="wt-content-key">SQL</strong> for Web Applications.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 25 Complete?</h2><p>Explain driver/API/data-source roles, prepared bindings, result cursors and update counts. Reproduce a committed transfer, known rollback and partial auto-commit outcome; identify the real database checks this lab cannot perform. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="jsp-java-server-pages.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">JSP — JavaServer Pages</span><span class="nav-action">Review Level 24</span></a></div><div class="topic-nav-side next"><a href="databases-sql-web-applications.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Databases and SQL for Web Applications</span><span class="nav-action">Open Level 26</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="jdbc-database-connectivity.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=20" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=17" defer></script>
+</body></html>

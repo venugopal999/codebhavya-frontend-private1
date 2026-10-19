@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Plan a web capstone, define architecture and tests, collect project evidence and practise technical interviews with a local planning lab.">
+
+    
+
+    <title>
+        Level 30 — Web Technologies Capstone and Placement | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/web-technologies-capstone-placement.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt30-skip-link" href="#wt30Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt30Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 30</div><div class="level-badge">LEVEL 30 · CAPSTONE + PLACEMENT</div><h1>Web Technologies Capstone and Placement</h1><p class="wt-hero-description">Bring the course together in a small project you can build, verify and explain.</p><div class="wt-hero-meta"><span>🎯 Project scope</span><span>🧪 Evidence</span><span>💬 Interview practice</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Bring <strong class="wt-content-key">HTML</strong>, <strong class="wt-content-key">CSS</strong>, browser programming, application contracts, data, security and deployment into one coherent project. </li><li>Build a small complete user journey, explain responsibility boundaries and present reproducible <strong class="wt-content-key">evidence</strong>. </li><li>Finishing a reading lesson is different from verifying an implemented project.</li></ul><div class="code-block"><pre><code>useful feature → explicit contract → implementation
+positive and negative tests → reviewed demonstration</code></pre></div><p><strong>Capstone outcomes:</strong> By the end, describe one design decision, one observed failure and one limitation using your own project <strong class="wt-content-key">evidence</strong>.</p></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Choose a Small Useful Project</h2><ul class="wt-content-points"><li>Use a study-task tracker as the reference project: a learner can list tasks, create a bounded title, mark a task complete and filter pending work. </li><li>Start with one user journey before adding accounts, reports or file uploads. </li><li>A local practice prototype and a shared private application have different requirements.</li></ul><div class="code-block"><pre><code>As a learner, I can add a study task and see it in my list.
+Acceptance: valid title creates one task; invalid input creates none.
+Out of scope initially: payments, uploads and notifications.</code></pre></div><ul class="wt-content-points"><li><strong>User story and scope:</strong> Pick a <strong class="wt-content-key">scope</strong> you can finish and explain. </li><li>A class team may choose a workshop-registration or reading-list project with similarly explicit operations.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🧱</span>Map Responsibilities Before Coding</h2><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> provides presentation and interaction. </li><li>A <strong class="wt-content-key">backend</strong> is needed to enforce shared/private operations beyond a single <strong class="wt-content-key">browser</strong>. </li><li>The <strong class="wt-content-key">database</strong> stores durable relationships under application constraints. </li><li>A static page can demonstrate local state, but hidden buttons cannot enforce multi-user <strong class="wt-content-key">authorization</strong>.</li></ul><div class="code-block"><pre><code>browser: render + collect input + show outcomes
+backend: validate + authorize + apply allowed operation
+store: persist accepted data with constraints</code></pre></div><ul class="wt-content-points"><li><strong>Architecture worksheet:</strong> The planner offers static, <strong class="wt-content-key">PHP</strong> and <strong class="wt-content-key">Java</strong> paths to organize responsibilities. </li><li>It does not generate or deploy a <strong class="wt-content-key">backend</strong>.</li></ul><figure class="wt-diagram"><figcaption>Assign the three responsibilities</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Browser</strong><p>Interaction and outcomes</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛡️</span><strong>Backend</strong><p>Allowed application operations</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗄️</span><strong>Store</strong><p>Durable accepted data</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🧾</span>Specify the Data Contract</h2><ul class="wt-content-points"><li>For a shared task tracker identify task ID, trusted owner ID, bounded title and completion flag. </li><li>Give fields explicit types and constraints. </li><li>Let the <strong class="wt-content-key">server</strong> assign identifiers and <strong class="wt-content-key">ownership</strong> from trusted identity; writable JSON should contain only the fields the caller is allowed to change.</li></ul><div class="code-block"><pre><code>tasks(id PRIMARY KEY, owner_id FOREIGN KEY,
+      title NOT NULL, completed NOT NULL)
+Writable create fields: title
+Writable complete field: completed</code></pre></div><ul class="wt-content-points"><li><strong>Driver-neutral schema sketch:</strong> Choose the actual <strong class="wt-content-key">database</strong> types, title bounds and boolean representation for your platform. </li><li>Document what happens if a requested ID does not exist or belongs to another user.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🪟</span>Build a Semantic and Responsive Interface</h2><ul class="wt-content-points"><li>Use meaningful headings, labels and buttons with visible focus. </li><li>Show loading, empty, success and failure states in readable text. </li><li>Keep essential actions available on a small screen and through the <strong class="wt-content-key">keyboard</strong>. </li><li>Stable layout and contrast matter as much as decorative polish.</li></ul><div class="code-block"><pre><code>&lt;label for=&quot;taskTitle&quot;&gt;Study task title&lt;/label&gt;
+&lt;input id=&quot;taskTitle&quot; maxlength=&quot;80&quot;&gt;
+&lt;button type=&quot;button&quot; id=&quot;addTask&quot;&gt;Add task&lt;/button&gt;
+&lt;p id=&quot;taskFeedback&quot; role=&quot;status&quot;&gt;&lt;/p&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Task input illustration:</strong> This fragment is not a complete form: connect explicit <strong class="wt-content-key">validation</strong> and feedback in the project. </li><li>A <strong class="wt-content-key">frontend</strong> maxlength does not replace a <strong class="wt-content-key">backend</strong> limit.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">⚙️</span>Implement a Local Vertical Slice</h2><ul class="wt-content-points"><li>Before connecting a <strong class="wt-content-key">backend</strong>, implement bounded title input, a single accepted state change and safe <strong class="wt-content-key">rendering</strong>. </li><li>Keep state separate from the <strong class="wt-content-key">DOM</strong> so that filtering does not accidentally delete tasks. </li><li>Give reset and removal their own deliberate behaviors.</li></ul><div class="code-block"><pre><code>const item = document.createElement(&quot;li&quot;);
+item.textContent = task.title;
+list.append(item);</code></pre></div><ul class="wt-content-points"><li><strong>Plain text presentation fragment:</strong> Choose an ID allocation policy and a maximum task count for your prototype. </li><li>Explain whether a page reload discards state; do not claim durability if you only use an in-memory <strong class="wt-content-key">array</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Define Backend Request Outcomes</h2><ul class="wt-content-points"><li>For the shared project define collection and item routes, allowed methods, input shape and <strong class="wt-content-key">response</strong> behavior before writing handlers. </li><li>A client must handle denial and failure explicitly. </li><li>Avoid assuming every <strong class="wt-content-key">response</strong> contains <strong class="wt-content-key">JSON</strong>, especially a completed204 operation.</li></ul><div class="code-block"><pre><code>GET /api/tasks → caller-owned tasks
+POST /api/tasks {title} → created task
+PATCH /api/tasks/:id {completed} → changed owned task
+DELETE /api/tasks/:id → completed empty response</code></pre></div><ul class="wt-content-points"><li><strong>Example contract — project-specific:</strong> Unlike an executable lab <strong class="wt-content-key">API</strong>, this is a specification you must implement. </li><li>Document actual statuses, serialization, bounds and retry behavior in your chosen <strong class="wt-content-key">backend</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🔐</span>Protect Ownership and State Changes</h2><ul class="wt-content-points"><li>Resolve identity with maintained <strong class="wt-content-key">authentication</strong>/<strong class="wt-content-key">session</strong> infrastructure. </li><li>Authorize each read and change against the requested <strong class="wt-content-key">object</strong>, then validate the exact writable fields. </li><li>Apply suitable framework <strong class="wt-content-key">CSRF</strong> protection for cookie-authenticated writes. </li><li>Render task titles as text and bind <strong class="wt-content-key">database</strong> values.</li></ul><div class="code-block"><pre><code>UPDATE tasks SET completed = :completed
+WHERE id = :task_id AND owner_id = :trusted_owner;</code></pre></div><ul class="wt-content-points"><li><strong>Authorized update — conceptual SQL:</strong> Use real driver parameters, check affected rows and implement appropriate atomic behavior. </li><li>A valid <strong class="wt-content-key">session</strong> or <strong class="wt-content-key">CSRF</strong> token never grants ownership of another user’s task.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🗄️</span>Make Persistence and Failures Explicit</h2><ul class="wt-content-points"><li>A shared persistence layer must preserve accepted changes according to a documented <strong class="wt-content-key">transaction</strong> boundary. </li><li>Roll back failed grouped operations. </li><li>Treat <strong class="wt-content-key">browser</strong> storage as a local convenience with failure handling, not a cross-device <strong class="wt-content-key">database</strong> or proof of identity. </li><li>Decide how a client recovers from an uncertain <strong class="wt-content-key">request</strong> outcome.</li></ul><div class="code-block"><pre><code>operation accepted? response lost?
+retry may duplicate creation?
+state read back? conflict handled?</code></pre></div><ul class="wt-content-points"><li><strong>Failure worksheet:</strong> For a create operation, define any retry/<strong class="wt-content-key">idempotency</strong> policy and enforce it on the <strong class="wt-content-key">backend</strong>. </li><li>Do not silently retry mutations while assuming that a lost <strong class="wt-content-key">response</strong> means nothing changed.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Write Tests That Check Behavior</h2><ul class="wt-content-points"><li>Give each test its initial state, action, expected outcome and observed result. </li><li>Check empty/valid/boundary/invalid inputs, owner and other-user access, persistence and error display. </li><li>Snapshot data around denied changes so a displayed error cannot hide a partial mutation.</li></ul><div class="code-block"><pre><code>Initial: two tasks owned by A; one task owned by B.
+Action: A attempts to complete B task.
+Expected: denied; B task unchanged; no private details returned.
+Observed: record actual status/body/store and tested release.</code></pre></div><ul class="wt-content-points"><li><strong>Task case example:</strong> A checklist is not test execution. </li><li>Retain the commands, fixtures or manual reproduction that a reviewer can run.</li></ul><figure class="wt-diagram"><figcaption>Make evidence reproducible</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📋</span><strong>Initial state</strong><p>Known fixtures</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Action</strong><p>Specified input</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Observation</strong><p>Outcome plus state</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debug Across the Whole Request Journey</h2><ul class="wt-content-points"><li>Locate the first boundary with an unexpected observation: control value, <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">event</strong>, network request, handler, query or rendered outcome. </li><li>Compare expected input/output at that boundary. </li><li>Do not edit every layer at once or remove a permission check merely to make the happy path pass.</li></ul><div class="code-block"><pre><code>reproduce → inspect actual input → locate divergence
+make focused change → rerun affected positive/negative cases</code></pre></div><ul class="wt-content-points"><li><strong>Debugging sequence:</strong> Keep secrets and private data out of screenshots and public logs. </li><li>Include enough sanitized <strong class="wt-content-key">evidence</strong> to explain a failure without publishing real credentials.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🚀</span>Verify the Release You Demonstrate</h2><ul class="wt-content-points"><li>Record the commit, build, domain and <strong class="wt-content-key">backend</strong> <strong class="wt-content-key">contract</strong> used for the demonstration. </li><li>Smoke-test required routes and interactions on that deployed release. </li><li>Check small screens, <strong class="wt-content-key">keyboard</strong> use and representative loading behavior. </li><li>Keep a compatible <strong class="wt-content-key">rollback</strong> target.</li></ul><div class="code-block"><pre><code>commit identifier
+frontend and backend version
+serving domain
+smoke results + measurement conditions</code></pre></div><ul class="wt-content-points"><li><strong>Release evidence:</strong> A successful build alone does not verify the application. </li><li>If an update is invisible, identify the serving release and <strong class="wt-content-key">cache</strong> layer as practised in Level29.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">📁</span>Prepare a Reviewable Project Portfolio</h2><ul class="wt-content-points"><li>Provide a README with purpose, features, setup, architecture, test instructions, screenshots and limitations. </li><li>Separate your own work from team responsibilities and third-party components. </li><li>Explain tradeoffs using observed behavior rather than claiming a technology is always best.</li></ul><div class="code-block"><pre><code>Problem and user journey
+Local setup and configuration names (no secret values)
+Architecture and data contract
+Tests and observed results
+Limitations and next improvements</code></pre></div><p><strong>README outline:</strong> A link to a running demo helps only when the reviewer can also understand how to reproduce the important behavior.</p></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Explain the Project in an Interview</h2><ul class="wt-content-points"><li>Start with the user problem, describe one end-to-end operation and explain one decision. </li><li>Be ready to show the data model, <strong class="wt-content-key">validation</strong>, <strong class="wt-content-key">object</strong> permission and error handling for that operation. </li><li>Discuss what you personally implemented and what is still incomplete.</li></ul><div class="code-block"><pre><code>problem → user action → browser/backend/data flow
+decision → alternative considered → evidence → limitation</code></pre></div><ul class="wt-content-points"><li><strong>A concise explanation structure:</strong> Do not memorize a claim you cannot demonstrate. </li><li>If asked about an unimplemented feature, explain the planned boundary and label it as future work.</li></ul><figure class="wt-diagram"><figcaption>A project explanation needs evidence</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>Problem</strong><p>User need</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧱</span><strong>Decision</strong><p>Reasoned boundary</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📊</span><strong>Evidence</strong><p>Observed behavior</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>Connect Revision to Project Evidence</h2><ul class="wt-content-points"><li>Use the course as a map: <strong class="wt-content-key">HTML</strong> and <strong class="wt-content-key">CSS</strong> for structure/layout; JavaScript and DOM for interaction; HTTP and backend lessons for contracts; SQL for stored relationships; security and performance for protected reliable delivery. </li><li>Revisit the lesson related to a concrete gap.</li></ul><div class="code-block"><pre><code>inaccessible action → semantic/keyboard lessons
+incorrect response handling → APIs lesson
+other-owner access → security lesson
+old release visible → performance/deployment lesson</code></pre></div><ul class="wt-content-points"><li><strong>Revision map:</strong> Placement preparation benefits from reasoning and <strong class="wt-content-key">evidence</strong>, but a capstone or checklist does not guarantee an interview result. </li><li>Practise explaining both accepted and rejected operations.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — From Brief to Evidence</h2><p>Follow a scoped project through contracts, implementation, verification and explanation. The approved player illustrates a complete learning cycle.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="capstone">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>CAPSTONE DELIVERY TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🎯</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Describe one useful user journey</h3><p data-trace-description>Choose a study-task tracker with bounded read and create actions.</p></div><pre class="trace-code"><code data-trace-code>user → task list → create task</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Scope" aria-pressed="true"><span>01</span><strong>Scope</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Contract" aria-pressed="false"><span>02</span><strong>Contract</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Build" aria-pressed="false"><span>03</span><strong>Build</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Verify" aria-pressed="false"><span>04</span><strong>Verify</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Explain" aria-pressed="false"><span>05</span><strong>Explain</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>A small complete feature is easier to verify than many unfinished screens.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Capstone Contract Planner</h2><ul class="wt-content-points"><li>Describe a project and choose its implementation path, data <strong class="wt-content-key">scope</strong>, audience and review target. </li><li>The planner checks declared architecture consistency and produces a responsibility/test plan. </li><li>It does not create an app, execute tests, inspect files or verify your <strong class="wt-content-key">evidence</strong>.</li></ul><ul class="wt-content-points"><li>Static <strong class="wt-content-key">browser</strong> practice supports public local-memory exercises. </li><li>Shared durable data or private per-user operations require an implemented <strong class="wt-content-key">backend</strong> in this planner. </li><li><strong class="wt-content-key">PHP</strong> and <strong class="wt-content-key">Java</strong> are alternative backend paths, not proof that any backend is secure or durable.</li></ul><ul class="wt-content-points"><li>Project title: trimmed1–80 Unicode code points with no controls. </li><li>Feature brief: trimmed60–600 Unicode code points; line breaks and tabs allowed, other C0/C1 controls and lone surrogates rejected. </li><li>Required review items depend on the selected <strong class="wt-content-key">scope</strong>. </li><li>Checkboxes are self-reported <strong class="wt-content-key">evidence</strong> reminders; checking every box never certifies the project or guarantees placement.</li></ul><ul class="wt-content-points"><li>Editing any field clears the old result so it cannot be mistaken for the new plan. </li><li>Reset restores the public local static fixture and clears all checkboxes. </li><li>The plan is in memory only; completion is the separate local study marker.</li></ul><div class="wt9-demo wt30-lab"><label for="wt30Title">Project title</label><input type="text" id="wt30Title" value="Study Task Tracker" maxlength="160"><label for="wt30Brief">One feature and its accepted/rejected behavior</label><textarea id="wt30Brief" rows="5" maxlength="1200">A learner adds a bounded task title and sees it in a local list. Invalid titles create no task and show readable feedback.</textarea><label for="wt30Stack">Implementation path</label><select id="wt30Stack"><option value="static">Static browser practice</option><option value="php">PHP backend project</option><option value="java">Java backend project</option></select><label for="wt30Data">Data scope</label><select id="wt30Data"><option value="memory">Local temporary memory</option><option value="shared">Shared durable database</option></select><label for="wt30Audience">Access contract</label><select id="wt30Audience"><option value="public">Public practice content</option><option value="private">Private per-user operations</option></select><label for="wt30Target">Review target</label><select id="wt30Target"><option value="local">Local demonstration</option><option value="production">Deployed demonstration</option></select><fieldset class="wt30-evidence"><legend>Self-reported evidence collected · planner does not verify it</legend><label><input type="checkbox" id="wt30Ui"> Keyboard/mobile journey recorded</label><label><input type="checkbox" id="wt30Input"> Valid/invalid input and unchanged-state results recorded</label><label><input type="checkbox" id="wt30Contract"> Actual backend request/error contract tested</label><label><input type="checkbox" id="wt30DataEvidence"> Database constraints/persistence results recorded</label><label><input type="checkbox" id="wt30Access"> Identity, other-owner denial and protected-write results recorded</label><label><input type="checkbox" id="wt30Tests"> Reproducible positive/negative cases retained</label><label><input type="checkbox" id="wt30Release"> Deployed release, smoke results and rollback target recorded</label><label><input type="checkbox" id="wt30Explain"> Own decisions, contribution and limitations explained</label></fieldset><div class="wt9-actions"><button type="button" class="primary-button" id="wt30Process">Review declared plan</button><button type="button" class="secondary-button" id="wt30Reset">Reset planner</button></div><p id="wt30Status" role="status">Idle. Planning exercise only.</p><h3>Declared input</h3><pre class="wt30-result"><code id="wt30Request">No plan yet.</code></pre><h3>Planning trace</h3><pre class="wt30-result"><code id="wt30Trace">No review yet.</code></pre><h3>Generated responsibility and test contract</h3><pre class="wt30-result"><code id="wt30Response">No contract yet.</code></pre><h3>Review summary · self-report only</h3><div class="wt30-preview" id="wt30Preview">No review yet.</div></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Review the Plan Before the Score</h2><ul class="wt-content-points"><li>If the planner asks for a <strong class="wt-content-key">backend</strong>, compare the chosen shared/private behavior with what a static page can actually enforce. </li><li>Selecting <strong class="wt-content-key">PHP</strong> or <strong class="wt-content-key">Java</strong> supplies a plan only; you still need to implement and test that boundary.</li></ul><ul class="wt-content-points"><li>If <strong class="wt-content-key">evidence</strong> gaps remain, reproduce the relevant case and retain observed results before marking its reminder. </li><li>Items outside the chosen <strong class="wt-content-key">scope</strong> are not counted. </li><li>Changing <strong class="wt-content-key">scope</strong> clears the old report, but prior checkboxes remain self-reported until you deliberately reset or revise them.</li></ul><ul class="wt-content-points"><li>A ready-for-self-review result means the declared plan is consistent and required reminders are checked. </li><li>It does not mean code, security, persistence, <strong class="wt-content-key">deployment</strong> or interview ability was verified.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What makes a capstone reviewable?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What makes a capstone reviewable?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A clear user problem, implemented contract, reproducible tests and honest limitations.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why begin with one vertical slice?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why begin with one vertical slice?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It connects a complete user action across required layers and exposes integration gaps early.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can a static UI enforce private shared ownership?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can a static UI enforce private shared ownership?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. An implemented backend must authorize operations at the trusted boundary.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do you explain a technology choice?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do you explain a technology choice?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Relate it to constraints, alternatives, observed behavior and a specific tradeoff.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What evidence supports an access denial?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What evidence supports an access denial?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The actual request/outcome and unchanged protected data, not only a hidden button.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What if a mutation response is lost?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What if a mutation response is lost?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The server may have accepted it; reconcile state and use a deliberately enforced retry policy.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do you discuss team work?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do you discuss team work?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Identify your actual contribution, interfaces with others and evidence of your own work.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does a checked readiness reminder prove?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does a checked readiness reminder prove?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Only your declared self-report; independently run and retain the relevant project checks.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain Capstone Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="A small vertical slice can be built and verified end to end."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. The first implementation goal should be?</h3><div class="wt8-options"><button type="button" class="wt8-option">Many empty screens</button><button type="button" class="wt8-option">One complete user journey</button><button type="button" class="wt8-option">Only a logo</button><button type="button" class="wt8-option">An unexplained copied app</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Client controls cannot substitute backend authorization."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Where must private object access be enforced?</h3><div class="wt8-options"><button type="button" class="wt8-option">CSS</button><button type="button" class="wt8-option">Button visibility</button><button type="button" class="wt8-option">Trusted backend operation</button><button type="button" class="wt8-option">Favicon</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Record enough detail for another reviewer to repeat it."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What makes a test reproducible?</h3><div class="wt8-options"><button type="button" class="wt8-option">Initial state, action, expected and observed outcome</button><button type="button" class="wt8-option">Only a success label</button><button type="button" class="wt8-option">Only a screenshot title</button><button type="button" class="wt8-option">No fixtures</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A declared requirement needs an implemented trusted layer."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. A static-only project requests shared durable private data. The planner should?</h3><div class="wt8-options"><button type="button" class="wt8-option">Certify it</button><button type="button" class="wt8-option">Ignore scope</button><button type="button" class="wt8-option">Create a database</button><button type="button" class="wt8-option">Flag missing backend architecture</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Document configuration without exposing credentials."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What belongs in public setup instructions?</h3><div class="wt8-options"><button type="button" class="wt8-option">Live secret values</button><button type="button" class="wt8-option">Configuration names and safe setup steps</button><button type="button" class="wt8-option">Private session tokens</button><button type="button" class="wt8-option">Real student passwords</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Check the data, not only the visible error."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. A denied mutation should leave?</h3><div class="wt8-options"><button type="button" class="wt8-option">Changed owner</button><button type="button" class="wt8-option">Partly written task</button><button type="button" class="wt8-option">Protected state unchanged</button><button type="button" class="wt8-option">No test evidence</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A text sink keeps markup-looking titles as text."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. How should a plain task title be displayed?</h3><div class="wt8-options"><button type="button" class="wt8-option">Fixed element textContent</button><button type="button" class="wt8-option">Dynamic eval</button><button type="button" class="wt8-option">Untrusted script markup</button><button type="button" class="wt8-option">SQL concatenation</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The planner creates no backend or infrastructure."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What does selecting Java backend in this lab do?</h3><div class="wt8-options"><button type="button" class="wt8-option">Deploy Render</button><button type="button" class="wt8-option">Implement authentication</button><button type="button" class="wt8-option">Create SQL tables</button><button type="button" class="wt8-option">Generate a planning contract</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Concrete evidence supports a reasoned explanation."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Which project claim is useful in an interview?</h3><div class="wt8-options"><button type="button" class="wt8-option">I built every possible feature</button><button type="button" class="wt8-option">A specific decision supported by observed behavior</button><button type="button" class="wt8-option">No limitations exist</button><button type="button" class="wt8-option">All frameworks are identical</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Verify actual application behavior separately."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does a green build alone establish?</h3><div class="wt8-options"><button type="button" class="wt8-option">Every user path works</button><button type="button" class="wt8-option">All tests ran automatically</button><button type="button" class="wt8-option">Its configured build completed</button><button type="button" class="wt8-option">Private data is safe</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Transport failure does not establish whether the server committed a change."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. How should a lost create response be handled?</h3><div class="wt8-options"><button type="button" class="wt8-option">Consider accepted state and an enforced retry policy</button><button type="button" class="wt8-option">Assume no change</button><button type="button" class="wt8-option">Always duplicate create</button><button type="button" class="wt8-option">Disable validation</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The planner never executes or inspects the claimed evidence."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. All planner boxes checked means?</h3><div class="wt8-options"><button type="button" class="wt8-option">Placement guaranteed</button><button type="button" class="wt8-option">Security certified</button><button type="button" class="wt8-option">Real tests verified by the page</button><button type="button" class="wt8-option">Declared reminders complete for self-review</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt30QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Turn Claims into Evidence</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎯</span><h3>Static start</h3><p>Default plan: consistent architecture; Ui/Input/Tests/Explain reminders required.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗄️</span><h3>Shared scope</h3><p>Static + shared: <strong class="wt-content-key">backend</strong> blocker and persistence/<strong class="wt-content-key">contract</strong> evidence gaps.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔐</span><h3>Private scope</h3><p>Static + private: <strong class="wt-content-key">backend</strong> blocker and access/<strong class="wt-content-key">contract</strong> evidence gaps.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚙️</span><h3>Backend path</h3><p><strong class="wt-content-key">PHP</strong> or <strong class="wt-content-key">Java</strong> + shared/private: no static blocker, but required backend/data/access evidence still needed.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚀</span><h3>Deployed target</h3><p>Choose production: release <strong class="wt-content-key">evidence</strong> becomes required, even for static practice.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📋</span><h3>Scope counts</h3><p>Public memory <strong class="wt-content-key">backend</strong> still needs a backend <strong class="wt-content-key">contract</strong>; data/access remain outside that declared scope.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Self-report</h3><p>Check applicable reminders: ready for self-review; no actual test/certification occurs.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Literal input</h3><p>Use title &lt;Demo&gt; &amp; tasks with a valid brief: display stays text. Edit clears the report; reset clears checkboxes.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>Scope:</strong> One useful complete journey.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧱</span><strong>Architecture:</strong> Responsibilities match requirements.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧾</span><strong>Data:</strong> Types, constraints and trusted ownership.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>UI:</strong> Readable keyboard/mobile outcomes.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Contract:</strong> Accepted and rejected operations.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔐</span><strong>Protection:</strong> Authorization before mutation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Evidence:</strong> Reproducible actual observations.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🚀</span><strong>Release:</strong> Identify the demonstrated version.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📁</span><strong>Portfolio:</strong> Setup, design, tests and limits.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">💬</span><strong>Explain:</strong> Your contribution and tradeoffs.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Capstone"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Capstone</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Capstone</h4><p>A project bringing together concepts from the learning journey.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Vertical slice"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Vertical slice</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Vertical slice</h4><p>A complete user action implemented across its required layers.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Acceptance criterion"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Acceptance criterion</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Acceptance criterion</h4><p>An observable condition defining the intended feature behavior.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Application contract"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Application contract</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Application contract</h4><p>The agreed operations, inputs, outputs and failure behavior.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Invariant"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Invariant</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Invariant</h4><p>A condition that must remain true across permitted operations.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Negative test"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Negative test</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Negative test</h4><p>A case verifying rejection or safe behavior for an invalid/disallowed action.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Test fixture"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Test fixture</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Test fixture</h4><p>Known starting data or conditions used to reproduce a test.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Evidence"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Evidence</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Evidence</h4><p>Recorded observations supporting a project claim.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Tradeoff"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Tradeoff</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Tradeoff</h4><p>A choice balancing benefits and costs under specific constraints.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Self-review"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Self-review</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Self-review</h4><p>A deliberate assessment of declared work before independent verification.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Build and Defend a Study-Task Tracker</h2><ul class="wt-content-points"><li>Implement list, create, complete and pending-filter actions with bounded titles, stable IDs and explicit empty/error states. </li><li>For local practice, state clearly that memory is temporary. </li><li>For shared private operation, implement maintained identity/<strong class="wt-content-key">session</strong> protection, per-owner read/write <strong class="wt-content-key">authorization</strong>, writable-field validation and driver-bound persistence.</li></ul><ul class="wt-content-points"><li>Retain tests for valid creation, empty/overlong input, repeated/uncertain requests, owner versus other-owner operations, persistence and failure recovery. </li><li>Record initial state, expected/observed outcomes and unchanged data after rejection. </li><li>Test the actual implementation rather than merely checking planner reminders.</li></ul><ul class="wt-content-points"><li>Provide a README with setup, architecture, data/<strong class="wt-content-key">request</strong> contracts, your contribution, actual tests and limitations. </li><li>Identify the release you demonstrate, check <strong class="wt-content-key">keyboard</strong>/mobile behavior and prepare a short explanation of one tradeoff and one failure you diagnosed.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> another reviewer can run the project, repeat its important tests and understand the decisions. </li><li>All30 lesson pages are now available in the course; this page’s completion marker records only this lesson on this device.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🎯</span><h3>Feature</h3><p>A small working task journey.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Evidence</h3><p>Reproducible outcomes and state checks.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💬</span><h3>Explanation</h3><p>Own decisions and honest limitations.</p></article></div></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 30 Complete?</h2><p>Describe your scoped capstone, trace one operation, identify its test evidence and explain its limits. Marking this lesson does not mark previous lessons complete or verify a project. Return to the roadmap for revision and use the existing Placement resources for further practice.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="web-performance-deployment.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Web Performance and Deployment</span><span class="nav-action">Review Level 29</span></a></div><div class="topic-nav-side next"><a href="index.html" class="topic-nav-card"><span class="nav-label">Course roadmap →</span><span class="nav-topic-name">Review all 30 published levels</span><span class="nav-action">View published lessons</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="web-technologies-capstone-placement.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=24" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=22" defer></script>
+</body></html>

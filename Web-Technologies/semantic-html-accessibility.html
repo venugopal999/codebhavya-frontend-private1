@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn semantic HTML, landmarks, headings, keyboard access, labels and text alternatives with diagrams, a step visualizer, practice and MCQs.">
+
+    
+
+    <title>
+        Level 10 — Semantic HTML and Accessibility | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/semantic-html-accessibility.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt10-skip-link" href="#wt10Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt10Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 10</div><div class="level-badge">LEVEL 10 · HTML</div><h1>Semantic HTML and Accessibility</h1><p class="wt-hero-description">Give your page a clear structure, meaningful controls and a keyboard path learners can follow.</p><div class="wt-hero-meta"><span>🧩 Semantic HTML</span><span>⌨️ Keyboard practice</span><span>🎯 Beginner → Intermediate</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 09 organized information with lists and tables and collected input with forms. </li><li>This lesson asks a different question: can a learner understand and operate the page without relying on its visual appearance? </li><li>You will give page regions, headings, controls and images a clear meaning.</li></ul><ul class="wt-content-points"><li>By the end, build a small workshop page that works with a <strong class="wt-content-key">keyboard</strong>, exposes useful structure, and explains its controls. </li><li>You will also distinguish an actual <strong class="wt-content-key">accessibility</strong> check from a visual guess.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Structure</h3><p>Choose <strong class="wt-content-key">semantic</strong> elements according to the purpose of the content.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Operation</h3><p>Use links and buttons correctly and preserve <strong class="wt-content-key">keyboard</strong> focus.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Meaning</h3><p>Give controls useful names and images appropriate alternatives.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Verification</h3><p>Inspect headings, landmarks and <strong class="wt-content-key">keyboard</strong> behavior, then record remaining checks.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧠</span>Semantic HTML — Meaning Before Appearance</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">semantic</strong> element communicates the kind of content it contains. </li><li>A heading identifies a heading; a button identifies an action; a navigation region groups navigation. </li><li>A large, bold paragraph does not become a heading because it resembles one.</li></ul><ul class="wt-content-points"><li>Consider two workshop cards that look identical. </li><li>One uses <code>h2</code> for its title and a native <code>button</code> for an action. </li><li>The other uses styled <code>div</code> elements. </li><li>Their appearance can match while their meaning and <strong class="wt-content-key">keyboard</strong> behavior differ. </li><li><strong class="wt-content-key">CSS</strong> controls presentation; meaningful <strong class="wt-content-key">HTML</strong> supplies a foundation that browsers and assistive technology can interpret.</li></ul><ul class="wt-content-points"><li>Use <code>div</code> and <code>span</code> when a neutral grouping is appropriate. </li><li>They are useful tools, but they do not automatically supply a heading, landmark or interactive behavior.</li></ul><div class="code-block"><pre><code>&lt;h2&gt;HTML Workshop&lt;/h2&gt;
+&lt;p&gt;Learn to build a clear document structure.&lt;/p&gt;
+&lt;button type=&quot;button&quot;&gt;Show workshop details&lt;/button&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Read the example:</strong> the title is available as a heading, the description is ordinary text, and the action is a button. </li><li>The button still needs a real action if you include it in a working page.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🗺️</span>Landmarks — A Map of the Page</h2><ul class="wt-content-points"><li>A landmark describes a major page region, such as the main content or navigation. </li><li>It helps a reader locate the part they need without visiting every item in the page. </li><li>A useful landmark map is small and purposeful; assigning a region to every decorative card creates noise.</li></ul><ul class="wt-content-points"><li>A page-level <code>header</code> and <code>footer</code> can provide banner and content-information landmarks. <code>main</code> marks the dominant content; <code>nav</code> marks navigation; <code>aside</code> can mark related, complementary information. </li><li>A header inside an article serves that article and is not the page banner.</li></ul><ul class="wt-content-points"><li>If you have two navigation regions, distinguish them with concise names such as <code>aria-label="Primary"</code> and <code>aria-label="Course"</code>. </li><li>The label describes the purpose. </li><li>Do not label every region simply “Navigation.”</li></ul><figure class="wt-diagram"><figcaption>Workshop page region map</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏠</span><strong>Page header + primary nav</strong><p>Site identity and links used across the website.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📖</span><strong>Main content</strong><p>Workshop title, learning content and registration information.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Page footer</strong><p>Site contact and policy information after the main content.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🏠</span>header and footer — Scope Matters</h2><ul class="wt-content-points"><li><code>header</code> groups introductory material for the page or its nearest relevant section. </li><li>It may contain a title, author or navigation. <code>footer</code> groups footer information such as authorship or related links. </li><li>Neither tag forces a fixed screen position.</li></ul><ul class="wt-content-points"><li>A document can contain an article header as well as a site header. </li><li>An article footer can contain that article’s author information, while the page footer contains site-wide information. </li><li>Judge <strong class="wt-content-key">scope</strong> from the surrounding structure, not from the word “header” alone.</li></ul><div class="code-block"><pre><code>&lt;article&gt;
+  &lt;header&gt;
+    &lt;h2&gt;Understanding semantic HTML&lt;/h2&gt;
+    &lt;p&gt;Prepared for the workshop.&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;p&gt;The article content belongs here.&lt;/p&gt;
+  &lt;footer&gt;&lt;p&gt;Author: Workshop Team&lt;/p&gt;&lt;/footer&gt;
+&lt;/article&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Expected structure:</strong> a self-contained article has an introduction, content and closing information. </li><li>Its nested header and footer do not replace the site-level header and footer.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>main and nav — Content and Navigation</h2><ul class="wt-content-points"><li>Use one visible, correctly placed <code>main</code> for the page’s dominant content. </li><li>It should not contain the repeated site header and footer merely because they are visible on every page. </li><li>Do not nest another main inside an article or inside an existing main to create a smaller content panel.</li></ul><ul class="wt-content-points"><li>Use <code>nav</code> for a meaningful collection of navigation links, such as primary navigation, course navigation or a table of contents. </li><li>A single ordinary link within a paragraph does not need its own nav element. </li><li>Name multiple nav regions when their purposes differ.</li></ul><div class="code-block"><pre><code>&lt;nav aria-label=&quot;Course&quot;&gt;
+  &lt;a href=&quot;html-lists-tables-forms.html&quot;&gt;Lists, tables and forms&lt;/a&gt;
+  &lt;a href=&quot;semantic-html-accessibility.html&quot; aria-current=&quot;page&quot;&gt;Semantic HTML&lt;/a&gt;
+&lt;/nav&gt;
+&lt;main id=&quot;main-content&quot;&gt;
+  &lt;h1&gt;Semantic HTML Workshop&lt;/h1&gt;
+  &lt;p&gt;Today we will organize the document.&lt;/p&gt;
+&lt;/main&gt;</code></pre></div><p><code>aria-current="page"</code> identifies the current page link. It does not disable the link or change <strong class="wt-content-key">keyboard</strong> navigation by itself.</p></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>article, section and aside — Choose by Purpose</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📰</span><h3>article</h3><p>A self-contained item that makes sense independently: a tutorial, news story or discussion post.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>section</h3><p>A thematic grouping of content, usually with a heading describing its topic.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💡</span><h3>aside</h3><p>Information related to its surrounding content, such as a relevant note or further context.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>div</h3><p>A neutral wrapper when you need grouping for layout or scripting without additional <strong class="wt-content-key">semantic</strong> meaning.</p></article></div><ul class="wt-content-points"><li>A section is not a replacement for every div. </li><li>Ask whether the group has a coherent topic and whether its heading helps the reader. </li><li>A decorative wrapper around two buttons can remain a div.</li></ul><ul class="wt-content-points"><li>An aside is not defined by being drawn on the right side of a screen. </li><li>A related note remains related information when the layout places it below the article on a phone. </li><li>Similarly, an article does not need a border or card appearance. </li><li>The tag follows meaning.</li></ul><ul class="wt-content-points"><li>A section with a suitable accessible name can be exposed as a region landmark. </li><li>Do not assume every unnamed section becomes a useful landmark, and avoid giving dozens of tiny panels landmark names.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔠</span>Headings — Write a Useful Outline</h2><ul class="wt-content-points"><li>Heading ranks express relationships. </li><li>Use a descriptive page heading, then headings for major topics and lower-ranked headings for their subdivisions. </li><li>In this course pattern, the lesson title is h1, main lesson sections are h2 and their topics are h3.</li></ul><ul class="wt-content-points"><li>For a beginner page, one clear h1 makes the main topic easy to identify. </li><li>Heading structure should follow the content hierarchy rather than whichever heading happens to look smaller. </li><li>Use <strong class="wt-content-key">CSS</strong> to change size. </li><li>Avoid jumping from h2 directly to h4 when opening a subsection. </li><li>Returning from an h4 subsection to a new h2 topic is a different operation: the smaller subsection has ended.</li></ul><div class="code-block"><pre><code>&lt;h1&gt;Web Workshop&lt;/h1&gt;
+&lt;h2&gt;Preparation&lt;/h2&gt;
+&lt;h3&gt;Tools&lt;/h3&gt;
+&lt;h3&gt;Prerequisites&lt;/h3&gt;
+&lt;h2&gt;Registration&lt;/h2&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Expected outline:</strong> Preparation and Registration are peers. </li><li>Tools and Prerequisites belong under Preparation. </li><li>Adding section tags does not automatically repair wrongly chosen heading ranks.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">🖼️</span>figure, figcaption, time and address</h2><ul class="wt-content-points"><li><code>figure</code> groups a self-contained figure such as a diagram, example or illustration. <code>figcaption</code> supplies its caption. </li><li>Place a figcaption as the first or last child of its figure. </li><li>A caption can explain what the figure teaches; it does not automatically replace an image’s appropriate text alternative.</li></ul><p><code>time</code> can attach a machine-readable value to a human-readable date or time. <code>address</code> is for contact information associated with the nearest article or the document, not for any text that happens to contain a postal address.</p><div class="code-block"><pre><code>&lt;figure&gt;
+  &lt;pre&gt;Header → Main content → Footer&lt;/pre&gt;
+  &lt;figcaption&gt;Reading order of the workshop page.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Session date: &lt;time datetime=&quot;2026-10-10&quot;&gt;10 October 2026&lt;/time&gt;&lt;/p&gt;
+&lt;address&gt;Workshop contact: &lt;a href=&quot;mailto:support@codebhavya.com&quot;&gt;Email CodeBhavya support&lt;/a&gt;&lt;/address&gt;</code></pre></div><ul class="wt-content-points"><li>These elements add meaning to existing information. </li><li>They do not schedule the <strong class="wt-content-key">event</strong>, send an email automatically or draw the diagram for you.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🖱️</span>Links and Buttons — Destination or Action?</h2><ul class="wt-content-points"><li>A link with href takes the learner to a destination: another page, a document or a location within the page. </li><li>A button performs an action: showing details, resetting a quiz or changing a selected state. </li><li>Choose the native element before designing its shape.</li></ul><ul class="wt-content-points"><li>A div with a click handler does not automatically become keyboard-operable. </li><li>Adding <code>role="button"</code> names a role, but does not supply focusability, Enter and Space behavior, disabled handling or a real action. </li><li>A native button is usually the simpler and more reliable starting point.</li></ul><ul class="wt-content-points"><li>Write link text that explains its destination in context. </li><li>Repeated “Click here” links make scanning harder. </li><li>On a workshop page, “View preparation checklist” gives a clearer purpose. </li><li>Buttons also need labels that explain the action they perform.</li></ul><div class="code-block"><pre><code>&lt;a href=&quot;#preparation&quot;&gt;View preparation checklist&lt;/a&gt;
+&lt;button type=&quot;button&quot; id=&quot;showDetails&quot; aria-expanded=&quot;false&quot;&gt;Show details&lt;/button&gt;</code></pre></div><ul class="wt-content-points"><li>A disclosure button’s script must update the displayed content and its expanded state together. </li><li>An attribute alone does not create the interaction.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">⌨️</span>Keyboard, Focus and Skip Links</h2><ul class="wt-content-points"><li>Try the page using Tab and Shift+Tab. </li><li>Focus should move through meaningful interactive elements in a logical order. </li><li>A native button can be activated with Enter or Space; a link is ordinarily activated with Enter. </li><li>Keep a visible focus indicator so the learner knows which control is active.</li></ul><ul class="wt-content-points"><li>A skip link lets a <strong class="wt-content-key">keyboard</strong> user move past repeated navigation to the main content. </li><li>Use a matching target ID and ensure the destination can receive focus when necessary. </li><li>A <code>tabindex="-1"</code> target can receive programmatic or fragment-related focus without becoming another stop in normal Tab order.</li></ul><ul class="wt-content-points"><li>Avoid positive tabindex values to force a custom order. </li><li>Fix the document order first. </li><li>Do not remove outlines globally; if you replace the default indicator, supply a visible alternative. </li><li>A menu or dialog also needs suitable focus behavior, not just a visually attractive panel.</li></ul><div class="code-block"><pre><code>&lt;a class=&quot;skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;main id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
+  &lt;h1&gt;Workshop&lt;/h1&gt;
+&lt;/main&gt;</code></pre></div><div class="code-block"><pre><code>:focus-visible { outline: 3px solid #126d96; outline-offset: 3px; }</code></pre></div><ul class="wt-content-points"><li>In the interactive lab below, the preview is a separate document. </li><li>Use its skip link and Tab through its controls to observe the behavior, then continue back to this lesson.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🏷️</span>Accessible Names and Visible Labels</h2><ul class="wt-content-points"><li>An accessible name identifies a control to assistive technology. </li><li>For a normal text input, a visible label associated with the input provides a useful name and helps all learners understand the field. </li><li>A placeholder is a hint inside the field; it is not a dependable replacement for a label.</li></ul><ul class="wt-content-points"><li>Match a label’s for value to a unique input id. </li><li>The input’s name is the submitted field key, which is a separate concept. </li><li>Instructions can be associated with <code>aria-describedby</code>; these add descriptive context without replacing the control’s name.</li></ul><div class="code-block"><pre><code>&lt;label for=&quot;learner&quot;&gt;Learner name&lt;/label&gt;
+&lt;input id=&quot;learner&quot; name=&quot;student&quot; aria-describedby=&quot;learnerHint&quot;&gt;
+&lt;p id=&quot;learnerHint&quot;&gt;Use a fictional name for practice.&lt;/p&gt;</code></pre></div><ul class="wt-content-points"><li>When a button contains visible words, those words usually provide its name. </li><li>An icon-only button needs a meaningful name as well. </li><li>Prefer a visible label when space permits. </li><li>Avoid aria-label values that override useful visible wording with unrelated text.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🖼️</span>Image Alternatives — Describe Purpose</h2><ul class="wt-content-points"><li>Choose text alternatives according to what an image does in its context. </li><li>An informative image needs an alternative that conveys the relevant information. </li><li>A decorative image can use <code>alt=""</code> so it does not interrupt the reading sequence. </li><li>A missing alt attribute is different from an intentionally empty alternative.</li></ul><ul class="wt-content-points"><li>For an image that is the only content of a link or button, the alternative should communicate the destination or action. </li><li>For a complex chart, a short alternative can identify the chart while nearby text explains the important data. </li><li>Do not try to squeeze every detail into an enormous alt value.</li></ul><div class="code-block"><pre><code>&lt;img src=&quot;workshop-room.jpg&quot; alt=&quot;Workshop room with computers arranged in four rows&quot;&gt;
+&lt;img src=&quot;decorative-divider.svg&quot; alt=&quot;&quot;&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Practice decision:</strong> if the photograph is used only as decoration and the room arrangement is irrelevant, its alternative may instead be empty. </li><li>The same file can have different roles in different contexts. </li><li>These source paths are illustrative; your page must supply the actual files.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">⚠️</span>Instructions, Errors and Status Messages</h2><ul class="wt-content-points"><li>Help the learner complete a task before showing an error. </li><li>State the expected format, required fields and important limits near the relevant control. </li><li>When a <strong class="wt-content-key">validation</strong> error occurs, describe the problem in words and explain how to fix it. </li><li>Red color alone does not explain which value is wrong.</li></ul><ul class="wt-content-points"><li>Use native form constraints when appropriate, then add task-specific checks where needed. </li><li>If a script marks a field invalid, keep <code>aria-invalid</code> and the associated error message synchronized. </li><li>Clear the invalid state when the problem is corrected.</li></ul><ul class="wt-content-points"><li>For a result that changes without moving focus, an appropriate live region can announce a short update. </li><li>Use polite announcements for ordinary status changes, and avoid announcing large blocks of text repeatedly. </li><li>A status message does not replace a meaningful focus destination when a task requires one.</li></ul><div class="code-block"><pre><code>&lt;label for=&quot;seats&quot;&gt;Seats (1 to 4)&lt;/label&gt;
+&lt;input id=&quot;seats&quot; name=&quot;seats&quot; type=&quot;number&quot; min=&quot;1&quot; max=&quot;4&quot; required&gt;
+&lt;p id=&quot;status&quot; role=&quot;status&quot;&gt;&lt;/p&gt;</code></pre></div><ul class="wt-content-points"><li>The native control checks the stated constraints. </li><li>The status region remains empty until a script has a relevant message to show. </li><li>Server-side <strong class="wt-content-key">validation</strong> remains necessary for real submissions.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>ARIA — Add What HTML Cannot Express</h2><ul class="wt-content-points"><li>ARIA can describe roles, states and relationships where the native markup does not communicate enough. </li><li>Start with appropriate <strong class="wt-content-key">HTML</strong> and add only the missing information. </li><li>A native button already has a button role, so adding that same role is normally redundant.</li></ul><p>ARIA does not implement behavior. <code>aria-expanded="true"</code> must correspond to content that is actually expanded. <code>aria-disabled="true"</code> communicates a state but does not automatically block a click. <code>aria-hidden="true"</code> hides content from the <strong class="wt-content-key">accessibility</strong> tree; do not put it on a focusable control that a <strong class="wt-content-key">keyboard</strong> user can still reach.</p><ul class="wt-content-points"><li>Use a relevant name for repeated landmarks and a descriptive relationship for help text. </li><li>Avoid adding role="application" to an ordinary tutorial page. </li><li>It changes interaction expectations and is not a shortcut to making a page accessible.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Native first</h3><p>Use button for an action and label for a standard input.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Keep states truthful</h3><p>Expanded, selected and invalid states must match the visible behavior.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚫</span><h3>Do not hide focused controls</h3><p>Hidden semantics and visible <strong class="wt-content-key">keyboard</strong> focus should not contradict each other.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Verify the result</h3><p>Inspect the exposed name, role and state rather than assuming an attribute worked.</p></article></div></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Worked Example — A Complete Semantic Page</h2><ul class="wt-content-points"><li>Copy this into a standalone <strong class="wt-content-key">HTML</strong> file and open it in your <strong class="wt-content-key">browser</strong>. </li><li>The example has one main content area, a descriptive page heading, two topic headings, a labelled navigation region and a real native disclosure. </li><li>The skip link is deliberately visible so its purpose is easy to observe.</li></ul><div class="code-block"><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;Semantic HTML Workshop&lt;/title&gt;
+  &lt;style&gt;
+    body { font: 18px/1.7 Arial, sans-serif; margin: 20px; }
+    :focus-visible { outline: 3px solid #126d96; outline-offset: 3px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;header&gt;
+    &lt;p&gt;CodeBhavya Workshop&lt;/p&gt;
+    &lt;nav aria-label=&quot;Workshop&quot;&gt;&lt;a href=&quot;#preparation&quot;&gt;Preparation&lt;/a&gt;&lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;h1&gt;Semantic HTML Workshop&lt;/h1&gt;
+    &lt;section id=&quot;preparation&quot;&gt;
+      &lt;h2&gt;Preparation&lt;/h2&gt;
+      &lt;ul&gt;&lt;li&gt;A code editor&lt;/li&gt;&lt;li&gt;HTML basics&lt;/li&gt;&lt;/ul&gt;
+    &lt;/section&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Learning task&lt;/h2&gt;
+      &lt;p&gt;Explain the landmarks and heading order of this page.&lt;/p&gt;
+      &lt;details&gt;&lt;summary&gt;Show task hint&lt;/summary&gt;&lt;p&gt;Find main, nav and headings.&lt;/p&gt;&lt;/details&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;&lt;p&gt;Workshop learning example.&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><ul class="wt-content-points"><li><strong>Expected keyboard result:</strong> Tab reaches the skip link and navigation link, then the disclosure summary. </li><li>Activating the summary opens the hint. </li><li>The main target does not become an extra ordinary Tab stop.</li></ul><ul class="wt-content-points"><li><strong>Expected structural result:</strong> Preparation and Learning task are sibling topics under the workshop title. </li><li>The footer appears after main. </li><li>Your <strong class="wt-content-key">browser</strong>’s <strong class="wt-content-key">accessibility</strong> tools may present the details of the exposed tree differently; examine actual names and roles instead of memorizing a screenshot.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Semantic Page Journey</h2><p>Follow the worked page through five checks. Select a timeline point directly, use Previous and Next, or let Auto Run advance the journey. Each stage shows a different reason the page is understandable and operable.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="semantic">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>SEMANTIC PAGE TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🗺️</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Identify the major page regions</h3><p data-trace-description>Locate the page-level header, named navigation, main content and footer.</p></div><pre class="trace-code"><code data-trace-code>header · nav · main · footer</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Regions" aria-pressed="true"><span>01</span><strong>Regions</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Headings" aria-pressed="false"><span>02</span><strong>Headings</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Keyboard" aria-pressed="false"><span>03</span><strong>Keyboard</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Names" aria-pressed="false"><span>04</span><strong>Names</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Verify" aria-pressed="false"><span>05</span><strong>Verify</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>This is a reading map, not a CSS layout. Nested article headers have a different scope from the page header.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Structure and Keyboard Lab</h2><ul class="wt-content-points"><li>Compare four fixed teaching examples in the preview. </li><li>These are local examples; the lab does not submit data or <strong class="wt-content-key">fetch</strong> another website. </li><li>Inspect the scenario, read its markup, then use the <strong class="wt-content-key">keyboard</strong> to test its actual controls.</li></ul><ul class="wt-content-points"><li>The findings describe known features of each example. </li><li>They are not an automated screen-reader simulation or a certification. </li><li>A scenario can pass these few checks while still needing contrast, zoom, assistive-technology and task-level review.</li></ul><ul class="wt-content-points"><li>In the heading-gap scenario, look for h1 followed directly by h3. </li><li>In the label scenario, focus the input and compare its placeholder with the missing persistent label. </li><li>In the div-action scenario, observe that the styled div is not an ordinary <strong class="wt-content-key">keyboard</strong> stop.</li></ul><div class="wt9-demo"><label for="wt10Scenario">Choose a teaching scenario</label><select id="wt10Scenario"><option value="good">Semantic workshop page</option><option value="headings">Heading rank gap</option><option value="label">Missing visible field label</option><option value="button">Action built from a div</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt10Inspect">Inspect this scenario</button><button type="button" class="secondary-button" id="wt10Reset">Reset lab</button></div><p id="wt10LabStatus" role="status">Choose a scenario, then inspect its teaching checks.</p><iframe id="wt10Preview" title="Semantic HTML practice page preview" sandbox="" loading="lazy"></iframe><h3>Scenario HTML</h3><pre class="trace-code"><code id="wt10Markup"></code></pre><h3>Teaching checks</h3><ul id="wt10Findings"></ul></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>A Practical Review — Evidence Before a Pass</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗺️</span><h3>Structure</h3><p>Locate the dominant main region, meaningful heading hierarchy and names for repeated navigation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Keyboard</h3><p>Complete the intended task using Tab, Shift+Tab, Enter and Space. Watch for missing focus or traps.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Names</h3><p>Read control labels, link purposes, image alternatives and associated instructions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔍</span><h3>Presentation</h3><p>Check readable contrast, zoom/reflow and whether meaning depends only on color.</p></article></div><ul class="wt-content-points"><li>Record a finding with its location, trigger and expected behavior. </li><li>For example: “In Registration, Tab skips the styled Show hint div. </li><li>Replace it with a native button and connect it to the hint.” This is actionable because it describes a user problem rather than saying the page looks wrong.</li></ul><ul class="wt-content-points"><li>Use <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">accessibility</strong> inspection and relevant assistive technology to confirm names, roles and reading order. </li><li>An automated tool can identify some issues but cannot decide every alternative text, interaction or task. </li><li>A score alone is not <strong class="wt-content-key">evidence</strong> that every learner can complete the task.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Is a section always a landmark?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Is a section always a landmark?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A section needs a suitable accessible name to be exposed as a region landmark. Use regions sparingly and organize the content with meaningful headings.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does role=&quot;button&quot; make a div behave as a button?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does role=&quot;button&quot; make a div behave as a button?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It communicates a role; it does not implement focus, keyboard activation or disabled behavior. Start with a native button for ordinary actions.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can a page have more than one header?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can a page have more than one header?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Yes. A page header and an article header have different scopes. An article header does not become the page-level banner.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why is a placeholder insufficient as a label?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why is a placeholder insufficient as a label?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It is a temporary hint within the field and can disappear after input. A persistent, associated visible label identifies the field clearly.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why use a skip link?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why use a skip link?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It provides a route past repeated content to a meaningful target such as main. Its destination must exist and focus behavior should be checked.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can heading size determine its rank?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can heading size determine its rank?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Rank expresses a topic relationship; CSS controls appearance. Choose the hierarchy before adjusting font size.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question When is empty alt appropriate?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>When is empty alt appropriate?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>When the image is decorative in that context and carries no needed information or action. Empty alt is an intentional alternative, not a missing attribute.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does a passing automated report prove accessibility?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does a passing automated report prove accessibility?</h3><span class="flip-card-hint">Click to see explanation</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It covers only some checks. Review meaning, keyboard interaction, task completion and relevant assistive technology as well.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Understand the Explanation</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="main identifies dominant content; the others serve different purposes."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which element identifies the dominant page content?</h3><div class="wt8-options"><button type="button" class="wt8-option">aside</button><button type="button" class="wt8-option">main</button><button type="button" class="wt8-option">span</button><button type="button" class="wt8-option">footer</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="A native button is appropriate for an action and provides standard keyboard behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. A Show hint control changes content on the same page. Which is the natural starting element?</h3><div class="wt8-options"><button type="button" class="wt8-option">button type=&quot;button&quot;</button><button type="button" class="wt8-option">a without href</button><button type="button" class="wt8-option">div with a border</button><button type="button" class="wt8-option">h3</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The ranks reflect a parent topic, section and subsection rather than font size."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which heading hierarchy fits a page topic, major section and subsection?</h3><div class="wt8-options"><button type="button" class="wt8-option">h1 → h4 → h2</button><button type="button" class="wt8-option">h3 → h1 → h6</button><button type="button" class="wt8-option">h1 → h2 → h3</button><button type="button" class="wt8-option">p → strong → span</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="A nested header serves its article; it is not automatically the page-level banner."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What does a header nested inside an article describe?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always the page banner</button><button type="button" class="wt8-option">The article introduction</button><button type="button" class="wt8-option">Only the browser tab</button><button type="button" class="wt8-option">A fixed screen toolbar</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Names such as Primary and Course help identify their purposes."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Two navigation regions have different purposes. What helps distinguish them?</h3><div class="wt8-options"><button type="button" class="wt8-option">Same label for both</button><button type="button" class="wt8-option">More div wrappers</button><button type="button" class="wt8-option">Unrelated aria-label text</button><button type="button" class="wt8-option">Relevant distinct accessible names</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="An explicit label association matches for to the unique input id."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. Which gives a normal input a persistent associated label?</h3><div class="wt8-options"><button type="button" class="wt8-option">placeholder only</button><button type="button" class="wt8-option">A nearby unassociated span</button><button type="button" class="wt8-option">label for matching the input id</button><button type="button" class="wt8-option">name=&quot;label&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="An empty alternative intentionally marks decorative information for omission from the reading sequence."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. An image is decorative in this context. Which alternative is suitable?</h3><div class="wt8-options"><button type="button" class="wt8-option">alt=&quot;&quot;</button><button type="button" class="wt8-option">Omit alt</button><button type="button" class="wt8-option">alt=&quot;image&quot;</button><button type="button" class="wt8-option">alt=&quot;click here&quot;</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The script must also implement and synchronize the actual disclosure behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What does aria-expanded do by itself?</h3><div class="wt8-options"><button type="button" class="wt8-option">Creates a panel</button><button type="button" class="wt8-option">Communicates an expanded state</button><button type="button" class="wt8-option">Adds keyboard support</button><button type="button" class="wt8-option">Hides all controls</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A logical source order supports normal keyboard navigation without a forced positive tabindex sequence."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. What is the best first response to an illogical Tab order?</h3><div class="wt8-options"><button type="button" class="wt8-option">Use tabindex=&quot;99&quot;</button><button type="button" class="wt8-option">Remove all focus outlines</button><button type="button" class="wt8-option">Make every paragraph focusable</button><button type="button" class="wt8-option">Fix the document order</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="article is appropriate for an independent item of content, such as a tutorial."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. Which use best fits article?</h3><div class="wt8-options"><button type="button" class="wt8-option">Every layout wrapper</button><button type="button" class="wt8-option">A self-contained tutorial</button><button type="button" class="wt8-option">An isolated spacer</button><button type="button" class="wt8-option">The whole color palette</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The accessible name should explain the link purpose rather than only describe the drawing."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. What should text for an image-only linked icon communicate?</h3><div class="wt8-options"><button type="button" class="wt8-option">Its pixel dimensions</button><button type="button" class="wt8-option">The filename</button><button type="button" class="wt8-option">Its destination or purpose</button><button type="button" class="wt8-option">Only its color</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Limited checks provide limited evidence. Accessibility requires broader review of real user tasks."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. A lab passes its four known checks. What conclusion is justified?</h3><div class="wt8-options"><button type="button" class="wt8-option">The whole site is certified</button><button type="button" class="wt8-option">No manual review is needed</button><button type="button" class="wt8-option">All assistive technologies behave identically</button><button type="button" class="wt8-option">Those checks passed; further review remains</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt10QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Specific Checks</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗺️</span><h3>Region repair</h3><ul class="wt-content-points"><li>Replace layout-only wrappers with appropriate page regions. </li><li>Expected: one visible main, a purposeful nav and a page footer outside main.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔠</span><h3>Heading repair</h3><ul class="wt-content-points"><li>Start with h1 Workshop and h3 Preparation. </li><li>Correct the hierarchy. </li><li>Expected: Preparation becomes h2; subsection headings can be h3.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌨️</span><h3>Keyboard comparison</h3><ul class="wt-content-points"><li>Compare a native button with a styled div. </li><li>Expected: the button is a Tab stop and activates with Enter or Space; the plain div does not.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🏷️</span><h3>Label association</h3><p>Make the input id learner and the label for student, then repair them. Expected: matching for/id values and a visible label.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🖼️</span><h3>Alternative decisions</h3><ul class="wt-content-points"><li>Write alternatives for an informative room photograph, a decorative line and an image-only home link. </li><li>Expected: context, empty alternative and destination respectively.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔗</span><h3>Skip destination</h3><p>Add a skip link to #main-content. Expected: a matching target and a verified <strong class="wt-content-key">keyboard</strong> route beyond repeated navigation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Disclosure states</h3><ul class="wt-content-points"><li>Open and close a native details example. </li><li>Expected: the summary stays operable and the content’s visibility follows its open state.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔎</span><h3>Review record</h3><ul class="wt-content-points"><li>Write one finding from each broken lab scenario. </li><li>Expected: identify the element, observed problem, correction and a repeatable verification step.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧩</span><strong>Meaning:</strong> Tags describe purpose; CSS controls appearance.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗺️</span><strong>Landmarks:</strong> Identify major regions without naming every tiny card.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📖</span><strong>Main:</strong> Keep one visible dominant content region.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📰</span><strong>Grouping:</strong> article is independent content; section groups a topic; div is neutral.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔠</span><strong>Headings:</strong> Choose ranks by the content hierarchy.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🖱️</span><strong>Controls:</strong> Use links for destinations and buttons for actions.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⌨️</span><strong>Keyboard:</strong> Preserve logical order, visible focus and usable skip targets.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Names:</strong> Use associated labels and useful control wording.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🖼️</span><strong>Alternatives:</strong> Describe image purpose in its actual context.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Evidence:</strong> Combine structural, keyboard and manual checks.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Semantic HTML"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Semantic HTML</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Semantic HTML</h4><p>Markup that communicates the intended meaning or purpose of content.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Landmark"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Landmark</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Landmark</h4><p>A major page region that supports structural navigation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Heading rank"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Heading rank</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Heading rank</h4><p>The level h1 through h6 used to express topic relationships.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Accessible name"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Accessible name</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Accessible name</h4><p>The name by which a control or other relevant element is identified to assistive technology.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Keyboard focus"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Keyboard focus</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Keyboard focus</h4><p>The currently active destination for keyboard interaction.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Skip link"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Skip link</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Skip link</h4><p>A link that bypasses repeated content to reach a useful page location.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Text alternative"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Text alternative</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Text alternative</h4><p>Text conveying the relevant purpose or information of non-text content.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Native control"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Native control</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Native control</h4><p>A built-in HTML control with browser-supplied semantics and behavior.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term ARIA state"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>ARIA state</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>ARIA state</h4><p>An attribute describing information such as expanded, selected or invalid state.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Manual review"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Manual review</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Manual review</h4><p>Human examination of meaning, interaction and real task completion.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Workshop Page Anyone Can Navigate</h2><ul class="wt-content-points"><li>Build a standalone workshop page combining Levels 09 and 10. </li><li>Include prerequisites, a small captioned timetable, a labelled registration form, a clear page heading and a logical sequence of topic headings. </li><li>Keep the page header and footer outside main and name navigation regions when needed.</li></ul><ul class="wt-content-points"><li>Provide a visible skip link, a native details hint and meaningful labels. </li><li>If you use images, document whether each one is informative, decorative or functional and choose its alternative accordingly. </li><li>For the form, include clear instructions and explain the expected submitted values.</li></ul><ul class="wt-content-points"><li>Test a complete <strong class="wt-content-key">keyboard</strong> path from the skip link through the form and disclosure. </li><li>Inspect the structure in <strong class="wt-content-key">browser</strong> tools, check the layout when zoomed and record at least three observations. </li><li>For a real published form, connect it to secure <strong class="wt-content-key">server</strong> processing; the lesson preview is a local teaching example.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain why each element was chosen, demonstrate the task with a <strong class="wt-content-key">keyboard</strong> and state which checks you performed. </li><li>Do not call the page fully accessible based only on the lab’s limited checklist.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 10 Complete?</h2><p>Before marking complete, build the workshop structure, repair a heading gap, associate an input label and demonstrate a usable keyboard path. Completion stores a study milestone on this device; it does not certify accessibility or award an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="html-lists-tables-forms.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">HTML Lists, Tables and Forms</span><span class="nav-action">Review Level 09</span></a></div><div class="topic-nav-side next"><a href="css-fundamentals.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">CSS Fundamentals</span><span class="nav-action">Open Level 11</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="semantic-html-accessibility.js?v=2"></script><script src="web-technologies-mobile-nav.js?v=5" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=2" defer></script>
+</body></html>

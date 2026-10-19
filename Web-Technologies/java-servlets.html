@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn servlet lifecycle, HTTP handlers, validated parameters and session isolation with diagrams, a visualizer, local lab and MCQs.">
+
+    
+
+    <title>
+        Level 23 — Java Servlets | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/java-servlets.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt23-skip-link" href="#wt23Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt23Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 23</div><div class="level-badge">LEVEL 23 · SERVLETS</div><h1>Java Servlets</h1><p class="wt-hero-description">Trace servlet lifecycle, request handling and deliberate session changes.</p><div class="wt-hero-meta"><span>☕ Java web</span><span>⚙️ Lifecycle</span><span>👤 Sessions</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">servlet</strong> is a <strong class="wt-content-key">Java</strong> component managed by a servlet container. </li><li>You will connect its lifecycle to <strong class="wt-content-key">HTTP</strong> handlers, distinguish request-local work from shared instance state and use sessions deliberately. </li><li>The examples use modern Jakarta <strong class="wt-content-key">Servlet</strong> APIs; compile and run them only with a matched dependency and runtime.</li></ul><ul class="wt-content-points"><li>The interactive lab models a study-preference endpoint and two <strong class="wt-content-key">browser</strong> clients. </li><li>It is synchronous <strong class="wt-content-key">JavaScript</strong>: no <strong class="wt-content-key">Java</strong>, container, HTTP request, cookie, authentication or real session timeout runs here.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚙️</span><h3>Lifecycle</h3><p>Explain init, service and destroy for one instance.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Handlers</h3><p>Read input and choose an <strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">response</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Isolation</h3><p>Separate request-local variables from shared fields.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Sessions</h3><p>Read, create, invalidate and expire state deliberately.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🧰</span>A Container-Managed Component</h2><ul class="wt-content-points"><li>The container loads a <strong class="wt-content-key">servlet</strong>, creates an instance, initializes it and supplies <strong class="wt-content-key">request</strong>/response objects when handling requests. </li><li>Your <strong class="wt-content-key">servlet</strong> is not a standalone main program and its source is not executed by the <strong class="wt-content-key">browser</strong>. </li><li>Static hosting does not become a <strong class="wt-content-key">servlet</strong> runtime when you upload a <strong class="wt-content-key">Java</strong> file.</li></ul><ul class="wt-content-points"><li>HttpServlet builds on the general <strong class="wt-content-key">Servlet</strong> lifecycle and dispatches <strong class="wt-content-key">HTTP</strong> requests to handlers such as doGet and doPost. </li><li>Application code usually overrides those handlers instead of replacing the <strong class="wt-content-key">HTTP</strong> service dispatcher.</li></ul><ul class="wt-content-points"><li>The snippets target the jakarta.<strong class="wt-content-key">servlet</strong> namespace. </li><li>Legacy javax.<strong class="wt-content-key">servlet</strong> applications require their matching <strong class="wt-content-key">API</strong> and container. </li><li>A JVM, compiler, <strong class="wt-content-key">API</strong> dependency and web runtime have distinct responsibilities; having a <strong class="wt-content-key">java</strong> command alone is insufficient.</li></ul><figure class="wt-diagram"><figcaption>Who performs the work</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Client</strong><p>Sends an <strong class="wt-content-key">HTTP</strong> <strong class="wt-content-key">request</strong>.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧰</span><strong>Container</strong><p>Maps, initializes and dispatches.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">☕</span><strong>Servlet</strong><p>Produces the application outcome.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Response</strong><p>Returns metadata and a body.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🗺️</span>Mapping and Context Paths</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">servlet</strong> mapping selects the component within a deployed web application. </li><li>If the application context is /learning and the mapping is /study, a <strong class="wt-content-key">browser</strong> may <strong class="wt-content-key">request</strong> /learning/study. </li><li>The mapping is not the source filename.</li></ul><ul class="wt-content-points"><li>Annotations such as @WebServlet can declare a mapping. </li><li><strong class="wt-content-key">Deployment</strong> descriptors can also configure components. </li><li>Follow one consistent configuration so duplicate or conflicting mappings do not hide the handler you expect.</li></ul><ul class="wt-content-points"><li>The lab accepts only /study and /logout as application-relative paths. </li><li>An unknown path returns a simulated 404 before the modeled component runs. </li><li>Its small exact-path router is not a replacement for container matching rules.</li></ul><div class="code-block"><pre><code>import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+
+@WebServlet(&quot;/study&quot;)
+public class StudyServlet extends HttpServlet {
+    // Add doGet/doPost handlers inside this class.
+}</code></pre></div><ul class="wt-content-points"><li>This declaration is illustrative. </li><li>It requires a compatible runtime, build configuration and correctly packaged application. </li><li>No /study <strong class="wt-content-key">Java</strong> endpoint is deployed by this website lesson.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">⚙️</span>Initialization: Prepare One Instance</h2><ul class="wt-content-points"><li>The container calls init before that <strong class="wt-content-key">servlet</strong> instance services requests. </li><li>Initialization can be triggered when the component is first needed or configured to occur during application startup. </li><li>It is not repeated for every <strong class="wt-content-key">request</strong>.</li></ul><ul class="wt-content-points"><li>Use initialization for component-level setup that has an appropriate lifetime. </li><li>A configuration or service reference is different from the current <strong class="wt-content-key">request</strong>’s learner name. </li><li>Do not initialize request-specific fields and then reuse them for later callers.</li></ul><ul class="wt-content-points"><li>If initialization fails, the component cannot be treated as successfully ready. </li><li>Production behavior and diagnostics belong to the real runtime; the local lab demonstrates a successful initialization path only.</li></ul><div class="code-block"><pre><code>// Inside a servlet class; illustrative lifecycle hooks:
+@Override
+public void init() {
+    getServletContext().log(&quot;Study servlet initialized&quot;);
+}
+
+@Override
+public void destroy() {
+    getServletContext().log(&quot;Study servlet destroyed&quot;);
+    // Release resources that this component actually owns.
+}</code></pre></div><ul class="wt-content-points"><li>The lab initializes lazily on its first mapped <strong class="wt-content-key">request</strong>, even when the <strong class="wt-content-key">HTTP</strong> method will later be rejected. </li><li>Unknown paths do not initialize the component. </li><li>Each modeled instance has its own generation number and service count.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Service and HTTP Handlers</h2><ul class="wt-content-points"><li>After initialization, the container calls service with the <strong class="wt-content-key">request</strong> and <strong class="wt-content-key">response</strong>. </li><li>HttpServlet’s <strong class="wt-content-key">HTTP</strong> dispatcher selects an appropriate handler. </li><li>Override doGet to implement a read and doPost to implement an accepted submission.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">servlet</strong> instance can receive many requests. </li><li>The lifecycle has one initialization for that instance and repeated service calls. </li><li>A new instance after replacement has a new lifecycle; it is not a destroyed <strong class="wt-content-key">object</strong> being revived.</li></ul><ul class="wt-content-points"><li>A complete HttpServlet has behavior for methods beyond the toy lab, including HEAD and OPTIONS. </li><li>The lab deliberately implements GET and POST on /study and POST on /logout; other methods return 405 with the appropriate Allow value.</li></ul><figure class="wt-diagram"><figcaption>Lifecycle of one instance</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🌱</span><strong>Create</strong><p>Container instantiates the component.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⚙️</span><strong>Initialize</strong><p>Prepare before handling requests.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Service</strong><p>Handle many requests.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧹</span><strong>Destroy</strong><p>Finish this instance’s lifecycle.</p></div></div></figure><ul class="wt-content-points"><li>A mapped method rejection still reaches the simulated service dispatcher and increments its count. </li><li>The lab returns 503 for mapped requests after destruction until you create a new instance. </li><li>These counters explain its model, not container instrumentation.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🧹</span>Destruction and Resource Ownership</h2><ul class="wt-content-points"><li>The container invokes destroy as a lifecycle cleanup callback when removing a <strong class="wt-content-key">servlet</strong> from service. </li><li>Avoid assuming that a process crash will always permit normal cleanup. </li><li>Persistent data must not depend on a final callback successfully writing everything.</li></ul><ul class="wt-content-points"><li>Release resources owned by the <strong class="wt-content-key">servlet</strong> according to their <strong class="wt-content-key">contract</strong>. </li><li>A container-managed data source, a request-scoped stream and a worker created by application code do not necessarily share the same <strong class="wt-content-key">ownership</strong> rules.</li></ul><ul class="wt-content-points"><li>In a real container, servicing requests and lifecycle transitions have coordination rules. </li><li>The lab is synchronous and has no in-flight threads. </li><li>Its Destroy button stops future modeled service calls; it does not demonstrate concurrent shutdown safety.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Owned resources</h3><p>Close what the component is responsible for.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>In-flight work</h3><p>Real concurrency needs separate verification.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌱</span><h3>Replacement</h3><p>Create a new component instance.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Session lifetime</h3><p>A <strong class="wt-content-key">session</strong> and a <strong class="wt-content-key">servlet</strong> have different lifetimes.</p></article></div><ul class="wt-content-points"><li>The lab preserves its <strong class="wt-content-key">session</strong> map when replacing only the modeled <strong class="wt-content-key">servlet</strong>. </li><li>Real application redeployment may invalidate, preserve or restore sessions depending on configuration; do not rely on this toy replacement behavior as a <strong class="wt-content-key">deployment</strong> guarantee. </li><li>Reset clears the whole local demonstration.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔎</span>Request Parameters and Repeated Values</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Request</strong> parameters arrive as strings and can have multiple values. getParameter returns one value; getParameterValues allows you to inspect multiplicity. </li><li>If your <strong class="wt-content-key">contract</strong> requires exactly one value, reject missing and repeated values rather than silently choosing one.</li></ul><ul class="wt-content-points"><li>For POST /study, this lab accepts exactly learner and topic as scalar strings. </li><li>After trimming, learner must contain 2–40 Unicode code points with no control characters or unpaired surrogates. </li><li>Topic must be exactly <strong class="wt-content-key">html</strong>, servlets or <strong class="wt-content-key">jsp</strong>. </li><li>The simulated media type must be application/x-www-form-urlencoded.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Validation</strong> happens before a <strong class="wt-content-key">session</strong> is created or modified. </li><li>Invalid input returns 400; an unsupported media type returns 415. </li><li>The <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">selector</strong> includes missing, repeated-value-shaped and extra-field requests to make these failures visible.</li></ul><div class="code-block"><pre><code>// Illustrative validation fragment inside doPost:
+String[] values = request.getParameterValues(&quot;topic&quot;);
+if (values == null || values.length != 1) {
+    response.sendError(400, &quot;One topic is required&quot;);
+    return;
+}
+String topic = values[0];
+if (!java.util.Set.of(&quot;html&quot;, &quot;servlets&quot;, &quot;jsp&quot;).contains(topic)) {
+    response.sendError(400, &quot;Unknown topic&quot;);
+    return;
+}
+// Validate all remaining input before changing session state.</code></pre></div><ul class="wt-content-points"><li>The <strong class="wt-content-key">Java</strong> fragment illustrates multiplicity and an allowlist; it is not the full <strong class="wt-content-key">browser</strong> validator ported into Java. </li><li>Define the actual <strong class="wt-content-key">Java</strong> <strong class="wt-content-key">request</strong> size, Unicode and media-type rules in your server implementation.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">📤</span>Response Status, Encoding and Commitment</h2><ul class="wt-content-points"><li>Set the representation and character encoding before obtaining the writer or committing output. </li><li>Status and headers communicate the result; the body must match its declared representation. </li><li>A <strong class="wt-content-key">JSON</strong> body needs a proper serializer, not arbitrary string concatenation.</li></ul><ul class="wt-content-points"><li>Once output is committed, changing headers, forwarding or sending an error may be too late. </li><li>Decide the outcome before writing a success body so <strong class="wt-content-key">validation</strong> failures do not produce half of one <strong class="wt-content-key">response</strong> and half of another.</li></ul><ul class="wt-content-points"><li>The lab returns JSON-shaped local results for accepted reads, preference saves and logout. </li><li>It shows status, <strong class="wt-content-key">Content-Type</strong>, Allow when applicable and literal <strong class="wt-content-key">response</strong> source. </li><li>No <strong class="wt-content-key">response</strong> travels over a network.</li></ul><div class="code-block"><pre><code>// Illustrative doGet handler inside a servlet class:
+@Override
+protected void doGet(jakarta.servlet.http.HttpServletRequest request,
+                     jakarta.servlet.http.HttpServletResponse response)
+        throws java.io.IOException {
+    response.setContentType(&quot;text/plain; charset=UTF-8&quot;);
+    response.getWriter().println(&quot;Read-only study endpoint&quot;);
+}</code></pre></div><ul class="wt-content-points"><li>If you render user text into <strong class="wt-content-key">HTML</strong>, use the encoding appropriate to its destination. </li><li><strong class="wt-content-key">JSON</strong> serialization and <strong class="wt-content-key">DOM</strong> textContent are different operations. </li><li>In this lab the <strong class="wt-content-key">browser</strong> preview uses text nodes and never interprets a learner label as <strong class="wt-content-key">HTML</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🧵</span>Request-Local Variables and Shared Fields</h2><ul class="wt-content-points"><li>One <strong class="wt-content-key">servlet</strong> instance may handle requests concurrently. </li><li>A mutable field named currentLearner can be overwritten by another <strong class="wt-content-key">request</strong> before the first <strong class="wt-content-key">response</strong> is finished. </li><li>Synchronizing all requests indiscriminately also risks unnecessary blocking and does not fix a poor state model.</li></ul><ul class="wt-content-points"><li>Keep <strong class="wt-content-key">request</strong> input and computed <strong class="wt-content-key">response</strong> data in local variables or request attributes. </li><li>Shared dependencies must have a deliberate thread-safety strategy. </li><li>Do not assume a service, collection or counter is safe solely because a <strong class="wt-content-key">servlet</strong> owns it.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">session</strong> can also be accessed by multiple requests at once. </li><li>Concurrent <strong class="wt-content-key">browser</strong> tabs or parallel requests can race when reading and updating mutable attributes. </li><li>The synchronous lab verifies logical isolation between two clients, not real concurrency safety.</li></ul><div class="code-block"><pre><code>// Avoid: private String currentLearner;
+// Prefer request-local data inside a handler:
+String learner = request.getParameter(&quot;learner&quot;);
+// Validate learner, then construct this request’s result locally.</code></pre></div><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Local</h3><p>One invocation’s input and result.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📄</span><h3>Request attribute</h3><p>Carry a model through a dispatch.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Session</h3><p>Deliberately associate state with a client <strong class="wt-content-key">session</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🌐</span><h3>Shared dependency</h3><p>Choose lifetime and concurrency controls.</p></article></div></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">👤</span>Read a Session Without Creating One</h2><ul class="wt-content-points"><li><strong class="wt-content-key">request</strong>.getSession(false) returns the current valid <strong class="wt-content-key">session</strong> if one exists, or null when there is none. </li><li>The no-argument getSession() creates a <strong class="wt-content-key">session</strong> when necessary. </li><li>Choose deliberately: a read-only anonymous page should not accidentally allocate a <strong class="wt-content-key">session</strong> just to check for one.</li></ul><ul class="wt-content-points"><li>A real container associates a <strong class="wt-content-key">session</strong> with client requests, commonly through a session <strong class="wt-content-key">cookie</strong>. </li><li><strong class="wt-content-key">Session</strong> identifiers are not learner names and should not be designed as predictable <strong class="wt-content-key">authentication</strong> tokens. </li><li><strong class="wt-content-key">URL</strong> rewriting exists but can expose identifiers in URLs and requires careful handling.</li></ul><ul class="wt-content-points"><li>The lab uses obvious mock identifiers such as demo-1 and two in-memory client associations. </li><li>They are teaching labels, never <strong class="wt-content-key">browser</strong> <strong class="wt-content-key">cookies</strong> or secure identifiers. </li><li>An anonymous GET /study returns a clear empty state without creating a <strong class="wt-content-key">session</strong>.</li></ul><div class="code-block"><pre><code>// Illustrative read in doGet:
+jakarta.servlet.http.HttpSession session = request.getSession(false);
+Object preference = session == null ? null
+        : session.getAttribute(&quot;studyPreference&quot;);
+// Render a controlled anonymous or accepted-preference result.</code></pre></div><ul class="wt-content-points"><li>An existing <strong class="wt-content-key">session</strong> does not prove <strong class="wt-content-key">authentication</strong> or authorization. </li><li>This lesson saves fictional study preferences, not accounts, access rights or sensitive data.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">💾</span>Create and Update Session Attributes Deliberately</h2><ul class="wt-content-points"><li>After all submission input has passed <strong class="wt-content-key">validation</strong>, a handler can obtain or create a <strong class="wt-content-key">session</strong> and set an accepted preference attribute. </li><li>Keep the stored value bounded and well-defined rather than copying the entire untrusted <strong class="wt-content-key">request</strong> <strong class="wt-content-key">object</strong>.</li></ul><ul class="wt-content-points"><li>The lab stores only the validated learner label and allowed topic. </li><li>A later GET for that client reads a copied preference. </li><li>A second client starts anonymous until it makes its own accepted POST. </li><li>Saving client B does not overwrite client A.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Session</strong> attributes have application lifetimes and can outlive a <strong class="wt-content-key">request</strong>. </li><li>They are not a <strong class="wt-content-key">database</strong> durability guarantee. </li><li>Storage, replication, serialization and expiry behavior depend on the actual environment.</li></ul><div class="code-block"><pre><code>// Illustrative fragment AFTER complete input validation:
+jakarta.servlet.http.HttpSession session = request.getSession();
+session.setAttribute(&quot;studyPreference&quot;, acceptedPreference);
+// acceptedPreference is a bounded application value prepared earlier.</code></pre></div><figure class="wt-diagram"><figcaption>Two client associations</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Client A</strong><p>Mock association to <strong class="wt-content-key">session</strong> A.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Session A</strong><p>A’s accepted study preference.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Client B</strong><p>Separate mock association.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Session B</strong><p>B’s accepted study preference.</p></div></div></figure><ul class="wt-content-points"><li>The lab updates a preference without creating a new <strong class="wt-content-key">session</strong> when the associated session is valid. </li><li>An invalid POST leaves the old preference and association unchanged.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">🚪</span>Invalidation, Expiry and Stale Associations</h2><ul class="wt-content-points"><li>HttpSession.invalidate invalidates the <strong class="wt-content-key">session</strong> and unbinds its attributes. </li><li>Do not continue reading or modifying an invalidated <strong class="wt-content-key">session</strong> <strong class="wt-content-key">object</strong> as if it were valid. </li><li>A later <strong class="wt-content-key">request</strong> may have no valid <strong class="wt-content-key">session</strong> even if the client still sends an old identifier.</li></ul><ul class="wt-content-points"><li>Real inactivity expiry is controlled by container/<strong class="wt-content-key">session</strong> configuration. setMaxInactiveInterval uses seconds; non-positive values mean the session will not expire from that inactivity interval. </li><li>This is not a scheduled timer you should infer from the lab.</li></ul><ul class="wt-content-points"><li>The Expire button manually deletes the selected client’s modeled <strong class="wt-content-key">server</strong> <strong class="wt-content-key">session</strong> while leaving a stale mock association visible. </li><li>The next GET stays anonymous and creates nothing. </li><li>A valid POST creates a fresh modeled identifier.</li></ul><div class="code-block"><pre><code>// Illustrative logout handler logic:
+jakarta.servlet.http.HttpSession session = request.getSession(false);
+if (session != null) {
+    session.invalidate();
+}
+// Return a deliberate logout outcome; do not create a new session.</code></pre></div><ul class="wt-content-points"><li>POST /logout in the lab deletes the current valid <strong class="wt-content-key">session</strong> and clears that client’s association. </li><li>Repeating logout succeeds without creating a <strong class="wt-content-key">session</strong>. </li><li>It is a session-lifecycle demonstration, not a complete <strong class="wt-content-key">authentication</strong>/logout implementation.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Sessions Are Not a Complete Security System</h2><ul class="wt-content-points"><li>Real authenticated applications need identity verification, <strong class="wt-content-key">authorization</strong> on protected operations and <strong class="wt-content-key">session</strong> fixation defenses. </li><li>Changing a <strong class="wt-content-key">session</strong> identifier after an <strong class="wt-content-key">authentication</strong> boundary is one relevant API capability; the application must still establish the identity correctly.</li></ul><ul class="wt-content-points"><li>Cookie-authenticated state-changing requests need an appropriate <strong class="wt-content-key">CSRF</strong> defense. </li><li>Secure, <strong class="wt-content-key">HttpOnly</strong> and <strong class="wt-content-key">SameSite</strong> cookie settings address different risks and do not replace access-control checks or correct input/output handling. </li><li>Do not accept a submitted role or a predictable ID as proof of permission.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> model sends no <strong class="wt-content-key">cookies</strong> and authenticates nobody. </li><li>Its <strong class="wt-content-key">validation</strong>, literal <strong class="wt-content-key">rendering</strong> and client isolation checks are useful boundaries, but do not establish that a production servlet application is secure.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔐</span><h3>Identity</h3><p>Verify who the caller is.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛂</span><h3>Authorization</h3><p>Check the requested protected action.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>CSRF</h3><p>Protect cookie-authenticated mutations.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Output</h3><p>Encode for the actual destination context.</p></article></div><ul class="wt-content-points"><li>Do not publish real credentials, <strong class="wt-content-key">session</strong> identifiers or sensitive learner records in teaching traces. </li><li>The lab uses fictional labels and public mock IDs only.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">↪️</span>Forward, Redirect and Post-Redirect-Get</h2><ul class="wt-content-points"><li>A forward transfers the same <strong class="wt-content-key">request</strong> internally before commitment; request attributes can carry an accepted model to a <strong class="wt-content-key">JSP</strong>. </li><li>A redirect causes a new client <strong class="wt-content-key">request</strong>, so those attributes are not automatically copied across.</li></ul><ul class="wt-content-points"><li>After a successful form submission, a Post-Redirect-Get flow can redirect to a read page and avoid repeating the same POST on an ordinary refresh. </li><li>It does not prevent all duplicate submissions or replace <strong class="wt-content-key">transaction</strong>/<strong class="wt-content-key">idempotency</strong> rules.</li></ul><ul class="wt-content-points"><li>The local lab intentionally displays a direct JSON-shaped POST outcome so every decision remains visible. </li><li>It does not perform a redirect or claim to implement PRG.</li></ul><div class="code-block"><pre><code>// Illustrative MVC flow before response commitment:
+request.setAttribute(&quot;study&quot;, acceptedModel);
+request.getRequestDispatcher(&quot;/WEB-INF/views/study.jsp&quot;)
+       .forward(request, response);
+
+// A different response choice for an accepted POST:
+// Redirect to a server-controlled, context-aware read URL.
+// Do not forward and redirect the same response.</code></pre></div><ul class="wt-content-points"><li>Level 24 develops <strong class="wt-content-key">JSP</strong> views and their integration with a controller. </li><li>Keep view <strong class="wt-content-key">rendering</strong> separate from <strong class="wt-content-key">request</strong> validation and session changes.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Separate Model Tests from Container Tests</h2><ul class="wt-content-points"><li>A local model can test the order of routing, lifecycle gates, <strong class="wt-content-key">validation</strong> and <strong class="wt-content-key">session</strong> operations. </li><li>It can show that an invalid submission creates nothing, that logout is repeatable and that client B has no access to client A’s modeled preference.</li></ul><ul class="wt-content-points"><li>A real project needs separate compilation and container checks: mappings, parameter multiplicity, encoding, <strong class="wt-content-key">cookies</strong>, actual expiry, <strong class="wt-content-key">response</strong> commitment, forwarding and concurrency. </li><li>A successful <strong class="wt-content-key">JavaScript</strong> simulation verifies none of those integrations.</li></ul><ul class="wt-content-points"><li>Before using the lab, predict each outcome: GET anonymously, valid POST, repeated GET, client switch, malformed POST, expiry, logout, destruction and replacement. </li><li>Compare state before and after a rejected <strong class="wt-content-key">request</strong>.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚙️</span><h3>Lifecycle</h3><p>Initialize once, service repeatedly, stop after destroy.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Isolation</h3><p>A and B keep separate accepted preferences.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Rejections</h3><p><strong class="wt-content-key">Validation</strong> failures leave <strong class="wt-content-key">session</strong> state unchanged.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧩</span><h3>Integration</h3><p>Verify the actual runtime independently.</p></article></div><ul class="wt-content-points"><li>The visualizer walks through one accepted POST. </li><li>The lab exposes every current modeled <strong class="wt-content-key">session</strong> for teaching; a real application must not provide an unrestricted session-inspection endpoint.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Servlet Lifecycle and Request</h2><p>Trace one accepted study-preference POST through mapping, initialization, handler validation, session association and response. The approved five-stage player explains a local model; it does not run a Java servlet.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="servlets">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>SERVLET LIFECYCLE AND REQUEST TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🗺️</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Find the mapped servlet</h3><p data-trace-description>The application-relative path selects the component.</p></div><pre class="trace-code"><code data-trace-code>POST /study</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Map" aria-pressed="true"><span>01</span><strong>Map</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Init" aria-pressed="false"><span>02</span><strong>Init</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Validate" aria-pressed="false"><span>03</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Session" aria-pressed="false"><span>04</span><strong>Session</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Respond" aria-pressed="false"><span>05</span><strong>Respond</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>Unknown paths stop at routing. This player follows an accepted POST for one mock client.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Servlet Lifecycle and Session Lab</h2><ul class="wt-content-points"><li>Use client A or B to model separate <strong class="wt-content-key">browser</strong> associations. </li><li>GET /study reads without creating a <strong class="wt-content-key">session</strong>. </li><li>POST /study validates exactly learner and topic, then saves a preference. </li><li>POST /logout invalidates without creating. </li><li>Only the stated method/path <strong class="wt-content-key">contract</strong> is implemented.</li></ul><ul class="wt-content-points"><li>Destroy stops the current modeled instance; create a new instance allows its next mapped <strong class="wt-content-key">request</strong> to initialize. </li><li>This component-only replacement preserves the mock <strong class="wt-content-key">session</strong> map. </li><li>Expire manually deletes a selected <strong class="wt-content-key">server</strong> <strong class="wt-content-key">session</strong> but leaves a stale client association; it is not an inactivity timer. </li><li>Reset clears the entire model.</li></ul><ul class="wt-content-points"><li>All identifiers and preferences are visible for teaching. </li><li>No <strong class="wt-content-key">Java</strong>, <strong class="wt-content-key">HTTP</strong>, cookies, authentication or persistent session storage is involved. </li><li>Completion is a separate local study marker.</li></ul><div class="wt9-demo wt23-lab"><label for="wt23Client">Mock browser client</label><select id="wt23Client"><option>A</option><option>B</option></select><label for="wt23Method">Simulated method</label><select id="wt23Method"><option>GET</option><option>POST</option><option>DELETE</option></select><label for="wt23Path">Application-relative path</label><select id="wt23Path"><option>/study</option><option>/logout</option><option>/missing</option></select><label for="wt23Learner">Fictional learner label · 2–40 Unicode code points after trimming</label><input id="wt23Learner" type="text" value="Demo learner" maxlength="160"><label for="wt23Topic">Allowed topic</label><select id="wt23Topic"><option value="html">html</option><option value="servlets">servlets</option><option value="jsp">jsp</option></select><label for="wt23Type">Simulated POST /study media type</label><select id="wt23Type"><option>application/x-www-form-urlencoded</option><option>application/json</option></select><label for="wt23Variant">Decoded POST /study parameter shape</label><select id="wt23Variant"><option value="normal">Two scalar strings</option><option value="missing">Missing learner</option><option value="array">Repeated learner value shape</option><option value="extra">Extra parameter</option></select><div class="wt9-actions"><button class="primary-button" type="button" id="wt23Process">Process mock request</button><button class="secondary-button" type="button" id="wt23Destroy">Destroy instance</button><button class="primary-button" type="button" id="wt23New">Create new instance</button><button class="secondary-button" type="button" id="wt23Expire">Expire selected mock session</button><button class="secondary-button" type="button" id="wt23Reset">Reset entire demonstration</button></div><p id="wt23Status" role="status">Idle. Synchronous JavaScript model; no servlet container is running.</p><h3>Servlet and session state · public teaching data</h3><pre class="wt23-result"><code id="wt23State"></code></pre><h3>Current request trace</h3><pre class="wt23-result"><code id="wt23Trace">No request yet.</code></pre><h3>Response metadata and literal body</h3><pre class="wt23-result"><code id="wt23Response">No response yet.</code></pre><h3>Safe text preview</h3><div class="wt23-preview" id="wt23Preview">No preview yet.</div><h3>Lifecycle log · last 30 events</h3><pre class="wt23-result"><code id="wt23Log"></code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Find the First Wrong Boundary</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗺️</span><h3>Mapping</h3><p>Check context path and annotation/descriptor mapping.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Parameters</h3><p>Inspect missing, repeated and invalid values before mutation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Sessions</h3><p>Distinguish absent, valid and stale associations.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧵</span><h3>Shared fields</h3><p>Look for <strong class="wt-content-key">request</strong> data stored on the <strong class="wt-content-key">servlet</strong> instance.</p></article></div><ul class="wt-content-points"><li>If every read creates a <strong class="wt-content-key">session</strong>, check whether the handler uses getSession() when it only needed getSession(false). </li><li>If a rejected POST still changes a preference, move all <strong class="wt-content-key">validation</strong> before <strong class="wt-content-key">session</strong> creation or attribute mutation.</li></ul><ul class="wt-content-points"><li>If client B sees client A’s learner, inspect shared fields, static collections and association logic. </li><li>A request-local variable can prevent an accidental servlet-field leak, but real <strong class="wt-content-key">session</strong> concurrency still needs a deliberate strategy.</li></ul><ul class="wt-content-points"><li>If headers fail to change, check whether <strong class="wt-content-key">response</strong> output was already committed. </li><li>If destroy appears to repeat, distinguish replacement instances and actual container callbacks from your own logging. </li><li>The lab is not a runtime debugger.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Who calls init, service and destroy?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Who calls init, service and destroy?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The servlet container manages the lifecycle and invokes those callbacks.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does init run for every request?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does init run for every request?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It initializes that instance before servicing; a replacement instance has its own lifecycle.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why override doGet or doPost instead of service in ordinary HTTP handlers?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why override doGet or doPost instead of service in ordinary HTTP handlers?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>HttpServlet already dispatches HTTP methods; handlers express the application behavior without replacing that dispatcher.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why avoid a mutable currentLearner instance field?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why avoid a mutable currentLearner instance field?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>One servlet instance can handle concurrent requests, so one caller can overwrite another’s data.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is getSession(false) useful for?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is getSession(false) useful for?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Reading an existing valid session without allocating a new session when there is none.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does an existing session prove authentication?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does an existing session prove authentication?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. Identity and authorization require separate trustworthy application checks.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What happens after invalidation?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What happens after invalidation?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>The session is no longer valid; later requests may have no current session, and the old object must not be reused as valid.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does this local lab verify actual cookie or container behavior?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does this local lab verify actual cookie or container behavior?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It checks a synchronous JavaScript model; real deployment, expiry and concurrency require integration tests.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain Servlet Decisions</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="The container supplies the objects used by server-side handlers."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Who creates request and response objects for a servlet?</h3><div class="wt8-options"><button type="button" class="wt8-option">CSS</button><button type="button" class="wt8-option">The servlet container</button><button type="button" class="wt8-option">The sitemap</button><button type="button" class="wt8-option">A browser Java import</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Initialization prepares that instance before it services requests."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. When does init run for an instance?</h3><div class="wt8-options"><button type="button" class="wt8-option">Before each line of code</button><button type="button" class="wt8-option">Only after destroy</button><button type="button" class="wt8-option">Before its first service call</button><button type="button" class="wt8-option">Inside every doGet</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="HttpServlet dispatches a GET to its HTTP handler."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which is a normal read handler?</h3><div class="wt8-options"><button type="button" class="wt8-option">doGet</button><button type="button" class="wt8-option">main only</button><button type="button" class="wt8-option">renderCSS</button><button type="button" class="wt8-option">getSession always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Request-local work avoids sharing one caller’s value through the servlet instance."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Where should one request’s learner input normally be kept?</h3><div class="wt8-options"><button type="button" class="wt8-option">A mutable global field</button><button type="button" class="wt8-option">An unprotected static string</button><button type="button" class="wt8-option">A shared current-user field</button><button type="button" class="wt8-option">A request-local variable</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="It returns the current valid session or null."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. Which session call avoids creating a session?</h3><div class="wt8-options"><button type="button" class="wt8-option">getSession()</button><button type="button" class="wt8-option">getSession(false)</button><button type="button" class="wt8-option">new HttpSession()</button><button type="button" class="wt8-option">invalidate() then getSession()</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="All submission validation precedes session creation or changes."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. When does an invalid POST create a session in this lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">Before validation</button><button type="button" class="wt8-option">After every missing field</button><button type="button" class="wt8-option">It does not</button><button type="button" class="wt8-option">Only for client B</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The stated route contract rejects unsupported methods and declares allowed ones."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. Which outcome is used for an unsupported mapped method?</h3><div class="wt8-options"><button type="button" class="wt8-option">405 with Allow</button><button type="button" class="wt8-option">200 always</button><button type="button" class="wt8-option">A database write</button><button type="button" class="wt8-option">A new session</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="A new instance has a distinct generation and lifecycle."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What happens to a destroyed modeled instance?</h3><div class="wt8-options"><button type="button" class="wt8-option">It services forever</button><button type="button" class="wt8-option">GET revives it</button><button type="button" class="wt8-option">It becomes a cookie</button><button type="button" class="wt8-option">It rejects mapped requests until replacement</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="The read follows getSession(false)-style behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Does an anonymous GET /study allocate a session?</h3><div class="wt8-options"><button type="button" class="wt8-option">Always</button><button type="button" class="wt8-option">No</button><button type="button" class="wt8-option">Only after expiry</button><button type="button" class="wt8-option">Only for B</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="No timer or container is running; the next read stays anonymous."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does the Expire button demonstrate?</h3><div class="wt8-options"><button type="button" class="wt8-option">A real cookie timeout</button><button type="button" class="wt8-option">A JVM shutdown</button><button type="button" class="wt8-option">Manual removal with a stale mock association</button><button type="button" class="wt8-option">Authentication</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Protected actions require trustworthy identity and authorization checks."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Which value proves authorization by itself?</h3><div class="wt8-options"><button type="button" class="wt8-option">None of these: a session, name or submitted role</button><button type="button" class="wt8-option">A learner label</button><button type="button" class="wt8-option">A predictable session ID</button><button type="button" class="wt8-option">Any role parameter</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Concurrency, cookies and runtime integration need separate tests."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Do synchronous model tests prove real servlet concurrency safety?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes</button><button type="button" class="wt8-option">Only on mobile</button><button type="button" class="wt8-option">Only after reset</button><button type="button" class="wt8-option">No</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt23QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict State Transitions</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Anonymous read</h3><p>GET /study for A. Expect init once, 200 anonymous and zero sessions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💾</span><h3>Accepted save</h3><p>POST /study, Demo learner/<strong class="wt-content-key">html</strong>. Expect one <strong class="wt-content-key">session</strong>, saved preference and another service call.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪟</span><h3>Other client</h3><p>Switch to B and GET. Expect anonymous; A’s <strong class="wt-content-key">session</strong> remains unchanged.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Rejected input</h3><p>For A, POST a one-character label or repeated-value shape. Expect 400 and unchanged <strong class="wt-content-key">session</strong> data.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚪</span><h3>Logout twice</h3><p>POST /logout twice for A. Expect 200 both times and no new <strong class="wt-content-key">session</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⌛</span><h3>Stale association</h3><p>Save, expire, then GET. Expect anonymous without recreation; valid POST then creates a new mock ID.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧹</span><h3>Destroy and replace</h3><p>Destroy, then GET: 503 without a service call. Create a new instance and GET: init once for the new generation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛡️</span><h3>Literal text</h3><p>Save learner &lt;Demo&gt; and a valid topic. Expect literal text, <strong class="wt-content-key">JSON</strong> source and no injected element.</p></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧰</span><strong>Container:</strong> Manages lifecycle and dispatch.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗺️</span><strong>Mapping:</strong> Relative to the application context.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚙️</span><strong>Init:</strong> Once for a successfully initialized instance.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Service:</strong> Repeated request processing.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧹</span><strong>Destroy:</strong> Cleanup for the retiring instance.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧵</span><strong>Local data:</strong> Avoid per-request instance fields.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔎</span><strong>Validation:</strong> Reject before session mutation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Read session:</strong> getSession(false) avoids allocation.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🚪</span><strong>Invalidate:</strong> End the valid session association.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Integration:</strong> Verify real runtime separately.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Servlet"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Servlet</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Servlet</h4><p>A container-managed Java request-processing component.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term HttpServlet"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>HttpServlet</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>HttpServlet</h4><p>A servlet base class with HTTP method dispatch and handlers.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Context path"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Context path</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Context path</h4><p>The application’s path prefix within the server.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Servlet mapping"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Servlet mapping</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Servlet mapping</h4><p>A URL pattern associated with a component.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Initialization"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Initialization</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Initialization</h4><p>Preparation before an instance services requests.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Response commitment"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Response commitment</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Response commitment</h4><p>The point at which response metadata/output has been sent and cannot be freely changed.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Request-local variable"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Request-local variable</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Request-local variable</h4><p>A value local to one handler invocation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term HttpSession"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>HttpSession</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>HttpSession</h4><p>Container-managed state associated with a client session.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Invalidation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Invalidation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Invalidation</h4><p>Ending a session’s validity and unbinding its attributes.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Post-Redirect-Get"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Post-Redirect-Get</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Post-Redirect-Get</h4><p>A flow that follows an accepted POST with a redirect to a GET resource.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Specify a Study Servlet</h2><ul class="wt-content-points"><li>Specify GET /study as a read that does not create a <strong class="wt-content-key">session</strong> and POST /study as a validated preference save. </li><li>Define scalar parameter multiplicity, size/type rules, allowed topics and a stable representation before writing <strong class="wt-content-key">response</strong> output.</li></ul><ul class="wt-content-points"><li>Add a logout operation that invalidates without creating, and explain how absent or expired sessions behave. </li><li>Keep <strong class="wt-content-key">request</strong> data local and identify which shared or <strong class="wt-content-key">session</strong> objects need concurrency controls in a real application.</li></ul><ul class="wt-content-points"><li>Trace initialization, repeated service and destruction separately from <strong class="wt-content-key">session</strong> lifetime. </li><li>Design actual container tests for mapping, <strong class="wt-content-key">cookies</strong>, encoding, repeated parameters, expiry and lifecycle behavior. </li><li>The <strong class="wt-content-key">browser</strong> model is only one layer of verification.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain the state before and after every accepted and rejected <strong class="wt-content-key">request</strong>, plus the integration checks that remain. </li><li>Level 24 continues with <strong class="wt-content-key">JSP</strong> — JavaServer Pages.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 23 Complete?</h2><p>Explain lifecycle callbacks and HTTP dispatch, reproduce both mock clients’ independent preferences, and show that invalid input, logout and expiry do not accidentally create sessions. Identify the real-runtime checks this model cannot perform. Completion is a local study marker.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="java-web-technologies.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Java Web Technologies</span><span class="nav-action">Review Level 22</span></a></div><div class="topic-nav-side next"><a href="jsp-java-server-pages.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">JSP — JavaServer Pages</span><span class="nav-action">Open Level 24</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="java-servlets.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=18" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=15" defer></script>
+</body></html>

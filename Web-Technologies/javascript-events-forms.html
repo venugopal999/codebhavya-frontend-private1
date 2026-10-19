@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn event listeners, propagation, default actions, form validation and FormData with diagrams, a visualizer, interactive labs and MCQs.">
+
+    
+
+    <title>
+        Level 17 — JavaScript Events and Forms | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/javascript-events-forms.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt17-skip-link" href="#wt17Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt17Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 17</div><div class="level-badge">LEVEL 17 · EVENTS</div><h1>JavaScript Events and Forms</h1><p class="wt-hero-description">Trace browser interactions and build a clear, correctable form workflow.</p><div class="wt-hero-meta"><span>⚡ Events</span><span>🧭 Propagation</span><span>✅ Forms + validation</span><span>🧪 Labs + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>Level 16 updated a document tree. </li><li>This lesson decides when and why those updates happen. </li><li>You will attach listeners, inspect an <strong class="wt-content-key">event</strong>, trace its propagation, distinguish cancellation from propagation control and handle a form’s submission deliberately.</li></ul><ul class="wt-content-points"><li>Our running task is a local workshop-request preview. </li><li>The learner supplies fictional contact details, chooses a <strong class="wt-content-key">session</strong> and requests places. </li><li>The page checks input, shows field-specific errors and exposes the resulting form data locally. </li><li>The purpose is to understand events and <strong class="wt-content-key">validation</strong>, not to book a real workshop.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🖱️</span><h3>Events</h3><p>Connect meaningful native controls to their actions.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Propagation</h3><p>Trace capture, target and bubble listeners.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Validation</h3><p>Combine native constraints with stated task rules.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Form data</h3><p>Inspect successful controls and handle submit once.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">⚡</span>Events — A Signal That Something Happened</h2><ul class="wt-content-points"><li>An <strong class="wt-content-key">event</strong> represents an occurrence, such as a click, an input change or a form submission. </li><li>The <strong class="wt-content-key">browser</strong> dispatches an <strong class="wt-content-key">event</strong> object through the relevant targets. </li><li>A <strong class="wt-content-key">listener</strong> responds to it with a <strong class="wt-content-key">function</strong>.</li></ul><ul class="wt-content-points"><li>Choose an <strong class="wt-content-key">event</strong> for the task rather than attaching every action to a pointer gesture. </li><li>A native button’s click can be activated through supported <strong class="wt-content-key">keyboard</strong> interaction. </li><li>A form’s submit <strong class="wt-content-key">event</strong> supports the submission workflow beyond a particular button click.</li></ul><ul class="wt-content-points"><li>A programmatically dispatched <strong class="wt-content-key">event</strong> is useful for a controlled test, but it does not automatically prove the <strong class="wt-content-key">browser</strong>’s full native interaction or validation behavior. </li><li>Test the actual control as well as the handler.</li></ul><figure class="wt-diagram"><figcaption>A workshop interaction</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🖱️</span><strong>Native control</strong><p>A learner activates a button or submits the form.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⚡</span><strong>Event object</strong><p>The <strong class="wt-content-key">browser</strong> exposes type, targets and state.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🛠️</span><strong>Listener</strong><p>Code reads values, validates and updates feedback.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">🔌</span>addEventListener — Pass the Function</h2><ul class="wt-content-points"><li>AddEventListener registers a callback for an <strong class="wt-content-key">event</strong> type. </li><li>Pass the <strong class="wt-content-key">function</strong> itself, not the result of immediately calling it. </li><li>A named callback is useful when you need to remove the same <strong class="wt-content-key">listener</strong> later.</li></ul><ul class="wt-content-points"><li>Repeatedly adding distinct anonymous functions can create multiple handlers even if their bodies look identical. </li><li>For a setup routine that can run more than once, guard initialization or manage <strong class="wt-content-key">listener</strong> cleanup.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">HTML</strong> onclick attributes mix behavior into markup and can make maintenance harder. </li><li>This lesson registers listeners in the external lesson script and keeps its native controls understandable from their <strong class="wt-content-key">HTML</strong>.</li></ul><div class="code-block"><pre><code>function showDetails(event) {
+  console.log(event.type);
+}
+button.addEventListener(&quot;click&quot;, showDetails);
+// Later, when this listener is no longer needed:
+button.removeEventListener(&quot;click&quot;, showDetails);</code></pre></div><ul class="wt-content-points"><li>RemoveEventListener needs the matching <strong class="wt-content-key">event</strong> type, callback identity and capture setting. </li><li>Rewriting a visually identical arrow <strong class="wt-content-key">function</strong> does not supply the original callback <strong class="wt-content-key">object</strong>.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Event Object — target and currentTarget</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Event</strong>.target identifies the target associated with the dispatch as exposed to the <strong class="wt-content-key">listener</strong>. </li><li>CurrentTarget is the <strong class="wt-content-key">object</strong> whose <strong class="wt-content-key">listener</strong> is currently running. </li><li>In our simple light-DOM example, clicking a span inside a link can make the span the target while the link remains currentTarget for its own <strong class="wt-content-key">listener</strong>.</li></ul><ul class="wt-content-points"><li><strong class="wt-content-key">Event</strong>.type identifies the event kind. </li><li>EventPhase distinguishes capture, at-target and bubble processing. </li><li>DefaultPrevented indicates whether a cancelable <strong class="wt-content-key">event</strong>’s default action has been canceled.</li></ul><ul class="wt-content-points"><li>Read or copy currentTarget during the <strong class="wt-content-key">listener</strong> if you need it later. </li><li>Its value is tied to <strong class="wt-content-key">listener</strong> invocation and is normally <strong class="wt-content-key">null</strong> after dispatch finishes. </li><li>Complex cases such as shadow <strong class="wt-content-key">DOM</strong> can retarget events; this lab uses an ordinary nested light-DOM structure.</li></ul><div class="code-block"><pre><code>link.addEventListener(&quot;click&quot;, event =&gt; {
+  const observed = {
+    type: event.type,
+    target: event.target.id,
+    listener: event.currentTarget.id,
+    phase: event.eventPhase
+  };
+  console.log(observed);
+});</code></pre></div><p>The event-path lab records these values synchronously rather than storing the <strong class="wt-content-key">event</strong> <strong class="wt-content-key">object</strong> and later assuming currentTarget still names the listener.</p></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Capture, Target and Bubble</h2><ul class="wt-content-points"><li>For a bubbling click, ancestor capture listeners run toward the target, target listeners run, then ancestor bubble listeners run outward. </li><li>A <strong class="wt-content-key">listener</strong> registered with capture: true observes the capture side of that path.</li></ul><ul class="wt-content-points"><li>Our playground has an outer region, an inner region and a link containing a span. </li><li>Its observed listeners normally run outer capture, inner capture, link <strong class="wt-content-key">listener</strong>, inner bubble and outer bubble. </li><li>If the span is clicked, the link is an ancestor of the actual target; if the link itself is the target, its own <strong class="wt-content-key">listener</strong> runs at target.</li></ul><ul class="wt-content-points"><li>Not every <strong class="wt-content-key">event</strong> bubbles. </li><li>Focus and blur differ from bubbling focusin and focusout, for example. </li><li>Choose an <strong class="wt-content-key">event</strong> and inspect its propagation rules before relying on a parent <strong class="wt-content-key">listener</strong>.</li></ul><div class="code-block"><pre><code>outer.addEventListener(&quot;click&quot;, observe, { capture: true });
+inner.addEventListener(&quot;click&quot;, observe, { capture: true });
+link.addEventListener(&quot;click&quot;, observe);
+inner.addEventListener(&quot;click&quot;, observe);
+outer.addEventListener(&quot;click&quot;, observe);</code></pre></div><figure class="wt-diagram"><figcaption>Observed nested click path</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⬇️</span><strong>Capture</strong><p>Outer region → inner region.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>Link listener</strong><p>Read target and currentTarget separately.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⬆️</span><strong>Bubble</strong><p>Inner region → outer region unless stopped.</p></div></div></figure></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">🛑</span>preventDefault and stopPropagation</h2><ul class="wt-content-points"><li>PreventDefault asks the <strong class="wt-content-key">browser</strong> to cancel an <strong class="wt-content-key">event</strong>’s default action when the event is cancelable. </li><li>For a link click, that can cancel navigation. </li><li>It does not automatically stop propagation to other listeners.</li></ul><ul class="wt-content-points"><li>StopPropagation prevents further propagation beyond the current processing point. </li><li>It does not by itself cancel navigation or prevent every other <strong class="wt-content-key">listener</strong> on the same node from running. </li><li>StopImmediatePropagation also stops later listeners on the same node for that <strong class="wt-content-key">event</strong>.</li></ul><ul class="wt-content-points"><li>Passive listeners cannot cancel default actions through preventDefault. </li><li>Use a passive <strong class="wt-content-key">listener</strong> for suitable observation, such as a scroll-related listener that does not need to cancel interaction, rather than setting passive blindly.</li></ul><div class="code-block"><pre><code>link.addEventListener(&quot;click&quot;, event =&gt; {
+  event.preventDefault(); // cancel navigation if cancelable
+  // Ancestor bubble listeners can still run.
+});</code></pre></div><ul class="wt-content-points"><li>In the playground, “Cancel navigation” still records all five observed listeners. </li><li>“Stop propagation” records the two capture listeners and the link <strong class="wt-content-key">listener</strong> while its local fragment navigation remains available.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔗</span>Delegation — Listen on a Stable Parent</h2><ul class="wt-content-points"><li>Delegation uses a suitable ancestor <strong class="wt-content-key">listener</strong> to handle events from its descendants. </li><li>It is useful when cards are inserted after initialization because the parent <strong class="wt-content-key">listener</strong> can remain in place. </li><li>It requires an <strong class="wt-content-key">event</strong> that reaches the parent and careful target checking.</li></ul><ul class="wt-content-points"><li>Closest can find a relevant button when the click landed on a nested icon or span. </li><li>Then confirm that the chosen control belongs to the intended container. </li><li>This avoids letting a broadly matched button trigger an unrelated action.</li></ul><ul class="wt-content-points"><li>Keep the action name controlled and meaningful. </li><li>Delegation is a <strong class="wt-content-key">listener</strong> organization technique, not permission to execute arbitrary text from a data attribute.</li></ul><div class="code-block"><pre><code>list.addEventListener(&quot;click&quot;, event =&gt; {
+  const button = event.target.closest(&quot;button[data-action]&quot;);
+  if (!button || !list.contains(button)) return;
+  if (button.dataset.action === &quot;details&quot;) {
+    showWorkshopDetails(button.dataset.id);
+  }
+});</code></pre></div><ul class="wt-content-points"><li>A <strong class="wt-content-key">listener</strong> stopped before reaching list will not be observed by this delegation example. </li><li>Inspect the actual path when a dynamically added control appears inactive.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">⌨️</span>Click, Keyboard and Native Semantics</h2><ul class="wt-content-points"><li>Use a button for an action and a link for navigation. </li><li>Native controls provide established <strong class="wt-content-key">keyboard</strong> behavior, focus handling and <strong class="wt-content-key">accessibility</strong> semantics. </li><li>A clickable div requires additional work and can still behave inconsistently.</li></ul><ul class="wt-content-points"><li>Do not add a second Enter/Space activation handler to a native button without considering its native click behavior; that can duplicate the action. </li><li>A custom control needs a deliberate <strong class="wt-content-key">keyboard</strong> <strong class="wt-content-key">contract</strong>, but the default choice should be a native control.</li></ul><ul class="wt-content-points"><li>Keydown is useful for tasks such as a documented shortcut. </li><li>Preserve ordinary Tab navigation and text-entry keys unless the specific interaction requires handling them. </li><li>Make the action available visibly as well as through a shortcut.</li></ul><div class="code-block"><pre><code>&lt;button type=&quot;button&quot; id=&quot;details&quot;&gt;Show details&lt;/button&gt;
+&lt;a href=&quot;#workshop-summary&quot;&gt;Read workshop summary&lt;/a&gt;</code></pre></div><ul class="wt-content-points"><li>The playground link can be activated by Enter. </li><li>The registration preview uses a native submit button and a form submit <strong class="wt-content-key">listener</strong>. </li><li>Native <strong class="wt-content-key">browser</strong> behavior remains part of the post-deployment test.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">✍️</span>input, change and Editing Feedback</h2><ul class="wt-content-points"><li>Input generally reports user-driven changes as they occur. </li><li>Change reports a committed change according to the control’s behavior. </li><li>Text inputs, selects and checkboxes do not all commit in exactly the same way.</li></ul><ul class="wt-content-points"><li>Assigning input.value from code does not automatically fire the input <strong class="wt-content-key">event</strong>. </li><li>A program that needs a follow-up update should call its own update <strong class="wt-content-key">function</strong> or dispatch a deliberately chosen <strong class="wt-content-key">event</strong> with a clear purpose.</li></ul><ul class="wt-content-points"><li>Keep editing feedback calm. </li><li>Clear a stale field error when its value is edited, then validate again on submission. </li><li>Avoid stealing focus or announcing the entire form on every keystroke.</li></ul><div class="code-block"><pre><code>nameInput.addEventListener(&quot;input&quot;, () =&gt; {
+  nameInput.setCustomValidity(&quot;&quot;);
+  nameError.textContent = &quot;&quot;;
+  nameInput.removeAttribute(&quot;aria-invalid&quot;);
+});</code></pre></div><ul class="wt-content-points"><li>Clearing an error means the stale message has been removed; it does not guarantee that the new entry meets every rule. </li><li>The lab rechecks the complete form on its next submit attempt.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">📝</span>Forms — Names, Labels and Button Types</h2><ul class="wt-content-points"><li>A label names a control for the learner; a name attribute identifies a field in submitted form data. </li><li>An ID helps connect the label and scripting. </li><li>Those three roles should not be confused.</li></ul><ul class="wt-content-points"><li>Use type="submit" for the primary form action and type="button" for a local helper that should not submit. </li><li>A button without an explicit type inside a form can submit unexpectedly.</li></ul><ul class="wt-content-points"><li>Required, type, min, max and step provide native constraints. </li><li>A select can have an empty required placeholder. </li><li>A checked checkbox can contribute its named value; an unchecked checkbox is omitted from ordinary FormData.</li></ul><div class="code-block"><pre><code>&lt;form id=&quot;request&quot;&gt;
+  &lt;label for=&quot;places&quot;&gt;Places requested&lt;/label&gt;
+  &lt;input id=&quot;places&quot; name=&quot;places&quot; type=&quot;number&quot;
+         min=&quot;1&quot; max=&quot;4&quot; step=&quot;1&quot; required&gt;
+  &lt;button type=&quot;submit&quot;&gt;Preview request&lt;/button&gt;
+  &lt;button type=&quot;button&quot;&gt;Clear messages&lt;/button&gt;
+&lt;/form&gt;</code></pre></div><ul class="wt-content-points"><li>The lab’s limits are teaching rules. </li><li>Native client constraints improve feedback; a real receiving service must validate its own accepted data and business rules.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Handle submit on the Form</h2><ul class="wt-content-points"><li>A form submit <strong class="wt-content-key">listener</strong> handles the form workflow, including supported implicit submission and requestSubmit. </li><li>Listening only to a particular button’s click can miss other ways the form is submitted.</li></ul><ul class="wt-content-points"><li>In the normal native workflow, failing interactive constraints can prevent submission before a submit <strong class="wt-content-key">event</strong> fires. </li><li>The lab uses novalidate intentionally so its submit handler can show inline errors for every attempt, while still consulting native validity APIs.</li></ul><ul class="wt-content-points"><li>PreventDefault is called immediately in the lab’s submit <strong class="wt-content-key">listener</strong> because its result is a local preview. </li><li>It does not send a <strong class="wt-content-key">request</strong> or navigate to a result page. </li><li>The submit button is initially disabled until the script has installed its handler.</li></ul><div class="code-block"><pre><code>form.addEventListener(&quot;submit&quot;, event =&gt; {
+  event.preventDefault();
+  // Validate fields and display a local preview.
+});</code></pre></div><ul class="wt-content-points"><li>One accepted click should produce one handling result. </li><li>Do not duplicate the same <strong class="wt-content-key">validation</strong> in both a click <strong class="wt-content-key">listener</strong> and a submit listener when both would process the same attempt.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Native Validity and Custom Task Rules</h2><ul class="wt-content-points"><li>CheckValidity returns whether applicable controls satisfy their constraints and can fire invalid events. </li><li>ReportValidity also asks the <strong class="wt-content-key">browser</strong> to present native feedback. </li><li>Validity exposes flags such as valueMissing, typeMismatch, rangeOverflow and stepMismatch.</li></ul><ul class="wt-content-points"><li>SetCustomValidity supplies a custom error string. </li><li>A non-empty message keeps the control invalid; clear it with an empty string when rechecking or after editing. </li><li>Forgetting to clear it can leave a corrected field blocked.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">request</strong> lab trims a 2–60-character display name, uses native single-email type checking with a 100-character limit, accepts a known <strong class="wt-content-key">session</strong> and integer places from 1–4, and checks that the selected session has enough places. </li><li><strong class="wt-content-key">HTML</strong> has three available places and <strong class="wt-content-key">JavaScript</strong> has two. </li><li>A checked confirmation is required.</li></ul><div class="code-block"><pre><code>placesInput.setCustomValidity(&quot;&quot;);
+if (requested &gt; available) {
+  placesInput.setCustomValidity(&quot;Request no more than the available places.&quot;);
+}
+const valid = form.checkValidity();</code></pre></div><ul class="wt-content-points"><li>The lab accepts decimal-digit place entries such as 2; fractional or exponential spellings are rejected. </li><li>It checks native validity and displays inline messages rather than calling reportValidity for competing popup feedback. </li><li>Email type checking is a syntax check, not proof of <strong class="wt-content-key">ownership</strong> or deliverability.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">📦</span>FormData — Inspect Successful Controls</h2><ul class="wt-content-points"><li>New FormData(form) collects successful named controls according to the form rules. </li><li>Disabled controls are omitted. </li><li>An unchecked checkbox is omitted. </li><li>A name is needed for an ordinary field to contribute an entry.</li></ul><ul class="wt-content-points"><li>Text and numeric control values usually arrive as strings; a number input does not make FormData produce a Number. </li><li>Repeated field names can have multiple entries, so getAll is useful when multiple values are intended.</li></ul><ul class="wt-content-points"><li>A submit button’s name/value depends on how the submitter is included. </li><li>This lab’s submit button has no name and constructs FormData from the form. </li><li>It shows the raw entries alongside an explicitly normalized places Number.</li></ul><div class="code-block"><pre><code>const data = new FormData(form);
+const entries = Array.from(data.entries());
+const places = Number(data.get(&quot;places&quot;));
+console.log(entries, places);</code></pre></div><ul class="wt-content-points"><li>The optional updates checkbox has value "yes" and appears only when checked. </li><li>The required confirmation appears in accepted data. </li><li>The preview never assumes an omitted checkbox entry is the string "false".</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>requestSubmit, submit and reset</h2><ul class="wt-content-points"><li>RequestSubmit follows a submission workflow similar to activating a submit button: it participates in <strong class="wt-content-key">validation</strong> and dispatches submit when the workflow permits. </li><li>Form.submit bypasses the submit <strong class="wt-content-key">event</strong> and constraint <strong class="wt-content-key">validation</strong>. </li><li>They are not interchangeable helpers.</li></ul><ul class="wt-content-points"><li>Avoid naming a form control submit when the code needs form.submit, because named controls can mask that method. </li><li>Use descriptive field names and keep the submission <strong class="wt-content-key">API</strong> clear.</li></ul><ul class="wt-content-points"><li>Form.reset restores controls to their default states rather than automatically making every field empty. </li><li>It does not clear every custom error, application result or generated message; clear those parts deliberately.</li></ul><div class="code-block"><pre><code>form.requestSubmit(); // validation/submit workflow
+// form.submit() has different behavior and bypasses that handler.
+
+form.reset();
+field.setCustomValidity(&quot;&quot;);
+error.textContent = &quot;&quot;;</code></pre></div><ul class="wt-content-points"><li>The lab’s reset returns to a blank name/email/<strong class="wt-content-key">session</strong>, one requested place and unchecked checkboxes. </li><li>It clears inline validity messages, preview data and the attempt count, then focuses the name field.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">♿</span>Errors, Focus and Honest Outcomes</h2><ul class="wt-content-points"><li>Give each field error a nearby text message and connect it with aria-describedby. </li><li>Set aria-invalid when the attempted entry is rejected. </li><li>A concise status reports the attempt outcome while the detailed errors remain associated with their controls.</li></ul><ul class="wt-content-points"><li>Focus the first invalid field after submission. </li><li>Keep all entered values so the learner can correct them. </li><li>On successful local preview, keep the form usable rather than replacing it with a success screen that hides the controls.</li></ul><ul class="wt-content-points"><li>Client <strong class="wt-content-key">validation</strong> does not reserve a seat or prove that a <strong class="wt-content-key">server</strong> accepted a request. </li><li>The lab reports a local accepted preview. </li><li>A real network form would need loading, <strong class="wt-content-key">server</strong> <strong class="wt-content-key">validation</strong>, response handling and a deliberate policy for repeated attempts; those concerns follow in the asynchronous lesson.</li></ul><figure class="wt-diagram"><figcaption>A useful rejection</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🏷️</span><strong>Field text</strong><p>Describe the specific correction.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⌨️</span><strong>Focus</strong><p>Move to the first invalid control.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">💬</span><strong>Status</strong><p>Report a concise overall result.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>Retry</strong><p>Keep values and validate the corrected attempt.</p></div></div></figure></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — Form Event Journey</h2><p>Follow the fixed submission path through activation, cancellation, validation, collection and reporting. Use the familiar timeline and playback controls. The lab below exposes actual event listeners and a separate form workflow.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="events">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>EVENTS AND FORM TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🖱️</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Activate the native submit control</h3><p data-trace-description>The form workflow reaches its submit listener in the local novalidate demo.</p></div><pre class="trace-code"><code data-trace-code>form.addEventListener(&quot;submit&quot;, handler)</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Activate" aria-pressed="true"><span>01</span><strong>Activate</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Cancel" aria-pressed="false"><span>02</span><strong>Cancel</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Validate" aria-pressed="false"><span>03</span><strong>Validate</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Collect" aria-pressed="false"><span>04</span><strong>Collect</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Report" aria-pressed="false"><span>05</span><strong>Report</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>A native form workflow is broader than one button click. This lab deliberately uses inline validation.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Event Path and Form Lab</h2><ul class="wt-content-points"><li>First choose a propagation mode and activate the nested link by clicking its text or using Enter. </li><li>Inspect the observed target, currentTarget, phase and defaultPrevented values. </li><li>The link points to a nearby marker in this lesson. </li><li>Cancel navigation prevents that fragment action while propagation continues; stop propagation keeps the fragment action but stops the later ancestor listeners.</li></ul><ul class="wt-content-points"><li>Then use fictional values in the local workshop-request form. </li><li>The handler cancels default submission, combines native validity with the stated task rules and previews FormData locally. </li><li>No personal details are sent or saved by this lab. </li><li>Corrected fields are rechecked on the next attempt.</li></ul><div class="wt9-demo"><h3>Event path playground</h3><label for="wt17Mode">Link click behavior</label><select id="wt17Mode"><option value="bubble">Normal propagation and local navigation</option><option value="prevent">Cancel local navigation; keep propagation</option><option value="stop">Stop propagation; keep local navigation</option></select><div id="wt17Outer" class="wt17-event-outer"><strong>Outer region</strong><div id="wt17Inner" class="wt17-event-inner"><strong>Inner region</strong><a href="#wt17EventLanding" id="wt17EventLink" class="wt17-event-link"><span id="wt17EventLabel">Activate this nested link</span></a></div></div><p id="wt17EventLanding" tabindex="-1">Local navigation marker for the event experiment.</p><p id="wt17EventStatus" role="status">Activate the link to inspect its event path.</p><pre class="wt17-result"><code id="wt17EventLog">[]</code></pre><button type="button" class="secondary-button" id="wt17ClearLog">Clear event log</button><h3>Local workshop-request preview</h3><p id="wt17FormHelp">Use fictional values. HTML has 3 places available; JavaScript has 2. Each request must contain 1–4 whole places and fit the selected availability.</p><form id="wt17Form" novalidate aria-describedby="wt17FormHelp"><label for="wt17Name">Display name</label><input id="wt17Name" name="displayName" type="text" required minlength="2" maxlength="60" autocomplete="off" aria-describedby="wt17NameError"><p id="wt17NameError" class="wt17-error"></p><label for="wt17Email">Fictional email for the preview</label><input id="wt17Email" name="email" type="email" required maxlength="100" autocomplete="off" aria-describedby="wt17EmailError"><p id="wt17EmailError" class="wt17-error"></p><label for="wt17Session">Session</label><select id="wt17Session" name="session" required aria-describedby="wt17SessionError"><option value="">Choose a session</option><option value="html">HTML workshop · 3 available</option><option value="javascript">JavaScript workshop · 2 available</option></select><p id="wt17SessionError" class="wt17-error"></p><label for="wt17Places">Places requested</label><input id="wt17Places" name="places" type="number" value="1" min="1" max="4" step="1" required aria-describedby="wt17PlacesError"><p id="wt17PlacesError" class="wt17-error"></p><label class="wt9-choice"><input id="wt17Confirm" name="confirmation" type="checkbox" value="yes" required aria-describedby="wt17ConfirmError"> I understand this is a local teaching preview.</label><p id="wt17ConfirmError" class="wt17-error"></p><label class="wt9-choice"><input id="wt17Updates" name="updates" type="checkbox" value="yes"> Include the optional updates field in the preview.</label><div class="wt9-actions"><button type="submit" class="primary-button" id="wt17Submit" disabled>Preview request</button><button type="button" class="secondary-button" id="wt17Reset">Reset form</button></div></form><p id="wt17FormStatus" role="status">The form becomes available when its local handler is ready.</p><h3>Submission outcome</h3><pre class="wt17-result"><code id="wt17Result">No accepted preview yet.</code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Identify the Event and the Workflow</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚡</span><h3>Handler</h3><p>Check <strong class="wt-content-key">event</strong> type, <strong class="wt-content-key">function</strong> identity and duplicate setup.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Path</h3><p>Inspect target, currentTarget, phase and stopping point.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Validity</h3><p>Clear stale custom errors and inspect native flags.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Data</h3><p>Check names, checkbox state, strings and omitted controls.</p></article></div><ul class="wt-content-points"><li>If preventDefault appears to do nothing, check cancelable and passive status. </li><li>If an ancestor handler is absent, inspect whether propagation was stopped earlier. </li><li>If Enter misses <strong class="wt-content-key">validation</strong>, inspect whether only a click <strong class="wt-content-key">listener</strong> exists. </li><li>If a corrected field stays invalid, check its custom validity message.</li></ul><ul class="wt-content-points"><li>If an optional checkbox is absent from FormData, inspect whether it is checked. </li><li>If a numeric comparison treats a string unexpectedly, convert deliberately and validate the whole entry. </li><li>If every click increments an attempt twice, look for two listeners processing the same submit.</li></ul><ul class="wt-content-points"><li>Repeat a small workflow: blank attempt, fill valid fields, <strong class="wt-content-key">request</strong> too many places, correct places, preview once, edit one field and reset. </li><li>Keep the <strong class="wt-content-key">event</strong> log and form outcome separate so a link click is not mistaken for a form submission.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why handle a form’s submit event rather than only its button click?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why handle a form’s submit event rather than only its button click?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Submit represents the form workflow, including supported implicit submission and requestSubmit. A click-only handler can miss other submission paths.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do target and currentTarget differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do target and currentTarget differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Target identifies the exposed event target; currentTarget identifies the object whose listener is currently running.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does preventDefault stop bubbling?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does preventDefault stop bubbling?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It cancels an applicable default action; propagation continues unless separately stopped.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Does stopPropagation cancel a link’s navigation?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Does stopPropagation cancel a link’s navigation?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. It stops further propagation, but default cancellation requires preventDefault when the event is cancelable.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What makes delegation useful for dynamic cards?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What makes delegation useful for dynamic cards?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A stable parent can observe a suitable bubbling event from descendants inserted later, while checking the intended target and scope.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why clear setCustomValidity before rechecking?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why clear setCustomValidity before rechecking?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A non-empty custom message keeps a control invalid even after its visible value is corrected.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What does FormData do with an unchecked checkbox?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What does FormData do with an unchecked checkbox?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It normally omits that control’s entry. The missing entry is not automatically the text false.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question How do requestSubmit and submit differ?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>How do requestSubmit and submit differ?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>RequestSubmit follows the validation and submit-event workflow. The submit method bypasses constraint validation and the submit event.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Explain the Event and Form</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Passing the function registers it; calling it immediately supplies its return value instead."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Which value should be passed to addEventListener as a callback?</h3><div class="wt8-options"><button type="button" class="wt8-option">The result of calling the handler</button><button type="button" class="wt8-option">The handler function</button><button type="button" class="wt8-option">A CSS selector</button><button type="button" class="wt8-option">The form data</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="CurrentTarget is tied to the current listener invocation."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Which property identifies the object whose listener is running?</h3><div class="wt8-options"><button type="button" class="wt8-option">target always</button><button type="button" class="wt8-option">type</button><button type="button" class="wt8-option">currentTarget</button><button type="button" class="wt8-option">defaultPrevented</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="Capture proceeds from the observed outer ancestor toward the target."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. Which observed listener runs first in the normal playground path?</h3><div class="wt8-options"><button type="button" class="wt8-option">Outer capture</button><button type="button" class="wt8-option">Link listener</button><button type="button" class="wt8-option">Inner bubble</button><button type="button" class="wt8-option">Outer bubble</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The default navigation is canceled, while propagation can continue."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. What does preventDefault do for this cancelable link click?</h3><div class="wt8-options"><button type="button" class="wt8-option">Deletes its listener</button><button type="button" class="wt8-option">Stops every ancestor listener</button><button type="button" class="wt8-option">Clears its text</button><button type="button" class="wt8-option">Cancels local fragment navigation</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="It stops the later ancestor propagation without canceling the default action by itself."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does stopPropagation do in the link listener?</h3><div class="wt8-options"><button type="button" class="wt8-option">Cancels navigation automatically</button><button type="button" class="wt8-option">Stops further propagation</button><button type="button" class="wt8-option">Removes the form</button><button type="button" class="wt8-option">Converts values</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="A form submit listener handles more than one specific button click path."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. Which event should handle the request form’s workflow?</h3><div class="wt8-options"><button type="button" class="wt8-option">mouseover</button><button type="button" class="wt8-option">keydown only</button><button type="button" class="wt8-option">submit</button><button type="button" class="wt8-option">scroll</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The handler still performs explicit native and custom checks for inline messages."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. What does novalidate change in this demo?</h3><div class="wt8-options"><button type="button" class="wt8-option">Every control becomes valid</button><button type="button" class="wt8-option">Names are ignored</button><button type="button" class="wt8-option">FormData is disabled</button><button type="button" class="wt8-option">Automatic interactive validation is bypassed</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="SetCustomValidity(&quot;&quot;) clears the custom error."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. Which value clears a custom validity error?</h3><div class="wt8-options"><button type="button" class="wt8-option">An empty string</button><button type="button" class="wt8-option">false as an attribute</button><button type="button" class="wt8-option">A space-only error</button><button type="button" class="wt8-option">The original error message</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Convert and validate deliberately when the application needs a Number."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. How does FormData ordinarily represent a number input?</h3><div class="wt8-options"><button type="button" class="wt8-option">As a Number always</button><button type="button" class="wt8-option">As a string entry</button><button type="button" class="wt8-option">As a function</button><button type="button" class="wt8-option">As a validity object</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="Only a checked successful checkbox contributes its named value here."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What happens to the unchecked optional updates checkbox?</h3><div class="wt8-options"><button type="button" class="wt8-option">It produces &quot;false&quot;</button><button type="button" class="wt8-option">It produces 0</button><button type="button" class="wt8-option">Its entry is omitted</button><button type="button" class="wt8-option">It prevents every submit</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The submit method has different behavior from requestSubmit."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Which method bypasses submit listeners and constraint validation?</h3><div class="wt8-options"><button type="button" class="wt8-option">requestSubmit</button><button type="button" class="wt8-option">checkValidity</button><button type="button" class="wt8-option">reset</button><button type="button" class="wt8-option">submit</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The general 1–4 rule is further limited by the JavaScript session’s two available places."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. How many places can an accepted JavaScript request contain here?</h3><div class="wt8-options"><button type="button" class="wt8-option">1 or 2</button><button type="button" class="wt8-option">Any number from 1–4</button><button type="button" class="wt8-option">0 only</button><button type="button" class="wt8-option">At least 3</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt17QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Test Specific Interactions</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Normal path</h3><p>Activate the nested link in normal mode. Expected: five observed listeners; target and <strong class="wt-content-key">listener</strong> IDs can differ.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🛑</span><h3>Cancellation</h3><p>Choose cancel navigation. Expected: five observed listeners and defaultPrevented becomes true at the link <strong class="wt-content-key">listener</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✋</span><h3>Stopping</h3><p>Choose stop propagation. Expected: two capture entries plus the link entry; later inner/outer bubble entries are absent.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📭</span><h3>Blank attempt</h3><p>Submit untouched fields. Expected: inline required errors and focus on the name field.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Accepted values</h3><ul class="wt-content-points"><li>Use Demo Learner, learner@example.com, <strong class="wt-content-key">HTML</strong>, 3 places and confirmation. </li><li>Expected: a local accepted preview with numeric places 3.</li></ul></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚫</span><h3>Capacity rule</h3><p>Choose <strong class="wt-content-key">JavaScript</strong> and 3 places. Expected: places error because only two are available.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📦</span><h3>Optional entry</h3><p>Preview with updates unchecked, then checked. Expected: updates omitted, then updates="yes".</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Correction/reset</h3><ul class="wt-content-points"><li>Correct an invalid place count and retry, then reset. </li><li>Expected: stale error clears, one handling result per attempt and defaults restored.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">⚡</span><strong>Listeners:</strong> Register callbacks without calling them immediately.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🎯</span><strong>Targets:</strong> Separate target from current listener identity.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Path:</strong> Capture and bubble describe propagation order.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🛑</span><strong>Cancel:</strong> Default action and propagation are separate decisions.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔗</span><strong>Delegation:</strong> Use a stable parent and checked descendant target.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✍️</span><strong>Editing:</strong> Clear stale messages without claiming full validity.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Submit:</strong> Handle the form workflow once.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Validation:</strong> Combine native constraints and explicit task rules.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📦</span><strong>FormData:</strong> Understand strings and omitted controls.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔄</span><strong>Outcome:</strong> Preserve correction paths and report local scope honestly.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Event"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Event</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Event</h4><p>An object representing an occurrence dispatched through event targets.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Listener"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Listener</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Listener</h4><p>A callback registered to respond to an event type.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Target"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Target</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Target</h4><p>The event target exposed to the current listener.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Current target"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Current target</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Current target</h4><p>The object whose event listener is currently running.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Capture"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Capture</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Capture</h4><p>Propagation toward the target through applicable ancestor listeners.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Bubbling"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Bubbling</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Bubbling</h4><p>Propagation outward through applicable ancestor listeners.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Default action"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Default action</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Default action</h4><p>A browser behavior associated with an event, such as navigation.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Delegation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Delegation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Delegation</h4><p>Handling suitable descendant events through a parent listener.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Constraint validation"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Constraint validation</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Constraint validation</h4><p>Checking controls against applicable native and custom validity rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Successful control"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Successful control</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Successful control</h4><p>A form control that contributes data under the form-entry rules.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — A Clear Local Request Workflow</h2><ul class="wt-content-points"><li>Build a labeled local workshop-request form with one submit handler. </li><li>Keep native constraints in the <strong class="wt-content-key">HTML</strong>, explain any deliberate novalidate choice and enforce the selected <strong class="wt-content-key">session</strong>’s available places. </li><li>Use nearby described errors, a concise status and a useful correction focus path.</li></ul><ul class="wt-content-points"><li>Clear custom errors before the next check. </li><li>Read FormData only for an accepted preview, show its raw strings and normalize the numeric places explicitly. </li><li>Treat an unchecked optional checkbox as omitted. </li><li>Preserve the form and user entries so a rejected <strong class="wt-content-key">request</strong> can be corrected.</li></ul><ul class="wt-content-points"><li>Test blank values, malformed email, an unknown <strong class="wt-content-key">session</strong>, zero/fractional/too-many places, unchecked confirmation, accepted <strong class="wt-content-key">HTML</strong> 3, rejected JavaScript 3 and accepted JavaScript 2. </li><li>Confirm one result per submit attempt and defaults after reset. </li><li>Test native mouse and <strong class="wt-content-key">keyboard</strong> paths in a <strong class="wt-content-key">browser</strong>.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> explain target/currentTarget, propagation versus cancellation, native versus custom checks and the <strong class="wt-content-key">scope</strong> of the local result. </li><li>Level 18 will introduce asynchronous <strong class="wt-content-key">JavaScript</strong> and <strong class="wt-content-key">API</strong> requests.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 17 Complete?</h2><p>Before marking complete, trace a nested event, cancel its default action deliberately, submit a form through its own listener and correct a field-specific error. Completion is a local study marker rather than an assessment score.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="dom-browser-programming.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">DOM and Browser Programming</span><span class="nav-action">Review Level 16</span></a></div><div class="topic-nav-side next"><a href="asynchronous-javascript-apis.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">Asynchronous JavaScript and APIs</span><span class="nav-action">Open Level 18</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="javascript-events-forms.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=12" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=9" defer></script>
+</body></html>

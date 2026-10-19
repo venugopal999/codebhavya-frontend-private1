@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="description" content="Learn server-side execution, routes, validation, identity, permissions and responses with diagrams, a visualizer, backend simulation and MCQs.">
+
+    
+
+    <title>
+        Level 20 — Server-Side Web Programming | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 09 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/server-side-web-programming.html">
+<style>
+.wt9-demo{background:#101317;border:1px solid #65cbd244;border-radius:14px;padding:20px;margin-top:18px;min-width:0}
+.wt9-demo label{display:block;margin:12px 0 6px;color:#efc65b}
+.wt9-demo input:not([type=checkbox]):not([type=radio]),.wt9-demo select,.wt9-demo textarea{box-sizing:border-box;width:100%;max-width:100%;padding:11px;background:#20262c;color:#eef3f5;border:1px solid #71818b;border-radius:8px;font:inherit}
+.wt9-demo fieldset{min-width:0;border:1px solid #71818b;border-radius:9px;margin:14px 0;padding:14px}
+.wt9-demo .wt9-choice{display:flex;align-items:center;gap:8px;color:#eef3f5}
+.wt9-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.wt9-table-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+.wt9-table{width:100%;border-collapse:collapse}.wt9-table th,.wt9-table td{border:1px solid #71818b;padding:12px;text-align:left}.wt9-table caption{text-align:left;margin-bottom:12px;color:#efc65b}
+.wt9-status{white-space:pre-wrap;overflow-wrap:anywhere;min-height:3em}
+.wt9-demo pre{max-width:100%;overflow-x:auto}
+
+.wt8-flip-card:focus-visible,.wt8-option:focus-visible{outline:3px solid #efc65b;outline-offset:4px}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course"><a class="wt20-skip-link" href="#wt20Main">Skip to lesson content</a><header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header><div class="reading-progress-wrap" aria-hidden="true"><div class="reading-progress" id="readingProgress"></div></div><main class="wt-page" id="wt20Main" tabindex="-1"><section class="wt-hero"><div class="wt-breadcrumb">Web Technologies <span>›</span> Level 20</div><div class="level-badge">LEVEL 20 · BACKEND</div><h1>Server-Side Web Programming</h1><p class="wt-hero-description">Trace a request through trusted checks, business rules and a deliberate response.</p><div class="wt-hero-meta"><span>🖥️ Backend</span><span>📨 Requests + responses</span><span>🔐 Identity + permissions</span><span>🧪 Lab + MCQs</span></div></section><section class="content-section " id="lesson-section-1"><div class="section-number">01</div><h2><span class="wt-heading-icon" aria-hidden="true">🎯</span>Learning Objectives</h2><ul class="wt-content-points"><li>The last lessons handled <strong class="wt-content-key">browser</strong> events, <strong class="wt-content-key">API</strong> responses and local preferences. </li><li>This lesson follows the other end of the <strong class="wt-content-key">request</strong>: the application that decides what <strong class="wt-content-key">response</strong> to return. </li><li>You will separate a <strong class="wt-content-key">browser</strong> interface from server-owned data, trace a handler pipeline and explain why a client-side check cannot protect a <strong class="wt-content-key">backend</strong>.</li></ul><ul class="wt-content-points"><li>Our example is a small workshop service. </li><li>Guests can read the catalog, recognized users can create bookings, and an administrator can inspect an aggregate report. </li><li>The interactive lab simulates this pipeline locally so you can inspect every decision without needing a <strong class="wt-content-key">backend</strong> account.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📨</span><h3>Requests</h3><p>Identify method, path, headers and body.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Routing</h3><p>Select a handler and reject unsupported operations.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Checks</h3><p>Validate input and apply identity, permission and capacity rules.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📤</span><h3>Responses</h3><p>Return a deliberate status and representation.</p></article></div></section>
+<section class="content-section " id="lesson-section-2"><div class="section-number">02</div><h2><span class="wt-heading-icon" aria-hidden="true">🖥️</span>Where Does the Code Execute?</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Browser</strong> code controls the interface in the learner’s device. </li><li>Server-side code executes in a <strong class="wt-content-key">backend</strong> environment and produces responses to requests. </li><li>Both can use <strong class="wt-content-key">JavaScript</strong>, but they have different capabilities, inputs and trust boundaries. </li><li>A filename ending in .js does not tell you where that code executes.</li></ul><ul class="wt-content-points"><li>A <strong class="wt-content-key">server</strong> can work with private configuration and shared records that are not shipped to every <strong class="wt-content-key">browser</strong>. </li><li><strong class="wt-content-key">Browser</strong> scripts can read and change their own interface, and users can inspect or modify what that browser sends. </li><li>Sending a secret inside <strong class="wt-content-key">frontend</strong> <strong class="wt-content-key">JavaScript</strong> does not make it private.</li></ul><ul class="wt-content-points"><li>For the workshop example, the <strong class="wt-content-key">browser</strong> displays available places and collects a requested quantity. </li><li>The <strong class="wt-content-key">backend</strong> must decide the current capacity and whether to create a booking. </li><li>A learner cannot authorize a reservation by changing a displayed counter or sending an admin field.</li></ul><figure class="wt-diagram"><figcaption>Separate execution responsibilities</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Browser</strong><p>Display a form and provide immediate feedback.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Request</strong><p>Carry the requested operation and input.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🖥️</span><strong>Backend</strong><p>Check rules against trusted application state.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Response</strong><p>Return the result for the <strong class="wt-content-key">browser</strong> to display.</p></div></div></figure><ul class="wt-content-points"><li>The lab intentionally puts both sides into one page for teaching. </li><li>That makes its “<strong class="wt-content-key">server</strong>” inspectable and editable too. </li><li>It demonstrates the order of checks; it cannot provide the protection of a separately deployed <strong class="wt-content-key">backend</strong>.</li></ul><h3>Static Resources and Dynamic Responses</h3><ul class="wt-content-points"><li>A static resource can be returned from a stored file, such as a course <strong class="wt-content-key">HTML</strong> page, image or stylesheet. </li><li>A dynamic <strong class="wt-content-key">response</strong> is computed from <strong class="wt-content-key">request</strong> information and application state. </li><li>A workshop catalog may be generated from current records even when its visual layout stays the same.</li></ul><ul class="wt-content-points"><li>A dynamic application still serves static assets. </li><li>Its <strong class="wt-content-key">HTML</strong> may reference ordinary <strong class="wt-content-key">CSS</strong> and JavaScript files. </li><li>A static <strong class="wt-content-key">frontend</strong> can also call a separate dynamic <strong class="wt-content-key">API</strong>; server rendering is not required for every feature.</li></ul><ul class="wt-content-points"><li>Consider two learners requesting their bookings. </li><li>The route can be identical, but the recognized identity determines which records are returned. </li><li>The <strong class="wt-content-key">response</strong> must be based on the correct user’s records rather than a browser-supplied user ID treated as authority.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🗂️</span><h3>Stored file</h3><p>A stylesheet can be served without constructing its contents per learner.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Catalog API</h3><p>A handler can return a current list as <strong class="wt-content-key">JSON</strong>.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Personal page</h3><p>A <strong class="wt-content-key">server</strong> can render a page from a recognized user’s records.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔄</span><h3>Mixed application</h3><p>Static assets and dynamic handlers can work together.</p></article></div><ul class="wt-content-points"><li>“Dynamic” describes how a <strong class="wt-content-key">response</strong> is produced, not whether the page has animations. </li><li>A <strong class="wt-content-key">frontend</strong> animation can run entirely in the <strong class="wt-content-key">browser</strong>, while a visually plain page can be generated dynamically.</li></ul></section>
+<section class="content-section " id="lesson-section-3"><div class="section-number">03</div><h2><span class="wt-heading-icon" aria-hidden="true">📨</span>Read the Request: Method, Path, Headers and Body</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">request</strong> describes an operation. </li><li>Its method conveys intended semantics, the path selects the target, headers carry metadata and the body can contain submitted data. </li><li>Query parameters belong to the <strong class="wt-content-key">URL</strong> and need their own parsing and <strong class="wt-content-key">validation</strong>.</li></ul><ul class="wt-content-points"><li>Our lab’s POST /bookings <strong class="wt-content-key">request</strong> uses a <strong class="wt-content-key">JSON</strong> body with exactly workshopId and seats. </li><li><strong class="wt-content-key">Content-Type</strong> identifies the supplied representation. </li><li>An <strong class="wt-content-key">Authorization</strong> header carries a visibly fake fixture token so the local simulator can look up a predefined identity.</li></ul><ul class="wt-content-points"><li>The preview shows what the simulator receives. </li><li>GET handlers ignore the body controls; POST /bookings parses the body only after route, method and identity checks. </li><li>This deliberate order is part of the exercise’s <strong class="wt-content-key">contract</strong>, not a requirement that all real frameworks have an identical middleware order.</li></ul><div class="code-block"><pre><code>POST /bookings HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer fixture-learner
+
+{&quot;workshopId&quot;:&quot;html&quot;,&quot;seats&quot;:1}</code></pre></div><ul class="wt-content-points"><li>This is an illustrative <strong class="wt-content-key">request</strong>, not a live endpoint or usable credential. </li><li>A real client and <strong class="wt-content-key">backend</strong> must agree on their <strong class="wt-content-key">contract</strong>, transport and authentication mechanism. </li><li>Do not paste real tokens into the teaching lab.</li></ul></section>
+<section class="content-section " id="lesson-section-4"><div class="section-number">04</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Routing — Match the Target Before the Handler</h2><ul class="wt-content-points"><li>A router maps a method and path to a handler. </li><li>Known paths may permit different methods. </li><li>In our simulation, GET /workshops reads the catalog; GET /bookings reads the current identity’s bookings; POST /bookings attempts a new booking.</li></ul><ul class="wt-content-points"><li>An unknown path returns 404. </li><li>A known path with an unsupported method returns 405 and an Allow header listing the methods this simulation supports. </li><li>DELETE /workshops is therefore different from GET /missing.</li></ul><ul class="wt-content-points"><li>Do not treat a path as a filename or execute arbitrary code based on it. </li><li>A framework normally offers explicit route declarations and parameter parsing. </li><li>The simulator uses a fixed route map so you can see the decision without learning one framework’s syntax.</li></ul><div class="wt9-table-wrap"><table class="wt9-table"><thead><tr><th>Path</th><th>Supported methods</th><th>Rule</th></tr></thead><tbody><tr><td>/workshops</td><td>GET</td><td>Public catalog, no mutation</td></tr><tr><td>/profile</td><td>GET</td><td>Recognized identity</td></tr><tr><td>/bookings</td><td>GET, POST</td><td>Own records or a validated booking</td></tr><tr><td>/admin/report</td><td>GET</td><td>Administrator only</td></tr></tbody></table></div><ul class="wt-content-points"><li>The toy router models only the listed methods. </li><li>It does not implement a full web <strong class="wt-content-key">server</strong>’s handling of HEAD, OPTIONS, query strings, trailing slashes or <strong class="wt-content-key">URL</strong> decoding. </li><li>A production router needs those decisions to be tested against its documented behavior.</li></ul></section>
+<section class="content-section " id="lesson-section-5"><div class="section-number">05</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Methods Describe the Intended Operation</h2><ul class="wt-content-points"><li>GET is intended for reading a representation without requesting a state change. </li><li>A <strong class="wt-content-key">request</strong> can still produce logs or other incidental effects, but a GET route should not book places merely because a learner follows its link.</li></ul><ul class="wt-content-points"><li>POST asks a target to process supplied data according to its <strong class="wt-content-key">contract</strong>. </li><li>In the lab, an accepted POST creates a booking. </li><li>Repeating the same <strong class="wt-content-key">request</strong> creates another booking if capacity permits; this exercise does not implement deduplication or an <strong class="wt-content-key">idempotency</strong> key.</li></ul><ul class="wt-content-points"><li>Do not assume that POST encrypts its body. </li><li><strong class="wt-content-key">HTTPS</strong> protects transport, while <strong class="wt-content-key">server</strong> validation and authorization decide what the operation may do. </li><li>Keeping a value out of a query string does not make it trustworthy.</li></ul><div class="code-block"><pre><code>// Contract examples — not live calls from this page:
+// GET /workshops       -&gt; read current catalog
+// GET /bookings        -&gt; read this identity&#x27;s bookings
+// POST /bookings       -&gt; attempt to create a booking
+// DELETE /workshops    -&gt; unsupported here: 405</code></pre></div><ul class="wt-content-points"><li>For a real create operation, decide what retries mean. </li><li>Network failure can leave a client uncertain whether a write completed. </li><li>A server-side <strong class="wt-content-key">idempotency</strong> strategy can make intended retries safe; merely disabling a <strong class="wt-content-key">browser</strong> button is insufficient.</li></ul></section>
+<section class="content-section " id="lesson-section-6"><div class="section-number">06</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Parse Input, Then Validate Its Meaning</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">JSON</strong> parser checks text syntax and produces a value. </li><li>It does not prove that the value contains the right fields or types. </li><li>A valid <strong class="wt-content-key">JSON</strong> string, <strong class="wt-content-key">array</strong> or null is unacceptable for our booking object.</li></ul><ul class="wt-content-points"><li>The exact lab <strong class="wt-content-key">contract</strong> is {workshopId, seats}. </li><li>WorkshopId must be <strong class="wt-content-key">html</strong>, <strong class="wt-content-key">css</strong> or javascript. </li><li>Seats must be a numeric integer from 1 to 3. </li><li>Extra fields, including a client-supplied role or userId, are rejected. </li><li>The accepted booking owner is derived from the recognized identity.</li></ul><ul class="wt-content-points"><li>The body must be <strong class="wt-content-key">JSON</strong> and at most 2048 characters for this local exercise. </li><li>In a deployed service, request-byte limits should also be enforced before an unbounded body is read or parsed. </li><li><strong class="wt-content-key">Browser</strong> maxlength and <strong class="wt-content-key">HTML</strong> validation improve feedback but can be bypassed.</li></ul><div class="code-block"><pre><code>const parsed = JSON.parse(rawBody);
+// Check exact shape, allowed workshopId and integer seats.
+const accepted = validateBooking(parsed);
+// A loaded &quot;1&quot; string is not the required numeric 1.</code></pre></div><ul class="wt-content-points"><li>Our <strong class="wt-content-key">API</strong> chooses 400 for malformed <strong class="wt-content-key">JSON</strong> or invalid fields and 415 for an unsupported media type. </li><li>Other APIs may use a different documented <strong class="wt-content-key">validation</strong> status. </li><li>The important behavior is a clear rejection before changing records.</li></ul></section>
+<section class="content-section " id="lesson-section-7"><div class="section-number">07</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>A Handler Pipeline with Clear Boundaries</h2><ul class="wt-content-points"><li>A handler often follows several stages: route selection, identity checks, parsing, <strong class="wt-content-key">validation</strong>, business rules, a data operation and <strong class="wt-content-key">response</strong> construction. </li><li>Keeping these stages clear makes failures easier to explain and test.</li></ul><ul class="wt-content-points"><li>The simulator first checks route and method. </li><li>Protected routes then identify the caller. </li><li>An admin-only handler checks its role. </li><li>The booking handler checks media type, parses bounded text, validates the data, checks remaining places and finally commits one change.</li></ul><ul class="wt-content-points"><li>An early rejection ends the pipeline. </li><li>A <strong class="wt-content-key">request</strong> with an invalid identity never reaches the booking mutation. </li><li>The trace records which stage accepted or rejected the <strong class="wt-content-key">request</strong>, and the <strong class="wt-content-key">response</strong> explains the outcome without showing internal stack traces.</li></ul><figure class="wt-diagram"><figcaption>Follow a booking handler</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Route</strong><p>Select POST /bookings.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Identity</strong><p>Look up the fixture credential.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Input and rules</strong><p>Validate the record and current capacity.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">💾</span><strong>Commit and respond</strong><p>Create one booking, then return 201.</p></div></div></figure><ul class="wt-content-points"><li>Real frameworks may place some checks in middleware shared by many handlers. </li><li>Shared middleware reduces repetition, but you still need to know what data it validates and what trusted identity it supplies to a route.</li></ul></section>
+<section class="content-section " id="lesson-section-8"><div class="section-number">08</div><h2><span class="wt-heading-icon" aria-hidden="true">📤</span>HTML Templates and JSON APIs</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">backend</strong> can render an <strong class="wt-content-key">HTML</strong> document using a template and records, or return JSON for a browser script to render. </li><li>These are two representation choices. </li><li>The same application may use both for different routes.</li></ul><ul class="wt-content-points"><li>Templates separate a layout from values inserted into it. </li><li>Use the template engine’s appropriate escaping behavior and avoid treating untrusted input as trusted markup. </li><li>For a <strong class="wt-content-key">JSON</strong> <strong class="wt-content-key">API</strong>, validate the output contract and render values as text where HTML is not intended.</li></ul><ul class="wt-content-points"><li>The lab returns JSON-shaped <strong class="wt-content-key">response</strong> objects. </li><li>Its <strong class="wt-content-key">response</strong> panel is not an <strong class="wt-content-key">HTTP</strong> connection; it displays status, headers and body so you can inspect the contract. </li><li>All displayed values use <strong class="wt-content-key">textContent</strong>.</li></ul><div class="code-block"><pre><code>// JSON response concept:
+{
+  &quot;id&quot;: &quot;booking-1&quot;,
+  &quot;workshopId&quot;: &quot;html&quot;,
+  &quot;seats&quot;: 1
+}
+// A template could instead place these values into an HTML page.</code></pre></div><ul class="wt-content-points"><li>A successful status and correct <strong class="wt-content-key">Content-Type</strong> should match the returned representation. </li><li>Do not make a client guess whether a body is a <strong class="wt-content-key">JSON</strong> result or an <strong class="wt-content-key">HTML</strong> error page. </li><li>The <strong class="wt-content-key">API</strong> loader in Level 18 already demonstrated why status checking and body parsing are separate stages.</li></ul></section>
+<section class="content-section " id="lesson-section-9"><div class="section-number">09</div><h2><span class="wt-heading-icon" aria-hidden="true">🗃️</span>Shared Data and Business Rules</h2><ul class="wt-content-points"><li>A real workshop service needs shared, durable records. </li><li>Two learners should not each receive a separate unlimited supply of places merely because they opened different <strong class="wt-content-key">browser</strong> tabs. </li><li>A <strong class="wt-content-key">database</strong> or other server-owned store can provide the shared state.</li></ul><ul class="wt-content-points"><li>Input validity and business validity differ. </li><li>The number 2 can be a valid requested quantity, but a workshop with only one remaining place cannot accept it. </li><li>Our lab returns 409 for that conflict and leaves its records unchanged.</li></ul><ul class="wt-content-points"><li>The simulation begins with <strong class="wt-content-key">HTML</strong>: 3 places, <strong class="wt-content-key">CSS</strong>: 2 and JavaScript: 0. </li><li>A successful booking decreases the selected remaining count and adds a booking. </li><li>It is a synchronous memory exercise, so it does not demonstrate <strong class="wt-content-key">database</strong> durability or concurrent transactions.</li></ul><div class="code-block"><pre><code>// Illustrative SQL shape; bind parameters through the driver.
+UPDATE workshops
+SET remaining = remaining - :seats
+WHERE id = :id AND remaining &gt;= :seats;
+// Check affected rows and insert the booking in one transaction.</code></pre></div><ul class="wt-content-points"><li>The statement is a design illustration, not a complete <strong class="wt-content-key">database</strong> program. </li><li>In a real implementation, the capacity update and booking insert must succeed or roll back together, with an appropriate concurrency strategy. </li><li>A <strong class="wt-content-key">browser</strong> counter and a separate check-then-write are not enough.</li></ul></section>
+<section class="content-section " id="lesson-section-10"><div class="section-number">10</div><h2><span class="wt-heading-icon" aria-hidden="true">🪪</span>Sessions Connect Requests to an Identity</h2><ul class="wt-content-points"><li><strong class="wt-content-key">HTTP</strong> requests do not themselves carry an application’s remembered user <strong class="wt-content-key">object</strong>. </li><li>An application may use an identifier to look up server-owned <strong class="wt-content-key">session</strong> state. </li><li>That state can include a user ID, expiry and relevant <strong class="wt-content-key">authentication</strong> context.</li></ul><ul class="wt-content-points"><li>A common <strong class="wt-content-key">browser</strong> flow uses a <strong class="wt-content-key">session</strong> cookie managed by the server. </li><li>Other applications use explicitly supplied <strong class="wt-content-key">authorization</strong> tokens. </li><li>These mechanisms have different security and lifecycle requirements. </li><li><strong class="wt-content-key">Session</strong> storage in the <strong class="wt-content-key">browser</strong> is not the server session and cannot establish an authenticated identity by itself.</li></ul><ul class="wt-content-points"><li>Our lab uses public fake Bearer fixture tokens to select guest, learner, administrator or expired identity behavior. </li><li>A predefined lookup supplies the mock user and role. </li><li>There is no login, password, real <strong class="wt-content-key">cookie</strong>, secret credential or verified account in this page.</li></ul><figure class="wt-diagram"><figcaption>Recognize a caller</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Credential input</strong><p>A <strong class="wt-content-key">request</strong> presents an identifier.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗂️</span><strong>Trusted lookup</strong><p>The <strong class="wt-content-key">backend</strong> validates it against its own rules.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">👤</span><strong>Identity</strong><p>A recognized user is available to the handler.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">⏳</span><strong>Lifecycle</strong><p>Expiry, logout and revocation need deliberate handling.</p></div></div></figure><ul class="wt-content-points"><li>In a real service, identifiers must be created and protected appropriately, and sessions must expire or be invalidated when required. </li><li>Do not copy the lab’s fixed strings into a production <strong class="wt-content-key">authentication</strong> system.</li></ul></section>
+<section class="content-section " id="lesson-section-11"><div class="section-number">11</div><h2><span class="wt-heading-icon" aria-hidden="true">🔐</span>Authentication and Authorization Answer Different Questions</h2><ul class="wt-content-points"><li><strong class="wt-content-key">Authentication</strong> establishes who the caller is under the application’s rules. </li><li><strong class="wt-content-key">Authorization</strong> checks whether that caller may perform the requested operation on the target resource. </li><li>A recognized learner is still not an administrator.</li></ul><ul class="wt-content-points"><li>The simulator returns 401 with a Bearer challenge when a protected route lacks a recognized fixture. </li><li>It returns 403 when the learner requests /admin/report. </li><li>Public /workshops does not require an identity.</li></ul><ul class="wt-content-points"><li>For GET /bookings, the <strong class="wt-content-key">response</strong> is filtered by the user ID obtained from the lookup. </li><li>A <strong class="wt-content-key">request</strong> body cannot nominate a different owner. </li><li>For POST, the record’s owner is assigned by the handler. </li><li>This avoids making <strong class="wt-content-key">ownership</strong> depend on a client-editable field.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪪</span><h3>Who?</h3><p>Recognize the credential through the trusted lookup.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔐</span><h3>Allowed?</h3><p>Apply the route’s permission rule.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Whose record?</h3><p>Use the recognized user when reading or creating records.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🚫</span><h3>Rejected</h3><p>Stop before a data operation when a check fails.</p></article></div><ul class="wt-content-points"><li><strong class="wt-content-key">Authorization</strong> belongs on the <strong class="wt-content-key">server</strong> at every protected operation. </li><li>Hiding an admin button or disabling a control only changes the interface; it does not prevent a user from sending the <strong class="wt-content-key">request</strong> another way.</li></ul></section>
+<section class="content-section " id="lesson-section-12"><div class="section-number">12</div><h2><span class="wt-heading-icon" aria-hidden="true">⚠️</span>Status Codes and Useful Failure Responses</h2><ul class="wt-content-points"><li>A status should describe the outcome, while the body gives enough information for the caller to respond. </li><li>The simulator uses 200 for accepted reads and 201 for a newly created booking. </li><li>A success message appears only after its mock commit.</li></ul><ul class="wt-content-points"><li>Failure responses are deliberate: 400 invalid body, 401 unrecognized identity, 403 insufficient role, 404 unknown path, 405 unsupported method, 409 capacity conflict, 415 wrong media type and 500 the injected failure before commit. </li><li>A failed <strong class="wt-content-key">request</strong> does not create a booking.</li></ul><ul class="wt-content-points"><li>The server-failure switch affects only an otherwise acceptable POST booking and triggers before mutation. </li><li>Invalid requests still fail at their earlier checks. </li><li>This ordering helps learners separate a <strong class="wt-content-key">validation</strong> error from a <strong class="wt-content-key">backend</strong> operation failure.</li></ul><div class="wt9-table-wrap"><table class="wt9-table"><thead><tr><th>Try this</th><th>Expected status</th><th>State change</th></tr></thead><tbody><tr><td>GET /workshops as guest</td><td>200</td><td>None</td></tr><tr><td>POST /bookings as guest</td><td>401</td><td>None</td></tr><tr><td>GET /admin/report as learner</td><td>403</td><td>None</td></tr><tr><td>Valid booking of an available place</td><td>201</td><td>One booking and reduced remaining count</td></tr><tr><td>Valid request for unavailable places</td><td>409</td><td>None</td></tr></tbody></table></div><ul class="wt-content-points"><li>A real <strong class="wt-content-key">server</strong> can log diagnostic details privately while returning a stable public error. </li><li>Avoid leaking credentials, <strong class="wt-content-key">database</strong> statements or stack traces in responses. </li><li>The trace in this teaching page is intentionally a visible explanation, not production logging.</li></ul></section>
+<section class="content-section " id="lesson-section-13"><div class="section-number">13</div><h2><span class="wt-heading-icon" aria-hidden="true">🛡️</span>Security Is More Than Input Validation</h2><ul class="wt-content-points"><li>Validate inputs on the <strong class="wt-content-key">backend</strong>, but also use defenses appropriate to where the data goes. </li><li>Parameterized <strong class="wt-content-key">database</strong> queries keep values separate from query code. </li><li>Output escaping or encoding depends on the destination context. </li><li><strong class="wt-content-key">Authorization</strong> checks keep records limited to permitted callers.</li></ul><ul class="wt-content-points"><li>Cookie-authenticated state-changing requests need a deliberate cross-site <strong class="wt-content-key">request</strong> forgery strategy, such as the framework’s validated <strong class="wt-content-key">CSRF</strong> protection. </li><li><strong class="wt-content-key">SameSite</strong> <strong class="wt-content-key">cookie</strong> policy can contribute, but choosing POST alone is not a complete defense. </li><li>The fixture lab does not model cross-site requests or implement production <strong class="wt-content-key">CSRF</strong> protection.</li></ul><ul class="wt-content-points"><li>Keep secrets in <strong class="wt-content-key">backend</strong> configuration rather than public assets. </li><li>Use <strong class="wt-content-key">HTTPS</strong>, resource limits, dependency maintenance and appropriate logging. </li><li>Each protects a different part of the application; none turns a client-controlled role field into authority.</li></ul><div class="code-block"><pre><code>// Unsafe design idea:
+// authorize(request.body.role === &quot;admin&quot;);
+// Better boundary:
+// recognized = verifyCredential(request);
+// requirePermission(recognized, &quot;view-report&quot;);</code></pre></div><ul class="wt-content-points"><li>The commented names above describe responsibilities, not a ready-made security library. </li><li>Use a framework’s documented facilities and test the entire application flow. </li><li>The next language lessons can implement these concepts within their own runtime.</li></ul></section>
+<section class="content-section " id="lesson-section-14"><div class="section-number">14</div><h2><span class="wt-heading-icon" aria-hidden="true">🧩</span>Runtime, Configuration and Deployment</h2><ul class="wt-content-points"><li>A <strong class="wt-content-key">backend</strong> needs an environment that can execute its language and accept requests. </li><li>Uploading <strong class="wt-content-key">PHP</strong> or Python source beside static <strong class="wt-content-key">frontend</strong> files does not make a static file host execute it. </li><li>The hosting setup must provide the matching runtime or a separately deployed service.</li></ul><ul class="wt-content-points"><li>Configuration commonly includes service URLs, <strong class="wt-content-key">database</strong> access and secrets. </li><li>Distinguish public settings needed by the <strong class="wt-content-key">browser</strong> from private values used only by the <strong class="wt-content-key">backend</strong>. </li><li>A <strong class="wt-content-key">frontend</strong> repository should not become a delivery mechanism for <strong class="wt-content-key">database</strong> credentials.</li></ul><ul class="wt-content-points"><li>Keep <strong class="wt-content-key">browser</strong> and <strong class="wt-content-key">backend</strong> changes connected through a documented API contract. </li><li>A health <strong class="wt-content-key">response</strong> can confirm that a service answers a basic check, but it does not prove that booking <strong class="wt-content-key">validation</strong>, authentication or a database write works. </li><li>Test those flows separately.</li></ul><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚙️</span><h3>Runtime</h3><p>Execute the <strong class="wt-content-key">server</strong> language in a supported environment.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔑</span><h3>Configuration</h3><p>Keep private values in the <strong class="wt-content-key">backend</strong>’s protected settings.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📜</span><h3>Contract</h3><p>Agree on routes, input, statuses and <strong class="wt-content-key">response</strong> fields.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧪</span><h3>Verification</h3><p>Check real operations, errors and deployed behavior.</p></article></div><ul class="wt-content-points"><li>This lesson ships only <strong class="wt-content-key">frontend</strong> teaching files. </li><li>It neither deploys an <strong class="wt-content-key">API</strong> nor adds a <strong class="wt-content-key">database</strong>. </li><li>The local lab is useful preparation, and its <strong class="wt-content-key">request</strong> paths remain hypothetical until a real <strong class="wt-content-key">backend</strong> implements them.</li></ul></section>
+<section class="content-section " id="lesson-section-15"><div class="section-number">15</div><h2><span class="wt-heading-icon" aria-hidden="true">🧭</span>Connect the Browser to a Tested Backend</h2><ul class="wt-content-points"><li>Start with one complete flow rather than many unexplained endpoints. </li><li>Define a catalog read and a booking create <strong class="wt-content-key">contract</strong>. </li><li>Implement the <strong class="wt-content-key">server</strong> checks and data operation, then connect the <strong class="wt-content-key">browser</strong> with clear loading, success and failure states.</li></ul><ul class="wt-content-points"><li>The <strong class="wt-content-key">browser</strong> should inspect status, parse the expected representation and validate what it displays. </li><li>The <strong class="wt-content-key">backend</strong> should validate and authorize independently, even if the <strong class="wt-content-key">browser</strong> already rejects bad inputs. </li><li>These complementary checks serve different responsibilities.</li></ul><ul class="wt-content-points"><li>Test missing identity, a wrong role, malformed data, insufficient capacity and a failed write. </li><li>For a durable system, also test retries and concurrent requests. </li><li>A successful local simulation does not establish that a deployed runtime or <strong class="wt-content-key">database</strong> behaves correctly.</li></ul><figure class="wt-diagram"><figcaption>Verify one full application flow</figcaption><div class="wt-diagram-grid"><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🪟</span><strong>Interface</strong><p>Collect the learner’s requested operation.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🖥️</span><strong>Handler</strong><p>Validate and apply trusted rules.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Data operation</strong><p>Commit consistently or leave records unchanged.</p></div><div class="wt-diagram-node"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Outcome</strong><p>Return and display a deliberate result.</p></div></div></figure><ul class="wt-content-points"><li>The visualizer below follows an accepted booking. </li><li>The interactive lab lets you interrupt the flow at different stages and inspect the unchanged or updated mock state. </li><li>Next, <strong class="wt-content-key">PHP</strong> Fundamentals will introduce a concrete <strong class="wt-content-key">server</strong> language while preserving these boundaries.</li></ul></section>
+<section class="content-section visualizer-section" id="lesson-section-16"><div class="section-number">16</div><h2><span class="wt-heading-icon" aria-hidden="true">🔄</span>Premium Visualizer — A Server Request Pipeline</h2><p>Follow one accepted booking from request through route, identity, validation and a mock commit. The player uses the same approved five-stage presentation as the earlier lessons. The lab separately exposes the rejection paths.</p><div class="visualizer-shell wt-premium-trace" data-premium-trace="server">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>SERVER REQUEST PIPELINE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">📨</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Receive the booking request</h3><p data-trace-description>A client requests one HTML place using the agreed JSON contract.</p></div><pre class="trace-code"><code data-trace-code>POST /bookings {&quot;workshopId&quot;:&quot;html&quot;,&quot;seats&quot;:1}</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Go to step 1: Request" aria-pressed="true"><span>01</span><strong>Request</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Go to step 2: Route" aria-pressed="false"><span>02</span><strong>Route</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Go to step 3: Identify" aria-pressed="false"><span>03</span><strong>Identify</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Go to step 4: Check" aria-pressed="false"><span>04</span><strong>Check</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Go to step 5: Commit" aria-pressed="false"><span>05</span><strong>Commit</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>This is a local teaching trace. A deployed backend would receive an actual HTTP request.</p></div></div></section>
+<section class="content-section " id="lesson-section-17"><div class="section-number">17</div><h2><span class="wt-heading-icon" aria-hidden="true">🧪</span>Premium Interactive — Workshop Backend Simulator</h2><ul class="wt-content-points"><li>This is a local simulation, not a deployed <strong class="wt-content-key">API</strong>, login or real booking service. </li><li>It sends no network requests and creates no <strong class="wt-content-key">cookies</strong>. </li><li>All fixture identities and mock records are public teaching data in this page. </li><li>Refresh or Reset simulator restores the starting state.</li></ul><ul class="wt-content-points"><li>Choose a method, path and fake identity fixture. </li><li>GET /workshops is public. </li><li>Protected reads require a recognized identity; /admin/report requires the admin fixture. </li><li>POST /bookings accepts exactly workshopId and numeric seats from 1 to 3. </li><li>It assigns <strong class="wt-content-key">ownership</strong> from the fixture lookup, not the body.</li></ul><ul class="wt-content-points"><li>Start with <strong class="wt-content-key">HTML</strong>: 3 places, <strong class="wt-content-key">CSS</strong>: 2 and JavaScript: 0. </li><li>Successful bookings consume places; repeated accepted POSTs create additional bookings. </li><li>The injected failure affects only an otherwise valid POST before commit. </li><li>Inspect the <strong class="wt-content-key">request</strong>, staged trace, <strong class="wt-content-key">response</strong> and mock state after every action.</li></ul><div class="wt9-demo wt20-lab"><label for="wt20Method">Request method</label><select id="wt20Method"><option value="GET">GET · read</option><option value="POST">POST · create booking</option><option value="DELETE">DELETE · unsupported in this simulation</option></select><label for="wt20Path">Request path</label><select id="wt20Path"><option value="/workshops">/workshops · public catalog</option><option value="/profile">/profile · recognized identity</option><option value="/bookings">/bookings · own list or create</option><option value="/admin/report">/admin/report · admin only</option><option value="/missing">/missing · unknown path</option></select><label for="wt20Identity">Public fake identity fixture · no real account</label><select id="wt20Identity"><option value="guest">Guest · no credential</option><option value="learner">Learner · user-1</option><option value="admin">Administrator · user-2</option><option value="expired">Expired or unrecognized fixture</option></select><label for="wt20Type">POST body media type</label><select id="wt20Type" aria-describedby="wt20BodyHelp"><option value="application/json">application/json</option><option value="text/plain">text/plain · rejected for booking create</option></select><label for="wt20Body">POST booking body · JSON, maximum 2048 characters</label><textarea id="wt20Body" rows="4" maxlength="2048" aria-describedby="wt20BodyHelp">{"workshopId":"html","seats":1}</textarea><p id="wt20BodyHelp">GET routes ignore this body. The booking contract accepts only workshopId and numeric seats. Use fictional data; never paste real credentials here.</p><label for="wt20Fault">Mock backend operation</label><select id="wt20Fault"><option value="normal">Normal · commit an accepted booking</option><option value="server">Simulate server failure · before an otherwise valid booking commit</option></select><div class="wt9-actions"><button type="button" class="primary-button" id="wt20Send">Process simulated request</button><button type="button" class="secondary-button" id="wt20Reset">Reset simulator · clear mock bookings</button></div><p id="wt20Status" role="status">Idle. No simulated request processed.</p><h3>Request passed to the local handler</h3><pre class="wt20-result"><code id="wt20Request">No request yet.</code></pre><h3>Handler stage trace</h3><pre class="wt20-result"><code id="wt20Trace">No trace yet.</code></pre><h3>Simulated response · status, headers and JSON body</h3><pre class="wt20-result"><code id="wt20Response">No response yet.</code></pre><h3>Mock backend state · visible for teaching</h3><pre class="wt20-result"><code id="wt20State">Starting places: HTML 3, CSS 2, JavaScript 0. No bookings.</code></pre></div></section>
+<section class="content-section " id="lesson-section-18"><div class="section-number">18</div><h2><span class="wt-heading-icon" aria-hidden="true">🛠️</span>Debugging — Find the First Failed Check</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Route or method</h3><p>404 means unknown target here; 405 includes the supported methods.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪪</span><h3>Identity or permission</h3><p>Distinguish an unrecognized caller from a recognized caller without the required role.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">✅</span><h3>Body or rule</h3><p>Separate <strong class="wt-content-key">JSON</strong> syntax, record <strong class="wt-content-key">validation</strong> and capacity conflicts.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💾</span><h3>Commit</h3><p>A failed operation must not consume places or create a partial booking.</p></article></div><ul class="wt-content-points"><li>If a guest POST returns 401 instead of 400 for bad <strong class="wt-content-key">JSON</strong>, inspect the trace: this handler checks identity before parsing. </li><li>If a learner cannot open the report, signing in as that learner again does not supply the administrator permission.</li></ul><ul class="wt-content-points"><li>If a valid <strong class="wt-content-key">request</strong> receives 409, read the current mock remaining count. </li><li>Repeated successful POSTs have already consumed places. </li><li>Reset restores the fixtures, but it also deliberately clears all bookings in this simulation.</li></ul><ul class="wt-content-points"><li>If a failed <strong class="wt-content-key">request</strong> changes mock state, compare the mutation boundary with the rejected stage. </li><li>A production <strong class="wt-content-key">database</strong> requires its own <strong class="wt-content-key">rollback</strong> and concurrency tests; the synchronous simulator does not establish those properties.</li></ul></section>
+<section class="content-section " id="lesson-section-19"><div class="section-number">19</div><h2><span class="wt-heading-icon" aria-hidden="true">💬</span>Interview Questions — Flip to Explain</h2><div class="wt8-flip-grid"><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can frontend form validation protect the backend by itself?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can frontend form validation protect the backend by itself?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. A caller can bypass browser checks. The backend must validate the received data and apply its own rules.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What is the difference between static and dynamic responses?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What is the difference between static and dynamic responses?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Static content can be served from stored resources; dynamic content is computed from request information and application state. A dynamic application can still serve static assets.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What distinguishes a 404 from a 405 in this lab?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What distinguishes a 404 from a 405 in this lab?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>404 is an unknown path. 405 is a known path with an unsupported method and includes an Allow header.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why is an integer quantity still subject to a business check?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why is an integer quantity still subject to a business check?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>It may be a valid input but exceed the current remaining places. Validation and capacity rules answer different questions.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What distinguishes authentication and authorization?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What distinguishes authentication and authorization?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>Authentication recognizes the caller. Authorization decides whether that caller may perform the operation on the resource.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Can a booking body choose its trusted owner or administrator role?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Can a booking body choose its trusted owner or administrator role?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>No. The handler derives ownership and permissions from the recognized identity, not client-supplied claims.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question Why is this browser simulator not a real protected backend?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>Why is this browser simulator not a real protected backend?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>All its code, fixtures and state run in the browser and can be inspected or changed. It teaches a pipeline without implementing a separate server.</p></div></div></article><article class="wt8-flip-card" data-wt-shared-flip role="button" tabindex="0" aria-pressed="false" aria-label="Flip interview question What must a real capacity update and booking insert provide?"><div class="wt8-flip-inner"><div class="wt8-flip-front"><span class="flip-card-label">QUESTION</span><h3>What must a real capacity update and booking insert provide?</h3><span class="flip-card-hint">Click or press Enter to explain</span></div><div class="wt8-flip-back"><span class="flip-card-label">ANSWER</span><p>A consistent transaction and concurrency strategy so both succeed together or neither leaves a partial result. The local synchronous exercise does not test database guarantees.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-20"><div class="section-number">20</div><h2><span class="wt-heading-icon" aria-hidden="true">❓</span>MCQ Practice — Trace the Backend Decision</h2><div class="wt8-mcq-grid"><article class="wt8-mcq" data-answer="1" data-explanation="Browser checks can be bypassed; the backend must check the received request."><span class="wt8-difficulty easy">PRACTICE</span><h3>1. Where must a real backend validate a booking request?</h3><div class="wt8-options"><button type="button" class="wt8-option">Only in the browser</button><button type="button" class="wt8-option">In the backend handler or its trusted validation layer</button><button type="button" class="wt8-option">Only in CSS</button><button type="button" class="wt8-option">Only after inserting it</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="GET /workshops returns a public catalog without changing records."><span class="wt8-difficulty easy">PRACTICE</span><h3>2. Which route reads the public catalog in this lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">POST /profile</button><button type="button" class="wt8-option">DELETE /workshops</button><button type="button" class="wt8-option">GET /workshops</button><button type="button" class="wt8-option">GET /missing</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The router rejects an unknown target before handler work."><span class="wt8-difficulty easy">PRACTICE</span><h3>3. What does an unknown /missing path return here?</h3><div class="wt8-options"><button type="button" class="wt8-option">404</button><button type="button" class="wt8-option">201</button><button type="button" class="wt8-option">409</button><button type="button" class="wt8-option">415</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The target exists, but the selected method is unsupported."><span class="wt8-difficulty easy">PRACTICE</span><h3>4. Which response accompanies an unsupported method on a known path?</h3><div class="wt8-options"><button type="button" class="wt8-option">200 with a new booking</button><button type="button" class="wt8-option">401 with a password</button><button type="button" class="wt8-option">409 without a response</button><button type="button" class="wt8-option">405 with an Allow header</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="This handler checks identity before parsing the booking body."><span class="wt8-difficulty easy">PRACTICE</span><h3>5. What does a guest POST /bookings encounter first?</h3><div class="wt8-options"><button type="button" class="wt8-option">A database insert</button><button type="button" class="wt8-option">401 identity rejection</button><button type="button" class="wt8-option">A successful admin report</button><button type="button" class="wt8-option">A capacity decrease</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="The learner is recognized but lacks the administrator role."><span class="wt8-difficulty easy">PRACTICE</span><h3>6. What does a learner GET /admin/report return?</h3><div class="wt8-options"><button type="button" class="wt8-option">201</button><button type="button" class="wt8-option">400</button><button type="button" class="wt8-option">403</button><button type="button" class="wt8-option">500 always</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The accepted number must be an integer from 1 to 3; loaded strings are not coerced."><span class="wt8-difficulty easy">PRACTICE</span><h3>7. Which JSON seats value meets the numeric contract?</h3><div class="wt8-options"><button type="button" class="wt8-option">2</button><button type="button" class="wt8-option">&quot;2&quot;</button><button type="button" class="wt8-option">0</button><button type="button" class="wt8-option">2.5</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="The request conflicts with current availability and is rejected before commit."><span class="wt8-difficulty easy">PRACTICE</span><h3>8. What happens to a valid request when places are insufficient?</h3><div class="wt8-options"><button type="button" class="wt8-option">Capacity becomes negative</button><button type="button" class="wt8-option">A booking is created anyway</button><button type="button" class="wt8-option">The body becomes HTML</button><button type="button" class="wt8-option">409 and no mutation</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="1" data-explanation="Trusted ownership is assigned from the identity lookup."><span class="wt8-difficulty easy">PRACTICE</span><h3>9. Where does the booking owner come from?</h3><div class="wt8-options"><button type="button" class="wt8-option">The note textarea</button><button type="button" class="wt8-option">The recognized fixture identity</button><button type="button" class="wt8-option">A body role field</button><button type="button" class="wt8-option">The page title</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="2" data-explanation="It simulates failure before mutation, leaving the mock state unchanged."><span class="wt8-difficulty easy">PRACTICE</span><h3>10. What does the injected server failure do here?</h3><div class="wt8-options"><button type="button" class="wt8-option">Clears all records</button><button type="button" class="wt8-option">Reserves half the seats</button><button type="button" class="wt8-option">Returns 500 before an otherwise valid commit</button><button type="button" class="wt8-option">Creates an admin account</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="0" data-explanation="The exercise deliberately has no idempotency key or request deduplication."><span class="wt8-difficulty easy">PRACTICE</span><h3>11. Is repeating an accepted POST deduplicated in this lab?</h3><div class="wt8-options"><button type="button" class="wt8-option">No; another booking can be created if capacity permits</button><button type="button" class="wt8-option">Yes, always by the browser</button><button type="button" class="wt8-option">Only CSS bookings</button><button type="button" class="wt8-option">It becomes a GET</button><div class="wt8-feedback" aria-live="polite"></div></div></article><article class="wt8-mcq" data-answer="3" data-explanation="Synchronous browser memory does not establish durable transactions or concurrent server behavior."><span class="wt8-difficulty easy">PRACTICE</span><h3>12. Does the local simulator prove deployed database concurrency safety?</h3><div class="wt8-options"><button type="button" class="wt8-option">Yes, for every database</button><button type="button" class="wt8-option">Yes, because it uses JSON</button><button type="button" class="wt8-option">Yes, because the button is styled</button><button type="button" class="wt8-option">No; a real backend and database need their own tests</button><div class="wt8-feedback" aria-live="polite"></div></div></article></div><div class="wt9-actions"><button type="button" class="secondary-button" id="wt20QuizReset">Reset quiz</button></div></section>
+<section class="content-section " id="lesson-section-21"><div class="section-number">21</div><h2><span class="wt-heading-icon" aria-hidden="true">💻</span>Extra Practice — Predict and Verify the Response</h2><div class="wt8-concept-grid"><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">📚</span><h3>Public read</h3><p>Reset, then GET /workshops as guest. Expected: 200; remaining 3/2/0 and no bookings.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🪪</span><h3>Missing identity</h3><p>POST /bookings as guest with valid <strong class="wt-content-key">JSON</strong>. Expected: 401, Bearer challenge, no mutation.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔐</span><h3>Wrong role</h3><p>GET /admin/report as learner, then as admin. Expected: 403 followed by 200.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🧭</span><h3>Routing</h3><p>Try GET /missing and DELETE /workshops. Expected: 404, then 405 with Allow: GET.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">🔤</span><h3>Body validation</h3><p>As learner POST /bookings with malformed <strong class="wt-content-key">JSON</strong>, seats "1" or an extra role. Expected: 400, no mutation; text/plain gives 415.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">💾</span><h3>Create</h3><p>As learner POST <strong class="wt-content-key">HTML</strong>/2. Expected: 201; HTML remaining 1, one booking owned by user-1.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">⚠️</span><h3>Conflict or failure</h3><p><strong class="wt-content-key">Request</strong> <strong class="wt-content-key">HTML</strong>/2 again: 409. Then request HTML/1 with server failure: 500. Expected: remaining stays 1.</p></article><article class="wt8-concept-card"><span class="wt-card-icon" aria-hidden="true">👤</span><h3>Ownership and reset</h3><ul class="wt-content-points"><li>GET /bookings as learner and admin. </li><li>Expected: each sees its own records. </li><li>Reset: all fixtures restored and mock bookings cleared.</li></ul></article></div></section>
+<section class="content-section " id="lesson-section-22"><div class="section-number">22</div><h2><span class="wt-heading-icon" aria-hidden="true">📌</span>Quick Revision</h2><div class="wt8-revision-grid"><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🖥️</span><strong>Execution:</strong> Browser and backend have different responsibilities.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📄</span><strong>Responses:</strong> Static assets and computed content can coexist.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📨</span><strong>Request:</strong> Read method, path, headers and body.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧭</span><strong>Route:</strong> Match explicit allowed operations.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">✅</span><strong>Validate:</strong> Parse syntax, then check record meaning.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🪪</span><strong>Identity:</strong> Recognize a caller through trusted rules.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🔐</span><strong>Permission:</strong> Check role and resource ownership.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🗃️</span><strong>Commit:</strong> Keep shared records consistent.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">📤</span><strong>Status:</strong> Describe success and the failed stage clearly.</div><div class="wt8-revision-item"><span class="wt-card-icon" aria-hidden="true">🧪</span><strong>Scope:</strong> A local simulation is preparation for deployed testing.</div></div></section>
+<section class="content-section " id="lesson-section-23"><div class="section-number">23</div><h2><span class="wt-heading-icon" aria-hidden="true">📖</span>Glossary — Flip to Learn</h2><div class="wt-terms-grid"><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Backend"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Backend</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Backend</h4><p>The application environment that executes server-side logic and produces responses.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Dynamic response"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Dynamic response</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Dynamic response</h4><p>Content computed using request information and application state.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Route"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Route</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Route</h4><p>A mapping from a request target and allowed method to a handler.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Handler"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Handler</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Handler</h4><p>Code that processes an accepted request and constructs its outcome.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Middleware"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Middleware</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Middleware</h4><p>Shared processing that runs around or before route-specific handler work.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Authentication"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Authentication</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Authentication</h4><p>Establishing the caller’s identity under the application’s rules.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Authorization"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Authorization</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Authorization</h4><p>Deciding whether a recognized caller may perform an operation on a resource.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Session"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Session</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Session</h4><p>Application state associated with a recognized request identity and its lifecycle.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Transaction"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Transaction</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Transaction</h4><p>A coordinated data operation that commits or rolls back related changes together.</p></div></div></article><article class="wt-term-card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip glossary term Idempotency"><div class="wt-term-inner"><div class="wt-term-front"><span class="flip-card-label">TERM</span><h3>Idempotency</h3><span class="flip-card-hint">Click to see meaning</span></div><div class="wt-term-back"><span class="flip-card-label">DEFINITION</span><h4>Idempotency</h4><p>A property where repeating an operation has the same intended effect as performing it once.</p></div></div></article></div></section>
+<section class="content-section " id="lesson-section-24"><div class="section-number">24</div><h2><span class="wt-heading-icon" aria-hidden="true">🏆</span>Final Challenge — Specify a Real Booking Service</h2><ul class="wt-content-points"><li>Write a <strong class="wt-content-key">contract</strong> for catalog reads, protected booking creation, own-booking reads and an administrator report. </li><li>Specify methods, fields, body limits, identity requirements, permission checks and deliberate status codes. </li><li>Separate <strong class="wt-content-key">browser</strong> feedback from <strong class="wt-content-key">backend</strong> enforcement.</li></ul><ul class="wt-content-points"><li>Trace each lab scenario and state which check fails first. </li><li>Keep malformed input, denied requests, capacity conflicts and a failed commit from changing records. </li><li>Explain why <strong class="wt-content-key">ownership</strong> comes from trusted identity and why a repeated POST may need an <strong class="wt-content-key">idempotency</strong> design.</li></ul><ul class="wt-content-points"><li>For a deployed implementation, select a runtime, protected configuration and shared data store. </li><li>Use a suitable <strong class="wt-content-key">transaction</strong> for capacity and booking records, then test concurrent requests, retry behavior, sessions and real <strong class="wt-content-key">HTTP</strong> responses. </li><li>Do not claim those guarantees from the <strong class="wt-content-key">browser</strong> simulation alone.</li></ul><ul class="wt-content-points"><li><strong>Success criterion:</strong> describe a complete request-to-response flow with clear boundaries and honest outcomes. </li><li>Level 21 introduces <strong class="wt-content-key">PHP</strong> Fundamentals as a concrete <strong class="wt-content-key">server</strong> language.</li></ul></section>
+<section class="content-section completion-section" id="lesson-section-25"><div class="section-number">25</div><h2><span class="wt-heading-icon" aria-hidden="true">✅</span>Level 20 Complete?</h2><p>Before marking complete, trace a successful booking and reproduce route, identity, permission, body, capacity and pre-commit failure outcomes. Explain how the real backend would differ from this teaching simulation. Completion is a local study marker, not a verified assessment.</p><button type="button" class="primary-button" id="completeLesson">✓ Mark Lesson Complete</button><p id="completionMessage" class="completion-message" aria-live="polite"></p></section><nav class="topic-navigation" aria-label="Lesson navigation"><div class="topic-nav-side"><a href="browser-storage-web-apis.html" class="topic-nav-card"><span class="nav-label">← Previous</span><span class="nav-topic-name">Browser Storage and Web APIs</span><span class="nav-action">Review Level 19</span></a></div><div class="topic-nav-side next"><a href="php-fundamentals.html" class="topic-nav-card"><span class="nav-label">Next →</span><span class="nav-topic-name">PHP Fundamentals</span><span class="nav-action">Open Level 21</span></a></div></nav></main><footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer><script src="server-side-web-programming.js?v=1"></script><script src="web-technologies-mobile-nav.js?v=15" defer></script><script src="web-technologies-presentation.js?v=4"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=12" defer></script>
+</body></html>

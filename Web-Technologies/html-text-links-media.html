@@ -1,0 +1,3834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="CodeBhavya Web Technologies Level 08 — HTML Text, Links and Media. Learn text formatting, hyperlinks, images, audio, video, iframes and embedded content."
+    >
+
+    <meta
+        name="keywords"
+        content="HTML text, HTML links, hyperlinks, HTML images, alt attribute, HTML audio, HTML video, iframe, Web Technologies, CodeBhavya"
+    >
+
+    <title>
+        Level 08 — HTML Text, Links and Media | CodeBhavya
+    </title>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="web-technologies.css">
+    <link rel="stylesheet" href="web-technologies-index.css">
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=7">
+
+    <style>
+
+        /* =========================================================
+           LEVEL 08 — LOCAL ENHANCEMENTS
+           ========================================================= */
+
+        .wt8-objective-grid,
+        .wt8-concept-grid,
+        .wt8-comparison-grid,
+        .wt8-media-grid,
+        .wt8-mistake-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-objective-card,
+        .wt8-concept-card,
+        .wt8-comparison-card,
+        .wt8-media-card,
+        .wt8-mistake-card {
+            background: linear-gradient(
+                145deg,
+                rgba(35,40,45,.96),
+                rgba(24,28,32,.96)
+            );
+            border: 1px solid rgba(101,203,210,.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition:
+                transform .22s ease,
+                border-color .22s ease,
+                box-shadow .22s ease;
+        }
+
+        .wt8-objective-card:hover,
+        .wt8-concept-card:hover,
+        .wt8-comparison-card:hover,
+        .wt8-media-card:hover,
+        .wt8-mistake-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(101,203,210,.38);
+            box-shadow: 0 12px 30px rgba(0,0,0,.20);
+        }
+
+        .wt8-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(101,203,210,.10);
+            border: 1px solid rgba(101,203,210,.20);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wt8-objective-card h3,
+        .wt8-concept-card h3,
+        .wt8-comparison-card h3,
+        .wt8-media-card h3,
+        .wt8-mistake-card h3 {
+            margin: 0 0 8px;
+            color: #efc65b;
+        }
+
+        .wt8-objective-card p,
+        .wt8-concept-card p,
+        .wt8-comparison-card p,
+        .wt8-media-card p,
+        .wt8-mistake-card p {
+            margin: 0;
+            line-height: 1.75;
+        }
+
+        .wt8-key-box {
+            margin: 20px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #65cbd2;
+            background: rgba(101,203,210,.07);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .wt8-key-box strong {
+            color: #65cbd2;
+        }
+
+        .wt8-example-output {
+            margin-top: 14px;
+            padding: 16px 18px;
+            background: #101317;
+            border: 1px solid rgba(103,197,150,.20);
+            border-radius: 12px;
+        }
+
+        .wt8-example-output strong {
+            color: #67c596;
+        }
+
+        .wt8-code-title {
+            color: #e6a75b;
+            font-size: .85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .wt8-code {
+            overflow-x: auto;
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 16px;
+            line-height: 1.7;
+        }
+
+        .wt8-code code {
+            white-space: pre;
+        }
+
+        .wt8-anatomy {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-anatomy-item {
+            padding: 16px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.13);
+        }
+
+        .wt8-anatomy-item .num {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239,198,91,.12);
+            color: #efc65b;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .wt8-anatomy-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #65cbd2;
+        }
+
+        /* =========================================================
+           PATH EXPLORER
+           ========================================================= */
+
+        .wt8-path-explorer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-path-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .wt8-path-panel h4 {
+            margin-top: 0;
+            color: #65cbd2;
+        }
+
+        .wt8-path-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .wt8-path-btn {
+            border: 1px solid rgba(255,255,255,.12);
+            background: #23282d;
+            color: #e9edf0;
+            border-radius: 9px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-path-btn:hover,
+        .wt8-path-btn.active {
+            border-color: #65cbd2;
+            color: #65cbd2;
+        }
+
+        .wt8-path-result {
+            min-height: 80px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #171b1f;
+            border: 1px dashed rgba(239,198,91,.25);
+        }
+
+        .wt8-path-result code {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           LINK ANATOMY VISUALIZER
+           ========================================================= */
+
+        .wt8-link-visualizer {
+            margin-top: 22px;
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.16);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .wt8-url-display {
+            padding: 18px;
+            background: #171b1f;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .wt8-url-display code {
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .url-protocol { color: #e8786d; }
+        .url-domain { color: #65cbd2; }
+        .url-path { color: #67c596; }
+        .url-query { color: #e6a75b; }
+        .url-fragment { color: #efc65b; }
+
+        .wt8-url-parts {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0,1fr));
+            gap: 10px;
+        }
+
+        .wt8-url-part {
+            padding: 13px;
+            border-radius: 11px;
+            background: #23282d;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .wt8-url-part strong {
+            display: block;
+            color: #65cbd2;
+            margin-bottom: 4px;
+        }
+
+        .wt8-url-part span {
+            font-size: .85rem;
+            color: #b8c0c7;
+        }
+
+        /* =========================================================
+           MEDIA BUILDER
+           ========================================================= */
+
+        .wt8-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .wt8-builder-panel {
+            background: #101317;
+            border: 1px solid rgba(101,203,210,.14);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .wt8-builder-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #65cbd2;
+            font-weight: 700;
+        }
+
+        .wt8-builder-panel select,
+        .wt8-builder-panel input,
+        .wt8-builder-panel textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: #1d2125;
+            color: #edf1f3;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font: inherit;
+        }
+
+        .wt8-builder-panel textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .wt8-builder-preview {
+            min-height: 260px;
+            background: #171b1f;
+            border: 1px dashed rgba(103,197,150,.30);
+            border-radius: 12px;
+            padding: 18px;
+            overflow: auto;
+        }
+
+        .wt8-builder-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wt8-tool-btn {
+            border: 1px solid rgba(101,203,210,.30);
+            background: #23282d;
+            color: #65cbd2;
+            border-radius: 9px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .wt8-tool-btn.primary {
+            background: rgba(101,203,210,.12);
+        }
+
+        /* =========================================================
+           INTERVIEW / FLIP CARDS
+           ========================================================= */
+
+        .wt8-flip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-flip-card {
+            min-height: 190px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .wt8-flip-inner {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            transform-style: preserve-3d;
+            transition: transform .55s ease;
+        }
+
+        .wt8-flip-card.is-flipped .wt8-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front,
+        .wt8-flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.16);
+        }
+
+        .wt8-flip-front {
+            background: linear-gradient(
+                145deg,
+                #292f35,
+                #1d2125
+            );
+        }
+
+        .wt8-flip-back {
+            background: linear-gradient(
+                145deg,
+                #172527,
+                #101317
+            );
+            transform: rotateY(180deg);
+        }
+
+        .wt8-flip-front .q-label {
+            color: #efc65b;
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .wt8-flip-front h3 {
+            margin: 12px 0 8px;
+            color: #edf1f3;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .wt8-flip-front .flip-hint {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-flip-back h3 {
+            margin-top: 0;
+            color: #67c596;
+        }
+
+        .wt8-flip-back p {
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MCQ
+           ========================================================= */
+
+        .wt8-mcq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .wt8-mcq {
+            background: #101317;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .wt8-difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            margin-bottom: 10px;
+        }
+
+        .wt8-difficulty.easy {
+            color: #67c596;
+            background: rgba(103,197,150,.10);
+            border: 1px solid rgba(103,197,150,.20);
+        }
+
+        .wt8-difficulty.moderate {
+            color: #e6a75b;
+            background: rgba(230,167,91,.10);
+            border: 1px solid rgba(230,167,91,.20);
+        }
+
+        .wt8-mcq h3 {
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .wt8-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .wt8-option {
+            text-align: left;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #23282d;
+            color: #e8edf0;
+            border-radius: 9px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wt8-option:hover {
+            border-color: #65cbd2;
+        }
+
+        .wt8-option.correct {
+            border-color: #67c596;
+            background: rgba(103,197,150,.10);
+        }
+
+        .wt8-option.wrong {
+            border-color: #e8786d;
+            background: rgba(232,120,109,.10);
+        }
+
+        .wt8-feedback {
+            min-height: 22px;
+            margin-top: 12px;
+            color: #b8c0c7;
+            font-size: .9rem;
+        }
+
+        /* =========================================================
+           PRACTICE
+           ========================================================= */
+
+        .wt8-practice-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-practice-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #101317;
+            border: 1px solid rgba(239,198,91,.12);
+        }
+
+        .wt8-practice-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(239,198,91,.10);
+            color: #efc65b;
+            font-weight: 900;
+        }
+
+        .wt8-practice-item h3 {
+            margin: 0 0 7px;
+            color: #edf1f3;
+        }
+
+        .wt8-practice-item p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           GLOSSARY
+           ========================================================= */
+
+        .wt8-glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .wt8-glossary-card {
+            min-height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .wt8-glossary-inner {
+            position: relative;
+            width: 100%;
+            min-height: 150px;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .wt8-glossary-card.is-flipped .wt8-glossary-inner {
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front,
+        .wt8-glossary-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(101,203,210,.15);
+        }
+
+        .wt8-glossary-front {
+            background: #23282d;
+        }
+
+        .wt8-glossary-back {
+            background: #101317;
+            transform: rotateY(180deg);
+        }
+
+        .wt8-glossary-front h3 {
+            margin: 0 0 12px;
+            color: #efc65b;
+        }
+
+        .wt8-glossary-front span {
+            color: #65cbd2;
+            font-size: .82rem;
+        }
+
+        .wt8-glossary-back p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           REVISION
+           ========================================================= */
+
+        .wt8-revision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .wt8-revision-item {
+            padding: 15px 17px;
+            border-radius: 12px;
+            background: #101317;
+            border-left: 3px solid #65cbd2;
+        }
+
+        .wt8-revision-item strong {
+            color: #efc65b;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+
+            .wt8-url-parts {
+                grid-template-columns: repeat(3, minmax(0,1fr));
+            }
+
+            .wt8-anatomy {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .wt8-objective-grid,
+            .wt8-concept-grid,
+            .wt8-comparison-grid,
+            .wt8-media-grid,
+            .wt8-mistake-grid,
+            .wt8-path-explorer,
+            .wt8-builder,
+            .wt8-mcq-grid,
+            .wt8-revision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-flip-grid,
+            .wt8-glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-url-parts,
+            .wt8-anatomy {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-options {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-item {
+                grid-template-columns: 1fr;
+            }
+
+            .wt8-practice-number {
+                margin-bottom: -3px;
+            }
+        }
+
+    </style>
+    <link rel="canonical" href="https://codebhavya.com/Web-Technologies/html-text-links-media.html">
+
+<link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+<link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../site-navigation.css?v=5" data-codebhavya-navigation="true">
+<link rel="stylesheet" href="web-technologies-presentation.css?v=26">
+
+<!-- CodeBhavya approved shared theme -->
+<link rel="stylesheet" href="/shared-theme/codebhavya-theme.css?v=20261019-1" data-cb-shared-theme="true">
+<script defer src="/shared-theme/codebhavya-theme.js?v=20261019-1" data-cb-shared-theme="true"></script>
+</head>
+
+<body class="cb-theme wt-page-level wt-presentation wt-content-refresh" data-cb-theme-layout="course">
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <header class="top-header"><a href="/index.html" class="logo codebhavya-new-logo"><img src="/images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a><nav class="top-nav" aria-label="Main navigation"></nav></header>
+
+    <div
+        class="reading-progress-wrap"
+        aria-hidden="true"
+    >
+        <div
+            class="reading-progress"
+            id="readingProgress"
+        ></div>
+    </div>
+
+    <!-- =========================================================
+         MAIN
+         ========================================================= -->
+
+    <main class="wt-page">
+
+        <!-- HERO -->
+
+        <section class="wt-hero">
+
+            <div class="wt-breadcrumb">
+                Web Technologies
+                <span>›</span>
+                Level 08
+            </div>
+
+            <div class="level-badge">
+                LEVEL 08 · HTML
+            </div>
+
+            <h1>
+                HTML Text, Links and Media
+            </h1>
+
+            <p class="wt-hero-description">
+                Learn how HTML presents text, creates meaningful hyperlinks,
+                displays images, plays audio and video, and embeds external
+                content into web pages.
+            </p>
+
+            <div class="wt-hero-meta">
+
+                <span>📚 HTML</span>
+                <span>⏱ Beginner → Intermediate</span>
+                <span>🎯 Practical Web Development</span>
+                <span>🧪 Practice + MCQs</span>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             01 LEARNING OBJECTIVES
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                01
+            </div>
+
+            <h2>
+                Learning Objectives
+            </h2>
+
+            <p class="section-intro">
+                What you will learn in this level
+            </p>
+
+            <ul class="wt-content-points"><li>
+                In Level 07, you learned the basic structure of an <strong class="wt-content-key">HTML</strong>
+                document, tags, elements, attributes, headings, paragraphs,
+                links and images. </li><li>Now we move deeper into the content that
+                real web pages contain.
+            </li></ul>
+
+            <div class="wt8-objective-grid">
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">📝</div>
+                    <h3>Text Content</h3>
+                    <p>
+                        Create readable and meaningful text using paragraphs,
+                        formatting elements, quotations and code elements.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">🔗</div>
+                    <h3>Hyperlinks</h3>
+                    <p>
+                        Create absolute, relative, internal, external,
+                        email and telephone links.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">🖼️</div>
+                    <h3>Images</h3>
+                    <p>
+                        Use images correctly with src, alt, dimensions,
+                        figure and figcaption.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">🎵</div>
+                    <h3>Media</h3>
+                    <p>
+                        Add audio, video, multiple media sources and fallback
+                        content to a web page.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">🌐</div>
+                    <h3>Embedded Content</h3>
+                    <p>
+                        Understand iframe and the basic principles of
+                        embedding external content.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">🚀</div>
+                    <h3>Practical Skills</h3>
+                    <p>
+                        Combine text, links and media into a complete
+                        <strong class="wt-content-key">HTML</strong> learning page.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             02 TEXT CONTENT
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                02
+            </div>
+
+            <h2>
+                Text Content and Text Semantics
+            </h2>
+
+            <p class="section-intro">
+                <strong class="wt-content-key">HTML</strong> describes what content means
+            </p>
+
+            <ul class="wt-content-points"><li>
+                Most web pages contain large amounts of text. </li><li><strong class="wt-content-key">HTML</strong> provides
+                elements that allow us to organize that text into meaningful
+                structures.
+            </li></ul>
+
+            <div class="wt8-concept-grid">
+
+                <article class="wt8-concept-card">
+                    <h3>Paragraph</h3>
+
+                    <p>
+                        The <code>&lt;p&gt;</code> element represents a
+                        paragraph of text.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>&lt;p&gt;
+    HTML gives structure to web content.
+&lt;/p&gt;</code></pre>
+                    </div>
+                </article>
+
+                <article class="wt8-concept-card">
+                    <h3>Semantic Meaning</h3>
+
+                    <p>
+                        <strong class="wt-content-key">HTML</strong> is not primarily a decoration language. It tells
+                        the <strong class="wt-content-key">browser</strong> and other tools what content represents.
+                    </p>
+
+                    <div class="wt8-key-box">
+                        <strong>Key idea:</strong>
+                        HTML = structure and meaning.
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             03 LINE BREAKS
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                03
+            </div>
+
+            <h2>
+                Paragraphs, Line Breaks and Whitespace
+            </h2>
+
+            <p class="section-intro">
+                Understanding <code>&lt;p&gt;</code> and <code>&lt;br&gt;</code>
+            </p>
+
+            <ul class="wt-content-points"><li>
+                A paragraph and a line break are not the same thing.
+                </li><li>A paragraph represents a block of related content.
+                </li><li>A line break simply moves the next content to a new line.
+            </li></ul>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Paragraph</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;p&gt;
+    First paragraph.
+&lt;/p&gt;
+
+&lt;p&gt;
+    Second paragraph.
+&lt;/p&gt;</code></pre>
+                    </div>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Line Break</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;p&gt;
+    CodeBhavya&lt;br&gt;
+    From Learning to Limitless Possibilities.
+&lt;/p&gt;</code></pre>
+                    </div>
+
+                </article>
+
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Common mistake:</strong>
+                Do not use dozens of
+                <code>&lt;br&gt;</code>
+                elements to create page spacing.
+                HTML should describe structure; CSS should handle visual spacing.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             04 FORMATTING
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                04
+            </div>
+
+            <h2>
+                Text Formatting
+            </h2>
+
+            <p class="section-intro">
+                Visual appearance versus <strong class="wt-content-key">semantic</strong> meaning
+            </p>
+
+            <div class="wt8-media-grid">
+
+                <article class="wt8-media-card">
+                    <h3>&lt;b&gt; and &lt;strong&gt;</h3>
+
+                    <p>
+                        Both may appear bold, but their meaning is different.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>&lt;b&gt;Bold appearance&lt;/b&gt;
+
+&lt;strong&gt;
+    Important information
+&lt;/strong&gt;</code></pre>
+                    </div>
+                </article>
+
+                <article class="wt8-media-card">
+                    <h3>&lt;i&gt; and &lt;em&gt;</h3>
+
+                    <p>
+                        <code>&lt;em&gt;</code> communicates emphasis,
+                        while <code>&lt;i&gt;</code> is generally used for
+                        alternate voice or stylistic text.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>&lt;i&gt;Technical term&lt;/i&gt;
+
+&lt;em&gt;
+    Read this carefully
+&lt;/em&gt;</code></pre>
+                    </div>
+                </article>
+
+                <article class="wt8-media-card">
+                    <h3>&lt;mark&gt; and &lt;small&gt;</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;mark&gt;Important word&lt;/mark&gt;
+
+&lt;small&gt;
+    Additional information
+&lt;/small&gt;</code></pre>
+                    </div>
+                </article>
+
+                <article class="wt8-media-card">
+                    <h3>&lt;del&gt; and &lt;ins&gt;</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;del&gt;Old price&lt;/del&gt;
+
+&lt;ins&gt;
+    New price
+&lt;/ins&gt;</code></pre>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="wt8-example-output">
+
+                <strong>Example:</strong>
+
+                <p>
+                    Learn
+                    <strong>HTML</strong>
+                    and
+                    <em>practice every day</em>.
+                    This is a
+                    <mark>very important</mark>
+                    concept.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             05 SUB / SUP + QUOTATIONS
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                05
+            </div>
+
+            <h2>
+                Subscript, Superscript and Quotations
+            </h2>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Subscript</h3>
+
+                    <p>
+                        Use <code>&lt;sub&gt;</code> when content should
+                        appear below the normal text <strong class="wt-content-key">baseline</strong>.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>H&lt;sub&gt;2&lt;/sub&gt;O
+
+CO&lt;sub&gt;2&lt;/sub&gt;</code></pre>
+                    </div>
+
+                    <div class="wt8-example-output">
+                        H<sub>2</sub>O &nbsp; CO<sub>2</sub>
+                    </div>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Superscript</h3>
+
+                    <p>
+                        Use <code>&lt;sup&gt;</code> for raised content.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>x&lt;sup&gt;2&lt;/sup&gt;
+
+10&lt;sup&gt;3&lt;/sup&gt;</code></pre>
+                    </div>
+
+                    <div class="wt8-example-output">
+                        x<sup>2</sup> &nbsp; 10<sup>3</sup>
+                    </div>
+
+                </article>
+
+            </div>
+
+            <div class="wt8-concept-grid">
+
+                <article class="wt8-concept-card">
+
+                    <h3>&lt;blockquote&gt;</h3>
+
+                    <p>
+                        Use <code>&lt;blockquote&gt;</code> for a longer
+                        quotation.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>&lt;blockquote&gt;
+    Learning never stops.
+&lt;/blockquote&gt;</code></pre>
+                    </div>
+
+                </article>
+
+                <article class="wt8-concept-card">
+
+                    <h3>&lt;q&gt; and &lt;cite&gt;</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;p&gt;
+    The teacher said
+    &lt;q&gt;Practice every day.&lt;/q&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+    I am reading
+    &lt;cite&gt;HTML and CSS&lt;/cite&gt;.
+&lt;/p&gt;</code></pre>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             06 CODE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                06
+            </div>
+
+            <h2>
+                Code, Preformatted Text and Output
+            </h2>
+
+            <p class="section-intro">
+                Displaying programming code correctly
+            </p>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>&lt;code&gt;</h3>
+
+                    <p>
+                        Represents a fragment of computer code.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>&lt;p&gt;
+    Use &lt;code&gt;printf()&lt;/code&gt; in C.
+&lt;/p&gt;</code></pre>
+                    </div>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>&lt;pre&gt;</h3>
+
+                    <p>
+                        Preserves spaces and line breaks.
+                    </p>
+
+                    <div class="wt8-code">
+<pre><code>&lt;pre&gt;
+Line 1
+    Line 2
+        Line 3
+&lt;/pre&gt;</code></pre>
+                    </div>
+
+                </article>
+
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Professional pattern:</strong>
+
+                For source-code examples, developers commonly combine
+                <code>&lt;pre&gt;</code>
+                and
+                <code>&lt;code&gt;</code>.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             07 HYPERLINKS
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                07
+            </div>
+
+            <h2>
+                Hyperlinks and Link Anatomy
+            </h2>
+
+            <p class="section-intro">
+                The <code>&lt;a&gt;</code> element connects resources
+            </p>
+
+            <ul class="wt-content-points"><li>
+                Hyperlinks are one of the foundations of the Web.
+                </li><li>They allow users to move between pages, sections,
+                websites and other resources.
+            </li></ul>
+
+            <div class="wt8-code">
+<pre><code>&lt;a href="https://codebhavya.com"&gt;
+    Visit CodeBhavya
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="wt8-anatomy">
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">1</span>
+                    <strong>&lt;a&gt;</strong>
+                    Anchor element that creates the link.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">2</span>
+                    <strong>href</strong>
+                    Destination of the link.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">3</span>
+                    <strong>Link text</strong>
+                    Visible text the user can select.
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             08 ABSOLUTE / RELATIVE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                08
+            </div>
+
+            <h2>
+                Absolute and Relative URLs
+            </h2>
+
+            <p class="section-intro">
+                Understanding where a link points
+            </p>
+
+            <div class="wt8-path-explorer">
+
+                <div class="wt8-path-panel">
+
+                    <h4>
+                        Choose a path
+                    </h4>
+
+                    <div class="wt8-path-buttons">
+
+                        <button
+                            class="wt8-path-btn active"
+                            data-path="about.html"
+                        >
+                            about.html
+                        </button>
+
+                        <button
+                            class="wt8-path-btn"
+                            data-path="pages/about.html"
+                        >
+                            pages/about.html
+                        </button>
+
+                        <button
+                            class="wt8-path-btn"
+                            data-path="../index.html"
+                        >
+                            ../index.html
+                        </button>
+
+                        <button
+                            class="wt8-path-btn"
+                            data-path="/index.html"
+                        >
+                            /index.html
+                        </button>
+
+                        <button
+                            class="wt8-path-btn"
+                            data-path="https://example.com"
+                        >
+                            https://example.com
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="wt8-path-result"
+                        id="wt8PathResult"
+                    >
+                        <code>about.html</code>
+                        <br>
+                        Current directory → about.html
+                    </div>
+
+                </div>
+
+                <div class="wt8-path-panel">
+
+                    <h4>
+                        Basic rule
+                    </h4>
+
+                    <p>
+                        A relative <strong class="wt-content-key">URL</strong> is interpreted using the location
+                        of the current document.
+                    </p>
+
+                    <p>
+                        An absolute <strong class="wt-content-key">URL</strong> contains the complete destination,
+                        including the protocol and domain.
+                    </p>
+
+                    <div class="wt8-key-box">
+
+                        <strong>Remember:</strong>
+
+                        <br>
+
+                        <code>page.html</code>
+                        → current directory
+
+                        <br>
+
+                        <code>../page.html</code>
+                        → parent directory
+
+                        <br>
+
+                        <code>https://example.com</code>
+                        → complete external address
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             09 INTERNAL LINKS
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                09
+            </div>
+
+            <h2>
+                Internal Page Links and Fragments
+            </h2>
+
+            <p class="section-intro">
+                Jump directly to a section of the same page
+            </p>
+
+            <p>
+                An internal link uses an element's
+                <code>id</code>
+                together with the
+                <code>#</code>
+                fragment syntax.
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;h2 id="contact"&gt;
+    Contact Us
+&lt;/h2&gt;
+
+&lt;a href="#contact"&gt;
+    Go to Contact
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Important:</strong>
+
+                The value after
+                <code>#</code>
+                must match the target element's
+                <code>id</code>.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             10 EXTERNAL LINKS
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                10
+            </div>
+
+            <h2>
+                External Links, target and rel
+            </h2>
+
+            <p class="section-intro">
+                Opening another website safely
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;a
+    href="https://example.com"
+    target="_blank"
+    rel="noopener noreferrer"
+&gt;
+    Open Example
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>target="_blank"</h3>
+
+                    <p>
+                        Requests that the destination open in a new browsing
+                        context, commonly a new tab.
+                    </p>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>rel="noopener noreferrer"</h3>
+
+                    <p>
+                        Commonly used as a defensive security and privacy
+                        measure when opening external resources.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             11 EMAIL / TELEPHONE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                11
+            </div>
+
+            <h2>
+                Email and Telephone Links
+            </h2>
+
+            <p class="section-intro">
+                Contact links using mailto and tel
+            </p>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Email Link</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;a href="mailto:hello@example.com"&gt;
+    Email Us
+&lt;/a&gt;</code></pre>
+                    </div>
+
+                    <p>
+                        When supported, the user's email application can
+                        open with the address already prepared.
+                    </p>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Telephone Link</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;a href="tel:+919999999999"&gt;
+    Call Us
+&lt;/a&gt;</code></pre>
+                    </div>
+
+                    <p>
+                        On supported mobile devices, tapping the link can
+                        open the phone application.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             12 IMAGES
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                12
+            </div>
+
+            <h2>
+                Images in HTML
+            </h2>
+
+            <p class="section-intro">
+                The <code>&lt;img&gt;</code> element
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;img
+    src="images/logo.png"
+    alt="CodeBhavya logo"
+&gt;</code></pre>
+            </div>
+
+            <div class="wt8-anatomy">
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">1</span>
+                    <strong>src</strong>
+                    Specifies the image resource.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">2</span>
+                    <strong>alt</strong>
+                    Provides alternative text.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">3</span>
+                    <strong>width</strong>
+                    Specifies intended width.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">4</span>
+                    <strong>height</strong>
+                    Specifies intended height.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">5</span>
+                    <strong>Image meaning</strong>
+                    Think about what information the image communicates.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <span class="num">6</span>
+                    <strong>File size</strong>
+                    Avoid unnecessarily large media files.
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             13 ALT / FIGURE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                13
+            </div>
+
+            <h2>
+                Alt Text, Figure and Figcaption
+            </h2>
+
+            <p class="section-intro">
+                Making images meaningful
+            </p>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Meaningful alt text</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;img
+    src="student-record.png"
+    alt="Student record management dashboard"
+&gt;</code></pre>
+                    </div>
+
+                    <p>
+                        Describe the useful meaning of the image rather than
+                        simply writing "image" or "picture".
+                    </p>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Decorative image</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;img
+    src="decorative-line.png"
+    alt=""
+&gt;</code></pre>
+                    </div>
+
+                    <p>
+                        An image that provides no useful information can use
+                        an empty alternative text value.
+                    </p>
+
+                </article>
+
+            </div>
+
+            <div class="wt8-code" style="margin-top:20px;">
+<pre><code>&lt;figure&gt;
+
+    &lt;img
+        src="html-structure.png"
+        alt="HTML document structure"
+    &gt;
+
+    &lt;figcaption&gt;
+        Basic structure of an HTML document.
+    &lt;/figcaption&gt;
+
+&lt;/figure&gt;</code></pre>
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Why figure?</strong>
+
+                It communicates that the media and its caption belong
+                together as one meaningful unit.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             14 AUDIO
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                14
+            </div>
+
+            <h2>
+                Audio
+            </h2>
+
+            <p class="section-intro">
+                Adding sound to a web page
+            </p>
+
+            <div class="wt8-media-grid">
+
+                <article class="wt8-media-card">
+
+                    <h3>Basic Audio</h3>
+
+                    <div class="wt8-code">
+<pre><code>&lt;audio controls&gt;
+
+    &lt;source
+        src="audio/lesson.mp3"
+        type="audio/mpeg"
+    &gt;
+
+    Your browser does not support audio.
+
+&lt;/audio&gt;</code></pre>
+                    </div>
+
+                </article>
+
+                <article class="wt8-media-card">
+
+                    <h3>controls</h3>
+
+                    <p>
+                        The <code>controls</code> attribute asks the <strong class="wt-content-key">browser</strong>
+                        to display controls such as play, pause and volume.
+                    </p>
+
+                    <div class="wt8-example-output">
+                        🎵 Browser controls appear when a valid audio file
+                        is supplied.
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             15 VIDEO
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                15
+            </div>
+
+            <h2>
+                Video
+            </h2>
+
+            <p class="section-intro">
+                Adding video content
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;video controls width="640"&gt;
+
+    &lt;source
+        src="videos/html-introduction.mp4"
+        type="video/mp4"
+    &gt;
+
+    Your browser does not support video.
+
+&lt;/video&gt;</code></pre>
+            </div>
+
+            <div class="wt8-anatomy">
+
+                <div class="wt8-anatomy-item">
+                    <strong>controls</strong>
+                    Displays playback controls.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <strong>autoplay</strong>
+                    Requests automatic playback.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <strong>muted</strong>
+                    Starts media without sound.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <strong>loop</strong>
+                    Requests repeated playback.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <strong>poster</strong>
+                    Image displayed before playback.
+                </div>
+
+                <div class="wt8-anatomy-item">
+                    <strong>fallback</strong>
+                    Text shown when media is unsupported.
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             16 SOURCE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                16
+            </div>
+
+            <h2>
+                The Source Element
+            </h2>
+
+            <p class="section-intro">
+                Providing multiple media alternatives
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;video controls&gt;
+
+    &lt;source
+        src="lesson.webm"
+        type="video/webm"
+    &gt;
+
+    &lt;source
+        src="lesson.mp4"
+        type="video/mp4"
+    &gt;
+
+    Your browser does not support video.
+
+&lt;/video&gt;</code></pre>
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Why multiple sources?</strong>
+
+                Different browsers and environments may support different
+                media formats. The browser can select a supported source.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             17 IFRAME
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                17
+            </div>
+
+            <h2>
+                iframe and Embedded Content
+            </h2>
+
+            <p class="section-intro">
+                Embedding another browsing context
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;iframe
+    src="https://example.com"
+    title="Example website"
+    width="600"
+    height="400"
+&gt;
+&lt;/iframe&gt;</code></pre>
+            </div>
+
+            <div class="wt8-comparison-grid">
+
+                <article class="wt8-comparison-card">
+
+                    <h3>title</h3>
+
+                    <p>
+                        A descriptive iframe title helps users understand
+                        what the embedded browsing context represents.
+                    </p>
+
+                </article>
+
+                <article class="wt8-comparison-card">
+
+                    <h3>Embedding restriction</h3>
+
+                    <ul class="wt-content-points"><li>
+                        Not every external website allows itself to be
+                        displayed inside an iframe. </li><li>The destination's
+                        security policies can prevent embedding.
+                    </li></ul>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             18 RESPONSIVE MEDIA
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                18
+            </div>
+
+            <h2>
+                Responsive Media Basics
+            </h2>
+
+            <p class="section-intro">
+                Preparing media for different screen sizes
+            </p>
+
+            <div class="wt8-objective-grid">
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">📱</div>
+                    <h3>Alternative Text</h3>
+                    <p>
+                        Use meaningful alt text for informative images.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">📐</div>
+                    <h3>Appropriate Dimensions</h3>
+                    <p>
+                        Use suitable dimensions instead of unnecessarily
+                        huge media.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">⚡</div>
+                    <h3>Optimize Media</h3>
+                    <p>
+                        Avoid unnecessarily large image, audio and video
+                        files.
+                    </p>
+                </article>
+
+                <article class="wt8-objective-card">
+                    <div class="wt8-icon">🛟</div>
+                    <h3>Fallback Content</h3>
+                    <p>
+                        Provide useful fallback content where appropriate.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Coming later:</strong>
+
+                CSS techniques such as
+                <code>max-width</code>,
+                Flexbox and Grid will be covered in the CSS levels.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             19 REAL WORLD EXAMPLE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                19
+            </div>
+
+            <h2>
+                Real-World Example — CodeBhavya Learning Resource Page
+            </h2>
+
+            <p class="section-intro">
+                Combining text, links and media
+            </p>
+
+            <div class="wt8-code">
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;HTML Learning Resources&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+    &lt;h1&gt;HTML Learning Resources&lt;/h1&gt;
+
+    &lt;p&gt;
+        Welcome to
+        &lt;strong&gt;CodeBhavya&lt;/strong&gt;.
+    &lt;/p&gt;
+
+    &lt;h2&gt;Useful Links&lt;/h2&gt;
+
+    &lt;a href="html-fundamentals.html"&gt;
+        HTML Fundamentals
+    &lt;/a&gt;
+
+    &lt;br&gt;
+
+    &lt;a
+        href="https://developer.mozilla.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+    &gt;
+        MDN Web Docs
+    &lt;/a&gt;
+
+    &lt;h2&gt;Learning Image&lt;/h2&gt;
+
+    &lt;figure&gt;
+
+        &lt;img
+            src="html-structure.png"
+            alt="HTML document structure"
+            width="500"
+        &gt;
+
+        &lt;figcaption&gt;
+            Basic HTML document structure.
+        &lt;/figcaption&gt;
+
+    &lt;/figure&gt;
+
+    &lt;h2&gt;Learning Video&lt;/h2&gt;
+
+    &lt;video controls width="600"&gt;
+
+        &lt;source
+            src="html-basics.mp4"
+            type="video/mp4"
+        &gt;
+
+        Your browser does not support video.
+
+    &lt;/video&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <div class="wt8-key-box">
+
+                <strong>Real-world lesson:</strong>
+
+                A useful web page is usually not made from one HTML element.
+                It combines many meaningful elements into a structured document.
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             20 PREMIUM VISUALIZER — LINK ANATOMY
+             ===================================================== -->
+
+        <section class="content-section visualizer-section">
+
+            <div class="section-number">
+                20
+            </div>
+
+            <h2>
+                Premium Visualizer — URL &amp; Link Anatomy
+            </h2>
+
+            <p class="section-intro">
+                Trace each part of the URL with the timeline or playback controls to understand its role.
+            </p>
+
+            <div class="visualizer-shell wt-premium-trace" data-premium-trace="url">
+<div class="visualizer-topbar"><div class="visualizer-title"><span class="pulse-dot" aria-hidden="true"></span><span>URL & LINK ANATOMY TRACE</span></div><div class="visualizer-status" data-trace-status>Step 1 of 5</div></div>
+<div class="trace-progress" role="progressbar" aria-label="Journey progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="trace-progress-bar" data-trace-progress style="width:20%"></div></div>
+<div class="trace-main"><div class="wt-trace-url" aria-label="Example URL"><code><span data-url-segment="0">https://</span><span data-url-segment="1">codebhavya.com</span><span data-url-segment="2">/Web-Technologies/html-fundamentals.html</span><span data-url-segment="3">?mode=learn</span><span data-url-segment="4">#html</span></code></div><div class="trace-stage" aria-live="polite" aria-atomic="true"><div class="trace-icon" data-trace-icon aria-hidden="true">🔒</div><div class="trace-step-number" data-trace-number>STEP 01</div><h3 data-trace-title>Choose the communication protocol</h3><p data-trace-description>https:// identifies HTTPS, which protects communication in transit when correctly configured.</p></div><pre class="trace-code"><code data-trace-code>https://</code></pre></div>
+<div class="trace-timeline" aria-label="Journey steps"><button type="button" class="trace-point active" data-trace-step="0" aria-label="Step 1: Protocol" aria-pressed="true"><span>01</span><strong>Protocol</strong></button><button type="button" class="trace-point" data-trace-step="1" aria-label="Step 2: Domain" aria-pressed="false"><span>02</span><strong>Domain</strong></button><button type="button" class="trace-point" data-trace-step="2" aria-label="Step 3: Path" aria-pressed="false"><span>03</span><strong>Path</strong></button><button type="button" class="trace-point" data-trace-step="3" aria-label="Step 4: Query" aria-pressed="false"><span>04</span><strong>Query</strong></button><button type="button" class="trace-point" data-trace-step="4" aria-label="Step 5: Fragment" aria-pressed="false"><span>05</span><strong>Fragment</strong></button></div>
+<div class="trace-controls"><button type="button" class="trace-btn secondary" data-trace-previous disabled>← Previous</button><button type="button" class="trace-btn primary" data-trace-auto aria-pressed="false">▶ Auto Run</button><button type="button" class="trace-btn secondary" data-trace-next>Next →</button><button type="button" class="trace-btn secondary" data-trace-reset>↺ Reset</button></div>
+<div class="trace-explanation"><h3>What is happening?</h3><p data-trace-explanation>The protocol describes how the browser communicates. It is not the website name.</p></div></div>
+</section>
+
+        <!-- =====================================================
+             21 PREMIUM INTERACTIVE — MEDIA BUILDER
+             ===================================================== -->
+
+        <section class="content-section visualizer-section">
+
+            <div class="section-number">
+                21
+            </div>
+
+            <h2>
+                Premium Interactive — HTML Media Builder
+            </h2>
+
+            <p class="section-intro">
+                Build an HTML media element and inspect the generated code.
+            </p>
+
+            <div class="wt8-builder">
+
+                <div class="wt8-builder-panel">
+
+                    <label for="wt8MediaType">
+                        Media Type
+                    </label>
+
+                    <select id="wt8MediaType">
+
+                        <option value="image">
+                            Image
+                        </option>
+
+                        <option value="audio">
+                            Audio
+                        </option>
+
+                        <option value="video">
+                            Video
+                        </option>
+
+                        <option value="iframe">
+                            iframe
+                        </option>
+
+                    </select>
+
+                    <label for="wt8MediaSource">
+                        Source
+                    </label>
+
+                    <input
+                        id="wt8MediaSource"
+                        type="text"
+                        value="media/sample.mp4"
+                    >
+
+                    <label for="wt8MediaAlt">
+                        Alt / Title
+                    </label>
+
+                    <input
+                        id="wt8MediaAlt"
+                        type="text"
+                        value="CodeBhavya learning media"
+                    >
+
+                    <div class="wt8-builder-actions">
+
+                        <button
+                            type="button"
+                            class="wt8-tool-btn primary"
+                            id="wt8BuildMedia"
+                        >
+                            ▶ Build
+                        </button>
+
+                        <button
+                            type="button"
+                            class="wt8-tool-btn"
+                            id="wt8ResetMedia"
+                        >
+                            ↺ Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="wt8-builder-panel">
+
+                    <h3>
+                        Generated HTML
+                    </h3>
+
+                    <textarea
+                        id="wt8GeneratedCode"
+                        readonly
+                    ></textarea>
+
+                    <h3>
+                        Preview
+                    </h3>
+
+                    <div
+                        class="wt8-builder-preview"
+                        id="wt8MediaPreview"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             22 COMMON MISTAKES
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                22
+            </div>
+
+            <h2>
+                Common HTML Mistakes
+            </h2>
+
+            <p class="section-intro">
+                Problems beginners frequently make
+            </p>
+
+            <div class="wt8-mistake-grid">
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Missing alt</h3>
+                    <p>
+                        Meaningful images should have useful alternative text.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Using headings for size</h3>
+                    <p>
+                        Choose headings according to document hierarchy,
+                        not simply visual size.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Too many &lt;br&gt;</h3>
+                    <p>
+                        Do not use line breaks as a replacement for <strong class="wt-content-key">CSS</strong> spacing.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ "Click here"</h3>
+                    <p>
+                        Prefer descriptive link text that explains the destination.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Every link opens new tab</h3>
+                    <p>
+                        Use target="_blank" only when it is actually useful.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Huge media files</h3>
+                    <p>
+                        Large files increase loading time and waste bandwidth.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Missing iframe title</h3>
+                    <p>
+                        Give embedded browsing contexts descriptive titles.
+                    </p>
+                </article>
+
+                <article class="wt8-mistake-card">
+                    <h3>❌ Assuming every site can be embedded</h3>
+                    <p>
+                        External websites may block iframe embedding.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             23 INTERVIEW
+             ===================================================== -->
+
+        <section class="content-section interview-section">
+
+            <div class="section-number">
+                23
+            </div>
+
+            <h2>
+                Interview Preparation
+            </h2>
+
+            <p class="section-intro">
+                Click a card to reveal the answer
+            </p>
+
+            <div class="wt8-flip-grid">
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 01
+                            </div>
+
+                            <h3>
+                                What is the difference between
+                                &lt;b&gt; and &lt;strong&gt;?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                Both can appear bold, but
+                                <code>&lt;strong&gt;</code>
+                                communicates importance while
+                                <code>&lt;b&gt;</code>
+                                is primarily presentational.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 02
+                            </div>
+
+                            <h3>
+                                What is a relative URL?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                A relative URL identifies a resource relative
+                                to the location of the current document.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 03
+                            </div>
+
+                            <h3>
+                                Why is alt important for images?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                It provides a textual alternative that can
+                                communicate the image's useful meaning when
+                                the image cannot be displayed and to users
+                                relying on assistive technologies.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 04
+                            </div>
+
+                            <h3>
+                                What is target="_blank"?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                It requests that the linked resource open
+                                in a new browsing context, commonly a new tab.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 05
+                            </div>
+
+                            <h3>
+                                Why is rel="noopener noreferrer" commonly
+                                used with external target="_blank" links?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                It is commonly used as a defensive security
+                                and privacy measure for links opened in a
+                                new browsing context.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 06
+                            </div>
+
+                            <h3>
+                                What is the purpose of figure and figcaption?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                They group self-contained content such as an
+                                image together with its related caption.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 07
+                            </div>
+
+                            <h3>
+                                What is the purpose of the source element?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                It allows multiple media sources to be provided
+                                so the browser can select a supported format.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 08
+                            </div>
+
+                            <h3>
+                                What is an iframe?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                An iframe embeds another browsing context
+                                inside the current HTML document.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                >
+
+                    <div class="wt8-flip-inner">
+
+                        <div class="wt8-flip-front">
+
+                            <div class="q-label">
+                                Question 09
+                            </div>
+
+                            <h3>
+                                Difference between absolute and relative URL?
+                            </h3>
+
+                            <div class="flip-hint">
+                                Click to reveal →
+                            </div>
+
+                        </div>
+
+                        <div class="wt8-flip-back">
+
+                            <h3>
+                                Answer
+                            </h3>
+
+                            <p>
+                                An absolute URL gives the complete destination,
+                                while a relative URL is interpreted from the
+                                current document's location.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             24 MCQ
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                24
+            </div>
+
+            <h2>
+                Quick MCQs
+            </h2>
+
+            <p class="section-intro">
+                Test your understanding
+            </p>
+
+            <div class="wt8-mcq-grid">
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="1"
+                >
+
+                    <span class="wt8-difficulty easy">
+                        EASY
+                    </span>
+
+                    <h3>
+                        1. Which HTML element creates a hyperlink?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            &lt;link&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;a&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;href&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;url&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="2"
+                >
+
+                    <span class="wt8-difficulty easy">
+                        EASY
+                    </span>
+
+                    <h3>
+                        2. Which attribute provides alternative text for an image?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            title
+                        </button>
+
+                        <button class="wt8-option">
+                            src
+                        </button>
+
+                        <button class="wt8-option">
+                            alt
+                        </button>
+
+                        <button class="wt8-option">
+                            text
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="0"
+                >
+
+                    <span class="wt8-difficulty easy">
+                        EASY
+                    </span>
+
+                    <h3>
+                        3. Which element is used to add audio?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            &lt;audio&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;sound&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;music&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;media&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="3"
+                >
+
+                    <span class="wt8-difficulty easy">
+                        EASY
+                    </span>
+
+                    <h3>
+                        4. Which element provides a caption for a figure?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            &lt;caption&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;label&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;description&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;figcaption&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="1"
+                >
+
+                    <span class="wt8-difficulty moderate">
+                        MODERATE
+                    </span>
+
+                    <h3>
+                        5. Which attribute commonly requests a new browsing context?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            new
+                        </button>
+
+                        <button class="wt8-option">
+                            target="_blank"
+                        </button>
+
+                        <button class="wt8-option">
+                            open="new"
+                        </button>
+
+                        <button class="wt8-option">
+                            window="new"
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="2"
+                >
+
+                    <span class="wt8-difficulty moderate">
+                        MODERATE
+                    </span>
+
+                    <h3>
+                        6. Which element embeds another browsing context?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            &lt;embed-page&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;frame-page&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;iframe&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;window&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="0"
+                >
+
+                    <span class="wt8-difficulty moderate">
+                        MODERATE
+                    </span>
+
+                    <h3>
+                        7. Which element is normally used for a longer quotation?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            &lt;blockquote&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;q&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;quote&gt;
+                        </button>
+
+                        <button class="wt8-option">
+                            &lt;cite&gt;
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+                <article
+                    class="wt8-mcq"
+                    data-answer="3"
+                >
+
+                    <span class="wt8-difficulty moderate">
+                        MODERATE
+                    </span>
+
+                    <h3>
+                        8. Which syntax creates an internal page link?
+                    </h3>
+
+                    <div class="wt8-options">
+
+                        <button class="wt8-option">
+                            href="contact"
+                        </button>
+
+                        <button class="wt8-option">
+                            href="/contact"
+                        </button>
+
+                        <button class="wt8-option">
+                            href="contact.html"
+                        </button>
+
+                        <button class="wt8-option">
+                            href="#contact"
+                        </button>
+
+                    </div>
+
+                    <div class="wt8-feedback"></div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             25 EXTRA PRACTICE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                25
+            </div>
+
+            <h2>
+                Extra Practice
+            </h2>
+
+            <p class="section-intro">
+                Placement-oriented <strong class="wt-content-key">HTML</strong> exercises
+            </p>
+
+            <div class="wt8-practice-list">
+
+                <article class="wt8-practice-item">
+
+                    <div class="wt8-practice-number">
+                        01
+                    </div>
+
+                    <div>
+                        <h3>Personal Introduction Page</h3>
+                        <p>
+                            Create a page containing your name, education,
+                            skills, hobbies, formatted text and a quotation.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="wt8-practice-item">
+
+                    <div class="wt8-practice-number">
+                        02
+                    </div>
+
+                    <div>
+                        <h3>Useful Links Page</h3>
+                        <p>
+                            Create internal links, external links, an email
+                            link and a telephone link.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="wt8-practice-item">
+
+                    <div class="wt8-practice-number">
+                        03
+                    </div>
+
+                    <div>
+                        <h3>Image Gallery Structure</h3>
+                        <p>
+                            Create three figures using images, meaningful
+                            alt text and captions.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="wt8-practice-item">
+
+                    <div class="wt8-practice-number">
+                        04
+                    </div>
+
+                    <div>
+                        <h3>Learning Media Page</h3>
+                        <p>
+                            Build a page containing audio, video, multiple
+                            sources and fallback content.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="wt8-practice-item">
+
+                    <div class="wt8-practice-number">
+                        05
+                    </div>
+
+                    <div>
+                        <h3>Course Resource Page</h3>
+                        <p>
+                            Combine headings, paragraphs, formatted text,
+                            links, images, figures and media.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="wt8-practice-item">
+
+                    <div class="wt8-practice-number">
+                        06
+                    </div>
+
+                    <div>
+                        <h3>Interview Profile Page</h3>
+                        <p>
+                            Create a profile page containing contact links,
+                            an image, a short biography and an embedded
+                            learning resource.
+                        </p>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             26 QUICK REVISION
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                26
+            </div>
+
+            <h2>
+                Quick Revision
+            </h2>
+
+            <p class="section-intro">
+                Everything important at a glance
+            </p>
+
+            <div class="wt8-revision-grid">
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;p&gt;</strong>
+                    — Paragraph
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;br&gt;</strong>
+                    — Line break
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;strong&gt;</strong>
+                    — Important content
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;em&gt;</strong>
+                    — Emphasized content
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;mark&gt;</strong>
+                    — Highlighted content
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;sub&gt;</strong>
+                    — Subscript
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;sup&gt;</strong>
+                    — Superscript
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;a&gt;</strong>
+                    — Hyperlink
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>href</strong>
+                    — Link destination
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>alt</strong>
+                    — Alternative image text
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;figure&gt;</strong>
+                    — Self-contained content
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;figcaption&gt;</strong>
+                    — Figure caption
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;audio&gt;</strong>
+                    — Audio
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;video&gt;</strong>
+                    — Video
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;source&gt;</strong>
+                    — Media source
+                </div>
+
+                <div class="wt8-revision-item">
+                    <strong>&lt;iframe&gt;</strong>
+                    — Embedded browsing context
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             27 GLOSSARY
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                27
+            </div>
+
+            <h2>
+                Glossary
+            </h2>
+
+            <p class="section-intro">
+                Click a term to reveal its meaning
+            </p>
+
+            <div class="wt8-glossary-grid">
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Hyperlink</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                A connection that allows users to navigate
+                                to another resource or location.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Absolute URL</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                A complete web address containing the protocol
+                                and destination.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Relative URL</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                A path interpreted relative to the current
+                                document or website location.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Alternative Text</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                Text that describes the useful meaning
+                                of an image.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Fragment</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                The part of a URL beginning with #
+                                that identifies a location within a resource.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Media</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                Content such as images, audio and video
+                                presented through a web page.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Fallback Content</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                Content shown when a browser cannot use
+                                the requested media or resource.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>iframe</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                An HTML element used to embed another
+                                browsing context.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="wt8-glossary-card"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div class="wt8-glossary-inner">
+
+                        <div class="wt8-glossary-front"><span class="flip-card-label">TERM</span>
+                            <h3>Source</h3>
+                            <span>Click to reveal</span>
+                        </div>
+
+                        <div class="wt8-glossary-back"><span class="flip-card-label">DEFINITION</span>
+                            <p>
+                                An element used to provide media resources
+                                to audio and video elements.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             28 FINAL CHALLENGE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-number">
+                28
+            </div>
+
+            <h2>
+                Final Challenge
+            </h2>
+
+            <p class="section-intro">
+                Build a complete <strong class="wt-content-key">HTML</strong> learning page
+            </p>
+
+            <div class="wt8-concept-card">
+
+                <h3>
+                    🎯 CodeBhavya HTML Media Profile
+                </h3>
+
+                <p>
+                    Build a single <strong class="wt-content-key">HTML</strong> page that represents a personal
+                    learning profile.
+                </p>
+
+                <h3>
+                    Your page must contain:
+                </h3>
+
+                <div class="wt8-practice-list">
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">01</div>
+                        <div>
+                            <p>
+                                One main heading using
+                                <code>&lt;h1&gt;</code>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">02</div>
+                        <div>
+                            <p>
+                                At least three subheadings and three paragraphs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">03</div>
+                        <div>
+                            <p>
+                                Bold, emphasized and highlighted content.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">04</div>
+                        <div>
+                            <p>
+                                One quotation and one code example.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">05</div>
+                        <div>
+                            <p>
+                                One internal link and two external links.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">06</div>
+                        <div>
+                            <p>
+                                One email link and one telephone link.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">07</div>
+                        <div>
+                            <p>
+                                At least two images with meaningful alt text.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">08</div>
+                        <div>
+                            <p>
+                                One figure with figcaption.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">09</div>
+                        <div>
+                            <p>
+                                One audio element and one video element.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="wt8-practice-item">
+                        <div class="wt8-practice-number">10</div>
+                        <div>
+                            <p>
+                                One iframe with a descriptive title.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="wt8-key-box">
+
+                    <strong>Completion goal:</strong>
+
+                    Your final page should demonstrate that you can combine
+                    text, links and media into a meaningful HTML document
+                    without depending on CSS.
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             COMPLETION
+             ===================================================== -->
+
+        <section class="content-section completion-section">
+
+            <div class="section-number">
+                ✓
+            </div>
+
+            <h2>
+                Level 08 Complete?
+            </h2>
+
+            <p>
+                Before marking this lesson complete, make sure you can create
+                text content, hyperlinks, images, audio, video and embedded
+                content without referring to the examples.
+            </p>
+
+            <button
+                type="button"
+                class="primary-button"
+                id="completeLesson"
+            >
+                ✓ Mark Lesson Complete
+            </button>
+
+            <p
+                id="completionMessage"
+                class="completion-message"
+                aria-live="polite"
+            ></p>
+
+        </section>
+
+        <!-- =====================================================
+             NAVIGATION
+             ===================================================== -->
+
+        <nav class="topic-navigation">
+
+            <div class="topic-nav-side">
+
+                <a
+                    href="html-fundamentals.html"
+                    class="topic-nav-card"
+                >
+
+                    <span class="nav-label">
+                        ← Previous
+                    </span>
+
+                    <span class="nav-topic-name">
+                        HTML Fundamentals
+                    </span>
+
+                    <span class="nav-action">
+                        Review Level 07
+                    </span>
+
+                </a>
+
+            </div>
+
+            <div class="topic-nav-side next">
+
+                <a
+                    href="html-lists-tables-forms.html"
+                    class="topic-nav-card"
+                >
+
+                    <span class="nav-label">
+                        Next →
+                    </span>
+
+                    <span class="nav-topic-name">
+                        HTML Lists, Tables and Forms
+                    </span>
+
+                    <span class="nav-action">
+                        Continue Learning
+                    </span>
+
+                </a>
+
+            </div>
+
+        </nav>
+
+    </main>
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="footer cb-global-footer" aria-label="CodeBhavya footer" data-cb-footer-version="policy-v7"><div class="footer-container cb-footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><section class="footer-column"><h2>Quick Links</h2><a href="/index.html">Home</a><a href="/Placement/index.html">Placement</a><a href="/Placement/progress.html">Overall Progress</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a></section><section class="footer-column"><h2>Learning</h2><a href="/Maths/index.html">Mathematics</a><a href="/C-Programming/index.html">C Programming</a><a href="/Python/index.html">Python</a><a href="/Java/index.html">Java</a><a href="/Data-Structures/index.html">Data Structures</a><a href="/AI-ML/index.html">AI &amp; Machine Learning</a></section><section class="footer-column"><h2>Core CS &amp; Web</h2><a href="/Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="/DBMS/index.html">DBMS &amp; SQL</a><a href="/Operating-Systems/index.html">Operating Systems</a><a href="/Full-Stack/index.html">Full Stack MERN</a><a href="/Web-Technologies/index.html">Web-Technologies</a><a href="/Computer-Networks/index.html">Computer Networks</a></section><section class="footer-column"><h2>Practice</h2><a href="/Online-Compiler/">Online Compiler</a><a href="/Programs/index.html">Programs Library</a><a href="/Placement/practice.html">Practice Hub</a><a href="/Placement/mcq-library.html">MCQ Library</a><a href="/Placement/coding.html">Coding Arena</a><a href="/Placement/mock-drive.html">Mock Drive</a><a href="/Placement/interview.html">Interview Coach</a><a href="/Placement/evidence-lab.html">Evidence Lab</a></section></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+
+    <script src="html-text-links-media.js"></script>
+
+    <script
+        src="web-technologies-mobile-nav.js?v=2"
+        defer
+    ></script>
+
+<script src="web-technologies-presentation.js?v=3"></script>
+<script src="../script.js?v=7-stable-footer"></script>
+<script src="web-technologies-premium-traces.js?v=1" defer></script>
+</body>
+</html>
