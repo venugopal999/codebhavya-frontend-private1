@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": 56,
+  "viewport_rule_checks_px": [
+    390,
+    820,
+    1440
+  ],
+  "original_home_content_and_controls_preserved": true,
+  "workspace_links_resolve": true,
+  "classic_shared_styles_prefix_unchanged": true,
+  "browser_visual_qa": false
+}
