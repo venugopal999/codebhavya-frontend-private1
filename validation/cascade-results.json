@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": 135,
+  "representative_layouts": 15,
+  "viewports_px": [
+    390,
+    900,
+    1440
+  ],
+  "method": "Static CSS selector, media and cascade checks; not browser geometry"
+}

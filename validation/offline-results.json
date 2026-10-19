@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "checks": 11,
+  "public_theme_assets_cached": 7,
+  "private_quiz_and_placement_requests_not_intercepted": true
+}

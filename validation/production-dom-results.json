@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checks": 359,
+  "representative_pages": 28,
+  "backend_requests": 0,
+  "method": "DOM behavior checks with backend disabled; no real browser layout or live payment/auth tests"
+}
