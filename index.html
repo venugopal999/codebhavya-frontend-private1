@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="learning-guide.css?v=1">
 
 <!-- CodeBhavya approved shared theme -->
-<link rel="stylesheet" href="shared-theme/codebhavya-theme.css?v=20261019-brand-search-1" data-cb-shared-theme="true">
+<link rel="stylesheet" href="shared-theme/codebhavya-theme.css?v=20261019-menu-spacing-1" data-cb-shared-theme="true">
 <script defer src="shared-theme/codebhavya-theme.js?v=20261019-2" data-cb-shared-theme="true"></script>
 <style id="cb-home-split-critical">
 /* Homepage split layout: real learning links, with the classic global shell retained. */
@@ -109,6 +109,16 @@ body.cb-theme[data-cb-theme-layout] .top-header :is(.cb-nav-link,.cb-nav-trigger
 body.cb-theme[data-cb-theme-layout] .top-header .cb-menu-panel{position:static!important;width:100%!important;margin:5px 0!important;transform:none!important}
 body.cb-theme[data-cb-theme-layout] .top-header .cb-header-search{width:100%!important;margin:8px 0 0!important;flex-basis:auto!important}
 }
+</style>
+<style id="cb-home-menu-spacing">
+/* Match the common menu spacing despite the legacy homepage reset. */
+body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-panel{padding:1rem!important}
+body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-intro{margin:0 0 .75rem!important;padding:.15rem .2rem .75rem!important}
+body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-group{padding:.7rem!important}
+body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-group h2{margin:0 0 .45rem!important;padding:0!important}
+body.cb-theme[data-cb-theme-layout=home] .top-header .cb-coming-soon{margin-top:.35rem!important;padding:.55rem .5rem!important}
+body.cb-theme[data-cb-theme-layout=home] .top-header .cb-coming-soon small{padding:.2rem .4rem!important}
+@media(max-width:980px){body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-panel{padding:.7rem!important}body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-group{padding:.55rem!important}body.cb-theme[data-cb-theme-layout=home] .top-header .cb-menu-intro span{margin-top:.2rem!important}}
 </style>
 </head>
 
@@ -829,7 +839,7 @@ Evidence Lab
 </footer>
 
 
-<script src="script.js?v=20261019-brand-search-1"></script>
+<script src="script.js?v=20261019-menu-spacing-1"></script>
 <script>
 // Keep installation optional: the browser decides when it can offer its prompt.
 (function () {
