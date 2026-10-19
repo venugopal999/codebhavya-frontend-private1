@@ -1,6 +1,6 @@
 // Cache only public lessons that a student explicitly saves. Quiz and Placement
 // always use the network, including their pages, scripts, and signed-in data.
-const SHELL_CACHE = 'codebhavya-public-shell-v8';
+const SHELL_CACHE = 'codebhavya-public-shell-v9';
 const OFFLINE_URL = '/offline.html';
 const SHELL_FILES = [
   '/shared-theme/codebhavya-theme.css', '/shared-theme/codebhavya-theme.js', '/shared-theme/fonts/inter-latin-400-normal.woff2', '/shared-theme/fonts/inter-latin-500-normal.woff2', '/shared-theme/fonts/inter-latin-600-normal.woff2', '/shared-theme/fonts/inter-latin-700-normal.woff2', '/shared-theme/fonts/jetbrains-mono-latin-400-normal.woff2',
